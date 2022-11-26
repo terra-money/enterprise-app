@@ -10,6 +10,10 @@
     "apps/**/*",
     "indexers/**/*"
   ],
+  "scripts": {
+    "docker:enterprise-api": "docker build . -f apps/enterprise-api/Dockerfile -t payments/api",
+    "docker:enterprise-indexers": "docker build . -f indexers/enterprise/Dockerfile -t payments/indexers"
+  },
   "dependencies": {
     "@types/node": "^16.11.56",
     "terrariums": "^1.1.9",
