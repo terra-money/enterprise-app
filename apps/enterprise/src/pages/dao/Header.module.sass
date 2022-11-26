@@ -1,0 +1,100 @@
+@import ../../themes/mixins.sass
+
+.root
+  &.compact
+    background-color: var(--section-background-color)
+    display: grid
+    grid-template-columns: auto auto 1fr auto
+    padding: 32px 48px
+    column-gap: 8px !important
+    .logo
+      grid-row: 1
+      grid-column: 1
+    .favourite
+      grid-row: 1
+      grid-column: 2
+    .name
+      margin-left: 16px
+      grid-row: 1
+      grid-column: 3
+    .tabs
+      grid-row: 1
+      grid-column: 4
+      .route
+        border-radius: 24px
+        padding: 0 16px
+        text-decoration: none
+        display: flex
+        align-items: center
+        justify-content: center
+        font-family: 'Poppins', sans-serif
+        font-size: 14px
+        font-weight: 500
+        height: 48px
+        margin-right: 4px
+        span
+          color: var(--text-color-secondary)
+        &:hover
+          background-color: var(--button-background-color-secondary-hover)          
+        &:global(.active)
+          background-color: var(--section-background-color)
+          span
+            @include color-gradient
+
+  &:not(.compact)
+    width: 100%
+    .container
+      display: grid
+      grid-template-columns: auto auto 1fr auto
+      grid-template-rows: repeat(3, auto)
+      row-gap: 16px !important
+      column-gap: 8px !important
+      border-bottom: 2px solid #1D1F20
+      .back
+        grid-row: 1
+        grid-column: 1 / span 3
+        cursor: pointer
+        text-decoration: none
+      .logo
+        grid-row: 2
+        grid-column: 1
+      .favourite
+        grid-row: 2
+        grid-column: 2
+      .name
+        margin-left: 16px
+        grid-row: 2
+        grid-column: 3 / span 2
+    .tabs
+      grid-row: 3
+      grid-column: 3
+      margin-top: 24px
+      .route
+        border-radius: 24px
+        padding: 0 16px
+        text-decoration: none
+        display: flex
+        align-items: center
+        justify-content: center
+        font-family: 'Poppins', sans-serif
+        font-size: 14px
+        font-weight: 500
+        height: 48px
+        margin-right: 4px
+        span
+          color: var(--text-color-secondary)
+        &:hover
+          background-color: var(--button-background-color-secondary-hover)
+        &:global(.active)
+          background-color: var(--section-background-color)
+          span
+            @include color-gradient
+
+.logo
+  cursor: pointer
+  width: 48px !important
+  height: 48px !important
+  padding: 12px !important
+
+.favourite, .logo
+  background-color: var(--section-background-color)

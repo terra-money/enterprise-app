@@ -1,0 +1,120 @@
+{
+  "name": "@enterprise/app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "react-app-rewired build",
+    "format": "prettier --write \"**/*.{js,ts,tsx}\"",
+    "generate-types": "node --experimental-specifier-resolution=node --loader ts-node/esm ../../scripts/generate-types.ts enterprise",
+    "lint": "eslint \"./src/{**/*,*}.{ts,tsx}\"",
+    "start": "PORT=4001 react-app-rewired start",
+    "test": "react-app-rewired test --passWithNoTests"
+  },
+  "lint-staged": {
+    "./src/{**/*,*}.{ts,tsx}": [
+      "prettier --write",
+      "eslint --max-warnings 0"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "./.eslintrc.js"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.10.2",
+    "@mui/material": "^5.10.2",
+    "@popperjs/core": "^2.11.6",
+    "@terra-money/terra.js": "^3.1.6",
+    "@terra-money/wallet-provider": "^3.11.1",
+    "assert": "^2.0.0",
+    "big.js": "^6.2.1",
+    "buffer": "^6.0.3",
+    "chart.js": "^3.9.1",
+    "chrono-node": "^2.4.1",
+    "classnames": "^2.3.1",
+    "crypto-browserify": "^3.12.0",
+    "d3-ease": "^3.0.1",
+    "d3-timer": "^3.0.1",
+    "date-fns": "^2.29.3",
+    "https-browserify": "^1.0.0",
+    "json-schema-to-typescript": "^11.0.2",
+    "lodash": "^4.17.21",
+    "notistack": "^2.0.5",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-ace": "^10.1.0",
+    "react-chartjs-2": "^5.0.1",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-transition-group": "^4.4.5",
+    "react-use": "^17.4.0",
+    "react-virtualized": "^9.22.3",
+    "react-window": "^1.8.8",
+    "redux-thunk": "^2.4.1",
+    "sass": "^1.54.5",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "typescript": "^4.8.2",
+    "url": "^0.11.0",
+    "usehooks-ts": "^2.6.0",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/big.js": "^6.1.5",
+    "@types/chart.js": "^2.9.37",
+    "@types/d3-ease": "^3.0.0",
+    "@types/d3-timer": "^3.0.0",
+    "@types/jest": "^28.1.8",
+    "@types/node": "^16.11.56",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-virtualized": "^9.21.21",
+    "@types/react-window": "^1.8.5",
+    "customize-cra": "^1.0.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "jest-watch-typeahead": "2.1.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "react-app-rewired": "^2.2.1",
+    "ts-node": "^10.9.1"
+  },
+  "generate-types": {
+    "contracts": [
+      "enterprise",
+      "enterprise-factory"
+    ],
+    "output": "src/types/contracts"
+  },
+  "importSort": {
+    ".js, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  }
+}

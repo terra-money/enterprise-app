@@ -1,0 +1,57 @@
+@import ../../themes/mixins.sass
+
+.center
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+
+.root
+  display: flex
+  flex-direction: column
+  gap: 8px
+  position: relative
+  margin: 36px 0
+
+  .bar
+    width: 100%
+    border-radius: 4px
+    height: 8px
+    background: #212425
+
+    .quorum
+      position: absolute
+      top: -16px
+      height: 12px
+      width: 1px
+      background: var(--input-placeholder-color)
+
+      .value
+        white-space: nowrap
+        position: absolute
+        top: -20px
+
+    .total
+      height: 100%
+      border-radius: 4px
+      background: #343738
+      display: flex
+
+      .no
+        height: 100%
+        flex: 1
+
+        .value
+          white-space: nowrap
+          position: absolute
+          bottom: -40px
+
+      .yes
+        height: 100%
+        border-radius: 4px
+        @include background-gradient
+
+        .value
+          white-space: nowrap
+          position: absolute
+          bottom: -40px

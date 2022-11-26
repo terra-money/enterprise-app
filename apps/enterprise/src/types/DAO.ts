@@ -1,0 +1,29 @@
+import { enterprise } from './contracts';
+
+export type DAOSocials = {
+  discord_username?: string;
+  github_username?: string;
+  telegram_username?: string;
+  twitter_username?: string;
+};
+
+export type DAOGovernanceConfig = {
+  quorum: number;
+  threshold: number;
+  unlockingPeriod: enterprise.Duration;
+  voteDuration: number;
+  minimumDeposit?: string;
+};
+
+export class DAO {
+  constructor(
+    public readonly address: string,
+    public readonly type: enterprise.DaoType,
+    public readonly name: string,
+    public readonly logo: string | undefined = undefined,
+    public readonly membershipContractAddress: string,
+    public readonly enterpriseFactoryContract: string,
+    public readonly socials: DAOSocials,
+    public readonly governanceConfig: DAOGovernanceConfig
+  ) {}
+}

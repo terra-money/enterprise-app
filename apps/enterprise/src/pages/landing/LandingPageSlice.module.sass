@@ -1,0 +1,8 @@
+.root
+  display: grid
+  width: 100%
+  --column-gap: 20px
+  grid-template-columns: 1fr min(1680px, 100% - calc(var(--column-gap) * 2)) 1fr
+  grid-column-gap: var(--column-gap)
+  > *
+    grid-column: 2

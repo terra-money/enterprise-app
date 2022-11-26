@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "lib": ["ES2020", "ES2020.Promise", "dom"],
+    "outDir": "dist",
+    "baseUrl": "./"
+  },
+  "exclude": ["node_modules"]
+}

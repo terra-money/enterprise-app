@@ -1,0 +1,21 @@
+.root
+  &.compact
+    background-color: var(--section-background-color)
+    padding: 32px 48px
+    .searchInput
+      width: 380px
+    .results
+      flex-grow: 1
+      justify-content: flex-end
+      
+  &:not(.compact)
+    width: 100%
+    .container
+      border-bottom: 1px solid var(--section-background-color)
+      padding-bottom: 32px
+    .heading, .subHeading
+      margin-bottom: 24px
+    .searchInput
+      width: 380px
+    .results
+      margin-top: 24px

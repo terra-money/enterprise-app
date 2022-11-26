@@ -1,0 +1,19 @@
+.balanceInput
+  display: flex
+  flex-direction: column
+  gap: 16px
+
+  .label
+    font-size: 16px
+
+  .content
+    display: grid
+    grid-template-columns: 1fr auto
+    align-items: center
+    gap: 16px
+
+.tokenInformation
+  & > [data-variant="label"]
+    margin-top: 24px
+    &:first-child
+      margin-top: 0

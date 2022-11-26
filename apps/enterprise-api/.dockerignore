@@ -1,0 +1,7 @@
+.vscode/
+.serverless/
+
+coverage/
+node_modules/
+
+.env

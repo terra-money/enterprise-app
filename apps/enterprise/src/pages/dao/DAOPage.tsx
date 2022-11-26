@@ -1,0 +1,47 @@
+import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { NavigationLayout } from 'components/layout/NavigationLayout';
+import { useRef } from 'react';
+import { Header } from './Header';
+import { Outlet, useParams } from 'react-router';
+import { useDAOQuery } from 'queries/useDAOQuery';
+import { CW20Addr } from '@terra-money/apps/types';
+import { LoadingPage } from 'pages/shared/LoadingPage';
+import { DAO } from 'types';
+import { PageLayout } from 'components/layout';
+import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+
+export type DAOOutletContext = {
+  isLoading: boolean;
+  dao: DAO | undefined;
+};
+
+export const DAOPage = () => {
+  const { address } = useParams();
+
+  const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <NavigationLayout>
+      <LoadingPage isLoading={isLoading}>
+        {dao && (
+          <CurrentDaoProvider value={dao}>
+            <ScrollableContainer
+              stickyRef={ref}
+              header={(visible) => (
+                <StickyHeader visible={visible}>
+                  <Header compact={true} />
+                </StickyHeader>
+              )}
+            >
+              <PageLayout header={<Header ref={ref} />}>
+                <Outlet context={{ dao, isLoading }} />
+              </PageLayout>
+            </ScrollableContainer>
+          </CurrentDaoProvider>
+        )}
+      </LoadingPage>
+    </NavigationLayout>
+  );
+};

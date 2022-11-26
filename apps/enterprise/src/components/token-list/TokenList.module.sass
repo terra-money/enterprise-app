@@ -1,0 +1,47 @@
+.searchTextInput
+  width: 100%
+  margin-top: 24px !important
+
+.container
+  position: relative
+  display: grid
+  row-gap: 0 !important
+  padding: 0
+  grid-template-rows: 1fr 300px
+
+.columns
+  background: var(--dialog-background-color)
+  width: 100%
+  grid-row: 1
+  display: flex
+  padding: 32px 32px 24px 32px
+  > *:first-child
+    flex-grow: 1
+  &.hide
+    opacity: 0
+
+.list
+  width: 100%
+  grid-row: 2
+  background: var(--dialog-background-color)
+  &:hover
+    &::-webkit-scrollbar-thumb
+      visibility: visible
+  &::-webkit-scrollbar
+    width: 8px
+  &::-webkit-scrollbar-track
+    background-color: var(--scrollbar-track-background-color)
+  &::-webkit-scrollbar-thumb
+    background-color: var(--scrollbar-thumb-background-color)
+    border-radius: 24px
+    height: 32px
+    visibility: hidden
+  &::-webkit-scrollbar-thumb:hover
+    background-color: var(--scrollbar-thumb-background-color-hover)  
+
+.throbber
+  grid-row: 1 / span 2
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)

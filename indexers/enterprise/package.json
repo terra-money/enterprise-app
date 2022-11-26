@@ -1,0 +1,41 @@
+{
+  "name": "@enterprise/indexers",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn clean && node build.js",
+    "collector:events": "esbuild src/collectors/events/index.ts --bundle --platform=node --outdir=dist --outbase=src && node ./dist/collectors/events/index.js",
+    "indexer:daos": "esbuild src/indexers/daos/index.ts --bundle --platform=node --outdir=dist --outbase=src && node ./dist/indexers/daos/index.js",
+    "indexer:proposals": "esbuild src/indexers/proposals/index.ts --bundle --platform=node --outdir=dist --outbase=src && node ./dist/indexers/proposals/index.js",
+    "indexer:analytics": "esbuild src/indexers/analytics/index.ts --bundle --platform=node --outdir=dist --outbase=src && node ./dist/indexers/analytics/index.js",
+    "generate-types": "node --experimental-specifier-resolution=node --loader ts-node/esm ../../scripts/generate-types.ts enterprise"
+  },
+  "dependencies": {
+    "@apps-shared/indexers": "workspace:^",
+    "@aws-sdk/client-dynamodb": "^3.159.0",
+    "@aws-sdk/util-dynamodb": "^3.159.0",
+    "@terra-money/terra.js": "^3.1.6",
+    "@types/node": "^16.11.56",
+    "axios": "^0.27.2",
+    "big.js": "^6.2.1",
+    "d3-array": "^3.2.0",
+    "date-fns": "^2.29.2",
+    "dotenv": "^16.0.1",
+    "pino": "^8.4.2",
+    "typescript": "^4.8.2"
+  },
+  "devDependencies": {
+    "@types/d3-array": "^3.0.3",
+    "esbuild": "^0.14.54",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0"
+  },
+  "generate-types": {
+    "contracts": [
+      "enterprise",
+      "enterprise-factory"
+    ],
+    "output": "src/types/contracts"
+  }
+}

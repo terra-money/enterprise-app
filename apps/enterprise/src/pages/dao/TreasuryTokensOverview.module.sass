@@ -1,0 +1,24 @@
+.root
+  display: grid
+  grid-template-columns: 148px 1fr
+  gap: 48px
+
+  .chart
+    width: 100%
+
+  .details
+    display: flex
+    flex-direction: column
+    height: 100%
+    justify-content: space-between
+    gap: 8px
+
+    .header
+      display: flex
+      flex-direction: column
+      gap: 4px
+      font-weight: 500
+
+    .assets
+      display: grid
+      grid-template-columns: repeat(auto-fit,160px)

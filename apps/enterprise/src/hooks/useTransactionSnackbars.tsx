@@ -1,0 +1,122 @@
+import {
+  CompletedTransaction,
+  FailedTransaction,
+  PendingTransaction,
+  useTransactionSubscribers,
+} from '@terra-money/apps/libs/transactions';
+import { useSnackbar } from 'notistack';
+import { useRefetchQueries } from 'queries';
+import { TX_KEY } from 'tx';
+import { useRefCallback } from '@terra-money/apps/hooks';
+import { TransactionSnackbar } from 'components/snackbar';
+import { indexerCompletion } from 'utils/indexerCompletion';
+import { useWallet } from '@terra-money/wallet-provider';
+
+type TxMessages = Record<TX_KEY, string>;
+
+const CompletedSnackbarMessages: TxMessages = {
+  [TX_KEY.CREATE_DAO]: 'The DAO was created successfully.',
+  [TX_KEY.STAKE_TOKEN]: 'Your tokens were staked.',
+  [TX_KEY.UNSTAKE_TOKEN]: 'Your tokens were unstaked.',
+  [TX_KEY.STAKE_NFT]: 'Your NFTs were staked.',
+  [TX_KEY.UNSTAKE_NFT]: 'Your NFTs were unstaked.',
+  [TX_KEY.CLAIM]: 'Your tokens were claimed.',
+  [TX_KEY.CREATE_PROPOSAL]: 'Your proposal was created.',
+  [TX_KEY.EXECUTE_PROPOSAL]: 'The proposal was executed.',
+  [TX_KEY.CAST_VOTE]: 'Your vote was cast.',
+};
+
+const FailedSnackbarMessages: TxMessages = {
+  [TX_KEY.CREATE_DAO]: 'Failed to create the DAO.',
+  [TX_KEY.STAKE_TOKEN]: 'Failed to stake your tokens.',
+  [TX_KEY.UNSTAKE_TOKEN]: 'Failed to unstake your tokens.',
+  [TX_KEY.STAKE_NFT]: 'Failed to stake your NFTs.',
+  [TX_KEY.UNSTAKE_NFT]: 'Failed to unstake your NFTs.',
+  [TX_KEY.CLAIM]: 'Failed to claim your tokens.',
+  [TX_KEY.CREATE_PROPOSAL]: 'Failed to create your proposal.',
+  [TX_KEY.EXECUTE_PROPOSAL]: 'Failed to execute the proposal.',
+  [TX_KEY.CAST_VOTE]: 'Failed to vote on the proposal.',
+};
+
+export const useTransactionSnackbars = () => {
+  const { network } = useWallet();
+
+  const refetch = useRefetchQueries();
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const onPending = useRefCallback(
+    (transaction: PendingTransaction) => {
+      enqueueSnackbar(
+        <TransactionSnackbar transaction={transaction} variant="pending" message="Transaction pending" />,
+        {
+          key: transaction.txHash,
+          anchorOrigin: { horizontal: 'right', vertical: 'bottom' },
+        }
+      );
+    },
+    [enqueueSnackbar]
+  );
+
+  const onCancelled = useRefCallback(
+    (transaction: PendingTransaction) => {
+      closeSnackbar(transaction.txHash);
+    },
+    [closeSnackbar]
+  );
+
+  const onCompleted = useRefCallback(
+    (transaction: CompletedTransaction) => {
+      const txKey = transaction.payload['txKey'] as TX_KEY;
+      indexerCompletion({
+        network,
+        height: transaction.height,
+        txKey,
+        callback: () => {
+          refetch(txKey);
+
+          closeSnackbar(transaction.txHash);
+
+          enqueueSnackbar(
+            <TransactionSnackbar
+              transaction={transaction}
+              variant="completed"
+              message={CompletedSnackbarMessages[txKey]}
+            />,
+            {
+              anchorOrigin: { horizontal: 'right', vertical: 'bottom' },
+              autoHideDuration: 5000,
+            }
+          );
+        },
+      });
+    },
+    [refetch, enqueueSnackbar, closeSnackbar]
+  );
+
+  const onFailed = useRefCallback(
+    (transaction: FailedTransaction) => {
+      const txKey = transaction.payload['txKey'] as TX_KEY;
+
+      refetch(txKey);
+
+      closeSnackbar(transaction.txHash);
+
+      enqueueSnackbar(
+        <TransactionSnackbar transaction={transaction} variant="failed" message={FailedSnackbarMessages[txKey]} />,
+        {
+          anchorOrigin: { horizontal: 'right', vertical: 'bottom' },
+          autoHideDuration: 5000,
+        }
+      );
+    },
+    [refetch, enqueueSnackbar, closeSnackbar]
+  );
+
+  useTransactionSubscribers({
+    onPending,
+    onCancelled,
+    onCompleted,
+    onFailed,
+  });
+};

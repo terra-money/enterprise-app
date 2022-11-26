@@ -1,0 +1,23 @@
+import { FormState } from '@terra-money/apps/hooks';
+import { validateAddress } from '@terra-money/apps/utils';
+import { MultisigMember } from 'types/MultisigMember';
+
+export const validateMembers = (members: MultisigMember[]): FormState<MultisigMember>[] => {
+  return members.map(({ addr, weight }, index) => {
+    const formState: FormState<MultisigMember> = { addr, weight };
+
+    if (!addr) {
+      formState.addrError = 'Address is required';
+    } else if (validateAddress(addr)) {
+      formState.addrError = 'Invalid Terra address';
+    } else {
+      const previousAddresses = members.slice(0, index).map(({ addr }) => addr);
+      const isDuplicate = previousAddresses.includes(addr);
+      if (isDuplicate) {
+        formState.addrError = 'Given address is already added';
+      }
+    }
+
+    return formState;
+  });
+};

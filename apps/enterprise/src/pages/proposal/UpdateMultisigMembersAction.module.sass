@@ -1,0 +1,36 @@
+@import ../../themes/mixins.sass
+
+.root
+  display: flex
+  flex-direction: column
+  gap: 24px
+
+  .list
+    display: flex
+    flex-wrap: wrap
+    gap: 20px
+
+    .item
+      background: var(--section-background-color)
+      border-radius: var(--section-border-radius)
+      display: flex
+      align-items: center
+      padding: var(--section-padding)
+      gap: 20px
+
+      .icon
+        border-radius: 100px
+        width: 40px
+        height: 40px
+        display: flex
+        align-items: center
+        justify-content: center
+        background: var(--button-background-color-secondary)
+        font-size: 12px
+
+      .remove
+        color: var(--text-color-error)
+
+      .add
+        @include background-gradient
+        color: var(--section-background-color)
