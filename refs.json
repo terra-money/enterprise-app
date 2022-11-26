@@ -1,20 +1,8 @@
 {
   "localterra": {
-    "payment-minter": {
-      "codeId": "69",
-      "address": "terra1amy8vy3ra4pv839sk2kfrj7c8mlpf65ct8d6awrfqq0u5hzvj78stq4qd2"
-    },
     "enterprise": {
       "codeId": "117",
       "address": "terra19g9xuqrvz2frv905v3fc7puryfypluhg383q9zwsmedrlqekfgys0ed340"
-    },
-    "fountain-streams": {
-      "codeId": "70",
-      "address": "terra1hu2a0ulf0ejkljm50m6jf49dw5ww0ua9menyqgpfwfm0juctd6gqcndk7s"
-    },
-    "atomic-execute": {
-      "codeId": "16",
-      "address": "terra16yhg0alwt30g7e5pe3jwnn48kywrdry0xknylufv4l27c9s9w0xsv7uvwe"
     },
     "cw20_base": {
       "codeId": "119"
@@ -28,60 +16,12 @@
     "enterprise-factory": {
       "codeId": "121",
       "address": "terra19lu57xxnh3h7sp999he4q8fu6m5tjsc4tuqtu7tmvakjp7l2f3tq2j4gzf"
-    },
-    "warp-account": {
-      "codeId": "12"
-    },
-    "warp-controller": {
-      "codeId": "13"
     }
   },
   "testnet": {
-    "payment-minter": {
-      "codeId": "2673",
-      "address": "terra1q849wnfswvw04phf70en4m55uf4a4n9xmjlua7epcdtcnt09j69qrww5d2"
-    },
-    "story-manager": {
-      "codeId": "1967",
-      "address": "terra1yfhsx0axnxn7y0ls6d7f8up0pyxku4k9d6097kfeetmepl8mp8uq25waes"
-    },
-    "story-root-dao": {
-      "codeId": "2390",
-      "address": "terra1xlph4qau9pjh99e8cxs6jkj3s9p4atwml54ccpw4wmg2a8xwv0pqf9yckf"
-    },
-    "story-protocol-token": {
-      "address": "terra1349lmvgm2ruwyrueagzpaq6hhymn60qw5sln40hqfeq63syew3js5x08hn"
-    },
     "enterprise": {
       "codeId": "5799",
       "address": "terra1rl9fnr4xce4ca5we9rwnqyyv89h422rwe3fpe7ycrpjn0egfulrsp2n4l9"
-    },
-    "merkle-airdrop": {
-      "codeId": "3418"
-    },
-    "proxy-wallet-core": {
-      "codeId": "2372",
-      "address": "terra1hy8ts22l72jjq6ur6pcnxdvsh9qpfl2vua9u6m9raytlchf6g5aq04rvye"
-    },
-    "improv-hub": {
-      "codeId": "3449",
-      "address": "terra15lc6a4marl4h3s7x2xdds4lqcjqvnc28lmjakmm4frxtta9qhrcsnm9cdz"
-    },
-    "improv-auction-terra": {
-      "codeId": "3450",
-      "address": "terra196twrcg7w7qrzuy685ka4cc4l6l3xq44mek2fkn99fkefs97rlsszrk498"
-    },
-    "improv-minter-terra": {
-      "codeId": "3451",
-      "address": "terra187fp3tcqsxrfag7327u8wrwr08z8dr543t7wmq0yay249trrmessu3r60l"
-    },
-    "improv-bid-token-terra": {
-      "codeId": "1974",
-      "address": "terra1349lmvgm2ruwyrueagzpaq6hhymn60qw5sln40hqfeq63syew3js5x08hn"
-    },
-    "fountain-streams": {
-      "codeId": "3958",
-      "address": "terra1yj2kr6st54xh27a40rw4yvecvvhm22jy2q33ykwp97f4ptlfc6xq20z6h5"
     },
     "enterprise-factory": {
       "codeId": "5800",
@@ -95,23 +35,9 @@
     },
     "cw721_base": {
       "codeId": "5351"
-    },
-    "warp-account": {
-      "codeId": "5822"
-    },
-    "warp-controller": {
-      "codeId": "5823",
-      "address": "terra16z50gpsl9fz0t8shpha3phy29jfwdjrgjvu88eu3leqpkwzvwhfst5zpl6"
     }
   },
   "mainnet": {
-    "warp-account": {
-      "codeId": "733"
-    },
-    "warp-controller": {
-      "codeId": "742",
-      "address": "terra1cc03qtfkgh8qe9e5047h0x6m083z0hlahkm28tvhdk9tzljwqr0sh5pqqd"
-    },
     "enterprise": {
       "codeId": "783"
     },
