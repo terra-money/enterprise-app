@@ -218,4 +218,4 @@ jobs:
           repo: ${{ env.TERRAFORM_REPO }}
           ref: ${{ env.TF_GITHUB_REF }}
           workflow: Terraform
-          token: ${{ secrets.TFL_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
