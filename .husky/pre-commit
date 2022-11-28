@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd ./contracts && yarn run lint-staged && cd -
 cd ./apps/enterprise && yarn run lint-staged && cd -
-cd ./apps/warp-protocol && yarn run lint-staged && cd -
