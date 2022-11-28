@@ -3,7 +3,6 @@ import { forwardRef, Ref } from 'react';
 import { LandingPageSlice } from './LandingPageSlice';
 import { PrimaryNavigation } from './PrimaryNavigation';
 import classNames from 'classnames';
-import { useDisplay } from 'hooks';
 import styles from './LandingTopbar.module.sass';
 
 interface LandingTopbarProps {
