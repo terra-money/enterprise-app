@@ -9,6 +9,7 @@ import { assertDefined, sum, toPercents } from '@terra-money/apps/utils';
 import { Text, Throbber } from 'components/primitives';
 import { AnimateNumber } from '@terra-money/apps/components';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { Address } from 'components/address';
 
 type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -88,7 +89,7 @@ export const TreasuryTokensOverview = () => {
       <div className={styles.details}>
         <div className={styles.header}>
           <Text variant="text">Treasury Total Value</Text>
-          <Text className={styles.content} variant="heading4">
+          <Text className={styles.total} variant="heading4">
             {treasuryTotalInUSD !== undefined ? (
               <>
                 <AnimateNumber format={(v) => `${formatAmount(v)} USD`}>{treasuryTotalInUSD}</AnimateNumber>
@@ -97,6 +98,7 @@ export const TreasuryTokensOverview = () => {
               <Throbber variant="secondary" size="small" />
             )}
           </Text>
+          <Address address={dao.address} />
         </div>
         <div className={styles.assets}>
           {treasuryTotalInUSD !== undefined &&
