@@ -13,7 +13,7 @@ export const DashboardPage = () => {
   return (
     <NavigationLayout>
       <ScrollableContainer stickyRef={ref} header={(visible) => <StickyHeader visible={visible}></StickyHeader>}>
-        <PageLayout header={<Text variant="heading2">Dashboard</Text>}>
+        <PageLayout header={<Text variant="heading2">Dashboard..</Text>}>
           <Overview />
           <RecentDAOs />
           <RecentProposals />
