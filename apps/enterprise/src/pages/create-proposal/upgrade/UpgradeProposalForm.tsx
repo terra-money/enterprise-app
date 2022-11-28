@@ -7,8 +7,12 @@ import { useEnterpriseCodeIdsQuery } from 'queries/useEnterpriseCodeIdsQuery';
 import { Text, Throbber } from 'components/primitives';
 import { assertDefined } from '@terra-money/apps/utils';
 import { LoadingPage } from 'pages/shared/LoadingPage';
+import { base64Encode } from 'utils';
+import { useWallet } from '@terra-money/wallet-provider';
 
 export const UpgradeProposalForm = () => {
+  const { network } = useWallet();
+
   const dao = useCurrentDao();
   const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.membershipContractAddress);
   const { data: codeIds, isLoading: isLoadingCodes } = useEnterpriseCodeIdsQuery();
@@ -27,7 +31,15 @@ export const UpgradeProposalForm = () => {
           title: upgradeMessage,
           description: upgradeMessage,
         }}
-        getProposalActions={() => [{ upgrade_dao: toUpgradeDaoMsg(assertDefined(latestCodeId)) }]}
+        getProposalActions={() => {
+          const migrationChangeCodeId = network.name === 'mainnet' ? 788 : 5894;
+
+          // we have changed the migration message format which means that in order to upgrade
+          // to the new contract we need to still provide the older migration format
+          const migrateMsg = contractInfo?.code_id ?? 0 < migrationChangeCodeId ? '{}' : base64Encode({});
+
+          return [{ upgrade_dao: toUpgradeDaoMsg(assertDefined(latestCodeId), migrateMsg) }];
+        }}
       >
         {isUpToDate === undefined ? (
           <Throbber />

@@ -1,6 +1,8 @@
 import { enterprise } from 'types/contracts';
 
-export const toUpgradeDaoMsg = (codeId: number): enterprise.UpgradeDaoMsg => ({
-  migrate_msg: '{}',
-  new_dao_code_id: codeId,
-});
+export const toUpgradeDaoMsg = (codeId: number, migrateMsg: string): enterprise.UpgradeDaoMsg => {
+  return {
+    migrate_msg: migrateMsg,
+    new_dao_code_id: codeId,
+  };
+};
