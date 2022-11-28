@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
+import { useDisplay } from 'hooks';
 import { useState } from 'react';
 import styles from './FeaturesExplorer.module.sass';
 
@@ -35,10 +36,21 @@ const features: Feature[] = [
 export const FeaturesExplorer = () => {
   const [activeFeature, setActiveFeature] = useState<number>(0);
 
+  const { isMobile } = useDisplay();
+
   return (
-    <div id="featuresExplorer" className={styles.root}>
+    <div id="featuresExplorer" className={classNames(styles.root, { [styles.mobile]: isMobile })}>
       <div className={styles.list}>
         {features.map(({ title, description }, index) => {
+          if (isMobile) {
+            return (
+              <div key={index} className={styles.item}>
+                <Text variant="heading4">{title}</Text>
+                <Text variant="text">{description}</Text>
+              </div>
+            );
+          }
+
           const isActive = index === activeFeature;
           return (
             <div
@@ -52,7 +64,7 @@ export const FeaturesExplorer = () => {
           );
         })}
       </div>
-      <img src={features[activeFeature].imageUrl} alt={features[activeFeature].title} />
+      {isMobile === false && <img src={features[activeFeature].imageUrl} alt={features[activeFeature].title} />}
     </div>
   );
 };

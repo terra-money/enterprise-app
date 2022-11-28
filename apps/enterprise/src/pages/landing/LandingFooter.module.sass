@@ -2,13 +2,16 @@
   display: flex
   flex-direction: column
   align-items: center
-  padding: 140px 32px 32px 32px
-  gap: 180px
   width: 100%
   background-image: url("./assets/landing-bottom-shape.png")
   background-repeat: no-repeat
   background-position: bottom center
   background-size: 60%
+  &.mobile
+    padding: 24px 24px 32px 24px
+  &:not(.mobile)
+    padding: 140px 32px 32px 32px
+    gap: 180px
 
   .header
     display: flex
@@ -29,32 +32,26 @@
     align-items: center
     justify-content: space-between
 
-    .left
+    .items
       display: flex
       align-items: center
-      gap: 42px
-
-      .items
-        display: flex
-        align-items: center
+      &:not(.mobile)
         gap: 32px
 
-      .icon
-        width: 48px
-        height: 48px
-        border-radius: 50%
-        background-color: #212425
-        display: flex
-        align-items: center
-        justify-content: center
-        color: white
-        font-size: 24px
+    .icon
+      width: 48px
+      height: 48px
+      border-radius: 50%
+      background-color: #212425
+      display: flex
+      align-items: center
+      justify-content: center
+      color: white
+      font-size: 24px
 
     .socials
       display: flex
       align-items: center
       gap: 24px
-
       color: rgba(255, 255, 255, 0.6)
-
       font-size: 24px
