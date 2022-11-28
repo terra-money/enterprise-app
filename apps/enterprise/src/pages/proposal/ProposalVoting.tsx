@@ -27,18 +27,6 @@ export const ProposalVoting = () => {
       </div>
       <div className={styles.container}>
         <ProposalVotingBar />
-        <Button
-          variant="primary"
-          loading={txResult.loading}
-          onClick={async () => {
-            await tx({
-              daoAddress: proposal.dao.address,
-              proposalId: proposal.id,
-            });
-          }}
-        >
-          Execute
-        </Button>
         {proposal.status === 'in_progress' ? (
           hasExpired === false ? (
             <CastVote />
