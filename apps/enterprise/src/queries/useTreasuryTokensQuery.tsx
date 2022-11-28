@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 import { QUERY_KEY } from './queryKey';
 import { fetchCW20TokenInfo } from './useCW20TokenInfoQuery';
 import { useWallet } from '@terra-money/wallet-provider';
+import { assertDefined } from '@terra-money/apps/utils';
 
 type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: Big };
 
@@ -20,45 +21,47 @@ export const useTreasuryTokensQuery = (address: string) => {
 
   const { network } = useWallet();
 
-  return useQuery([QUERY_KEY.TREASURY_TOKENS], async () => {
-    if (!assets || !tokens || !prices) {
-      return;
-    }
+  return useQuery(
+    [QUERY_KEY.TREASURY_TOKENS],
+    async () => {
+      const result = [] as TreasuryToken[];
+      await Promise.all(
+        assertDefined(assets).map(async (asset) => {
+          const tokenKey = getAssetKey(asset.info);
+          let token = tokens[tokenKey];
+          if (!token && getAssetType(asset.info) === 'cw20') {
+            try {
+              const tokenInfo = await fetchCW20TokenInfo(network, tokenKey);
 
-    const result = [] as TreasuryToken[];
-    await Promise.all(
-      assets.map(async (asset) => {
-        const tokenKey = getAssetKey(asset.info);
-        let token = tokens[tokenKey];
-        if (!token && getAssetType(asset.info) === 'cw20') {
-          try {
-            const tokenInfo = await fetchCW20TokenInfo(network, tokenKey);
-
-            token = {
-              ...tokenInfo,
-              type: 'cw20',
-              key: tokenKey,
-              token: tokenKey as CW20Addr,
-              icon: '',
-              protocol: '',
-            };
-          } catch {
-            console.log(`Failed to fetch token info for ${tokenKey}`);
+              token = {
+                ...tokenInfo,
+                type: 'cw20',
+                key: tokenKey,
+                token: tokenKey as CW20Addr,
+                icon: '',
+                protocol: '',
+              };
+            } catch {
+              console.log(`Failed to fetch token info for ${tokenKey}`);
+            }
           }
-        }
 
-        const amount = Big(asset.amount);
-        if (token && amount.gt(0)) {
-          const price = prices[tokenKey];
-          result.push({
-            ...token,
-            amount: asset.amount as u<BigSource>,
-            usdAmount: price ? demicrofy(amount as u<BigSource>, token.decimals).mul(price) : undefined,
-          });
-        }
-      })
-    );
+          const amount = Big(asset.amount);
+          if (token && amount.gt(0)) {
+            const price = assertDefined(prices)[tokenKey];
+            result.push({
+              ...token,
+              amount: asset.amount as u<BigSource>,
+              usdAmount: price ? demicrofy(amount as u<BigSource>, token.decimals).mul(price) : undefined,
+            });
+          }
+        })
+      );
 
-    return result;
-  });
+      return result;
+    },
+    {
+      enabled: !!(assets && tokens && prices),
+    }
+  );
 };
