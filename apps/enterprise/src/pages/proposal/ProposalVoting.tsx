@@ -27,7 +27,7 @@ export const ProposalVoting = () => {
       </div>
       <div className={styles.container}>
         <ProposalVotingBar />
-        <Button
+        {/* <Button
           variant="primary"
           loading={txResult.loading}
           onClick={async () => {
@@ -38,7 +38,7 @@ export const ProposalVoting = () => {
           }}
         >
           Execute
-        </Button>
+        </Button> */}
         {proposal.status === 'in_progress' ? (
           hasExpired === false ? (
             <CastVote />
