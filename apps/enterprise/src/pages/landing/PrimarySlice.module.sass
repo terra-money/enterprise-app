@@ -1,12 +1,16 @@
 .root
-  padding-bottom: 120px
   width: 100%
-  margin-top: 96px
   display: flex
   flex-direction: column
   align-items: center
-
-  gap: 68px
+  &.mobile
+    gap: 68px
+    margin-top: 32px
+    padding: 0 24px 64px 24px
+  &:not(.mobile)
+    gap: 68px
+    margin-top: 96px
+    padding: 0 24px 120px 24px
 
   h1
     max-width: 1060px

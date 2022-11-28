@@ -1,26 +1,37 @@
 .root
-  margin-top: 96px
   display: grid
-  grid-template-columns: 3fr 7fr
-
-  .list
-    grid-column: 1
-    display: flex
-    flex-direction: column
-    gap: 4px
-    padding: 0 48px
-
-    .item
-      cursor: pointer
-      padding: 32px
+  &.mobile
+    margin-top: 32px
+    .list
       display: flex
       flex-direction: column
-      gap: 12px
-      border-radius: 32px
-
-    .active
-      background: var(--section-background-color)
-
-  img
-    max-width: 100%
-    grid-column: 2
+      gap: 32px
+      padding: 0 24px
+      .item
+        display: flex
+        flex-direction: column
+        gap: 8px
+        align-items: center
+        text-align: center
+        
+  &:not(.mobile)
+    margin-top: 96px
+    grid-template-columns: 3fr 7fr
+    .list
+      grid-column: 1
+      display: flex
+      flex-direction: column
+      gap: 4px
+      padding: 0 48px
+      .item
+        cursor: pointer
+        padding: 32px
+        display: flex
+        flex-direction: column
+        gap: 12px
+        border-radius: 32px
+      .active
+        background: var(--section-background-color)
+    img
+      max-width: 100%
+      grid-column: 2
