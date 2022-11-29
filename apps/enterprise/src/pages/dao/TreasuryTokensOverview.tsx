@@ -7,7 +7,7 @@ import { u } from '@terra-money/apps/types';
 import Big, { BigSource } from 'big.js';
 import { assertDefined, sum, toPercents } from '@terra-money/apps/utils';
 import { Text, Throbber } from 'components/primitives';
-import { AnimateNumber } from '@terra-money/apps/components';
+import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { Address } from 'components/address';
 
@@ -87,19 +87,18 @@ export const TreasuryTokensOverview = () => {
       </div>
 
       <div className={styles.details}>
-        <div className={styles.header}>
-          <Text variant="text">Treasury Total Value</Text>
-          <Text className={styles.total} variant="heading4">
-            {treasuryTotalInUSD !== undefined ? (
-              <>
-                <AnimateNumber format={(v) => `${formatAmount(v)} USD`}>{treasuryTotalInUSD}</AnimateNumber>
-              </>
-            ) : (
-              <Throbber variant="secondary" size="small" />
-            )}
-          </Text>
+        <Container className={styles.header} direction="column" gap={8}>
+          <Text variant="label">Treasury Total Value</Text>
+          {treasuryTotalInUSD !== undefined ? (
+            <Text className={styles.total} variant="heading3">
+              <AnimateNumber format={(v) => formatAmount(v)}>{treasuryTotalInUSD ?? 0}</AnimateNumber>
+              <sub>USD</sub>
+            </Text>
+          ) : (
+            <Throbber variant="secondary" size="small" />
+          )}
           <Address address={dao.address} />
-        </div>
+        </Container>
         <div className={styles.assets}>
           {treasuryTotalInUSD !== undefined &&
             tokenBalancesWithPrice?.map((token, index) => (

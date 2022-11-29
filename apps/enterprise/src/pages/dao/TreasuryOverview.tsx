@@ -6,8 +6,8 @@ import { Panel } from 'components/panel';
 import { Text } from 'components/primitives';
 import { useDAONFTTreasury } from 'queries';
 import { DAO } from 'types';
-import styles from './TreasuryOverview.module.sass';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
+import styles from './TreasuryOverview.module.sass';
 
 interface TreasuryOverviewProps {
   dao: DAO;
