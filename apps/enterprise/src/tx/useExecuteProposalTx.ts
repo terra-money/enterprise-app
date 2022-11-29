@@ -23,7 +23,7 @@ export const useExecuteProposalTx = () => {
         .build();
 
       return {
-        ...txOverrides,
+        //...txOverrides,
         ...tx,
       };
     },

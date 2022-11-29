@@ -14,7 +14,8 @@ export const UpgradeProposalForm = () => {
   const { network } = useWallet();
 
   const dao = useCurrentDao();
-  const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.membershipContractAddress);
+
+  const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.address);
   const { data: codeIds, isLoading: isLoadingCodes } = useEnterpriseCodeIdsQuery();
 
   const latestCodeId = codeIds ? Math.max(...codeIds.map(Number)) : undefined;
@@ -32,11 +33,13 @@ export const UpgradeProposalForm = () => {
           description: upgradeMessage,
         }}
         getProposalActions={() => {
-          const migrationChangeCodeId = network.name === 'mainnet' ? 788 : 5894;
+          const currentCodeId = contractInfo?.code_id ?? 0;
+
+          const migrationChangeCodeId = network.name === 'mainnet' ? 788 : 5877;
 
           // we have changed the migration message format which means that in order to upgrade
           // to the new contract we need to still provide the older migration format
-          const migrateMsg = contractInfo?.code_id ?? 0 < migrationChangeCodeId ? '{}' : base64Encode({});
+          const migrateMsg = currentCodeId < migrationChangeCodeId ? '{}' : base64Encode({});
 
           return [{ upgrade_dao: toUpgradeDaoMsg(assertDefined(latestCodeId), migrateMsg) }];
         }}
