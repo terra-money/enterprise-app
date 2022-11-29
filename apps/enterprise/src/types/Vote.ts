@@ -2,7 +2,7 @@ import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { enterprise } from './contracts';
 
-const voteOptions: readonly enterprise.DefaultVoteOption[] = ['yes', 'no', 'abstain'] as const;
+const voteOptions: readonly enterprise.DefaultVoteOption[] = ['yes', 'no', 'abstain', 'veto'] as const;
 
 export class Vote {
   public readonly proposalId: number;
