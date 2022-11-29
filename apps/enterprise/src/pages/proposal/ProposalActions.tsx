@@ -5,6 +5,7 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import { ExecuteMessagesProposalAction } from './ExecuteMessagesProposalAction';
 import { UpdateAssetsWhitelistAction } from './UpdateAssetsWhitelistAction';
 import { UpdateMultisigMembersAction } from './UpdateMultisigMembersAction';
+import { UpdateNFTsWhitelistAction } from './UpdateNFTWhitelistAction';
 import { UpgradeProposalAction } from './UpgradeProposalAction';
 
 export const ProposalActions = () => {
@@ -22,6 +23,7 @@ export const ProposalActions = () => {
       )}
       Execute={() => <ExecuteMessagesProposalAction />}
       Assets={() => <UpdateAssetsWhitelistAction />}
+      NFTs={() => <UpdateNFTsWhitelistAction />}
       Config={() => <ConfigProposalActions />}
       Upgrade={() => <UpgradeProposalAction />}
     />

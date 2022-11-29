@@ -34,6 +34,7 @@ import { UpdateWhitelistedAssetsProposalPage } from 'pages/create-proposal/white
 import { ExecuteMessageProposalPage } from 'pages/create-proposal/execute/ExecuteMessageProposalPage';
 import { MultisigMembersProposalPage } from 'pages/create-proposal/multisig-members/MultisigMembersProposalPage';
 import styles from './App.module.sass';
+import { UpdateWhitelistedNFTsProposalPage } from 'pages/create-proposal/whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,15 @@ const AppBetaRoutes = () => {
             <ConditionalWallet
               notConnected={() => <NotConnected />}
               connected={() => <UpdateWhitelistedAssetsProposalPage />}
+            />
+          }
+        />
+        <Route
+          path="/dao/:address/proposals/create/nfts"
+          element={
+            <ConditionalWallet
+              notConnected={() => <NotConnected />}
+              connected={() => <UpdateWhitelistedNFTsProposalPage />}
             />
           }
         />

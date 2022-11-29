@@ -4,7 +4,7 @@ import { DAO } from './DAO';
 
 export type ProposalStatusName = 'Active' | 'Pending' | 'Passed' | 'Rejected' | 'Executed';
 
-export type ProposalType = 'Text' | 'Config' | 'Upgrade' | 'Other' | 'Assets' | 'Execute' | 'Members';
+export type ProposalType = 'Text' | 'Config' | 'Upgrade' | 'Other' | 'Assets' | 'NFTs' | 'Execute' | 'Members';
 
 export class Proposal {
   public readonly type: ProposalType;
@@ -83,6 +83,10 @@ export class Proposal {
 
       if ('update_asset_whitelist' in action) {
         return 'Assets';
+      }
+
+      if ('update_nft_whitelist' in action) {
+        return 'NFTs';
       }
 
       if ('execute_msgs' in action) {

@@ -12,7 +12,7 @@ import { OptionButton } from 'components/option-button';
 import { FormFooter } from 'components/form-footer';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 
-const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'execute', 'members'] as const;
+const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members'] as const;
 type ProposalType = typeof proposalTypes[number];
 
 export const proposalTitle: Record<ProposalType, string> = {
@@ -20,6 +20,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   config: 'Update configuration proposal',
   upgrade: 'Upgrade proposal',
   assets: 'Update whitelisted assets',
+  nfts: 'Update whitelisted NFTs',
   execute: 'Proposal to execute message',
   members: 'Update multisig members',
 };
