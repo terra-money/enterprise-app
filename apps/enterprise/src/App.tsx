@@ -1,5 +1,4 @@
 import { TransactionsProvider } from '@terra-money/apps/libs/transactions';
-import { useTheme } from '@terra-money/apps/themes';
 import { WalletProvider, useChainOptions } from '@terra-money/wallet-provider';
 import { DialogContainer, DialogProvider } from '@terra-money/apps/dialog';
 import { NetworkGuard } from 'components/network-guard';
@@ -35,6 +34,8 @@ import { ExecuteMessageProposalPage } from 'pages/create-proposal/execute/Execut
 import { MultisigMembersProposalPage } from 'pages/create-proposal/multisig-members/MultisigMembersProposalPage';
 import styles from './App.module.sass';
 import { UpdateWhitelistedNFTsProposalPage } from 'pages/create-proposal/whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
+import { darkTheme } from 'lib/ui/theme/darkTheme';
+import { ThemeProvider } from 'styled-components';
 
 const queryClient = new QueryClient();
 
@@ -124,7 +125,6 @@ const AppBetaRoutes = () => {
 
 const AppProviders = () => {
   const chainOptions = useChainOptions();
-  const [theme] = useTheme();
 
   // TODO: check later if chainOptions would cause a flicker due to being null for first couple of calls
   return (
@@ -134,25 +134,27 @@ const AppProviders = () => {
         connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}
         defaultNetwork={chainOptions?.walletConnectChainIds[1]}
       >
-        <main className={styles.root} data-theme={theme}>
-          <NetworkGuard>
-            <QueryClientProvider client={queryClient}>
-              <TransactionsProvider>
-                <DialogProvider>
-                  <SnackbarProvider
-                    autoHideDuration={null}
-                    content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                  >
-                    <PersonalizationProvider>
-                      <AppRoutes />
-                      <DialogContainer />
-                    </PersonalizationProvider>
-                  </SnackbarProvider>
-                </DialogProvider>
-              </TransactionsProvider>
-            </QueryClientProvider>
-          </NetworkGuard>
-        </main>
+        <ThemeProvider theme={darkTheme}>
+          <main className={styles.root}>
+            <NetworkGuard>
+              <QueryClientProvider client={queryClient}>
+                <TransactionsProvider>
+                  <DialogProvider>
+                    <SnackbarProvider
+                      autoHideDuration={null}
+                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                    >
+                      <PersonalizationProvider>
+                        <AppRoutes />
+                        <DialogContainer />
+                      </PersonalizationProvider>
+                    </SnackbarProvider>
+                  </DialogProvider>
+                </TransactionsProvider>
+              </QueryClientProvider>
+            </NetworkGuard>
+          </main>
+        </ThemeProvider>
       </WalletProvider>
     )
   );

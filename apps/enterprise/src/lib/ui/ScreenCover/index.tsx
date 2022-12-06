@@ -1,12 +1,7 @@
-import { ComponentProps } from "react";
-import {
-  handleWithStopPropagation,
-  handleWithStopPropagationAndPreventDefault,
-} from "lib/shared/events";
-import styled, { css } from "styled-components";
-import { zIndex } from "lib/ui/zIndex";
+import styled, { css } from 'styled-components';
+import { zIndex } from 'lib/ui/zIndex';
 
-const Container = styled.div<{ isBlurred?: boolean }>`
+export const ScreenCover = styled.div<{ isBlurred?: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -28,16 +23,3 @@ const Container = styled.div<{ isBlurred?: boolean }>`
       backdrop-filter: blur(4px);
     `}
 `;
-Container.defaultProps = {
-  isBlurred: true,
-};
-
-type Props = ComponentProps<typeof Container>;
-
-export const ScreenCover = ({ onClick, ...props }: Props) => (
-  <Container
-    onMouseDown={handleWithStopPropagation}
-    onClick={handleWithStopPropagationAndPreventDefault(onClick)}
-    {...props}
-  />
-);

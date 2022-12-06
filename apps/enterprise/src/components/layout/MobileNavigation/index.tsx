@@ -1,5 +1,5 @@
 import { getCSSUnit } from '@terra-money/apps/utils';
-import { WalletConnectionButton } from 'components/wallet-connection-button';
+import { ManageWallet } from 'chain/components/ManageWallet';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
@@ -56,7 +56,7 @@ export const MobileNavigation = ({ children }: ComponentWithChildrenProps) => {
     <Container>
       <Header alignItems="center" justifyContent="space-between">
         <div />
-        <WalletConnectionButton />
+        <ManageWallet />
       </Header>
       <ContentWr>
         <Content>{children}</Content>

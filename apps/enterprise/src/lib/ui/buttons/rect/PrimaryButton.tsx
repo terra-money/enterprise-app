@@ -1,14 +1,14 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
-import { RectButton, Props as RectButtonProps } from './RectButton'
+import { RectButton, Props as RectButtonProps } from './RectButton';
 
-type PrimaryButtonKind = 'primary' | 'attention'
+type PrimaryButtonKind = 'primary' | 'attention' | 'reversed' | 'secondary';
 
 export type Props = RectButtonProps & {
-  kind?: PrimaryButtonKind
-}
+  kind?: PrimaryButtonKind;
+};
 
-const defaultKind = 'primary'
+const defaultKind = 'primary';
 
 const Container = styled(RectButton)<Props>`
   color: ${({ theme }) => theme.colors.white.toCssValue()};
@@ -20,6 +20,14 @@ const Container = styled(RectButton)<Props>`
       `,
       attention: css`
         background: ${({ theme }) => theme.colors.attention.toCssValue()};
+      `,
+      reversed: css`
+        background: ${({ theme }) => theme.colors.text.toCssValue()};
+        color: ${({ theme }) => theme.colors.background.toCssValue()};
+      `,
+      secondary: css`
+        background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+        color: ${({ theme }) => theme.colors.text.toCssValue()};
       `,
     }[kind])};
   ${({ isDisabled, isLoading, kind = defaultKind }) =>
@@ -33,13 +41,21 @@ const Container = styled(RectButton)<Props>`
       `,
       attention: css`
         :hover {
-          background: ${({ theme }) =>
-            theme.colors.attentionHover.toCssValue()};
+          background: ${({ theme }) => theme.colors.attentionHover.toCssValue()};
+        }
+      `,
+      reversed: css`
+        :hover {
+          background: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
+        }
+      `,
+      secondary: css`
+        :hover {
+          background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
+          color: ${({ theme }) => theme.colors.text.toCssValue()};
         }
       `,
     }[kind]};
-`
+`;
 
-export const PrimaryButton = ({ as, ...rest }: Props) => (
-  <Container forwardedAs={as} {...rest} />
-)
+export const PrimaryButton = ({ as, ...rest }: Props) => <Container forwardedAs={as} {...rest} />;

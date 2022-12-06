@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import { AnimatedPage, Container } from '@terra-money/apps/components';
-import { WalletConnectionButton } from 'components/wallet-connection-button';
 import styles from './PageLayout.module.sass';
+import { ManageWallet } from 'chain/components/ManageWallet';
 
 interface PageLayoutProps extends PropsWithChildren {
   header: ReactNode;
@@ -15,7 +15,9 @@ export const PageLayout = (props: PageLayoutProps) => {
         <Container className={styles.content} direction="row">
           {header}
         </Container>
-        <WalletConnectionButton className={styles.wallet} />
+        <div className={styles.wallet}>
+          <ManageWallet />
+        </div>
       </Container>
       {children}
     </AnimatedPage>
