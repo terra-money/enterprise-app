@@ -1,4 +1,4 @@
-import { AnimateNumber, Container, UIElementProps } from '@terra-money/apps/components';
+import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { LUNA, u } from '@terra-money/apps/types';
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
@@ -7,16 +7,10 @@ import { Address } from 'components/address';
 import { FriendlyFormatter } from 'components/numeric-panel';
 import { Button, Text } from 'components/primitives';
 import { useNativeBalanceQuery } from 'queries';
-import { Action } from 'types';
-import styles from './ConnectedWalletDialog.module.sass';
+import styles from './ConnectedWallet.module.sass';
 
-interface ConnectedWalletDialogProps extends UIElementProps {
-  onClose: Action<void>;
-}
-
-export const ConnectedWalletDialog = (props: ConnectedWalletDialogProps) => {
-  const { onClose } = props;
-
+// TODO: migrage to styled-components
+export const ConnectedWallet = () => {
   const connectedWallet = useConnectedWallet();
 
   const { data: balance = Big(0) as u<Big> } = useNativeBalanceQuery();
@@ -34,7 +28,6 @@ export const ConnectedWalletDialog = (props: ConnectedWalletDialogProps) => {
         className={styles.disconnect}
         onClick={() => {
           disconnect();
-          onClose();
         }}
       >
         Disconnect wallet

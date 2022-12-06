@@ -1,32 +1,16 @@
-import { ClickAwayListener } from '@mui/material';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
-import { UIElementProps } from '@terra-money/apps/components';
-import { useState } from 'react';
 import { useConnectWalletDialog } from 'components/dialog/connect-wallet';
-import { ConnectedWalletDialog } from './ConnectedWalletDialog';
 import { WalletButton } from 'chain/components/WalletButton';
+import { ManageConnectedWallet } from 'chain/components/ManageConnectedWallet';
 
-export const WalletConnectionButton = (props: UIElementProps) => {
-  const { className } = props;
-
+export const WalletConnectionButton = () => {
   const connectedWallet = useConnectedWallet();
-
-  const [open, setOpen] = useState(false);
 
   const openConnectWalletDialog = useConnectWalletDialog();
 
-  return (
-    <ClickAwayListener onClickAway={() => setOpen(false)}>
-      <div className={className}>
-        {connectedWallet === undefined || connectedWallet.walletAddress === undefined ? (
-          <WalletButton onClick={() => openConnectWalletDialog({})} />
-        ) : (
-          <>
-            <WalletButton onClick={() => setOpen((open) => !open)} />
-            {open && <ConnectedWalletDialog onClose={() => setOpen(false)} />}
-          </>
-        )}
-      </div>
-    </ClickAwayListener>
-  );
+  if (connectedWallet) {
+    return <ManageConnectedWallet />;
+  }
+
+  return <WalletButton onClick={() => openConnectWalletDialog({})} />;
 };
