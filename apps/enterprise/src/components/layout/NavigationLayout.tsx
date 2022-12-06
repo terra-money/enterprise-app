@@ -1,8 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Container } from '@terra-money/apps/components';
 import { Logo } from './Logo';
-import { ReactComponent as HomeIcon } from 'components/assets/Home.svg';
-import { ReactComponent as PlusIcon } from 'components/assets/Plus.svg';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { useNavigate } from 'react-router';
 import { Favourites } from './Favourites';
@@ -10,6 +8,10 @@ import { IconButton, Tooltip } from 'components/primitives';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { Path } from 'navigation';
 import styles from './NavigationLayout.module.sass';
+import { useIsScreenWidthLessThan } from 'lib/ui/hooks/useIsScreenWidthLessThan';
+import { MobileNavigation } from './MobileNavigation';
+import { CreateDaoButton } from 'dao/components/CreateDaoButton';
+import { DashboardButton } from 'dao/components/DashboardButton';
 
 interface NavigationLayoutProps extends PropsWithChildren {}
 
@@ -18,15 +20,19 @@ export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
 
   const connectedWallet = useConnectedWallet();
 
+  const isMobile = useIsScreenWidthLessThan(768);
+
+  if (isMobile) {
+    return <MobileNavigation>{children}</MobileNavigation>;
+  }
+
   return (
     <Container className={styles.root} direction="row">
       <Container className={styles.navigation} direction="column">
         <Logo compact={true} onClick={() => navigate(Path.Landing)} />
         <Container className={styles.menu} direction="column">
           <Tooltip title="Dashboard" placement="right" arrow={true}>
-            <IconButton onClick={() => navigate(Path.Dashboard)}>
-              <HomeIcon />
-            </IconButton>
+            <DashboardButton />
           </Tooltip>
           <Favourites className={styles.favourites} />
           <Tooltip title="Got feedback?" placement="right" arrow={true}>
@@ -39,11 +45,11 @@ export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
             </IconButton>
           </Tooltip>
           {connectedWallet && (
-            <Tooltip title="Create a DAO" placement="right" arrow={true}>
-              <IconButton className={styles.create} variant="primary" onClick={() => navigate('/dao/create')}>
-                <PlusIcon className={styles.icon} />
-              </IconButton>
-            </Tooltip>
+            <div className={styles.create}>
+              <Tooltip title="Create a DAO" placement="right" arrow={true}>
+                <CreateDaoButton />
+              </Tooltip>
+            </div>
           )}
         </Container>
       </Container>
