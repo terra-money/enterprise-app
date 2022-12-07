@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export type ClosableComponentProps = {
   onClose: () => void;
@@ -18,4 +18,8 @@ export type ComponentWithBackActionProps = {
 
 export type ComponentWithClassNameProps = {
   className?: string;
+};
+
+export type OpenerComponentProps = {
+  renderOpener: (props: { onClick: () => void }) => React.ReactNode;
 };

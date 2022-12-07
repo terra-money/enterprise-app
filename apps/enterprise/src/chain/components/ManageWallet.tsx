@@ -1,6 +1,13 @@
-import { WalletConnectionButton } from 'components/wallet-connection-button';
+import { ConditionalWallet } from 'components/conditional-wallet';
+import { ConnectWallet } from './ConnectWallet';
+import { ManageConnectedWallet } from './ManageConnectedWallet';
+import { WalletButton } from './WalletButton';
 
-// TODO: refactor and move WalletConnectionButton to chain/components
 export const ManageWallet = () => {
-  return <WalletConnectionButton />;
+  return (
+    <ConditionalWallet
+      connected={() => <ManageConnectedWallet />}
+      notConnected={() => <ConnectWallet renderOpener={({ onClick }) => <WalletButton onClick={onClick} />} />}
+    />
+  );
 };

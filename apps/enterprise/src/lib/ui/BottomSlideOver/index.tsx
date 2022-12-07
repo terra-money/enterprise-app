@@ -8,9 +8,9 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { getHorizontalPaddingCSS } from 'lib/ui/utils/getHorizontalPaddingCSS';
 import { getVerticalPaddingCSS } from 'lib/ui/utils/getVerticalPaddingCSS';
-import { PrimaryButton } from './buttons/rect/PrimaryButton';
+import { PrimaryButton } from '../buttons/rect/PrimaryButton';
 
-type BottomSlideOverProps = ComponentWithChildrenProps &
+export type BottomSlideOverProps = ComponentWithChildrenProps &
   ClosableComponentProps & {
     title: ReactNode;
   };

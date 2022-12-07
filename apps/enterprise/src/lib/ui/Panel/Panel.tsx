@@ -1,22 +1,21 @@
-import styled, { css } from "styled-components";
-import { defaultBorderRadiusCSS } from "../borderRadius";
-import { getCSSUnit } from "../utils/getCSSUnit";
+import styled, { css } from 'styled-components';
+import { defaultBorderRadiusCSS } from '../borderRadius';
+import { getCSSUnit } from '../utils/getCSSUnit';
 
 export interface PanelProps {
-  width?: React.CSSProperties["width"];
-  padding?: React.CSSProperties["padding"];
+  width?: React.CSSProperties['width'];
+  padding?: React.CSSProperties['padding'];
   withSections?: boolean;
 }
 
 export const panelBackgroundCSS = css`
   background: ${({ theme: { name, colors } }) =>
-    (name === "light"
-      ? colors.background
-      : colors.backgroundGlass
-    ).toCssValue()};
+    (name === 'light' ? colors.background : colors.foreground)
+      // : colors.backgroundGlass
+      .toCssValue()};
 `;
 
-const panelPaddingCSS = css<{ padding?: React.CSSProperties["padding"] }>`
+const panelPaddingCSS = css<{ padding?: React.CSSProperties['padding'] }>`
   padding: ${({ padding }) => getCSSUnit(padding || 20)};
 `;
 
@@ -34,9 +33,7 @@ export const Panel = styled.div<PanelProps>`
           gap: 1px;
 
           background: ${({ theme }) =>
-            theme.name === "light"
-              ? theme.colors.backgroundGlass2.toCssValue()
-              : undefined};
+            theme.name === 'light' ? theme.colors.backgroundGlass2.toCssValue() : undefined};
 
           > * {
             ${panelPaddingCSS}
