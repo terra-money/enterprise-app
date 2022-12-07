@@ -36,6 +36,7 @@ import styles from './App.module.sass';
 import { UpdateWhitelistedNFTsProposalPage } from 'pages/create-proposal/whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
 import { darkTheme } from 'lib/ui/theme/darkTheme';
 import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from 'lib/ui/GlobalStyle';
 
 const queryClient = new QueryClient();
 
@@ -135,6 +136,7 @@ const AppProviders = () => {
         defaultNetwork={chainOptions?.walletConnectChainIds[1]}
       >
         <ThemeProvider theme={darkTheme}>
+          <GlobalStyle />
           <main className={styles.root}>
             <NetworkGuard>
               <QueryClientProvider client={queryClient}>
