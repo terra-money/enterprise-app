@@ -50,7 +50,7 @@ export const BottomSlideOver = ({ children, onClose, title }: BottomSlideOverPro
               {title}
             </Text>
             <PrimaryButton kind="secondary" size="l" onClick={onClose} isRounded>
-              Close
+              <Text color="gradient">Close</Text>
             </PrimaryButton>
           </HStack>
           <Content gap={12}>{children}</Content>

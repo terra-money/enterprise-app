@@ -12,6 +12,10 @@ export const darkTheme: DefaultTheme = {
   colors: {
     ...sharedColors,
     foreground: new HSLA(200, 5, 12),
+
+    foregroundAlt: new HSLA(200, 4, 15),
+    foregroundAltHover: new HSLA(200, 3, 18),
+
     background: new HSLA(200, 9, 7),
     text: new HSLA(0, 0, 100, 0.81),
     textSupporting: new HSLA(0, 0, 61),
@@ -20,6 +24,8 @@ export const darkTheme: DefaultTheme = {
 
     backgroundGlass: new HSLA(0, 0, 100, 0.06),
     backgroundGlass2: new HSLA(0, 0, 100, 0.13),
+
+    gradient: [new HSLA(318, 32, 72), new HSLA(220, 53, 83), new HSLA(347, 19, 81)],
 
     overlay: new HSLA(backgroundHue, backgroundSaturation, 1, 0.8),
 

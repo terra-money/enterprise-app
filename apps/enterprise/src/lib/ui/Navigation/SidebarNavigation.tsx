@@ -1,10 +1,9 @@
-import { Topbar } from "./Topbar";
-import styled, { css } from "styled-components";
-import { useIsScreenWidthLessThan } from "lib/ui/hooks/useIsScreenWidthLessThan";
-import { HStack, VStack } from "lib/ui/Stack";
-import { Sidebar } from "./Sidebar";
-import { ReactNode } from "react";
-import { ThemeToggleButton } from "../theme/ThemeToggleButton";
+import { Topbar } from './Topbar';
+import styled, { css } from 'styled-components';
+import { useIsScreenWidthLessThan } from 'lib/ui/hooks/useIsScreenWidthLessThan';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { Sidebar } from './Sidebar';
+import { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -39,11 +38,7 @@ const Header = styled(HStack)`
   padding-left: 16px;
 `;
 
-export const SidebarNavigation = ({
-  children,
-  renderNavigation,
-  logo,
-}: Props) => {
+export const SidebarNavigation = ({ children, renderNavigation, logo }: Props) => {
   const isSmallScreen = useIsScreenWidthLessThan(SMALL_SCREEN_BREAKPOINT);
 
   const renderSidebar = () => {
@@ -52,7 +47,6 @@ export const SidebarNavigation = ({
         <VStack fullWidth gap={20}>
           <Header alignItems="center" justifyContent="space-between">
             {logo}
-            <ThemeToggleButton />
           </Header>
           {renderNavigation()}
         </VStack>
@@ -72,9 +66,7 @@ export const SidebarNavigation = ({
   return (
     <ScreenWidthSidebar fullHeight alignItems="start">
       {renderSidebar()}
-      <ScreenWidthSidebarContent alignItems="center">
-        {children}
-      </ScreenWidthSidebarContent>
+      <ScreenWidthSidebarContent alignItems="center">{children}</ScreenWidthSidebarContent>
     </ScreenWidthSidebar>
   );
 };

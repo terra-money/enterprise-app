@@ -1,4 +1,5 @@
-import styled, { DefaultTheme, css } from "styled-components";
+import styled, { DefaultTheme, css } from 'styled-components';
+import { gradientColorCSS } from '../gradients';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
   ({
@@ -15,21 +16,21 @@ const getTextColorRecord = ({ colors }: DefaultTheme) =>
     white: colors.white,
   } as const);
 
-type TextWeight = "regular" | "semibold" | "bold";
+type TextWeight = 'regular' | 'semibold' | 'bold';
 const fontWeight: Record<TextWeight, number> = {
   regular: 400,
   semibold: 500,
   bold: 600,
 };
 
-type TextHeight = "small" | "regular" | "large";
+type TextHeight = 'small' | 'regular' | 'large';
 const lineHeight: Record<TextHeight, number> = {
   small: 1,
   regular: 1.2,
   large: 1.5,
 };
 
-export type TextColor = keyof ReturnType<typeof getTextColorRecord>;
+export type TextColor = keyof ReturnType<typeof getTextColorRecord> | 'gradient';
 
 export interface Props {
   color?: TextColor;
@@ -53,9 +54,11 @@ export const Text = styled.p<Props>`
 
   ${({ color, theme }) =>
     color &&
-    css`
-      color: ${getTextColorRecord(theme)[color].toCssValue()};
-    `}
+    (color === 'gradient'
+      ? gradientColorCSS
+      : css`
+          color: ${getTextColorRecord(theme)[color].toCssValue()};
+        `)}
   ${({ weight }) =>
     weight &&
     css`

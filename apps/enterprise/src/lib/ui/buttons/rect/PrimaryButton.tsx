@@ -26,7 +26,7 @@ const Container = styled(RectButton)<Props>`
         color: ${({ theme }) => theme.colors.background.toCssValue()};
       `,
       secondary: css`
-        background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+        background: ${({ theme }) => theme.colors.foregroundAlt.toCssValue()};
         color: ${({ theme }) => theme.colors.text.toCssValue()};
       `,
     }[kind])};
@@ -51,8 +51,7 @@ const Container = styled(RectButton)<Props>`
       `,
       secondary: css`
         :hover {
-          background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
-          color: ${({ theme }) => theme.colors.text.toCssValue()};
+          background: ${({ theme }) => theme.colors.foregroundAltHover.toCssValue()};
         }
       `,
     }[kind]};
