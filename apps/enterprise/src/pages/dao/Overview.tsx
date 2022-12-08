@@ -58,7 +58,7 @@ export const Overview = () => {
         </SidePanel>
       </Panels>
       <RecentProposals />
-      {dao && <SocialChannels dao={dao} />}
+      <SocialChannels />
     </VStack>
   );
 };
