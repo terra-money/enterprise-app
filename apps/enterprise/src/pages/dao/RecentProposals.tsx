@@ -1,18 +1,14 @@
-import { Container } from '@terra-money/apps/components';
 import { Text } from 'components/primitives';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { VStack } from 'lib/ui/Stack';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { useProposalsQuery } from 'queries';
-import { DAO } from 'types';
 import { ProposalCard } from '../shared/ProposalCard';
-import styles from './RecentProposals.module.sass';
 
 const LIMIT = 6;
 
-interface RecentProposalsProps {
-  dao?: DAO;
-}
-
-export const RecentProposals = (props: RecentProposalsProps) => {
-  const { dao } = props;
+export const RecentProposals = () => {
+  const dao = useCurrentDao();
 
   const { data: proposals } = useProposalsQuery({
     daoAddress: dao?.address,
@@ -25,21 +21,23 @@ export const RecentProposals = (props: RecentProposalsProps) => {
   }
 
   return (
-    <Container className={styles.root} direction="column">
+    <VStack gap={16}>
       <Text variant="heading4">Recent Proposals</Text>
-      {proposals === undefined ? (
-        <Container className={styles.list}>
-          {[...Array(LIMIT)].map((_, index) => {
-            return <ProposalCard key={index} />;
-          })}
-        </Container>
-      ) : (
-        <Container className={styles.list}>
-          {proposals.map((proposal, index) => (
-            <ProposalCard key={index} proposal={proposal} />
-          ))}
-        </Container>
-      )}
-    </Container>
+      <SameWidthChildrenRow gap={16} minChildrenWidth={320}>
+        {proposals === undefined ? (
+          <>
+            {[...Array(LIMIT)].map((_, index) => {
+              return <ProposalCard key={index} />;
+            })}
+          </>
+        ) : (
+          <>
+            {proposals.map((proposal, index) => (
+              <ProposalCard key={index} proposal={proposal} />
+            ))}
+          </>
+        )}
+      </SameWidthChildrenRow>
+    </VStack>
   );
 };

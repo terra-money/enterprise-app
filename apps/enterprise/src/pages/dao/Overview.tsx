@@ -34,7 +34,7 @@ export const Overview = () => {
   const dao = useCurrentDao();
 
   return (
-    <>
+    <VStack gap={24}>
       <Panels>
         <TreasuryOverview />
         <SidePanel>
@@ -57,8 +57,8 @@ export const Overview = () => {
           />
         </SidePanel>
       </Panels>
-      <RecentProposals dao={dao} />
+      <RecentProposals />
       {dao && <SocialChannels dao={dao} />}
-    </>
+    </VStack>
   );
 };
