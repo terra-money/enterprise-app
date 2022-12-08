@@ -5,13 +5,16 @@ import classNames from 'classnames';
 import { DAO } from 'types';
 import styles from './FavouriteToggle.module.sass';
 
+type FavouriteToggleSize = 'small' | 'medium';
+
 interface FavouriteToggleProps {
   className?: string;
   dao: DAO;
+  size?: FavouriteToggleSize;
 }
 
 export const FavouriteToggle = (props: FavouriteToggleProps) => {
-  const { className, dao } = props;
+  const { className, dao, size = 'medium' } = props;
 
   const [{ favourites }, dispatch] = usePersonalization();
 
@@ -21,6 +24,7 @@ export const FavouriteToggle = (props: FavouriteToggleProps) => {
     <IconButton
       className={classNames(className, styles.root, {
         [styles.active]: isFavourite,
+        [styles.small]: size === 'small',
       })}
       onClick={(event) => {
         event.preventDefault();

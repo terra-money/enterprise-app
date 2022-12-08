@@ -6,7 +6,7 @@ import { Text } from 'components/primitives';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { forwardRef, Ref } from 'react';
 import { useNavigate } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { DaoNavigation } from './DaoNavigation';
 import styles from './Header.module.sass';
 
 interface HeaderProps {
@@ -29,25 +29,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           {dao.name}
         </Text>
         <Container className={styles.tabs}>
-          <NavLink className={styles.route} to={''} end={true}>
-            <span>Overview</span>
-          </NavLink>
-          <NavLink className={styles.route} to={'treasury'}>
-            <span>Treasury</span>
-          </NavLink>
-          <NavLink className={styles.route} to={'proposals'}>
-            <span>Proposals</span>
-          </NavLink>
-          {dao.type !== 'multisig' && (
-            <NavLink className={styles.route} to={'staking'}>
-              <span>Staking</span>
-            </NavLink>
-          )}
-          {dao.type === 'multisig' && (
-            <NavLink className={styles.route} to={'members'}>
-              <span>Members</span>
-            </NavLink>
-          )}
+          <DaoNavigation />
         </Container>
       </Container>
     );
@@ -66,25 +48,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         </Text>
       </Container>
       <Container ref={ref} className={styles.tabs}>
-        <NavLink className={styles.route} to={''} end={true}>
-          <span>Overview</span>
-        </NavLink>
-        <NavLink className={styles.route} to={'treasury'}>
-          <span>Treasury</span>
-        </NavLink>
-        <NavLink className={styles.route} to={'proposals'}>
-          <span>Proposals</span>
-        </NavLink>
-        {dao.type !== 'multisig' && (
-          <NavLink className={styles.route} to={'staking'}>
-            <span>Staking</span>
-          </NavLink>
-        )}
-        {dao.type === 'multisig' && (
-          <NavLink className={styles.route} to={'members'}>
-            <span>Members</span>
-          </NavLink>
-        )}
+        <DaoNavigation />
       </Container>
     </Container>
   );

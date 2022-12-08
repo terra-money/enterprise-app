@@ -9,6 +9,8 @@ import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { VStack } from 'lib/ui/Stack';
+import { MobileDaoHeader } from './MobileDaoHeader';
 
 export const DAOPage = () => {
   const { address } = useParams();
@@ -23,7 +25,12 @@ export const DAOPage = () => {
         {dao && (
           <CurrentDaoProvider value={dao}>
             <ResponsiveView
-              small={() => <Outlet context={{ dao, isLoading }} />}
+              small={() => (
+                <VStack gap={24}>
+                  <MobileDaoHeader />
+                  <Outlet />
+                </VStack>
+              )}
               normal={() => (
                 <ScrollableContainer
                   stickyRef={ref}
@@ -34,7 +41,7 @@ export const DAOPage = () => {
                   )}
                 >
                   <PageLayout header={<Header ref={ref} />}>
-                    <Outlet context={{ dao, isLoading }} />
+                    <Outlet />
                   </PageLayout>
                 </ScrollableContainer>
               )}
