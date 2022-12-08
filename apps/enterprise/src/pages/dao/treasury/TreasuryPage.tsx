@@ -14,7 +14,7 @@ export const TreasuryPage = () => {
 
   return (
     <Container direction="column" gap={32} className={styles.root}>
-      {dao && <TreasuryOverview dao={dao} />}
+      {dao && <TreasuryOverview />}
       <Container direction="column" gap={16}>
         <Text variant="heading4">Transactions</Text>
         <Container gap={16} direction="column">

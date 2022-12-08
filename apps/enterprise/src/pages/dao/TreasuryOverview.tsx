@@ -1,21 +1,15 @@
 import { Container } from '@terra-money/apps/components';
-import classNames from 'classnames';
 import { AnimateNumber } from '@terra-money/apps/components';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { Panel } from 'components/panel';
 import { Text } from 'components/primitives';
 import { useDAONFTTreasury } from 'queries';
-import { DAO } from 'types';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 
-interface TreasuryOverviewProps {
-  dao: DAO;
-  className?: string;
-}
-
-export const TreasuryOverview = (props: TreasuryOverviewProps) => {
-  const { dao, className } = props;
+export const TreasuryOverview = () => {
+  const dao = useCurrentDao();
 
   const { data: nfts = [] } = useDAONFTTreasury(dao.address);
 
@@ -24,7 +18,7 @@ export const TreasuryOverview = (props: TreasuryOverviewProps) => {
   }, 0);
 
   return (
-    <Panel className={classNames(className, styles.root)}>
+    <Panel className={styles.root}>
       <Container direction="column" gap={32}>
         <TreasuryTokensOverview />
         <hr className={styles.sep} />
