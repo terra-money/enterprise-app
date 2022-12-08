@@ -9,6 +9,7 @@ import { DAO } from 'types';
 import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
 
 export type DAOOutletContext = {
   isLoading: boolean;
@@ -27,18 +28,27 @@ export const DAOPage = () => {
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
-            <ScrollableContainer
-              stickyRef={ref}
-              header={(visible) => (
-                <StickyHeader visible={visible}>
-                  <Header compact={true} />
-                </StickyHeader>
+            <ResponsiveView
+              small={() => (
+                <PageLayout header={<Header />}>
+                  <Outlet context={{ dao, isLoading }} />
+                </PageLayout>
               )}
-            >
-              <PageLayout header={<Header ref={ref} />}>
-                <Outlet context={{ dao, isLoading }} />
-              </PageLayout>
-            </ScrollableContainer>
+              normal={() => (
+                <ScrollableContainer
+                  stickyRef={ref}
+                  header={(visible) => (
+                    <StickyHeader visible={visible}>
+                      <Header compact={true} />
+                    </StickyHeader>
+                  )}
+                >
+                  <PageLayout header={<Header ref={ref} />}>
+                    <Outlet context={{ dao, isLoading }} />
+                  </PageLayout>
+                </ScrollableContainer>
+              )}
+            />
           </CurrentDaoProvider>
         )}
       </LoadingPage>

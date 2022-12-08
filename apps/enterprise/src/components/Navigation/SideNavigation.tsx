@@ -10,6 +10,7 @@ import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { useConnectedWallet } from '@terra-money/use-wallet';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
+import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 
 const Container = styled(VStack)`
   padding: 32px;
@@ -30,6 +31,9 @@ export const SideNavigation = () => {
         <VStack gap={12}>
           <Tooltip title="Dashboard" placement="right" arrow={true}>
             <DashboardButton />
+          </Tooltip>
+          <Tooltip title="Manage your favourite DAOs" placement="right" arrow={true}>
+            <ManageDaosButton />
           </Tooltip>
           <Favourites />
         </VStack>

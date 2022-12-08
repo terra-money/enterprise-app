@@ -1,10 +1,10 @@
 import { ManageWallet } from 'chain/components/ManageWallet';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { DashboardButton } from 'dao/components/DashboardButton';
+import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { HStack } from 'lib/ui/Stack';
 import styled from 'styled-components';
-import { Favourites } from '../layout/Favourites';
 
 const Container = styled.div`
   height: 100%;
@@ -43,7 +43,7 @@ export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) 
       <Footer alignItems="center" justifyContent="space-between">
         <HStack gap={16}>
           <DashboardButton />
-          <Favourites />
+          <ManageDaosButton />
         </HStack>
         <CreateDaoButton />
       </Footer>
