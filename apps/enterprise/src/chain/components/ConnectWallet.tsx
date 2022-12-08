@@ -1,7 +1,6 @@
 import { PopoverOpener } from 'lib/ui/popover/PopoverOpener';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
-import { WalletButton } from './WalletButton';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { Text } from 'lib/ui/Text';
 import { ConnectWalletOptions } from './ConnectWalletOptions';
@@ -14,14 +13,14 @@ export const ConnectWallet = ({ renderOpener }: OpenerComponentProps) => {
   return (
     <ResponsiveView
       small={() => (
-        <BottomSlideOverOpener renderOpener={({ onClick }) => <WalletButton onClick={onClick} />} title={title}>
+        <BottomSlideOverOpener renderOpener={renderOpener} title={title}>
           <ConnectWalletOptions />
         </BottomSlideOverOpener>
       )}
       normal={() => (
         <PopoverOpener
           placement="bottom-end"
-          renderOpener={({ onClick }) => <WalletButton onClick={onClick} />}
+          renderOpener={renderOpener}
           renderContent={() => (
             <Panel width={400}>
               <VStack gap={20}>

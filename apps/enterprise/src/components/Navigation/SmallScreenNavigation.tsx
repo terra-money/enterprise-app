@@ -1,11 +1,10 @@
-import { getCSSUnit } from '@terra-money/apps/utils';
 import { ManageWallet } from 'chain/components/ManageWallet';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { HStack } from 'lib/ui/Stack';
 import styled from 'styled-components';
-import { Favourites } from '../Favourites';
+import { Favourites } from '../layout/Favourites';
 
 const Container = styled.div`
   height: 100%;
@@ -33,7 +32,7 @@ const Footer = styled(HStack)`
   background: rgba(21, 23, 24, 0.9);
 `;
 
-export const MobileNavigation = ({ children }: ComponentWithChildrenProps) => {
+export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) => {
   return (
     <Container>
       <Header alignItems="center" justifyContent="space-between">

@@ -1,4 +1,3 @@
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router';
 import { useCW20TokenInfoQuery, useDAOQuery } from 'queries';
@@ -7,6 +6,7 @@ import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
 import { WhitelistedNFTsProposalForm } from './WhitelistedNFTsProposalForm';
 import { CurrentDAOWhitelistedNFTsProvider } from './CurrentDAOWhitelistedNFTsProvider';
+import { Navigation } from 'components/Navigation';
 
 export const UpdateWhitelistedNFTsProposalPage = () => {
   const { address } = useParams();
@@ -20,7 +20,7 @@ export const UpdateWhitelistedNFTsProposalPage = () => {
   });
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -34,6 +34,6 @@ export const UpdateWhitelistedNFTsProposalPage = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

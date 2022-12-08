@@ -1,4 +1,3 @@
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router';
 import { useCW20TokenInfoQuery, useDAOQuery } from 'queries';
@@ -6,6 +5,7 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { UpgradeProposalForm } from './UpgradeProposalForm';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
+import { Navigation } from 'components/Navigation';
 
 export const CreateUpgradeProposalPage = () => {
   const { address } = useParams();
@@ -19,7 +19,7 @@ export const CreateUpgradeProposalPage = () => {
   });
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -31,6 +31,6 @@ export const CreateUpgradeProposalPage = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

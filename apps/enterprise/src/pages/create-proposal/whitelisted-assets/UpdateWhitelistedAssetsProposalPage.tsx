@@ -1,4 +1,3 @@
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router';
 import { useCW20TokenInfoQuery, useDAOQuery } from 'queries';
@@ -7,6 +6,7 @@ import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
 import { WhitelistedAssetsProposalForm } from './WhitelistedAssetsProposalForm';
 import { CurrentDAOWhitelistedAssetsProvider } from './CurrentDAOWhitelistedAssetsProvider';
+import { Navigation } from 'components/Navigation';
 
 export const UpdateWhitelistedAssetsProposalPage = () => {
   const { address } = useParams();
@@ -20,7 +20,7 @@ export const UpdateWhitelistedAssetsProposalPage = () => {
   });
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -34,6 +34,6 @@ export const UpdateWhitelistedAssetsProposalPage = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

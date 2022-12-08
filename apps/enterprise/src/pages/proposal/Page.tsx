@@ -1,5 +1,4 @@
 import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { useRef } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { ProposalActions } from './ProposalActions';
 import { PageLayout } from 'components/layout';
 import { ProposalSummaryText } from './ProposalSummaryText';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { Navigation } from 'components/Navigation';
 
 export const Page = () => {
   const { id, address } = useParams();
@@ -26,7 +26,7 @@ export const Page = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {proposal && (
           <CurrentDaoProvider value={proposal.dao}>
@@ -51,6 +51,6 @@ export const Page = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

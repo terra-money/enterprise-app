@@ -1,5 +1,4 @@
 import { AnimatedPage, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { useRef, useState } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { Header } from './Header';
@@ -11,6 +10,7 @@ import { Button, Text } from 'components/primitives';
 import { OptionButton } from 'components/option-button';
 import { FormFooter } from 'components/form-footer';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { Navigation } from 'components/Navigation';
 
 const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members'] as const;
 type ProposalType = typeof proposalTypes[number];
@@ -37,7 +37,7 @@ export const Page = () => {
   const navigate = useNavigate();
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -88,6 +88,6 @@ export const Page = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

@@ -1,5 +1,4 @@
-import { Container, UIElementProps } from '@terra-money/apps/components';
-import classNames from 'classnames';
+import { UIElementProps } from '@terra-money/apps/components';
 import { ReactComponent as FavouritesIcon } from 'components/assets/Favourites.svg';
 import { useNavigate } from 'react-router';
 import { usePersonalization } from 'libs/personalization';
@@ -8,18 +7,17 @@ import { NavLink } from 'react-router-dom';
 import { IconButton, Tooltip } from 'components/primitives';
 import { Path } from 'navigation';
 import styles from './Favourites.module.sass';
+import { VStack } from 'lib/ui/Stack';
 
 interface FavouritesProps extends UIElementProps {}
 
 export const Favourites = (props: FavouritesProps) => {
-  const { className } = props;
-
   const navigate = useNavigate();
 
   const [{ favourites }] = usePersonalization();
 
   return (
-    <Container className={classNames(styles.root, className)} direction="column">
+    <VStack gap={12}>
       {favourites.map((favourite, index) => {
         return (
           <NavLink key={index} className={styles.link} to={`/dao/${favourite.address}`}>
@@ -34,6 +32,6 @@ export const Favourites = (props: FavouritesProps) => {
           <FavouritesIcon />
         </IconButton>
       </Tooltip>
-    </Container>
+    </VStack>
   );
 };

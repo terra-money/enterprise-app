@@ -1,17 +1,17 @@
 import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { Text } from 'components/primitives';
 import { useRef } from 'react';
 import { Overview } from './Overview';
 import { RecentProposals } from './RecentProposals';
 import { PageLayout } from 'components/layout';
 import { RecentDAOs } from './RecentDAOs';
+import { Navigation } from 'components/Navigation';
 
 export const DashboardPage = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <ScrollableContainer stickyRef={ref} header={(visible) => <StickyHeader visible={visible}></StickyHeader>}>
         <PageLayout header={<Text variant="heading2">Dashboard</Text>}>
           <Overview />
@@ -19,6 +19,6 @@ export const DashboardPage = () => {
           <RecentProposals />
         </PageLayout>
       </ScrollableContainer>
-    </NavigationLayout>
+    </Navigation>
   );
 };

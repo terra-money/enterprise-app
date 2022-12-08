@@ -1,5 +1,4 @@
 import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { useRef } from 'react';
 import { Header } from './Header';
 import { Outlet, useParams } from 'react-router';
@@ -9,6 +8,7 @@ import { LoadingPage } from 'pages/shared/LoadingPage';
 import { DAO } from 'types';
 import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { Navigation } from 'components/Navigation';
 
 export type DAOOutletContext = {
   isLoading: boolean;
@@ -23,7 +23,7 @@ export const DAOPage = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -42,6 +42,6 @@ export const DAOPage = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

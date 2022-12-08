@@ -1,10 +1,10 @@
-import { NavigationLayout } from 'components/layout/NavigationLayout';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router';
 import { useDAOQuery } from 'queries';
 import { CW20Addr } from '@terra-money/apps/types';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { TextProposalForm } from './TextProposalForm';
+import { Navigation } from 'components/Navigation';
 
 export const CreateTextProposalPage = () => {
   const { address } = useParams();
@@ -12,7 +12,7 @@ export const CreateTextProposalPage = () => {
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
@@ -20,6 +20,6 @@ export const CreateTextProposalPage = () => {
           </CurrentDaoProvider>
         )}
       </LoadingPage>
-    </NavigationLayout>
+    </Navigation>
   );
 };

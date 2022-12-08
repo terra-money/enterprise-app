@@ -1,6 +1,6 @@
 import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
-import { NavigationLayout } from 'components/layout/NavigationLayout';
+import { Navigation } from 'components/Navigation';
 import { usePreviousIfEmpty } from 'hooks';
 import { useDAOsQuery } from 'queries';
 import { useRef, useState } from 'react';
@@ -26,7 +26,7 @@ export const Page = () => {
   const items = usePreviousIfEmpty([...Array<DAO>(MAX_PREVIEW_SIZE)], data);
 
   return (
-    <NavigationLayout>
+    <Navigation>
       <ScrollableContainer
         stickyRef={stickyRef}
         header={(visible) => (
@@ -85,6 +85,6 @@ export const Page = () => {
           <List items={items} isLoading={isLoading} />
         </PageLayout>
       </ScrollableContainer>
-    </NavigationLayout>
+    </Navigation>
   );
 };
