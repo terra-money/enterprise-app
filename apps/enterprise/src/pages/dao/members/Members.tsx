@@ -1,10 +1,10 @@
 import { Throbber } from 'components/primitives';
-import { Navigate, useOutletContext } from 'react-router';
-import { DAOOutletContext } from '../DAOPage';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { Navigate } from 'react-router';
 import { MultisigMembers } from './MultisigMembers';
 
 export const Members = () => {
-  const { dao } = useOutletContext<DAOOutletContext>();
+  const dao = useCurrentDao();
 
   if (dao === undefined) {
     return <Throbber />;

@@ -1,18 +1,18 @@
-import { useNavigate, useOutletContext } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
 import { Button, SearchInput, Tooltip } from 'components/primitives';
 import { useProposalsQuery, useVotingPowerQuery } from 'queries';
-import { DAOOutletContext } from '../DAOPage';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { useMemo, useState } from 'react';
 import styles from './ProposalsPage.module.sass';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 
 const LIMIT = 10;
 
 export const ProposalsPage = () => {
-  const { dao } = useOutletContext<DAOOutletContext>();
+  const dao = useCurrentDao();
 
   const connectedWallet = useConnectedWallet();
 

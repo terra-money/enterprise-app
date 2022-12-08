@@ -14,6 +14,7 @@ const Container = styled.div`
 
 const ContentWr = styled.div`
   overflow-y: auto;
+  padding: 16px;
 `;
 
 const Header = styled(HStack)`

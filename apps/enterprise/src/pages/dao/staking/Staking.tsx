@@ -1,12 +1,11 @@
 import { Throbber } from 'components/primitives';
 import { Navigate } from 'react-router';
-import { useOutletContext } from 'react-router';
-import { DAOOutletContext } from '../DAOPage';
 import { TokenStaking } from './TokenStaking';
 import { NFTStaking } from './NFTStaking';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 
 export const Staking = () => {
-  const { dao } = useOutletContext<DAOOutletContext>();
+  const dao = useCurrentDao();
 
   if (dao === undefined) {
     return <Throbber />;

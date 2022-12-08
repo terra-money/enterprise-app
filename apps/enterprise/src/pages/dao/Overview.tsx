@@ -1,7 +1,5 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { RecentProposals } from './RecentProposals';
-import { useOutletContext } from 'react-router';
-import { DAOOutletContext } from './DAOPage';
 import { NumericPanel } from 'components/numeric-panel';
 import { useCW20TokenInfoQuery, useCW721NumTokensQuery, useTokenStakingAmountQuery } from 'queries';
 import { TreasuryOverview } from './TreasuryOverview';
@@ -14,6 +12,7 @@ import { CW20Addr, u } from '@terra-money/apps/types';
 import { usePrice } from '@terra-money/apps/hooks';
 import styles from './Overview.module.sass';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 
 interface LayoutProps {
   dao: DAO;
@@ -126,7 +125,7 @@ const NFTDAOLayout = (props: LayoutProps) => {
 };
 
 export const Overview = () => {
-  const { dao } = useOutletContext<DAOOutletContext>();
+  const dao = useCurrentDao();
 
   return (
     <>

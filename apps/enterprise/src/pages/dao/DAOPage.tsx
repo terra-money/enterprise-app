@@ -5,16 +5,10 @@ import { Outlet, useParams } from 'react-router';
 import { useDAOQuery } from 'queries/useDAOQuery';
 import { CW20Addr } from '@terra-money/apps/types';
 import { LoadingPage } from 'pages/shared/LoadingPage';
-import { DAO } from 'types';
 import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
-
-export type DAOOutletContext = {
-  isLoading: boolean;
-  dao: DAO | undefined;
-};
 
 export const DAOPage = () => {
   const { address } = useParams();
@@ -29,11 +23,7 @@ export const DAOPage = () => {
         {dao && (
           <CurrentDaoProvider value={dao}>
             <ResponsiveView
-              small={() => (
-                <PageLayout header={<Header />}>
-                  <Outlet context={{ dao, isLoading }} />
-                </PageLayout>
-              )}
+              small={() => <Outlet context={{ dao, isLoading }} />}
               normal={() => (
                 <ScrollableContainer
                   stickyRef={ref}
