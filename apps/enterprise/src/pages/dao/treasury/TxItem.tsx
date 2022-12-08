@@ -1,20 +1,17 @@
 import { useCallback } from 'react';
-import classNames from 'classnames';
 import { useWallet } from '@terra-money/wallet-provider';
-import { Container } from '@terra-money/apps/components';
 import { Button, Text } from 'components/primitives';
-import { Panel } from 'components/panel';
 import { getFinderUrl, truncateAddress } from '@terra-money/apps/utils';
 import { TxResponse } from '@terra-money/apps/types';
-import styles from './TxItem.module.sass';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { HStack } from 'lib/ui/Stack';
 
 interface TxItemProps {
-  className?: string;
   tx: TxResponse;
 }
 
 export const TxItem = (props: TxItemProps) => {
-  const { className, tx } = props;
+  const { tx } = props;
   const { txhash, timestamp } = tx;
   const { network } = useWallet();
 
@@ -23,8 +20,8 @@ export const TxItem = (props: TxItemProps) => {
   }, [network, txhash]);
 
   return (
-    <Panel className={classNames(className, styles.root)}>
-      <Container className={styles.row}>
+    <Panel>
+      <HStack gap={16} alignItems="center" justifyContent="space-between" wrap="wrap">
         <Text variant="button" onClick={onDetailsClick}>
           {truncateAddress(txhash, [10, 10])}
         </Text>
@@ -40,7 +37,7 @@ export const TxItem = (props: TxItemProps) => {
           })}
         </Text>
         <Button onClick={onDetailsClick}>Details</Button>
-      </Container>
+      </HStack>
     </Panel>
   );
 };
