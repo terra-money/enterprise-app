@@ -27,7 +27,6 @@ import { BetaGuard } from 'components/beta-guard';
 import { LandingPage } from 'pages/landing';
 import { Path } from 'navigation';
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { NotConnected } from 'components/not-connected';
 import { CreateUpgradeProposalPage } from 'pages/create-proposal/upgrade/CreateUpgradeProposalPage';
 import { UpdateWhitelistedAssetsProposalPage } from 'pages/create-proposal/whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
 import { ExecuteMessageProposalPage } from 'pages/create-proposal/execute/ExecuteMessageProposalPage';
@@ -37,6 +36,7 @@ import { UpdateWhitelistedNFTsProposalPage } from 'pages/create-proposal/whiteli
 import { darkTheme } from 'lib/ui/theme/darkTheme';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
+import { ConnectWalletPrompt } from 'components/not-connected';
 
 const queryClient = new QueryClient();
 
@@ -68,26 +68,35 @@ const AppBetaRoutes = () => {
         <Route
           path="/dao/:address/proposals/create/text"
           element={
-            <ConditionalWallet notConnected={() => <NotConnected />} connected={() => <CreateTextProposalPage />} />
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <CreateTextProposalPage />}
+            />
           }
         />
         <Route
           path="/dao/:address/proposals/create/config"
           element={
-            <ConditionalWallet notConnected={() => <NotConnected />} connected={() => <CreateConfigProposalPage />} />
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <CreateConfigProposalPage />}
+            />
           }
         />
         <Route
           path="/dao/:address/proposals/create/upgrade"
           element={
-            <ConditionalWallet notConnected={() => <NotConnected />} connected={() => <CreateUpgradeProposalPage />} />
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <CreateUpgradeProposalPage />}
+            />
           }
         />
         <Route
           path="/dao/:address/proposals/create/assets"
           element={
             <ConditionalWallet
-              notConnected={() => <NotConnected />}
+              notConnected={() => <ConnectWalletPrompt />}
               connected={() => <UpdateWhitelistedAssetsProposalPage />}
             />
           }
@@ -96,7 +105,7 @@ const AppBetaRoutes = () => {
           path="/dao/:address/proposals/create/nfts"
           element={
             <ConditionalWallet
-              notConnected={() => <NotConnected />}
+              notConnected={() => <ConnectWalletPrompt />}
               connected={() => <UpdateWhitelistedNFTsProposalPage />}
             />
           }
@@ -104,14 +113,17 @@ const AppBetaRoutes = () => {
         <Route
           path="/dao/:address/proposals/create/execute"
           element={
-            <ConditionalWallet notConnected={() => <NotConnected />} connected={() => <ExecuteMessageProposalPage />} />
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <ExecuteMessageProposalPage />}
+            />
           }
         />
         <Route
           path="/dao/:address/proposals/create/members"
           element={
             <ConditionalWallet
-              notConnected={() => <NotConnected />}
+              notConnected={() => <ConnectWalletPrompt />}
               connected={() => <MultisigMembersProposalPage />}
             />
           }

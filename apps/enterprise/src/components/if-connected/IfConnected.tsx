@@ -1,5 +1,5 @@
 import { useConnectedWallet, useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import { NotConnected } from 'components/not-connected';
+import { ConnectWalletPrompt } from 'components/not-connected';
 import { Throbber } from 'components/primitives';
 import { ReactNode } from 'react';
 import styles from './IfConnected.module.sass';
@@ -11,7 +11,7 @@ interface IfConnectedProps {
 }
 
 export const IfConnected = (props: IfConnectedProps) => {
-  const { then: thenChildren, else: elseChildren = <NotConnected />, hideLoader } = props;
+  const { then: thenChildren, else: elseChildren = <ConnectWalletPrompt />, hideLoader } = props;
 
   const connectedWallet = useConnectedWallet();
   const wallet = useWallet();

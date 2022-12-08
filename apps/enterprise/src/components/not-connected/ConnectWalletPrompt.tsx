@@ -3,7 +3,7 @@ import { Panel } from 'components/panel';
 import { Text, Button } from 'components/primitives';
 import styles from './NotConnected.module.sass';
 
-const NotConnected = () => {
+export const ConnectWalletPrompt = () => {
   return (
     <Panel className={styles.root}>
       <Text variant="text">Please connect your wallet</Text>
@@ -17,5 +17,3 @@ const NotConnected = () => {
     </Panel>
   );
 };
-
-export { NotConnected };

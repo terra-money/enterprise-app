@@ -1,10 +1,8 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import classNames from 'classnames';
-import { NotConnected as WalletNotConnected } from 'components/not-connected';
 import { NumericPanel } from 'components/numeric-panel';
 import { Button } from 'components/primitives';
 import {
@@ -19,12 +17,13 @@ import {
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
-import { DAO } from 'types';
 import { useStakeNFTDialog } from './StakeNFTDialog';
 import { useUnstakeNFTDialog } from './UnstakeNFTDialog';
 import { PendingClaims } from './PendingClaims';
 import styles from './NFTStaking.module.sass';
 import { usePendingClaims } from 'hooks';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 
 const useNFTData = (daoAddress: string, tokenAddress: string) => {
   const { data: info, isLoading: isLoadingInfo } = useCW721ContractInfoQuery(tokenAddress);
@@ -67,13 +66,9 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
   };
 };
 
-interface LayoutProps {
-  walletAddress: string;
-  dao: DAO;
-}
-
-const Connected = (props: LayoutProps) => {
-  const { walletAddress, dao } = props;
+export const NftStakingConnectedView = () => {
+  const walletAddress = useAssertMyAddress();
+  const dao = useCurrentDao();
 
   const { isLoading, totalStaked, totalStakedPercent, numTokens, symbol } = useNFTData(
     dao.address,
@@ -181,42 +176,5 @@ const Connected = (props: LayoutProps) => {
       </Container>
       <PendingClaims claims={pendingClaims} formatter={(amount) => amount.toString()} />
     </>
-  );
-};
-
-const NotConnected = (props: Omit<LayoutProps, 'walletAddress'>) => {
-  const { dao } = props;
-
-  const { totalStaked, totalStakedPercent, numTokens, symbol } = useNFTData(dao.address, dao.membershipContractAddress);
-
-  return (
-    <Container className={classNames(styles.root)}>
-      <NumericPanel title="Number of tokens" value={numTokens} decimals={0} suffix={symbol} />
-      <NumericPanel
-        title="Total staked"
-        value={totalStaked}
-        decimals={2}
-        suffix={
-          <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>{totalStakedPercent}</AnimateNumber>
-        }
-      />
-      <WalletNotConnected />
-    </Container>
-  );
-};
-
-interface NFTStakingProps {
-  dao: DAO;
-}
-
-export const NFTStaking = (props: NFTStakingProps) => {
-  const { dao } = props;
-
-  const connectedWallet = useConnectedWallet();
-
-  return Boolean(connectedWallet) ? (
-    <Connected walletAddress={connectedWallet!.walletAddress} dao={dao} />
-  ) : (
-    <NotConnected dao={dao} />
   );
 };

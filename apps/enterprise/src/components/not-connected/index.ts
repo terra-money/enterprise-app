@@ -1,1 +1,1 @@
-export * from './NotConnected';
+export * from './ConnectWalletPrompt';

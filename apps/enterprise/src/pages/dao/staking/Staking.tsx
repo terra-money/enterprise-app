@@ -1,22 +1,53 @@
-import { Throbber } from 'components/primitives';
 import { Navigate } from 'react-router';
-import { TokenStaking } from './TokenStaking';
-import { NFTStaking } from './NFTStaking';
+import { TokenStakingConnectedView } from './TokenStaking';
+import { NftStakingConnectedView } from './NFTStaking';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { ConditionalRender } from 'components/primitives';
+import { ConditionalWallet } from 'components/conditional-wallet';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { ConnectWalletPrompt } from 'components/not-connected';
+import { VStack } from 'lib/ui/Stack';
+import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
+import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
+import { NftDaoTotalSupplyPanel } from '../NftDaoTotalSupplyPanel';
+import { NftDaoTotalStakedPanel } from '../NftDaoTotalStakedPanel';
 
 export const Staking = () => {
   const dao = useCurrentDao();
 
-  if (dao === undefined) {
-    return <Throbber />;
-  }
-
-  switch (dao.type) {
-    case 'token':
-      return <TokenStaking dao={dao} />;
-    case 'nft':
-      return <NFTStaking dao={dao} />;
-  }
-
-  return <Navigate to={`/dao/${dao!.address}`} replace={true} />;
+  return (
+    <ConditionalWallet
+      connected={() => (
+        <ConditionalRender
+          value={dao.type}
+          token={() => <TokenStakingConnectedView />}
+          nft={() => <NftStakingConnectedView />}
+          multisig={() => <Navigate to={`/dao/${dao!.address}`} replace={true} />}
+        />
+      )}
+      notConnected={() => (
+        <SameWidthChildrenRow minChildrenWidth={320} fullWidth gap={16}>
+          <VStack gap={16}>
+            <ConditionalRender
+              value={dao.type}
+              token={() => (
+                <>
+                  <TokenDaoTotalSupplyPanel />
+                  <TokenDaoTotalStakedPanel />
+                </>
+              )}
+              nft={() => (
+                <>
+                  <NftDaoTotalSupplyPanel />
+                  <NftDaoTotalStakedPanel />
+                </>
+              )}
+              multisig={() => <Navigate to={`/dao/${dao!.address}`} replace={true} />}
+            />
+          </VStack>
+          <ConnectWalletPrompt />
+        </SameWidthChildrenRow>
+      )}
+    />
+  );
 };
