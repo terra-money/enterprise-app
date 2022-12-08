@@ -1,30 +1,43 @@
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { useTreasuryTokensQuery } from 'queries';
-import styles from './TreasuryTokensOverview.module.sass';
-import { Chart } from 'react-chartjs-2';
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
 import Big, { BigSource } from 'big.js';
 import { assertDefined, sum, toPercents } from '@terra-money/apps/utils';
-import { Text, Throbber } from 'components/primitives';
-import { AnimateNumber, Container } from '@terra-money/apps/components';
+import { Throbber } from 'components/primitives';
+import { AnimateNumber } from '@terra-money/apps/components';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { Address } from 'components/address';
+import { TreasuryTokensPieChart } from './TreasuryTokensPieChart';
+import styled from 'styled-components';
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
 
-type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
+export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
-const pieChartColors = ['#E9FF92', '#FFD0B5', '#B4D6FF', '#DCE4EA'];
-const getPieChartDataset = (tokens: TreasuryToken[]) => {
-  return {
-    data: tokens.map((t) => Big(assertDefined(t.usdAmount)).toNumber()),
-    backgroundColor: tokens.map((_, index) => pieChartColors[index % pieChartColors.length]),
-  };
-};
+const PieChartWr = styled.div`
+  width: 100%;
+`;
 
-const placeholderDataset = {
-  data: [100],
-  backgroundColor: ['#252728'],
-};
+const AssetsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 160px);
+`;
+
+const NormalScreenWidthContainer = styled.div`
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  grid-template-rows: minmax(148px, 1fr);
+  gap: 48px;
+`;
+
+const SmallScreenWidthContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 88px;
+  grid-template-rows: minmax(88px, 1fr);
+  gap: 12px;
+`;
 
 export const TreasuryTokensOverview = () => {
   const dao = useCurrentDao();
@@ -37,8 +50,6 @@ export const TreasuryTokensOverview = () => {
         .sort((a, b) => assertDefined(b.usdAmount).cmp(assertDefined(a.usdAmount)))
     : undefined;
 
-  const hasBalance = tokenBalancesWithPrice && tokenBalancesWithPrice.length > 0;
-
   const treasuryTotalInUSD = tokenBalancesWithPrice
     ? sum(tokenBalancesWithPrice.map((token) => assertDefined(token.usdAmount)))
     : undefined;
@@ -47,74 +58,75 @@ export const TreasuryTokensOverview = () => {
     ? tokenBalances.filter((token) => token.usdAmount === undefined).sort((a, b) => Big(a.amount).cmp(b.amount))
     : undefined;
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.chart}>
-        <Chart
-          type="doughnut"
-          data={{
-            datasets: [hasBalance ? getPieChartDataset(tokenBalancesWithPrice) : placeholderDataset],
-          }}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: false,
-              },
-              tooltip: {
-                enabled: false,
-              },
-            },
-            elements: {
-              point: {
-                radius: 0,
-              },
-              arc: {
-                borderWidth: 0,
-              },
-            },
-            scales: {
-              x: {
-                display: false,
-              },
-              y: {
-                display: false,
-              },
-            },
-          }}
-        />
-      </div>
+  const renderPieChart = () => {
+    return (
+      <PieChartWr>
+        <TreasuryTokensPieChart tokens={tokenBalancesWithPrice || []} />
+      </PieChartWr>
+    );
+  };
 
-      <div className={styles.details}>
-        <Container className={styles.header} direction="column" gap={8}>
-          <Text variant="label">Treasury Total Value</Text>
-          {treasuryTotalInUSD !== undefined ? (
-            <Text className={styles.total} variant="heading3">
-              <AnimateNumber format={(v) => formatAmount(v)}>{treasuryTotalInUSD ?? 0}</AnimateNumber>
-              <sub>USD</sub>
+  const renderBasicInfo = () => {
+    return (
+      <VStack gap={8}>
+        <Text color="supporting" size={14}>
+          Treasury Total Value
+        </Text>
+        {treasuryTotalInUSD !== undefined ? (
+          <Text size={18} weight="semibold">
+            <AnimateNumber format={(v) => formatAmount(v)}>{treasuryTotalInUSD ?? 0}</AnimateNumber>
+          </Text>
+        ) : (
+          <Throbber variant="secondary" size="small" />
+        )}
+        <Address address={dao.address} />
+      </VStack>
+    );
+  };
+
+  const renderAssets = () => {
+    return (
+      <AssetsContainer>
+        {treasuryTotalInUSD !== undefined &&
+          tokenBalancesWithPrice?.map((token, index) => (
+            <Text color="supporting" size={14} key={index}>
+              {token.symbol} {formatAmount(demicrofy(token.amount, token.decimals))}{' '}
+              {toPercents(assertDefined(token.usdAmount).div(treasuryTotalInUSD).toNumber(), 'round')}
             </Text>
-          ) : (
-            <Throbber variant="secondary" size="small" />
-          )}
-          <Address address={dao.address} />
-        </Container>
-        <div className={styles.assets}>
-          {treasuryTotalInUSD !== undefined &&
-            tokenBalancesWithPrice?.map((token, index) => (
-              <Text variant="text" key={index}>
-                {token.symbol} {formatAmount(demicrofy(token.amount, token.decimals))}{' '}
-                {toPercents(assertDefined(token.usdAmount).div(treasuryTotalInUSD).toNumber(), 'round')}
-              </Text>
-            ))}
-          {tokenBalancesWithoutPrice !== undefined &&
-            tokenBalancesWithoutPrice?.map((token, index) => (
-              <Text variant="text" key={index}>
-                {token.symbol} {formatAmount(demicrofy(token.amount, token.decimals))}
-              </Text>
-            ))}
-        </div>
-      </div>
-    </div>
+          ))}
+        {tokenBalancesWithoutPrice !== undefined &&
+          tokenBalancesWithoutPrice?.map((token, index) => (
+            <Text color="supporting" size={14} key={index}>
+              {token.symbol} {formatAmount(demicrofy(token.amount, token.decimals))}
+            </Text>
+          ))}
+      </AssetsContainer>
+    );
+  };
+
+  return (
+    <ResponsiveView
+      small={() => (
+        <VStack gap={12}>
+          <SmallScreenWidthContainer>
+            {renderBasicInfo()}
+            {renderPieChart()}
+          </SmallScreenWidthContainer>
+          {renderAssets()}
+        </VStack>
+      )}
+      normal={() => (
+        <NormalScreenWidthContainer>
+          {renderPieChart()}
+
+          <VStack fullHeight justifyContent="space-between" gap={8}>
+            <>
+              {renderBasicInfo()}
+              {renderAssets()}
+            </>
+          </VStack>
+        </NormalScreenWidthContainer>
+      )}
+    />
   );
 };
