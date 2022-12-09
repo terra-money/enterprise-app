@@ -1,7 +1,6 @@
-import classNames from 'classnames';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { DAOCard } from 'pages/shared/DAOCard';
 import { DAO } from 'types';
-import styles from './List.module.sass';
 
 interface ListProps {
   className?: string;
@@ -10,17 +9,13 @@ interface ListProps {
 }
 
 export const List = (props: ListProps) => {
-  const { className, items, isLoading } = props;
+  const { items, isLoading } = props;
 
   return (
-    <ul className={classNames(styles.root, className)}>
-      {items.map((dao, index) => {
-        return (
-          <li key={index}>
-            <DAOCard dao={dao} skeleton={isLoading} />
-          </li>
-        );
-      })}
-    </ul>
+    <SameWidthChildrenRow gap={16} maxColumns={3} fullWidth minChildrenWidth={320}>
+      {items.map((dao, index) => (
+        <DAOCard key={index} dao={dao} skeleton={isLoading} />
+      ))}
+    </SameWidthChildrenRow>
   );
 };
