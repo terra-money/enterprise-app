@@ -8,6 +8,9 @@ import styles from './UpdateMultisigMembersAction.module.sass';
 import { ReactComponent as MinusIcon } from 'components/assets/Minus.svg';
 import { ReactComponent as PlusIcon } from 'components/assets/Plus.svg';
 import classNames from 'classnames';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 
 // TODO: highlight what members will be added and removed
 export const UpdateMultisigMembersAction = () => {
@@ -22,9 +25,9 @@ export const UpdateMultisigMembersAction = () => {
   if (!updateMembersAction) return null;
 
   return (
-    <div className={styles.root}>
+    <VStack gap={24}>
       <Text variant="heading4">Update members</Text>
-      <div className={styles.list}>
+      <SameWidthChildrenRow gap={20} minChildrenWidth={320} maxColumns={2}>
         {updateMembersAction.edit_members.map(({ address, weight }) => {
           const renderChange = () => {
             if (weight === '0') {
@@ -50,13 +53,15 @@ export const UpdateMultisigMembersAction = () => {
             return <ValueDiff oldValue={currentMember.weight.toString()} newValue={weight} />;
           };
           return (
-            <div key={address} className={styles.item}>
-              <Address address={address} truncation="none" />
-              {renderChange()}
-            </div>
+            <Panel>
+              <HStack fullWidth justifyContent="space-between" style={{ minHeight: 40 }} alignItems="center" gap={20}>
+                <Address address={address} />
+                {renderChange()}
+              </HStack>
+            </Panel>
           );
         })}
-      </div>
-    </div>
+      </SameWidthChildrenRow>
+    </VStack>
   );
 };

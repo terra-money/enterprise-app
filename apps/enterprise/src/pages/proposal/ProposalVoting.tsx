@@ -7,6 +7,8 @@ import { useBlockHeightQuery } from 'queries';
 import { useExecuteProposalTx } from 'tx';
 import { MyVote } from './MyVote';
 import styles from './ProposalVoting.module.sass';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 export const ProposalVoting = () => {
   const proposal = useCurrentProposal();
@@ -18,15 +20,37 @@ export const ProposalVoting = () => {
   const hasExpired = proposal.hasExpired(blockHeight, Date.now());
 
   return (
-    <div className={styles.root}>
-      <div className={styles.header}>
+    <VStack gap={16}>
+      <HStack justifyContent="space-between" alignItems="center" gap={8} wrap="wrap">
         <Text className={styles.title} variant="heading4">
           Progress
         </Text>
         <ProposalExpiration />
-      </div>
-      <div className={styles.container}>
-        <ProposalVotingBar />
+      </HStack>
+      <Panel>
+        <HStack justifyContent="center" alignItems="center" wrap="wrap" gap={20}>
+          <ProposalVotingBar />
+          {proposal.status === 'in_progress' ? (
+            hasExpired === false ? (
+              <CastVote />
+            ) : (
+              <Button
+                variant="primary"
+                loading={txResult.loading}
+                onClick={async () => {
+                  await tx({
+                    daoAddress: proposal.dao.address,
+                    proposalId: proposal.id,
+                  });
+                }}
+              >
+                Execute
+              </Button>
+            )
+          ) : (
+            <MyVote proposal={proposal} />
+          )}
+        </HStack>
         {/* <Button
           variant="primary"
           loading={txResult.loading}
@@ -39,27 +63,7 @@ export const ProposalVoting = () => {
         >
           Execute
         </Button> */}
-        {proposal.status === 'in_progress' ? (
-          hasExpired === false ? (
-            <CastVote />
-          ) : (
-            <Button
-              variant="primary"
-              loading={txResult.loading}
-              onClick={async () => {
-                await tx({
-                  daoAddress: proposal.dao.address,
-                  proposalId: proposal.id,
-                });
-              }}
-            >
-              Execute
-            </Button>
-          )
-        ) : (
-          <MyVote proposal={proposal} />
-        )}
-      </div>
-    </div>
+      </Panel>
+    </VStack>
   );
 };

@@ -5,10 +5,13 @@ import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import { Address } from 'components/address';
 import { PaginatedView } from 'components/paginated-view';
 import { Text } from 'components/primitives';
+import { useIsSmallScreen } from 'lib/ui/hooks/useIsSmallScreen';
+import { LabeledPageSection } from 'lib/ui/LabeledPageSection';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { useCW20TokenInfoQuery } from 'queries';
 import { useProposalVotesQuery } from 'queries/useProposalVotesQuery';
 import { useCurrentProposal } from './CurrentProposalProvider';
-import styles from './ProposalVotes.module.sass';
 
 // TODO: display date when contracts provide it
 export const ProposalVotes = () => {
@@ -25,23 +28,23 @@ export const ProposalVotes = () => {
 
   const votes = usePaginatedResultItems(proposalVotesPages, (response) => response.votes);
 
+  const isSmallScreen = useIsSmallScreen();
+
   return votes.length === 0 ? null : (
-    <div className={styles.root}>
-      <Text className={styles.title} variant="heading4">
-        Votes
-      </Text>
-      <div className={styles.list}>
+    <LabeledPageSection name="Votes">
+      <VStack gap={16}>
         <PaginatedView onRequestToLoadMore={fetchNextPage} isLoading={isLoading || isFetchingNextPage}>
           {votes?.map(({ outcome, amount, voter }, index) => (
-            <div className={styles.vote} key={index}>
-              <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
-              <Address address={voter} />
-              <Text variant="text">-</Text>
-              {token && <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>}
-            </div>
+            <Panel key={index}>
+              <HStack justifyContent="space-between" alignItems="center">
+                <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
+                <Address truncation={isSmallScreen ? [7, 4] : undefined} address={voter} />
+                {token && <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>}
+              </HStack>
+            </Panel>
           ))}
         </PaginatedView>
-      </div>
-    </div>
+      </VStack>
+    </LabeledPageSection>
   );
 };

@@ -65,12 +65,12 @@ export const getUpdatedFields = (
 
   if (msg.unlocking_period !== 'no_change') {
     const unlockingPeriod = msg.unlocking_period.change;
-    view.unlockingPeriod = unlockingPeriod ? toPercents(Number(unlockingPeriod)) : noValue;
+    view.unlockingPeriod = unlockingPeriod ? toDays(Number(unlockingPeriod)) : noValue;
   }
 
   if (msg.voting_duration !== 'no_change') {
     const votingDuration = msg.voting_duration.change;
-    view.votingDuration = votingDuration ? toPercents(Number(votingDuration)) : noValue;
+    view.votingDuration = votingDuration ? toDays(Number(votingDuration)) : noValue;
   }
 
   return view;

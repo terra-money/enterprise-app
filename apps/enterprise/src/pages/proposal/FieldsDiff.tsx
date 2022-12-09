@@ -2,6 +2,7 @@ import { Text } from 'components/primitives';
 import styles from './FieldsDiff.module.sass';
 import React from 'react';
 import { ValueDiff } from 'components/value-diff';
+import styled from 'styled-components';
 
 interface FieldChangeInfo {
   name: string;
@@ -13,9 +14,22 @@ interface FieldsDiffProps {
   fields: FieldChangeInfo[];
 }
 
+const Container = styled.div`
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 228px 1fr;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+`;
+
 export const FieldsDiff = ({ fields }: FieldsDiffProps) => {
   return (
-    <div className={styles.root}>
+    <Container>
       {fields.map((field) => {
         return (
           <React.Fragment key={field.name}>
@@ -26,6 +40,6 @@ export const FieldsDiff = ({ fields }: FieldsDiffProps) => {
           </React.Fragment>
         );
       })}
-    </div>
+    </Container>
   );
 };
