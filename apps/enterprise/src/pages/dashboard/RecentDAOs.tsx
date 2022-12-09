@@ -1,8 +1,7 @@
-import { Container } from '@terra-money/apps/components';
-import { Text } from 'components/primitives';
+import { LabeledPageSection } from 'lib/ui/LabeledPageSection';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { DAOCard } from 'pages/shared/DAOCard';
 import { QUERY_KEY, useDAOsQuery } from 'queries';
-import styles from './RecentDAOs.module.sass';
 
 const LIMIT = 6;
 
@@ -18,21 +17,22 @@ export const RecentDAOs = () => {
   }
 
   return (
-    <Container className={styles.root} direction="column">
-      <Text variant="heading4">Recent DAOs</Text>
-      {isLoading ? (
-        <Container className={styles.list}>
-          {[...Array(LIMIT)].map((_, index) => {
-            return <DAOCard key={index} skeleton={true} />;
-          })}
-        </Container>
-      ) : (
-        <Container className={styles.list}>
-          {daos.map((dao, index) => (
-            <DAOCard key={index} dao={dao} skeleton={false} />
-          ))}
-        </Container>
-      )}
-    </Container>
+    <LabeledPageSection name="Recent DAOs">
+      <SameWidthChildrenRow maxColumns={3} fullWidth minChildrenWidth={320} gap={16}>
+        {isLoading ? (
+          <>
+            {[...Array(LIMIT)].map((_, index) => {
+              return <DAOCard key={index} skeleton={true} />;
+            })}
+          </>
+        ) : (
+          <>
+            {daos.map((dao, index) => (
+              <DAOCard key={index} dao={dao} skeleton={false} />
+            ))}
+          </>
+        )}
+      </SameWidthChildrenRow>
+    </LabeledPageSection>
   );
 };

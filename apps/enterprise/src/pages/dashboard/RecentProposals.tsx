@@ -1,8 +1,7 @@
-import { Container } from '@terra-money/apps/components';
-import { Text } from 'components/primitives';
+import { LabeledPageSection } from 'lib/ui/LabeledPageSection';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { QUERY_KEY, useProposalsQuery } from 'queries';
 import { ProposalCard } from '../shared/ProposalCard';
-import styles from './RecentProposals.module.sass';
 
 export const RecentProposals = () => {
   const { data: proposals = [], isLoading } = useProposalsQuery({
@@ -16,21 +15,22 @@ export const RecentProposals = () => {
   }
 
   return (
-    <Container className={styles.root} direction="column">
-      <Text variant="heading4">Recent Proposals</Text>
-      {isLoading ? (
-        <Container className={styles.list}>
-          {[...Array(12)].map((_, index) => {
-            return <ProposalCard key={index} />;
-          })}
-        </Container>
-      ) : (
-        <Container className={styles.list}>
-          {proposals.map((proposal, index) => (
-            <ProposalCard key={index} proposal={proposal} />
-          ))}
-        </Container>
-      )}
-    </Container>
+    <LabeledPageSection name="Recent proposals">
+      <SameWidthChildrenRow maxColumns={3} fullWidth minChildrenWidth={320} gap={16}>
+        {isLoading ? (
+          <>
+            {[...Array(12)].map((_, index) => {
+              return <ProposalCard key={index} />;
+            })}
+          </>
+        ) : (
+          <>
+            {proposals.map((proposal, index) => (
+              <ProposalCard key={index} proposal={proposal} />
+            ))}
+          </>
+        )}
+      </SameWidthChildrenRow>
+    </LabeledPageSection>
   );
 };

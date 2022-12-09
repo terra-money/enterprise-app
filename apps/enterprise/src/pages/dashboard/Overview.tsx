@@ -1,11 +1,11 @@
-import { AnimateNumber, Container } from '@terra-money/apps/components';
+import { AnimateNumber } from '@terra-money/apps/components';
 import { usePrice } from '@terra-money/apps/hooks';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { LUNA, u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { useCommunityPoolQuery, useDAOsQuery, useProposalsQuery } from 'queries';
-import styles from './Overview.module.sass';
 
 export const Overview = () => {
   // TODO: get this a better way
@@ -23,7 +23,7 @@ export const Overview = () => {
   const communityPoolValue = price ? communityPoolTotal.mul(price) : Big(0);
 
   return (
-    <Container className={styles.root}>
+    <SameWidthChildrenRow minChildrenWidth={320} rowHeight={172} gap={16} fullWidth>
       <NumericPanel
         title="Community pool total value"
         value={communityPoolValue}
@@ -41,6 +41,6 @@ export const Overview = () => {
         value={polls?.length}
         isLoading={polls === undefined || isLoadingPolls}
       />
-    </Container>
+    </SameWidthChildrenRow>
   );
 };

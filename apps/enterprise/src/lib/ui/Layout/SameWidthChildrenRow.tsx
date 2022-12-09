@@ -1,24 +1,34 @@
-import styled, { css } from "styled-components";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
+import styled, { css } from 'styled-components';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 
 interface Props {
-  gap?: number;
+  gap: number;
   minChildrenWidth?: number;
   rowHeight?: number;
   fullWidth?: boolean;
+  maxColumns?: number;
 }
 
 export const SameWidthChildrenRow = styled.div<Props>`
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
-    minmax(${({ minChildrenWidth }) => getCSSUnit(minChildrenWidth || 0)}, 1fr)
+    minmax(
+      max(
+        ${({ minChildrenWidth }) => getCSSUnit(minChildrenWidth || 0)},
+        ${({ maxColumns, gap }) => {
+          if (!maxColumns) return `0px`;
+
+          const gapCount = maxColumns - 1;
+          const totalGapWidth = `calc(${gapCount} * ${getCSSUnit(gap)})`;
+
+          return `calc((100% - ${totalGapWidth}) / ${maxColumns})`;
+        }}
+      ),
+      1fr
+    )
   );
-  ${({ gap }) =>
-    gap &&
-    css`
-      gap: ${getCSSUnit(gap)};
-    `}
+  gap: ${({ gap }) => getCSSUnit(gap)};
   ${({ rowHeight }) =>
     rowHeight &&
     css`
