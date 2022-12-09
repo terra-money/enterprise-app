@@ -1,4 +1,5 @@
 import { Text } from 'components/primitives';
+import { HStack } from 'lib/ui/Stack';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
 import { enterprise } from 'types/contracts';
 import { useCurrentProposal } from './CurrentProposalProvider';
@@ -21,11 +22,11 @@ export const UpdateAssetsWhitelistAction = () => {
         return (
           <div key={action} className={styles.section}>
             <Text variant="heading4">Whitelisted assets to {action}</Text>
-            <div className={styles.list}>
+            <HStack gap={16} wrap="wrap">
               {(assets as enterprise.AssetInfoBaseFor_Addr[]).map((asset, index) => (
                 <WhitelistedAsset key={index} asset={asset} />
               ))}
-            </div>
+            </HStack>
           </div>
         );
       })}
