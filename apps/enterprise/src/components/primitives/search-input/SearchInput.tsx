@@ -24,6 +24,7 @@ const SearchInput = (props: SearchInputProps) => {
         event.stopPropagation();
         onSearch && onSearch();
       }}
+      style={{ width: '100%' }}
     >
       <TextInput
         className={classNames(className, styles.root)}

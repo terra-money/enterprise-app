@@ -6,8 +6,9 @@ import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { useMemo, useState } from 'react';
-import styles from './ProposalsPage.module.sass';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { HStack } from 'lib/ui/Stack';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
 
 const LIMIT = 10;
 
@@ -41,7 +42,7 @@ export const ProposalsPage = () => {
 
   return (
     <Container direction="column" gap={32}>
-      <Container className={styles.header}>
+      <HStack justifyContent="space-between" gap={16} fullWidth>
         <SearchInput
           value={search.input}
           onChange={(input) =>
@@ -84,10 +85,10 @@ export const ProposalsPage = () => {
               }
             }}
           >
-            New Proposal
+            <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
           </Button>
         </Tooltip>
-      </Container>
+      </HStack>
       <Container direction="column" gap={16}>
         {proposals === undefined
           ? [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
