@@ -13,6 +13,9 @@ import { PageLayout } from 'components/layout';
 import { ProposalSummaryText } from './ProposalSummaryText';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { VStack } from 'lib/ui/Stack';
+import { SmallScreenProposalHeader } from './SmallScreenProposalHeader';
 
 export const Page = () => {
   const { id, address } = useParams();
@@ -31,22 +34,35 @@ export const Page = () => {
         {proposal && (
           <CurrentDaoProvider value={proposal.dao}>
             <CurrentProposalProvider value={proposal}>
-              <ScrollableContainer
-                stickyRef={ref}
-                threshold={0.5}
-                header={(visible) => (
-                  <StickyHeader visible={visible}>
-                    <Header compact={true} />
-                  </StickyHeader>
+              <ResponsiveView
+                normal={() => (
+                  <ScrollableContainer
+                    stickyRef={ref}
+                    threshold={0.5}
+                    header={(visible) => (
+                      <StickyHeader visible={visible}>
+                        <Header compact={true} />
+                      </StickyHeader>
+                    )}
+                  >
+                    <PageLayout header={<Header ref={ref} />}>
+                      <ProposalSummaryText />
+                      <ProposalActions />
+                      <ProposalVoting />
+                      <ProposalVotes />
+                    </PageLayout>
+                  </ScrollableContainer>
                 )}
-              >
-                <PageLayout header={<Header ref={ref} />}>
-                  <ProposalSummaryText />
-                  <ProposalActions />
-                  <ProposalVoting />
-                  <ProposalVotes />
-                </PageLayout>
-              </ScrollableContainer>
+                small={() => (
+                  <VStack gap={24}>
+                    <SmallScreenProposalHeader />
+                    <ProposalSummaryText />
+                    <ProposalActions />
+                    <ProposalVoting />
+                    <ProposalVotes />
+                  </VStack>
+                )}
+              />
             </CurrentProposalProvider>
           </CurrentDaoProvider>
         )}
