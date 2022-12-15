@@ -5,8 +5,8 @@ import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 import { getHorizontalPaddingCSS } from 'lib/ui/utils/getHorizontalPaddingCSS';
 import { Spinner } from 'lib/ui/Spinner';
 
-import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 import { UnstyledButton } from '../UnstyledButton';
+import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 
 export const rectButtonSizes = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -25,7 +25,6 @@ interface ContainerProps {
   size: RectButtonSize;
   isDisabled?: boolean;
   isLoading?: boolean;
-  isRounded?: boolean;
 }
 
 const Container = styled(UnstyledButton)<ContainerProps>`
@@ -34,7 +33,7 @@ const Container = styled(UnstyledButton)<ContainerProps>`
 
   ${centerContentCSS};
 
-  border-radius: ${({ isRounded }) => getCSSUnit(isRounded ? 100 : 8)};
+  ${roundedCSS};
 
   ${({ size }) =>
     ({
@@ -50,8 +49,8 @@ const Container = styled(UnstyledButton)<ContainerProps>`
       `,
       m: css`
         ${getHorizontalPaddingCSS(24)}
-        height: 44px;
-        font-size: 14px;
+        height: 64px;
+        font-size: 16px;
       `,
       l: css`
         ${getHorizontalPaddingCSS(20)}

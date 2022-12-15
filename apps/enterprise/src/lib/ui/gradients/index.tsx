@@ -26,3 +26,14 @@ export const gradientColorCSS = css`
   background-size: 600%;
   animation: ${animation} 16s linear infinite;
 `;
+
+export const gradientBackgroundCSS = css`
+  background: radial-gradient(
+    184.05% 757.39% at 0% 0%,
+    ${({ theme }) => theme.colors.gradient[0].toCssValue()} 3.13%,
+    ${({ theme }) => theme.colors.gradient[1].toCssValue()} 31.77%,
+    ${({ theme }) => theme.colors.gradient[2].toCssValue()} 58.85%
+  );
+  background-size: 600%;
+  animation: anime 16s linear infinite;
+`;

@@ -1,3 +1,4 @@
+import { gradientBackgroundCSS } from 'lib/ui/gradients';
 import styled, { css } from 'styled-components';
 
 import { RectButton, Props as RectButtonProps } from './RectButton';
@@ -16,7 +17,8 @@ const Container = styled(RectButton)<Props>`
   ${({ kind = defaultKind }) =>
     ({
       primary: css`
-        background: ${({ theme }) => theme.colors.primary.toCssValue()};
+        ${gradientBackgroundCSS};
+        color: ${({ theme }) => theme.colors.background.toCssValue()};
       `,
       attention: css`
         background: ${({ theme }) => theme.colors.attention.toCssValue()};
@@ -34,11 +36,7 @@ const Container = styled(RectButton)<Props>`
     !isDisabled &&
     !isLoading &&
     {
-      primary: css`
-        :hover {
-          background: ${({ theme }) => theme.colors.primaryHover.toCssValue()};
-        }
-      `,
+      primary: css``,
       attention: css`
         :hover {
           background: ${({ theme }) => theme.colors.attentionHover.toCssValue()};

@@ -1,26 +1,26 @@
-import FocusTrap from "focus-trap-react";
-import React, { ReactNode, useEffect } from "react";
-import { useKey } from "react-use";
-import { handleWithStopPropagation } from "lib/shared/events";
-import styled, { css } from "styled-components";
-import { BodyPortal } from "lib/ui/BodyPortal";
-import { CloseIconButton } from "lib/ui/buttons/square/CloseIconButton";
-import { useIsScreenWidthLessThan } from "lib/ui/hooks/useIsScreenWidthLessThan";
-import { ScreenCover } from "lib/ui/ScreenCover";
-import { Spacer } from "lib/ui/Spacer";
-import { HStack } from "lib/ui/Stack";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
-import { getSameDimensionsCSS } from "lib/ui/utils/getSameDimensionsCSS";
+import FocusTrap from 'focus-trap-react';
+import React, { ReactNode, useEffect } from 'react';
+import { useKey } from 'react-use';
+import { handleWithStopPropagation } from 'lib/shared/events';
+import styled, { css } from 'styled-components';
+import { BodyPortal } from 'lib/ui/BodyPortal';
+import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
+import { useIsScreenWidthLessThan } from 'lib/ui/hooks/useIsScreenWidthLessThan';
+import { ScreenCover } from 'lib/ui/ScreenCover';
+import { Spacer } from 'lib/ui/Spacer';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 
-import { ModalTitleText } from "./ModalTitleText";
+import { ModalTitleText } from './ModalTitleText';
 
 interface RenderContentParams {
   isFullScreen: boolean;
 }
 
-type ModalTitlePlacement = "left" | "center";
+type ModalTitlePlacement = 'left' | 'center';
 
-type ModalPlacement = "top" | "center";
+type ModalPlacement = 'top' | 'center';
 
 export interface Props {
   renderContent: (params: RenderContentParams) => React.ReactNode;
@@ -32,7 +32,9 @@ export interface Props {
   title?: ReactNode;
   titlePlacement?: ModalTitlePlacement;
   className?: string;
+  style?: React.CSSProperties;
   padding?: string | number;
+  footer?: ReactNode;
 }
 
 const MIN_HORIZONTAL_FREE_SPACE_IN_PX = 120;
@@ -51,16 +53,16 @@ export const Container = styled.div<ContainerProps>`
   max-height: 100%;
 
   background: ${({ theme: { name, colors } }) =>
-    (name === "light" ? colors.background : colors.foreground).toCssValue()};
+    (name === 'light' ? colors.background : colors.foreground).toCssValue()};
 
   ${({ isFullScreen, width, placement }) =>
     isFullScreen
-      ? getSameDimensionsCSS("100%")
+      ? getSameDimensionsCSS('100%')
       : css`
           width: ${getCSSUnit(width)};
           border-radius: 16px;
           max-height: 92%;
-          ${placement === "top" &&
+          ${placement === 'top' &&
           `
             align-self: start;
             margin-top: 4%;
@@ -69,7 +71,8 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 const Content = styled.div`
-  ${getSameDimensionsCSS("100%")};
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
 `;
 
@@ -79,26 +82,26 @@ export const Modal = ({
   title = null,
   width = 400,
   hasImplicitClose = true,
-  titlePlacement = "left",
-  placement = "center",
+  titlePlacement = 'left',
+  placement = 'center',
   padding = 20,
   className,
+  style,
+  footer = null,
 }: Props) => {
-  const isFullScreen = useIsScreenWidthLessThan(
-    `calc(${getCSSUnit(width)} + ${MIN_HORIZONTAL_FREE_SPACE_IN_PX}px)`
-  );
+  const isFullScreen = useIsScreenWidthLessThan(`calc(${getCSSUnit(width)} + ${MIN_HORIZONTAL_FREE_SPACE_IN_PX}px)`);
 
-  useKey("Escape", () => {
+  useKey('Escape', () => {
     onClose?.();
   });
 
   useEffect(() => {
-    window.history.pushState(null, "modal");
+    window.history.pushState(null, 'modal');
     window.onpopstate = () => {
       if (onClose) {
         onClose();
       } else {
-        window.history.pushState(null, "modal");
+        window.history.pushState(null, 'modal');
       }
     };
 
@@ -109,12 +112,8 @@ export const Modal = ({
 
   const hasCloseButton = (hasImplicitClose || isFullScreen) && onClose;
 
-  const headerPadding = [padding, padding, 0, padding]
-    .map(getCSSUnit)
-    .join(" ");
-  const contentPadding = [0, padding, padding, padding]
-    .map(getCSSUnit)
-    .join(" ");
+  const headerPadding = [padding, padding, 0, padding].map(getCSSUnit).join(' ');
+  const contentPadding = [0, padding, padding, padding].map(getCSSUnit).join(' ');
 
   return (
     <BodyPortal>
@@ -122,33 +121,30 @@ export const Modal = ({
         <FocusTrap
           focusTrapOptions={{
             clickOutsideDeactivates: true,
-            fallbackFocus: "#container",
+            fallbackFocus: '#container',
           }}
         >
           <Container
             placement={placement}
             className={className}
             id="container"
+            style={style}
             isFullScreen={isFullScreen}
             width={width}
             onClick={handleWithStopPropagation()}
           >
-            <HStack
-              style={{ padding: headerPadding }}
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              {(titlePlacement === "center" || !title) &&
-                (hasCloseButton ? <Spacer width={32} /> : <div />)}
+            <HStack style={{ padding: headerPadding }} alignItems="center" justifyContent="space-between">
+              {(titlePlacement === 'center' || !title) && (hasCloseButton ? <Spacer width={32} /> : <div />)}
               {title && <ModalTitleText>{title}</ModalTitleText>}
-              {hasCloseButton && (
-                <CloseIconButton size="l" onClick={() => onClose?.()} />
-              )}
+              {hasCloseButton && <CloseIconButton size="l" onClick={() => onClose?.()} />}
             </HStack>
             {(title || hasCloseButton) && <Spacer height={20} />}
-            <Content style={{ padding: contentPadding }}>
-              {renderContent({ isFullScreen })}
-            </Content>
+            <Content style={{ padding: contentPadding }}>{renderContent({ isFullScreen })}</Content>
+            {footer && (
+              <VStack fullWidth style={{ padding: padding }}>
+                {footer}
+              </VStack>
+            )}
           </Container>
         </FocusTrap>
       </ScreenCover>
