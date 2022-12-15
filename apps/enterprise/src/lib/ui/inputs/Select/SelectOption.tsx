@@ -1,36 +1,29 @@
-import { ReactNode } from "react";
-import styled, { css } from "styled-components";
-import { defaultTransitionCSS } from "lib/ui/animations/transitions";
-import { centerContentCSS } from "lib/ui/utils/centerContentCSS";
+import { ReactNode, useEffect, useRef } from 'react';
+import styled, { css } from 'styled-components';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 
-import { defaultInputShapeCSS } from "../config";
-import {
-  InvisibleHTMLRadio,
-  Props as InvisibleHTMLRadioProps,
-} from "../InvisibleHTMLRadio";
+import { InvisibleHTMLRadio, Props as InvisibleHTMLRadioProps } from '../InvisibleHTMLRadio';
+import { roundedCSS } from 'lib/ui/utils/roundedCSS';
+import { Text } from 'lib/ui/Text';
 
 const Container = styled.label<{ isSelected: boolean }>`
-  position: relative;
   cursor: pointer;
-
-  ${centerContentCSS}
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
-
-  ${defaultInputShapeCSS};
-  ${defaultTransitionCSS};
-
+  ${roundedCSS}
+  padding: 0 16px;
+  text-decoration: none;
+  ${centerContentCSS};
+  font-size: 14px;
   font-weight: 500;
+  height: 48px;
 
-  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
   :hover {
-    background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
+    background: ${({ theme }) => theme.colors.foregroundAltHover.toCssValue()};
   }
 
-  ${({ isSelected }) =>
+  ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
-      color: ${({ theme }) => theme.colors.text.toCssValue()};
+      background: ${theme.colors.foregroundAlt.toCssValue()};
     `};
 `;
 
@@ -39,15 +32,17 @@ interface Props extends InvisibleHTMLRadioProps {
   className?: string;
 }
 
-export const SelectOption = ({
-  isSelected,
-  children,
-  className,
-  ...rest
-}: Props) => {
+export const SelectOption = ({ isSelected, children, className, ...rest }: Props) => {
+  const ref = useRef<HTMLLabelElement>(null);
+  useEffect(() => {
+    if (isSelected) {
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [isSelected]);
+
   return (
-    <Container className={className} tabIndex={-1} isSelected={isSelected}>
-      {children}
+    <Container ref={ref} className={className} tabIndex={-1} isSelected={isSelected}>
+      <Text color={isSelected ? 'gradient' : 'supporting'}>{children}</Text>
       <InvisibleHTMLRadio isSelected={isSelected} {...rest} />
     </Container>
   );

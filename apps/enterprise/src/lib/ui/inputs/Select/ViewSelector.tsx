@@ -1,6 +1,8 @@
-import { SameWidthChildrenRow } from "lib/ui/Layout/SameWidthChildrenRow";
+import { HStack } from 'lib/ui/Stack';
+import { hideScrollbarsCSS } from 'lib/ui/utils/hideScrollbarsCSS';
+import styled from 'styled-components';
 
-import { SelectOption } from "./SelectOption";
+import { SelectOption } from './SelectOption';
 
 interface Props<T> {
   options: readonly T[];
@@ -10,15 +12,16 @@ interface Props<T> {
   groupName: string;
 }
 
-export function ViewSelector<T>({
-  options,
-  getName,
-  selectedOption,
-  groupName,
-  onSelect,
-}: Props<T>) {
+const Container = styled(HStack)`
+  gap: 4px;
+  overflow-x: auto;
+
+  ${hideScrollbarsCSS};
+`;
+
+export function ViewSelector<T>({ options, getName, selectedOption, groupName, onSelect }: Props<T>) {
   return (
-    <SameWidthChildrenRow gap={8}>
+    <Container>
       {options.map((option) => (
         <SelectOption
           groupName={groupName}
@@ -30,6 +33,6 @@ export function ViewSelector<T>({
           {getName(option)}
         </SelectOption>
       ))}
-    </SameWidthChildrenRow>
+    </Container>
   );
 }
