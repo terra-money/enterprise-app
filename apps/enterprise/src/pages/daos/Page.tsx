@@ -1,6 +1,7 @@
 import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
+import { SearchInput } from 'components/primitives';
 import { usePreviousIfEmpty } from 'hooks';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -28,6 +29,37 @@ export const Page = () => {
 
   const items = usePreviousIfEmpty([...Array<DAO>(MAX_PREVIEW_SIZE)], data);
 
+  const searchInput = (
+    <SearchInput
+      value={search.input}
+      onChange={(input) =>
+        setSearch((previous) => {
+          return {
+            ...previous,
+            input,
+          };
+        })
+      }
+      onClear={() => {
+        setSearch((previous) => {
+          return {
+            ...previous,
+            input: '',
+            searchText: '',
+          };
+        });
+      }}
+      onSearch={() =>
+        setSearch((previous) => {
+          return {
+            ...previous,
+            searchText: previous.input,
+          };
+        })
+      }
+    />
+  );
+
   return (
     <Navigation>
       <ResponsiveView
@@ -36,6 +68,7 @@ export const Page = () => {
             <Text size={24} weight="bold">
               DAOs
             </Text>
+            {searchInput}
             <List items={items} isLoading={isLoading} />
           </VStack>
         )}
@@ -48,23 +81,7 @@ export const Page = () => {
                   compact={true}
                   isLoading={isLoading}
                   totalCount={items?.length ?? 0}
-                  searchText={search.input}
-                  onSearchTextChange={(input) =>
-                    setSearch((previous) => {
-                      return {
-                        ...previous,
-                        input,
-                      };
-                    })
-                  }
-                  onSearch={() =>
-                    setSearch((previous) => {
-                      return {
-                        ...previous,
-                        searchText: previous.input,
-                      };
-                    })
-                  }
+                  searchInput={searchInput}
                 />
               </StickyHeader>
             )}
@@ -75,23 +92,7 @@ export const Page = () => {
                   ref={stickyRef}
                   isLoading={isLoading}
                   totalCount={items?.length ?? 0}
-                  searchText={search.input}
-                  onSearchTextChange={(input) =>
-                    setSearch((previous) => {
-                      return {
-                        ...previous,
-                        input,
-                      };
-                    })
-                  }
-                  onSearch={() =>
-                    setSearch((previous) => {
-                      return {
-                        ...previous,
-                        searchText: previous.input,
-                      };
-                    })
-                  }
+                  searchInput={searchInput}
                 />
               }
             >
