@@ -8,10 +8,10 @@ import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
 import { useConnectedWallet, UserDenied } from '@terra-money/wallet-provider';
 import { useCallback } from 'react';
-import { useTxErrorDialog } from './error/TxErrorDialog';
 import { LinearProgress } from '@mui/material';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import styles from './TransactionSnackbar.module.sass';
+import { useTransactionError } from 'chain/components/TransactionErrorProvider';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -39,7 +39,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
 
   const connectedWallet = useConnectedWallet();
 
-  const openTxErrorDialog = useTxErrorDialog();
+  const { showDetails: showTransactionErrorDetails } = useTransactionError();
 
   const onDetailsClick = useCallback(() => {
     if (!connectedWallet) {
@@ -47,12 +47,12 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
     }
 
     if (transaction.txHash.length === 0 && transaction.status === TransactionStatus.Failed) {
-      openTxErrorDialog({ transaction });
+      showTransactionErrorDetails(transaction.error.message.slice(0, 500));
       return;
     }
 
     window.open(getFinderUrl(connectedWallet.network.name, transaction.txHash));
-  }, [connectedWallet, transaction, openTxErrorDialog]);
+  }, [connectedWallet, showTransactionErrorDetails, transaction]);
 
   return (
     <div className={styles.root} data-variant={variant}>

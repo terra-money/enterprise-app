@@ -37,6 +37,7 @@ import { darkTheme } from 'lib/ui/theme/darkTheme';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { ConnectWalletPrompt } from 'components/not-connected';
+import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 
 const queryClient = new QueryClient();
 
@@ -153,17 +154,19 @@ const AppProviders = () => {
             <NetworkGuard>
               <QueryClientProvider client={queryClient}>
                 <TransactionsProvider>
-                  <DialogProvider>
-                    <SnackbarProvider
-                      autoHideDuration={null}
-                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                    >
-                      <PersonalizationProvider>
-                        <AppRoutes />
-                        <DialogContainer />
-                      </PersonalizationProvider>
-                    </SnackbarProvider>
-                  </DialogProvider>
+                  <TransactionErrorProvider>
+                    <DialogProvider>
+                      <SnackbarProvider
+                        autoHideDuration={null}
+                        content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                      >
+                        <PersonalizationProvider>
+                          <AppRoutes />
+                          <DialogContainer />
+                        </PersonalizationProvider>
+                      </SnackbarProvider>
+                    </DialogProvider>
+                  </TransactionErrorProvider>
                 </TransactionsProvider>
               </QueryClientProvider>
             </NetworkGuard>

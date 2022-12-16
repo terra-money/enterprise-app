@@ -53,7 +53,7 @@ export const Container = styled.div<ContainerProps>`
   max-height: 100%;
 
   background: ${({ theme: { name, colors } }) =>
-    (name === 'light' ? colors.background : colors.foreground).toCssValue()};
+    (name === 'light' ? colors.background : colors.background).toCssValue()};
 
   ${({ isFullScreen, width, placement }) =>
     isFullScreen
@@ -80,11 +80,11 @@ export const Modal = ({
   renderContent,
   onClose,
   title = null,
-  width = 400,
+  width = 480,
   hasImplicitClose = true,
   titlePlacement = 'left',
   placement = 'center',
-  padding = 20,
+  padding = 24,
   className,
   style,
   footer = null,

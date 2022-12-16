@@ -12,7 +12,7 @@ import {
   useVotingPowerQuery,
 } from 'queries';
 import { useStakeTokenDialog } from './StakeTokenDialog';
-import { useUnstakeTokenDialog } from './UnstakeTokenDialog';
+import { UnstakeTokenOverlay } from './UnstakeTokenOverlay';
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
@@ -25,6 +25,7 @@ import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
 import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
 import { VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { OverlayOpener } from 'lib/ui/OverlayOpener';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -93,8 +94,6 @@ export const TokenStakingConnectedView = () => {
 
   const openStakeTokenDialog = useStakeTokenDialog();
 
-  const openUnstakeTokenDialog = useUnstakeTokenDialog();
-
   const [claimTxResult, claimTx] = useClaimTx();
 
   return (
@@ -132,22 +131,24 @@ export const TokenStakingConnectedView = () => {
                 >
                   Stake
                 </Button>
-                <Button
-                  variant="secondary"
-                  disabled={isLoading || walletStaked.lte(0)}
-                  onClick={() => {
-                    openUnstakeTokenDialog({
-                      walletAddress,
-                      tokenAddress,
-                      daoAddress: dao.address,
-                      staked: walletStaked,
-                      symbol: tokenSymbol,
-                      decimals: tokenDecimals,
-                    });
-                  }}
-                >
-                  Unstake
-                </Button>
+                <OverlayOpener
+                  renderOpener={({ onOpen }) => (
+                    <Button variant="secondary" disabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>
+                      Unstake
+                    </Button>
+                  )}
+                  renderOverlay={({ onClose }) => (
+                    <UnstakeTokenOverlay
+                      daoAddress={dao.address}
+                      staked={walletStaked}
+                      symbol={tokenSymbol}
+                      onClose={onClose}
+                      decimals={tokenDecimals}
+                      tokenAddress={tokenAddress}
+                      walletAddress={walletAddress}
+                    />
+                  )}
+                />
               </Container>
             </VStack>
           </Container>
