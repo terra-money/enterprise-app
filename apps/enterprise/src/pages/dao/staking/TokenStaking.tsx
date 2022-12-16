@@ -11,7 +11,6 @@ import {
   useTokenStakingAmountQuery,
   useVotingPowerQuery,
 } from 'queries';
-import { useStakeTokenDialog } from './StakeTokenDialog';
 import { UnstakeTokenOverlay } from './UnstakeTokenOverlay';
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
@@ -26,6 +25,7 @@ import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
 import { VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
+import { StakeTokenOverlay } from './StakeTokenOverlay';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -92,8 +92,6 @@ export const TokenStakingConnectedView = () => {
 
   const { data: balance = Big(0) as u<Big> } = useCW20BalanceQuery(walletAddress, tokenAddress);
 
-  const openStakeTokenDialog = useStakeTokenDialog();
-
   const [claimTxResult, claimTx] = useClaimTx();
 
   return (
@@ -114,23 +112,25 @@ export const TokenStakingConnectedView = () => {
                 </Text>
               </Container>
               <Container className={styles.actions} direction="row">
-                <Button
-                  variant="primary"
-                  disabled={isLoading || balance.lte(0)}
-                  onClick={() => {
-                    openStakeTokenDialog({
-                      walletAddress,
-                      tokenAddress,
-                      daoAddress: dao.address,
-                      staked: walletStaked,
-                      balance,
-                      symbol: tokenSymbol,
-                      decimals: tokenDecimals,
-                    });
-                  }}
-                >
-                  Stake
-                </Button>
+                <OverlayOpener
+                  renderOpener={({ onOpen }) => (
+                    <Button variant="primary" disabled={isLoading || balance.lte(0)} onClick={onOpen}>
+                      Stake
+                    </Button>
+                  )}
+                  renderOverlay={({ onClose }) => (
+                    <StakeTokenOverlay
+                      balance={balance}
+                      daoAddress={dao.address}
+                      staked={walletStaked}
+                      symbol={tokenSymbol}
+                      onClose={onClose}
+                      decimals={tokenDecimals}
+                      tokenAddress={tokenAddress}
+                      walletAddress={walletAddress}
+                    />
+                  )}
+                />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
                     <Button variant="secondary" disabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>

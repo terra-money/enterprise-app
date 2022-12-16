@@ -1,43 +1,52 @@
 import { NumericPanel } from 'components/numeric-panel';
-import { useUnstakeTokenForm } from './useUnstakeTokenForm';
+import { useStakeTokenForm } from './useStakeTokenForm';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { AmountInput } from 'components/amount-input';
 import { demicrofy, microfy } from '@terra-money/apps/libs/formatting';
-import { useUnstakeTokenTx } from 'tx';
+import { useStakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 
-interface UnstakeTokenOverlayProps extends ClosableComponentProps {
+interface StakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
   daoAddress: string;
   tokenAddress: string;
+  balance: u<Big>;
   staked: u<Big>;
   symbol: string;
   decimals: number;
 }
 
-export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onClose }: UnstakeTokenOverlayProps) => {
-  const [input, { amount, submitDisabled }] = useUnstakeTokenForm({ staked, decimals });
+export const StakeTokenOverlay = ({
+  daoAddress,
+  tokenAddress,
+  balance,
+  staked,
+  symbol,
+  decimals,
+  onClose,
+}: StakeTokenOverlayProps) => {
+  const [input, { amount, submitDisabled }] = useStakeTokenForm({ balance, decimals });
 
-  const [txResult, unstakeTokenTx] = useUnstakeTokenTx();
+  const [txResult, stakeTokenTx] = useStakeTokenTx();
 
   return (
     <Modal
-      title="Unstake your tokens"
+      title="Stake your tokens"
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
           <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
           <AmountInput
             value={amount}
-            placeholder="Type amount to unstake"
-            maxAmount={demicrofy(staked, decimals)}
+            placeholder="Type amount to stake"
+            maxAmount={demicrofy(balance, decimals)}
             symbol={symbol}
             onChange={(event) => input({ amount: event.target.value })}
-            onMaxClick={() => input({ amount: demicrofy(staked, decimals).toString() })}
+            onMaxClick={() => input({ amount: demicrofy(balance, decimals).toString() })}
           />
         </VStack>
       )}
@@ -48,15 +57,16 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
             isLoading={txResult.loading}
             onClick={async () => {
               if (submitDisabled === false && amount) {
-                await unstakeTokenTx({
+                await stakeTokenTx({
                   daoAddress,
+                  tokenAddress,
                   amount: microfy(Big(amount), decimals),
                 });
                 onClose();
               }
             }}
           >
-            Unstake
+            Stake
           </PrimaryButton>
           <PrimaryButton kind="secondary" onClick={onClose}>
             Cancel
