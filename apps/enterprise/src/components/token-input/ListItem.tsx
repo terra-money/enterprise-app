@@ -1,27 +1,23 @@
 import { Text } from 'components/primitives';
-import { ListChildComponentProps } from 'react-window';
 import { TokenIcon } from 'components/token-icon';
 import { useTokenBalanceQuery } from 'queries';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { TokenBalance } from './TokenBalance';
-import { ListData } from './ListData';
 import styles from './ListItem.module.sass';
+import { Token } from 'types';
 
-export const ListItem = (props: ListChildComponentProps<ListData>) => {
-  const {
-    index,
-    style,
-    data: { tokens, onSelectionChanged },
-  } = props;
+interface Props {
+  token: Token;
+  onSelect: () => void;
+}
 
-  const token = tokens[index];
-
+export const ListItem = ({ token, onSelect }: Props) => {
   const connectedWallet = useConnectedWallet();
 
   const { data: balance } = useTokenBalanceQuery(connectedWallet?.walletAddress!, token);
 
   return (
-    <div key={token.symbol} className={styles.listItem} style={style} onClick={() => onSelectionChanged(token)}>
+    <div key={token.symbol} className={styles.listItem} onClick={onSelect}>
       <TokenIcon className={styles.icon} symbol={token.symbol} path={token.icon} />
       <Text className={styles.symbol} variant="text" weight="bold">
         {token.symbol}

@@ -1,5 +1,7 @@
 import { AddButton } from 'components/add-button';
-import { useTokenListDialog } from 'components/token-list';
+import { TokenInput } from 'components/token-input';
+import { Modal } from 'lib/ui/Modal';
+import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { Token } from 'types';
 
 interface AddTokenButtonProps {
@@ -7,17 +9,23 @@ interface AddTokenButtonProps {
 }
 
 export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
-  const openTokenList = useTokenListDialog();
-
   return (
-    <AddButton
-      onClick={() =>
-        openTokenList().then((token) => {
-          if (token) {
-            onSelect(token);
-          }
-        })
-      }
+    <OverlayOpener
+      renderOverlay={({ onClose }) => (
+        <Modal
+          title="Select a token"
+          onClose={onClose}
+          renderContent={() => (
+            <TokenInput
+              onSelect={(token) => {
+                onSelect(token);
+                onClose();
+              }}
+            />
+          )}
+        />
+      )}
+      renderOpener={({ onOpen }) => <AddButton onClick={onOpen} />}
     />
   );
 };
