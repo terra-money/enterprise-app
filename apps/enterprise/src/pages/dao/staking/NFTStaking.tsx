@@ -8,8 +8,7 @@ import { useVotingPowerQuery, useCW721TokensQuery, useNFTStakingQuery, useReleas
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
-import { useStakeNFTDialog } from './StakeNFTDialog';
-import { useUnstakeNFTDialog } from './UnstakeNFTDialog';
+import { StakeNFTOverlay } from './StakeNFTOverlay';
 import { PendingClaims } from './PendingClaims';
 import styles from './NFTStaking.module.sass';
 import { usePendingClaims } from 'hooks';
@@ -20,6 +19,8 @@ import { NftDaoTotalSupplyPanel } from '../NftDaoTotalSupplyPanel';
 import { NftDaoTotalStakedPanel } from '../NftDaoTotalStakedPanel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
+import { OverlayOpener } from 'lib/ui/OverlayOpener';
+import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -58,10 +59,6 @@ export const NftStakingConnectedView = () => {
 
   const { data: tokens = [] } = useCW721TokensQuery(walletAddress, dao.membershipContractAddress);
 
-  const openStakeNFTDialog = useStakeNFTDialog();
-
-  const openUnstakeNFTDialog = useUnstakeNFTDialog();
-
   const [claimTxResult, claimTx] = useClaimTx();
 
   return (
@@ -82,36 +79,45 @@ export const NftStakingConnectedView = () => {
                 </Text>
               </Container>
               <Container className={styles.actions} direction="row">
-                <Button
-                  variant="primary"
-                  disabled={isLoading || tokens.length === 0}
-                  onClick={() => {
-                    openStakeNFTDialog({
-                      walletAddress,
-                      tokenAddress: dao.membershipContractAddress,
-                      daoAddress: dao.address,
-                      staked: walletStaked.tokens,
-                      tokens,
-                      symbol,
-                    });
-                  }}
-                >
-                  Stake
-                </Button>
-                <Button
-                  variant="secondary"
-                  disabled={isLoading || walletStaked.tokens.length === 0}
-                  onClick={() => {
-                    openUnstakeNFTDialog({
-                      walletAddress,
-                      daoAddress: dao.address,
-                      staked: walletStaked.tokens,
-                      symbol,
-                    });
-                  }}
-                >
-                  Unstake
-                </Button>
+                <OverlayOpener
+                  renderOpener={({ onOpen }) => (
+                    <Button variant="primary" disabled={isLoading || tokens.length === 0} onClick={onOpen}>
+                      Stake
+                    </Button>
+                  )}
+                  renderOverlay={({ onClose }) => (
+                    <StakeNFTOverlay
+                      tokens={tokens}
+                      daoAddress={dao.address}
+                      symbol={symbol}
+                      onClose={onClose}
+                      tokenAddress={dao.membershipContractAddress}
+                      walletAddress={walletAddress}
+                      staked={walletStaked.tokens}
+                    />
+                  )}
+                />
+
+                <OverlayOpener
+                  renderOpener={({ onOpen }) => (
+                    <Button
+                      variant="secondary"
+                      disabled={isLoading || walletStaked.tokens.length === 0}
+                      onClick={onOpen}
+                    >
+                      Unstake
+                    </Button>
+                  )}
+                  renderOverlay={({ onClose }) => (
+                    <UnstakeNFTOverlay
+                      daoAddress={dao.address}
+                      symbol={symbol}
+                      onClose={onClose}
+                      walletAddress={walletAddress}
+                      staked={walletStaked.tokens}
+                    />
+                  )}
+                />
               </Container>
             </VStack>
           </Container>

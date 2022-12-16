@@ -1,6 +1,5 @@
 import { TransactionsProvider } from '@terra-money/apps/libs/transactions';
 import { WalletProvider, useChainOptions } from '@terra-money/wallet-provider';
-import { DialogContainer, DialogProvider } from '@terra-money/apps/dialog';
 import { NetworkGuard } from 'components/network-guard';
 import { SnackbarContainer } from 'components/snackbar';
 import { SnackbarProvider } from 'notistack';
@@ -155,17 +154,14 @@ const AppProviders = () => {
               <QueryClientProvider client={queryClient}>
                 <TransactionsProvider>
                   <TransactionErrorProvider>
-                    <DialogProvider>
-                      <SnackbarProvider
-                        autoHideDuration={null}
-                        content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                      >
-                        <PersonalizationProvider>
-                          <AppRoutes />
-                          <DialogContainer />
-                        </PersonalizationProvider>
-                      </SnackbarProvider>
-                    </DialogProvider>
+                    <SnackbarProvider
+                      autoHideDuration={null}
+                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                    >
+                      <PersonalizationProvider>
+                        <AppRoutes />
+                      </PersonalizationProvider>
+                    </SnackbarProvider>
                   </TransactionErrorProvider>
                 </TransactionsProvider>
               </QueryClientProvider>
@@ -178,11 +174,7 @@ const AppProviders = () => {
 };
 
 const App = () => {
-  return (
-    <DialogProvider>
-      <AppProviders />
-    </DialogProvider>
-  );
+  return <AppProviders />;
 };
 
 export default App;
