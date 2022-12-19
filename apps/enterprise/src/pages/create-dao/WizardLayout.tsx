@@ -1,7 +1,8 @@
-import { AnimatedPage, Container } from '@terra-money/apps/components';
+import { AnimatedPage } from '@terra-money/apps/components';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { ReactNode } from 'react';
+import styled from 'styled-components';
 import { StepProgress } from './StepProgress';
-import styles from './WizardLayout.module.sass';
 
 export interface WizardLayoutProps {
   percentageComplete: number;
@@ -9,17 +10,36 @@ export interface WizardLayoutProps {
   footer: ReactNode;
 }
 
+const Container = styled(VStack)`
+  height: 100%;
+  background-image: linear-gradient(180deg, #151718 20%, #101213 100%);
+  background-position: 100% 0%;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+`;
+
+const Content = styled(VStack)`
+  flex: 1;
+`;
+
+const Footer = styled(HStack)`
+  padding: 48px 0 64px 64px;
+
+  @media (max-width: 768px) {
+    padding: 0;
+    padding-top: 32px;
+  }
+`;
+
 export const WizardLayout = (props: WizardLayoutProps) => {
   const { children, footer, percentageComplete } = props;
 
   return (
-    <AnimatedPage className={styles.root}>
-      <StepProgress percentageComplete={percentageComplete} />
-      <Container className={styles.body} direction="column">
-        {children}
-      </Container>
-      <Container className={styles.footer} direction="row">
-        {footer}
+    <AnimatedPage>
+      <Container>
+        <StepProgress percentageComplete={percentageComplete} />
+        <Content>{children}</Content>
+        <Footer>{footer}</Footer>
       </Container>
     </AnimatedPage>
   );
