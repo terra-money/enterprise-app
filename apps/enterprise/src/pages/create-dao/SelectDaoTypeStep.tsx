@@ -24,6 +24,8 @@ const daoTypeExplanationRecord: Record<DaoType, string> = {
 const Container = styled(VStack)`
   gap: 32px;
 
+  overflow-y: auto;
+
   margin: 96px 64px 32px 64px;
 `;
 

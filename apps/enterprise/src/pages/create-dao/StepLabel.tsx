@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
-import { WizardState } from './Wizard';
 import { enterprise } from 'types/contracts';
 import styles from './StepLabel.module.sass';
 
-interface StepLabelProps<T> extends Pick<WizardState<T>, 'steps'> {
+interface StepLabelProps<T> {
+  steps: T[];
   className?: string;
   type?: enterprise.DaoType;
   description?: string;
