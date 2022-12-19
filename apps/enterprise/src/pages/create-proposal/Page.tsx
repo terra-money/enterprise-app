@@ -35,8 +35,12 @@ const title = 'Create a proposal';
 const NormalScreenContainer = styled(VStack)`
   padding: 48px 48px 64px 48px;
   height: 100%;
-  overflow-y: auto;
   gap: 32px;
+`;
+
+const NormalScreenContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
 `;
 
 export const Page = () => {
@@ -96,7 +100,7 @@ export const Page = () => {
                 <AnimatedPage>
                   <NormalScreenContainer>
                     <Header ref={ref} title={title} />
-                    {renderOptions()}
+                    <NormalScreenContent>{renderOptions()}</NormalScreenContent>
                     {renderFooter()}
                   </NormalScreenContainer>
                 </AnimatedPage>
