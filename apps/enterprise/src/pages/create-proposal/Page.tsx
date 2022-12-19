@@ -1,16 +1,20 @@
-import { AnimatedPage, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { AnimatedPage } from '@terra-money/apps/components';
 import { useRef, useState } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { Header } from './Header';
 import { useNavigate, useParams } from 'react-router';
 import { useDAOQuery } from 'queries';
 import { CW20Addr } from '@terra-money/apps/types';
-import styles from './Page.module.sass';
-import { Button, Text } from 'components/primitives';
-import { OptionButton } from 'components/option-button';
+import { Button } from 'components/primitives';
 import { FormFooter } from 'components/form-footer';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { VStack } from 'lib/ui/Stack';
+import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
+import { assertDefined } from '@terra-money/apps/utils';
+import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
+import styled from '@emotion/styled';
 
 const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members'] as const;
 type ProposalType = typeof proposalTypes[number];
@@ -25,6 +29,16 @@ export const proposalTitle: Record<ProposalType, string> = {
   members: 'Update multisig members',
 };
 
+const title = 'Create a proposal';
+
+// TODO: turn into a reusable component
+const NormalScreenContainer = styled(VStack)`
+  padding: 48px 48px 64px 48px;
+  height: 100%;
+  overflow-y: auto;
+  gap: 32px;
+`;
+
 export const Page = () => {
   const { address } = useParams();
 
@@ -36,55 +50,58 @@ export const Page = () => {
 
   const navigate = useNavigate();
 
+  const renderOptions = () => {
+    const { type } = assertDefined(dao);
+    const options = type === 'multisig' ? proposalTypes : proposalTypes.filter((type) => type !== 'members');
+    return (
+      <PrimarySelect
+        label="Choose type"
+        options={options}
+        getName={(type) => proposalTitle[type]}
+        selectedOption={proposalType}
+        onSelect={setProposalType}
+        groupName="proposal-type"
+      />
+    );
+  };
+
+  const renderFooter = () => {
+    const { address } = assertDefined(dao);
+    return (
+      <FormFooter
+        primary={
+          <Button onClick={() => navigate(`/dao/${address}/proposals/create/${proposalType}`)} variant="primary">
+            Next
+          </Button>
+        }
+        secondary={<Button onClick={() => navigate(`/dao/${address}`)}>Cancel</Button>}
+      />
+    );
+  };
+
   return (
     <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
-            <ScrollableContainer
-              stickyRef={ref}
-              header={(visible) => (
-                <StickyHeader visible={visible}>
-                  <Header compact={true} title="Create a proposal" />
-                </StickyHeader>
+            <ResponsiveView
+              small={() => (
+                <VStack gap={24}>
+                  <MobileCreateProposalHeader title={title} />
+                  {renderOptions()}
+                  {renderFooter()}
+                </VStack>
               )}
-            >
-              <AnimatedPage className={styles.root}>
-                <Header ref={ref} title="Create a proposal" />
-                <div className={styles.options}>
-                  <Text variant="text" className={styles.label}>
-                    Choose type
-                  </Text>
-                  <div className={styles.list}>
-                    {proposalTypes.map((type, index) => {
-                      if (type === 'members' && dao.type !== 'multisig') {
-                        return null;
-                      }
-                      return (
-                        <OptionButton
-                          key={index}
-                          title={proposalTitle[type]}
-                          active={type === proposalType}
-                          onClick={() => setProposalType(type)}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-                <FormFooter
-                  className={styles.footer}
-                  primary={
-                    <Button
-                      onClick={() => navigate(`/dao/${dao.address}/proposals/create/${proposalType}`)}
-                      variant="primary"
-                    >
-                      Next
-                    </Button>
-                  }
-                  secondary={<Button onClick={() => navigate(`/dao/${dao.address}`)}>Cancel</Button>}
-                />
-              </AnimatedPage>
-            </ScrollableContainer>
+              normal={() => (
+                <AnimatedPage>
+                  <NormalScreenContainer>
+                    <Header ref={ref} title={title} />
+                    {renderOptions()}
+                    {renderFooter()}
+                  </NormalScreenContainer>
+                </AnimatedPage>
+              )}
+            />
           </CurrentDaoProvider>
         )}
       </LoadingPage>
