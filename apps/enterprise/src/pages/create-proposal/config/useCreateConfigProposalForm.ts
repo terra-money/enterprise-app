@@ -34,6 +34,11 @@ const validators: Partial<
     }
   },
   name: (value) => validateLength(value, 3, 140, 'name'),
+  description: (value) => {
+    if (value) {
+      return validateLength(value, 3, 2000, 'description');
+    }
+  },
 
   discordUsername: validateDiscordUsername,
   githubUsername: validateGithubUsername,

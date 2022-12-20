@@ -159,6 +159,8 @@ export module enterprise {
     github_username: ModifyValueFor_Nullable_String;
     logo: ModifyValueFor_Logo;
     name: ModifyValueFor_String;
+    description: ModifyValueFor_String;
+
     telegram_username: ModifyValueFor_Nullable_String;
     twitter_username: ModifyValueFor_Nullable_String;
   }

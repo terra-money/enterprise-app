@@ -2,6 +2,7 @@ import { ConfigProposalFormInput, ConfigProposalFormState } from './useCreateCon
 import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
 import { FormInput } from '@terra-money/apps/hooks';
+import { DescriptionInput } from '../shared/DescriptionInput';
 
 interface ConfigProposalFormProps {
   formInput: FormInput<ConfigProposalFormInput>;
@@ -9,7 +10,7 @@ interface ConfigProposalFormProps {
 }
 
 export const MetadataFields = ({ formInput, formState }: ConfigProposalFormProps) => {
-  const { name, nameError, logo, logoError } = formState;
+  const { name, nameError, logo, logoError, description, descriptionError } = formState;
 
   return (
     <>
@@ -29,6 +30,12 @@ export const MetadataFields = ({ formInput, formState }: ConfigProposalFormProps
           onChange={({ currentTarget }) => formInput({ logo: currentTarget.value })}
         />
       </FormControl>
+      <DescriptionInput
+        label="Description"
+        value={description}
+        error={descriptionError}
+        onChange={(description) => formInput({ description })}
+      />
     </>
   );
 };

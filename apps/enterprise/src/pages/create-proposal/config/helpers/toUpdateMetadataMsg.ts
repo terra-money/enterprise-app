@@ -12,7 +12,15 @@ const hasSocialChanged = (one: string | null | undefined, another: string | null
 
 export const toUpdateMetadataMsg = (
   dao: DAO,
-  { discordUsername, githubUsername, telegramUsername, twitterUsername, logo, name }: ConfigProposalFormInput
+  {
+    discordUsername,
+    githubUsername,
+    telegramUsername,
+    twitterUsername,
+    logo,
+    name,
+    description,
+  }: ConfigProposalFormInput
 ): enterprise.UpdateMetadataMsg => {
   const msg: enterprise.UpdateMetadataMsg = {
     discord_username: 'no_change',
@@ -21,6 +29,7 @@ export const toUpdateMetadataMsg = (
     twitter_username: 'no_change',
     logo: 'no_change',
     name: 'no_change',
+    description: 'no_change',
   };
 
   if (hasSocialChanged(dao.socials.discord_username, discordUsername)) {
@@ -41,6 +50,10 @@ export const toUpdateMetadataMsg = (
 
   if (dao.name !== name) {
     msg.name = { change: name };
+  }
+
+  if (dao.description !== description) {
+    msg.description = { change: description };
   }
 
   if (logo && !dao.logo) {
