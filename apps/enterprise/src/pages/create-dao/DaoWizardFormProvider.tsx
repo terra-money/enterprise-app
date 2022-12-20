@@ -30,6 +30,7 @@ export interface DaoSocialDataInput {
 
 export interface DaoInfoInput {
   name: string;
+  description: string;
   logo?: string;
 }
 
@@ -145,6 +146,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   type: defaultDaoType,
   info: {
     name: '',
+    description: '',
     logo: undefined,
   },
   isValid: true,

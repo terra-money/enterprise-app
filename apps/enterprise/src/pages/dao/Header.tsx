@@ -46,6 +46,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <Text className={styles.name} variant="heading2">
           {dao.name}
         </Text>
+        {dao.description && <Text variant="text">{dao.description}</Text>}
       </Container>
       <Container ref={ref} className={styles.tabs}>
         <DaoNavigation />

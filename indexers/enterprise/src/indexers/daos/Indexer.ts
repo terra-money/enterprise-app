@@ -54,6 +54,7 @@ export class Indexer extends EventIndexer<Entity> {
       address,
       type: response.dao_type,
       name: response.metadata.name,
+      description: response.metadata.description,
       lowerCaseName: response.metadata.name.toLowerCase(),
       logo: response.metadata.logo === 'none' ? undefined : response.metadata.logo.url,
       membershipContractAddress: response.dao_membership_contract,

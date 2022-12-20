@@ -18,6 +18,7 @@ export const MobileDaoHeader = () => {
       <Text size={24} weight="bold">
         {dao.name}
       </Text>
+      {dao.description && <Text color="supporting">{dao.description}</Text>}
       <Line />
       <DaoNavigation />
     </VStack>

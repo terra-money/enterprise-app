@@ -147,6 +147,7 @@ export module enterprise_factory {
   export interface DaoMetadata {
     logo: Logo;
     name: string;
+    description?: string;
     socials: DaoSocialData;
   }
   export interface DaoSocialData {

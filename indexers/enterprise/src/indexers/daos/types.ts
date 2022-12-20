@@ -5,6 +5,7 @@ export type Entity = {
   address: string;
   type: enterprise.DaoType;
   name: string;
+  description?: string;
   lowerCaseName: string;
   logo?: string;
   membershipContractAddress: string;

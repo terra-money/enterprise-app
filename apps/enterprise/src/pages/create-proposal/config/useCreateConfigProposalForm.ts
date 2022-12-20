@@ -67,7 +67,7 @@ export const useCreateConfigProposalForm = () => {
   );
 
   const initialState: ConfigProposalFormState = useMemo(() => {
-    const { name, logo, socials, governanceConfig } = dao;
+    const { name, logo, description, socials, governanceConfig } = dao;
 
     const unlockingPeriodInSeconds =
       'time' in governanceConfig.unlockingPeriod ? governanceConfig.unlockingPeriod.time : 0;
@@ -84,6 +84,7 @@ export const useCreateConfigProposalForm = () => {
 
       logo: logo || '',
       name: name || '',
+      description: description || '',
 
       quorum: governanceConfig.quorum,
       threshold: governanceConfig.threshold,

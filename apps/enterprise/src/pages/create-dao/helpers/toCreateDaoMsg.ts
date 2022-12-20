@@ -95,7 +95,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
 
 export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
-    info: { name, logo },
+    info: { name, logo, description },
     socials,
   } = input;
 
@@ -106,6 +106,7 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
       dao_metadata: {
         logo: logo ? { url: logo } : 'none',
         name,
+        description,
         socials: {
           github_username: socials.githubUsername,
           twitter_username: socials.twitterUsername,

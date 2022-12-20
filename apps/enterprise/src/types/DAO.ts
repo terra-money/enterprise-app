@@ -20,6 +20,7 @@ export class DAO {
     public readonly address: string,
     public readonly type: enterprise.DaoType,
     public readonly name: string,
+    public readonly description: string | undefined = undefined,
     public readonly logo: string | undefined = undefined,
     public readonly membershipContractAddress: string,
     public readonly enterpriseFactoryContract: string,

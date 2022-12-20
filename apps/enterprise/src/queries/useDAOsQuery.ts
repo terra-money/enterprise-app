@@ -15,6 +15,7 @@ export type DAOsQueryResponse = Array<{
   address: string;
   type: enterprise.DaoType;
   name: string;
+  description: string | undefined;
   logo: string | undefined;
   membershipContractAddress: string;
   enterpriseFactoryContract: string;
@@ -32,6 +33,7 @@ export const fetchDAOsQuery = async (endpoint: string) => {
       entity.address,
       entity.type,
       entity.name,
+      entity.description,
       entity.logo,
       entity.membershipContractAddress,
       entity.enterpriseFactoryContract,
