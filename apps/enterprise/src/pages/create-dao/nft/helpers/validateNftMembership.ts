@@ -11,7 +11,9 @@ export const validateNftMembership = ({
 
   formState.nftNameError = validateLength(nftName, 3, 140, 'name');
   formState.nftSymbolError = validateLength(nftSymbol, 3, 10, 'symbol');
-  formState.minterError = validateAddress(minter);
+  if (minter) {
+    formState.minterError = validateAddress(minter);
+  }
 
   return formState;
 };

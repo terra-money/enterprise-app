@@ -44,7 +44,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
     nft: () => ({
       new_membership: {
         new_nft: {
-          minter: nftMembership.minter,
+          minter: nftMembership.minter || null,
           nft_name: nftMembership.nftName,
           nft_symbol: nftMembership.nftSymbol,
         },
