@@ -5,7 +5,7 @@ import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
 import { batch, createLCDClient } from '@apps-shared/indexers/utils';
 import { KeySelector } from '@apps-shared/indexers/services/persistence';
 import { fetchByHeight } from '@apps-shared/indexers/services/event-store';
-import { CreateProposalEvent, EnterpriseEventPK, ExecuteProposalEvent } from 'types/events';
+import { DaoEvents, EnterpriseEventPK } from 'types/events';
 import { enterprise } from 'types/contracts';
 import Big from 'big.js';
 
@@ -30,13 +30,16 @@ export class Indexer extends EventIndexer<Entity> {
       EnterpriseEventPK.dao('create_proposal'),
       EnterpriseEventPK.dao('execute_proposal'),
       EnterpriseEventPK.dao('cast_vote'),
-    ];
 
-    type Events = CreateProposalEvent | ExecuteProposalEvent;
+      EnterpriseEventPK.dao('stake_cw20'),
+      EnterpriseEventPK.dao('stake_cw721'),
+      EnterpriseEventPK.dao('unstake_cw20'),
+      EnterpriseEventPK.dao('unstake_cw721'),
+    ];
 
     const promises = await Promise.all(
       pks.map((pk) =>
-        fetchByHeight<Events, string>(this.events, pk, min, max, (event) => [
+        fetchByHeight<DaoEvents, string>(this.events, pk, min, max, (event) => [
           `${event.payload._contract_address}:${event.payload.proposal_id}`,
         ])
       )
