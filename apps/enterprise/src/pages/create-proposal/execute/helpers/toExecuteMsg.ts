@@ -16,7 +16,7 @@ export interface ExecuteMsgInput {
 
 export const encodedWasmFields: Array<keyof WasmMessage> = ['execute', 'instantiate', 'migrate'];
 
-const base64encode = (input: string): string => {
+export const base64encode = (input: string): string => {
   return Buffer.from(JSON.stringify(JSON.parse(JSON.stringify(input)))).toString('base64');
 };
 

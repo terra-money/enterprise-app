@@ -16,7 +16,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 
-const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members'] as const;
+const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members', 'spend'] as const;
 type ProposalType = typeof proposalTypes[number];
 
 export const proposalTitle: Record<ProposalType, string> = {
@@ -27,6 +27,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   nfts: 'Update whitelisted NFTs',
   execute: 'Proposal to execute message',
   members: 'Update multisig members',
+  spend: 'Spend treasury',
 };
 
 const title = 'Create a proposal';

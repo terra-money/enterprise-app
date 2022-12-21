@@ -37,6 +37,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { ConnectWalletPrompt } from 'components/not-connected';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
+import { SpendTreasuryProposalPage } from 'pages/create-proposal/spend/SpendTreasuryProposalPage';
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,15 @@ const AppBetaRoutes = () => {
             <ConditionalWallet
               notConnected={() => <ConnectWalletPrompt />}
               connected={() => <MultisigMembersProposalPage />}
+            />
+          }
+        />
+        <Route
+          path="/dao/:address/proposals/create/spend"
+          element={
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <SpendTreasuryProposalPage />}
             />
           }
         />
