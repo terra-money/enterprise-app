@@ -21,6 +21,7 @@ export const TextInput = forwardRef(function TextInputInner(
         {...props}
         isValid={!error}
         ref={ref}
+        onWheel={props.type === 'number' ? ({ currentTarget }) => currentTarget.blur() : undefined}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           props.onChange?.(event);
           onValueChange?.(event.currentTarget.value);

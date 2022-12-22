@@ -6,27 +6,32 @@ import { useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
 import { TreasuryToken } from 'queries';
-
-const spendTreasuryProposalFormSchema = z.object({
-  destinationAddress: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
-  amount: z.number().positive().gt(0),
-});
-
-type SpendTreasuryProposalFormShape = z.infer<typeof spendTreasuryProposalFormSchema>;
+import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 
 export const SpendTreasuryProposalForm = () => {
-  const { register, formState, getValues } = useForm<SpendTreasuryProposalFormShape>({
-    mode: 'all',
-    resolver: zodResolver(spendTreasuryProposalFormSchema),
-  });
-
   const [token, setToken] = useState<TreasuryToken | null>(null);
+
+  const formSchema = useMemo(() => {
+    let amount = z.number().positive().gt(0);
+    if (token) {
+      amount = amount.lte(demicrofy(token.amount, token.decimals).toNumber());
+    }
+    return z.object({
+      destinationAddress: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
+      amount,
+    });
+  }, [token]);
+
+  const { register, formState, getValues } = useForm<z.infer<typeof formSchema>>({
+    mode: 'all',
+    resolver: zodResolver(formSchema),
+  });
 
   const treasuryTokens = useCurrentDaoTreasuryTokens();
 
