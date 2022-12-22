@@ -14,6 +14,11 @@ import { TreasuryTokenInput } from './TreasuryTokenInput';
 import { TreasuryToken } from 'queries';
 import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 
+interface SpendTreasuryProposalFormSchema {
+  destinationAddress: string;
+  amount: number;
+}
+
 export const SpendTreasuryProposalForm = () => {
   const [token, setToken] = useState<TreasuryToken | null>(null);
 
@@ -28,7 +33,7 @@ export const SpendTreasuryProposalForm = () => {
     });
   }, [token]);
 
-  const { register, formState, getValues } = useForm<z.infer<typeof formSchema>>({
+  const { register, formState, getValues } = useForm<SpendTreasuryProposalFormSchema>({
     mode: 'all',
     resolver: zodResolver(formSchema),
   });
