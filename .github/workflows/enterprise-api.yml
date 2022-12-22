@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-      - enterprise/main
+      - develop
     paths:
       - indexers/enterprise/src/**
       - indexers/shared/src/**
@@ -19,7 +19,7 @@ on:
   pull_request:
     branches:
       - main
-      - enterprise/main
+      - develop
     paths:
       - indexers/enterprise/src/**
       - apps/enterprise-api/src/**
@@ -131,7 +131,7 @@ jobs:
         run: |
           if [ ${GITHUB_REF} == "refs/heads/main" ]; then
             echo "DOCKER_IMAGE_TAG=phoenix-1" >> $GITHUB_ENV
-          elif [ ${GITHUB_REF} == "refs/heads/enterprise/main" ]; then
+          elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
@@ -182,7 +182,7 @@ jobs:
         run: |
           if [ ${GITHUB_REF} == "refs/heads/main" ]; then
             echo "DOCKER_IMAGE_TAG=phoenix-1" >> $GITHUB_ENV
-          elif [ ${GITHUB_REF} == "refs/heads/enterprise/main" ]; then
+          elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
@@ -208,7 +208,7 @@ jobs:
         run: |
           if [ ${GITHUB_REF} == "refs/heads/main" ]; then
             echo "TF_GITHUB_REF=phoenix-1" >> $GITHUB_ENV
-          elif [ ${GITHUB_REF} == "refs/heads/enterprise/main" ]; then
+          elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "TF_GITHUB_REF=pisco-1" >> $GITHUB_ENV
           fi
 
