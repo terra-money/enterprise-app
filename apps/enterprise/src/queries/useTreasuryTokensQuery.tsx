@@ -12,7 +12,7 @@ import { fetchCW20TokenInfo } from './useCW20TokenInfoQuery';
 import { useWallet } from '@terra-money/wallet-provider';
 import { assertDefined } from '@terra-money/apps/utils';
 
-type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: Big };
+export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: Big };
 
 export const useTreasuryTokensQuery = (address: string) => {
   const { data: assets } = useDAOAssetTreasury(address);

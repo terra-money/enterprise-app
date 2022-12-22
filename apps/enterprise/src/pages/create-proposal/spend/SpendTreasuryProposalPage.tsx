@@ -5,6 +5,7 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { SpendTreasuryProposalForm } from './SpendTreasuryProposalForm';
+import { CurrentDAOTreasuryTokensProvider } from './CurrentDAOTreasuryTokentsProvider';
 
 export const SpendTreasuryProposalPage = () => {
   const { address } = useParams();
@@ -16,7 +17,9 @@ export const SpendTreasuryProposalPage = () => {
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
-            <SpendTreasuryProposalForm />
+            <CurrentDAOTreasuryTokensProvider>
+              <SpendTreasuryProposalForm />
+            </CurrentDAOTreasuryTokensProvider>
           </CurrentDaoProvider>
         )}
       </LoadingPage>

@@ -1,22 +1,15 @@
-import { ChangeEvent, InputHTMLAttributes, Ref, forwardRef } from "react";
-import styled, { css } from "styled-components";
-import { defaultTransitionCSS } from "lib/ui/animations/transitions";
-import { defaultInputShapeCSS } from "./config";
+import { ChangeEvent, InputHTMLAttributes, Ref, forwardRef } from 'react';
+import styled, { css } from 'styled-components';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { defaultInputShapeCSS } from './config';
 
-import {
-  Props as InputWrapperProps,
-  InputWrapperWithErrorMessage,
-} from "./InputWrapper";
+import { Props as InputWrapperProps, InputWrapperWithErrorMessage } from './InputWrapper';
 
-export type SharedTextInputProps = Pick<
-  InputWrapperProps,
-  "label" | "error"
-> & {
+export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error'> & {
   onValueChange?: (value: string) => void;
 };
 
-type TextInputProps = InputHTMLAttributes<HTMLInputElement> &
-  SharedTextInputProps;
+type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
 
 export const TextInput = forwardRef(function TextInputInner(
   { onValueChange, label, error, height, ...props }: TextInputProps,
@@ -44,7 +37,7 @@ export const commonInputCSS = css<{
   max-width: 100%;
 
   background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
-  padding: 12px;
+  padding: 24px;
   color: ${({ theme }) => theme.colors.text.toCssValue()};
 
   ${defaultTransitionCSS};
@@ -56,12 +49,8 @@ export const commonInputCSS = css<{
   outline: 1px solid transparent;
   ${({ isValid, theme }) => {
     const errorColor = theme.colors.alert.toCssValue();
-    const regularColor = isValid
-      ? theme.colors.backgroundGlass.toCssValue()
-      : errorColor;
-    const activeColor = isValid
-      ? theme.colors.primary.toCssValue()
-      : errorColor;
+    const regularColor = isValid ? theme.colors.backgroundGlass.toCssValue() : errorColor;
+    const activeColor = isValid ? theme.colors.primary.toCssValue() : errorColor;
 
     return css`
       border: 1px solid ${regularColor};
