@@ -99,10 +99,17 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
     info: { name, logo, description },
     socials,
+    council,
   } = input;
 
   return {
     create_dao: {
+      dao_council:
+        council.length > 0
+          ? {
+              members: council.map((member) => member.address),
+            }
+          : null,
       asset_whitelist: null,
       dao_membership: getDaoMembership(input),
       dao_metadata: {

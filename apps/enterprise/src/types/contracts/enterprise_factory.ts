@@ -68,6 +68,11 @@ export module enterprise_factory {
     | {
         url: string;
       };
+
+  export interface DaoCouncil {
+    members: string[];
+  }
+
   export interface CreateDaoMsg {
     /**
      * assets that are allowed to show in DAO's treasury
@@ -76,6 +81,7 @@ export module enterprise_factory {
     dao_gov_config: DaoGovConfig;
     dao_membership: CreateDaoMembershipMsg;
     dao_metadata: DaoMetadata;
+    dao_council?: DaoCouncil | null;
     /**
      * NFTs that are allowed to show in DAO's treasury
      */

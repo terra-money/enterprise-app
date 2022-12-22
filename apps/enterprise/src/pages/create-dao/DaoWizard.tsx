@@ -18,6 +18,7 @@ import { TokenInfoStep } from './token/TokenInfoStep';
 import { TokenMarketingStep } from './token/TokenMarketingStep';
 import { WizardButtons, WizardButtonsProps } from './WizardButtons';
 import { WizardLayout } from './WizardLayout';
+import { CouncilStep } from './shared/CouncilStep';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ export const DaoWizard = () => {
         info={() => <InfoStep />}
         members={() => <MembersStep />}
         govConfig={() => <GovConfigStep />}
+        council={() => <CouncilStep />}
         socials={() => <SocialsStep />}
         confirm={() => <ConfirmationStep pending={txResult.loading} />}
         membership={() => <NftMembershipStep />}

@@ -1,5 +1,5 @@
 import { FormInput, FormState, useForm } from '@terra-money/apps/hooks';
-import { getLast, isFormStateValid } from '@terra-money/apps/utils';
+import { getLast, isFormStateValid, validateAddress } from '@terra-money/apps/utils';
 import { createContextHook } from '@terra-money/apps/utils/createContextHook';
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
@@ -34,6 +34,10 @@ export interface DaoInfoInput {
   logo?: string;
 }
 
+export interface CouncilMember {
+  address: string;
+}
+
 export interface DaoImportInput {
   shouldImport: boolean;
   daoAddress?: string;
@@ -55,6 +59,8 @@ export interface DaoWizardInput {
   initialBalances: FormState<InitialBalance>[];
   initialDaoBalance: number | undefined;
   tokenMarketing: FormState<TokenMarketing>;
+
+  council: FormState<CouncilMember>[];
 
   existingTokenAddr: string;
   existingToken: CW20TokenInfoResponse | undefined;
@@ -100,6 +106,7 @@ export type DaoWizardStep =
   | 'type'
   | 'daoImport'
   | 'info'
+  | 'council'
   | 'socials'
   | 'govConfig'
   | 'confirm'
@@ -121,7 +128,7 @@ export interface DaoWizardState extends DaoWizardInput {
 }
 
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
-const sharedLastSteps: DaoWizardStep[] = ['govConfig', 'socials', 'confirm'];
+const sharedLastSteps: DaoWizardStep[] = ['govConfig', 'council', 'socials', 'confirm'];
 
 const daoTypeSpecificSteps: Record<enterprise.DaoType, DaoWizardStep[]> = {
   multisig: ['members'],
@@ -170,6 +177,8 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
     shouldImport: false,
     daoAddress: undefined,
   },
+
+  council: [],
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],
 
@@ -273,6 +282,18 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
       return {
         members,
         isValid: members.every(isFormStateValid) && members.length > 1,
+      };
+    },
+
+    council: () => {
+      const council = state.council.map(({ address }) => ({
+        address,
+        addressError: validateAddress(address),
+      }));
+
+      return {
+        council,
+        isValid: council.every(isFormStateValid),
       };
     },
 
