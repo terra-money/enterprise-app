@@ -1,5 +1,5 @@
 import { AnimatedPage } from '@terra-money/apps/components';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { Header } from './Header';
 import { useNavigate, useParams } from 'react-router';

@@ -82,7 +82,7 @@ export const MintTokensProposalForm = () => {
           },
         ];
       }}
-      title={proposalTitle.spend}
+      title={proposalTitle.mint}
     >
       <VStack gap={16}>
         {fields.map((field, index) => (
