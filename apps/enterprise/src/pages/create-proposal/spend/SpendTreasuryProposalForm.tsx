@@ -6,14 +6,12 @@ import { useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
-import { AddTokenButton } from 'pages/create-dao/shared/AddTokenButton';
 import { useState } from 'react';
-import { Token } from 'types/Token';
-import { WhitelistedAsset } from '../whitelisted-assets/WhitelistedAsset';
-import { toWhitelistedAsset } from 'pages/create-dao/helpers/toWhitelistedAsset';
 import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';
+import { TreasuryTokenInput } from './TreasuryTokenInput';
+import { TreasuryToken } from 'queries';
 
 const spendTreasuryProposalFormSchema = z.object({
   destinationAddress: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
@@ -28,7 +26,7 @@ export const SpendTreasuryProposalForm = () => {
     resolver: zodResolver(spendTreasuryProposalFormSchema),
   });
 
-  const [token, setToken] = useState<Token | null>(null);
+  const [token, setToken] = useState<TreasuryToken | null>(null);
 
   const treasuryTokens = useCurrentDaoTreasuryTokens();
 
@@ -64,11 +62,7 @@ export const SpendTreasuryProposalForm = () => {
             label="Destination address"
             placeholder="Enter recepient address"
           />
-          {token ? (
-            <WhitelistedAsset asset={toWhitelistedAsset(token)} onRemove={() => setToken(null)} />
-          ) : (
-            <AddTokenButton onSelect={setToken} />
-          )}
+          <TreasuryTokenInput value={token} onChange={setToken} />
           {token && (
             <TextInput
               {...register('amount', {

@@ -7,17 +7,17 @@ import {
   useImperativeHandle,
   useRef,
   useState,
-} from "react";
-import { usePrevious } from "react-use";
-import { useBoolean } from "lib/shared/hooks/useBoolean";
-import styled from "styled-components";
-import { CollapseToggleIconButton } from "lib/ui/buttons/square/CollapseToggleIconButton";
-import { useKeyPress } from "lib/shared/hooks/useKeyPress";
+} from 'react';
+import { usePrevious } from 'react-use';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
+import styled from 'styled-components';
+import { CollapseToggleIconButton } from 'lib/ui/buttons/square/CollapseToggleIconButton';
+import { useKeyPress } from 'lib/shared/hooks/useKeyPress';
 
-import { InputWrapperWithErrorMessage } from "../InputWrapper";
-import { TextInputContainer } from "../TextInput";
-import { ComboboxOptions } from "./ComboboxOptions";
-import { DropdownMenuPlacer } from "./DropdownMenuPlacer";
+import { InputWrapperWithErrorMessage } from '../InputWrapper';
+import { TextInputContainer } from '../TextInput';
+import { ComboboxOptions } from './ComboboxOptions';
+import { DropdownMenuPlacer } from './DropdownMenuPlacer';
 
 interface Props<T> {
   label: React.ReactNode;
@@ -34,12 +34,13 @@ interface Props<T> {
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 const ToggleWrapper = styled.div`
   position: absolute;
   right: 16px;
-  bottom: 28px;
+  bottom: 44px;
   display: flex;
 `;
 
@@ -65,8 +66,7 @@ function FixedOptionsInputInner<T>(
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
-  const [isMenuOpen, { set: openMenu, unset: closeMenu, toggle: toggleMenu }] =
-    useBoolean(false);
+  const [isMenuOpen, { set: openMenu, unset: closeMenu, toggle: toggleMenu }] = useBoolean(false);
   useEffect(() => {
     const isInputFocused = document.activeElement === inputRef.current;
 
@@ -79,7 +79,7 @@ function FixedOptionsInputInner<T>(
 
   const previousValue = usePrevious(value);
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const [suggestions, setSuggestions] = useState(options);
 
@@ -89,9 +89,7 @@ function FixedOptionsInputInner<T>(
     const newSuggestions =
       value && optionToString(value).toLowerCase() === lowerCaseInputValue
         ? options
-        : options.filter((item) =>
-            optionToString(item).toLowerCase().includes(lowerCaseInputValue)
-          );
+        : options.filter((item) => optionToString(item).toLowerCase().includes(lowerCaseInputValue));
 
     setSuggestions(newSuggestions);
   }, [inputValue, optionToString, options, value]);
@@ -102,9 +100,7 @@ function FixedOptionsInputInner<T>(
 
   const handleSelectOption = useCallback(
     (option: T) => {
-      const optionAsString = clearAfterOptionSelected
-        ? ""
-        : optionToString(option);
+      const optionAsString = clearAfterOptionSelected ? '' : optionToString(option);
       setInputValue(optionAsString);
 
       onChange(option);
@@ -115,12 +111,12 @@ function FixedOptionsInputInner<T>(
 
   useEffect(() => {
     if (previousValue !== value) {
-      setInputValue(value ? optionToString(value) : "");
+      setInputValue(value ? optionToString(value) : '');
     }
   }, [optionToString, previousValue, value]);
 
   useKeyPress(
-    "Enter",
+    'Enter',
     () => {
       if (highlightedIndex !== null) {
         handleSelectOption(suggestions[highlightedIndex]);
@@ -167,6 +163,7 @@ function FixedOptionsInputInner<T>(
       </InputWrapperWithErrorMessage>
       <ToggleWrapper>
         <CollapseToggleIconButton
+          size="l"
           as="div"
           isOpen={isMenuOpen}
           onMouseDown={toggleMenu}
@@ -178,7 +175,7 @@ function FixedOptionsInputInner<T>(
 }
 
 // Redecalare forwardRef
-declare module "react" {
+declare module 'react' {
   function forwardRef<T, P>(
     render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
   ): (props: P & React.RefAttributes<T>) => React.ReactElement | null;
