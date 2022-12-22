@@ -63,7 +63,6 @@ export const SpendTreasuryProposalForm = () => {
         <VStack alignItems="start" gap={8}>
           <TextInput
             {...register('destinationAddress')}
-            error={formState.errors.destinationAddress?.message}
             label="Destination address"
             placeholder="Enter recepient address"
           />

@@ -53,6 +53,7 @@ export interface DaoWizardInput {
 
   tokenInfo: FormState<TokenInfo>;
   initialBalances: FormState<InitialBalance>[];
+  initialDaoBalance: number | undefined;
   tokenMarketing: FormState<TokenMarketing>;
 
   existingTokenAddr: string;
@@ -184,6 +185,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
     symbol: '',
   },
   initialBalances: [EMPTY_INITIAL_BALANCE],
+  initialDaoBalance: undefined,
   tokenMarketing: {},
 
   existingTokenAddr: '',

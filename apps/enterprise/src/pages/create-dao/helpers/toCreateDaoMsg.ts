@@ -11,6 +11,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
     nftMembership,
     tokenInfo: { name, symbol, decimals },
     initialBalances,
+    initialDaoBalance,
     tokenMarketing,
     daoImport,
   } = input;
@@ -57,6 +58,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
             address,
             amount: microfy(amount, decimals).toString(),
           })),
+          initial_dao_balance: initialDaoBalance ? microfy(initialDaoBalance, decimals).toString() : null,
           token_decimals: decimals,
           token_marketing: {
             description: tokenMarketing.description,

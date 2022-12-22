@@ -19,7 +19,7 @@ const HelpContainer = styled.div`
 export const WizardBody = (props: WizardBodyProps) => {
   const { children, helpContent } = props;
 
-  const isSmallScreen = useIsScreenWidthLessThan(1080);
+  const isSmallScreen = useIsScreenWidthLessThan(1200);
 
   if (isSmallScreen) {
     return <VStack>{children}</VStack>;

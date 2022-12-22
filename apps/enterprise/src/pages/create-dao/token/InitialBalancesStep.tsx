@@ -1,15 +1,17 @@
 import { WizardStep } from '../WizardStep';
 import { Text, useRestrictedNumericInput } from 'components/primitives';
-import { InputBaseProps, Stack } from '@mui/material';
+import { InputBaseProps } from '@mui/material';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { FormTextInput } from 'components/form-text-input';
-import { EMPTY_INITIAL_BALANCE, InitialBalance, TokenInfo, useDaoWizardForm } from '../DaoWizardFormProvider';
-import { Container } from '@terra-money/apps/components';
+import { EMPTY_INITIAL_BALANCE, InitialBalance, useDaoWizardForm } from '../DaoWizardFormProvider';
 import Big from 'big.js';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import styles from './InitialBalancesStep.module.sass';
 import { AddButton } from 'components/add-button';
+import { VStack } from 'lib/ui/Stack';
+import { TextInput } from 'lib/ui/inputs/TextInput';
+import { enforceTextInputIntoNumber } from 'lib/ui/inputs/utils/enforceTextInputIntoNumber';
 
 const updateInitialBalance = (
   initialBalances: InitialBalance[],
@@ -26,23 +28,6 @@ const updateInitialBalance = (
 
     return initialBalance;
   });
-};
-
-const TokenSupplyInformation = ({ balances = [], token }: { balances: InitialBalance[]; token: TokenInfo }) => {
-  const totalSupply = balances.reduce((previous, current) => {
-    return previous.add(current?.amount?.length > 0 ? current.amount : '0');
-  }, Big(0));
-
-  return (
-    <Container className={styles.tokenInformation} direction="column">
-      <Text variant="label">Name</Text>
-      <Text variant="heading4">{token.name}</Text>
-      <Text variant="label">Symbol</Text>
-      <Text variant="heading4">{token.symbol}</Text>
-      <Text variant="label">Total Supply</Text>
-      <Text variant="heading4">{formatAmount(totalSupply as u<Big>, { decimals: token.decimals })}</Text>
-    </Container>
-  );
 };
 
 interface TokenAmountInputProps extends Pick<InputBaseProps, 'onChange'> {
@@ -78,7 +63,7 @@ const TokenAmountInput = (props: TokenAmountInputProps) => {
 
 export const InitialBalancesStep = () => {
   const {
-    formState: { initialBalances, tokenInfo },
+    formState: { initialBalances, tokenInfo, initialDaoBalance },
     formInput,
   } = useDaoWizardForm();
 
@@ -86,15 +71,34 @@ export const InitialBalancesStep = () => {
     formInput({ initialBalances: newBalances });
   };
 
-  const helpContent = <TokenSupplyInformation balances={initialBalances} token={tokenInfo} />;
+  const totalSupply = initialBalances
+    .reduce((previous, current) => {
+      return previous.add(current?.amount?.length > 0 ? current.amount : '0');
+    }, Big(0))
+    .add(initialDaoBalance || 0);
 
   return (
     <WizardStep
       title="Initial token distribution"
       subTitle="You need at least one initial balance"
-      helpContent={helpContent}
+      helpContent={
+        <VStack gap={24}>
+          <Text variant="label">Name</Text>
+          <Text variant="heading4">{tokenInfo.name}</Text>
+          <Text variant="label">Symbol</Text>
+          <Text variant="heading4">{tokenInfo.symbol}</Text>
+          <Text variant="label">Total Supply</Text>
+          <Text variant="heading4">{formatAmount(totalSupply as u<Big>)}</Text>
+        </VStack>
+      }
     >
-      <Stack spacing={4} direction="column">
+      <VStack gap={16}>
+        <TextInput
+          value={initialDaoBalance}
+          label="Initial DAO balance"
+          placeholder="Enter initial DAO balance"
+          onValueChange={(value) => formInput({ initialDaoBalance: enforceTextInputIntoNumber(value) })}
+        />
         {initialBalances.map((balance, index) => {
           const { address, addressError, amount, amountError } = balance;
           return (
@@ -125,7 +129,7 @@ export const InitialBalancesStep = () => {
           );
         })}
         <AddButton onClick={() => onChange([...initialBalances, EMPTY_INITIAL_BALANCE])} />
-      </Stack>
+      </VStack>
     </WizardStep>
   );
 };

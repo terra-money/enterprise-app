@@ -16,6 +16,11 @@ const Container = styled(VStack)`
   background-position: 100% 0%;
   background-size: 50% 100%;
   background-repeat: no-repeat;
+  overflow-y: auto;
+
+  @media (max-width: 1200px) {
+    background-image: none;
+  }
 `;
 
 const Content = styled(VStack)`
