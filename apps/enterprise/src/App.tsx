@@ -38,6 +38,7 @@ import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { ConnectWalletPrompt } from 'components/not-connected';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 import { SpendTreasuryProposalPage } from 'pages/create-proposal/spend/SpendTreasuryProposalPage';
+import { MintTokensProposalPage } from 'pages/create-proposal/mint/MintTokensProposalPage';
 
 const queryClient = new QueryClient();
 
@@ -126,6 +127,15 @@ const AppBetaRoutes = () => {
             <ConditionalWallet
               notConnected={() => <ConnectWalletPrompt />}
               connected={() => <MultisigMembersProposalPage />}
+            />
+          }
+        />
+        <Route
+          path="/dao/:address/proposals/create/mint"
+          element={
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <MintTokensProposalPage />}
             />
           }
         />

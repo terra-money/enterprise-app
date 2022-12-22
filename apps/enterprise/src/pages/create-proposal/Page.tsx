@@ -1,5 +1,5 @@
 import { AnimatedPage } from '@terra-money/apps/components';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { Header } from './Header';
 import { useNavigate, useParams } from 'react-router';
@@ -16,8 +16,18 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 
-const proposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'members', 'spend'] as const;
-type ProposalType = typeof proposalTypes[number];
+const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'spend'] as const;
+
+const daoProposalsRecord = {
+  multisig: [...sharedProposalTypes, 'members'] as const,
+  token: [...sharedProposalTypes, 'mint'] as const,
+  nft: sharedProposalTypes,
+} as const;
+
+type ProposalType =
+  | typeof daoProposalsRecord.multisig[number]
+  | typeof daoProposalsRecord.token[number]
+  | typeof daoProposalsRecord.nft[number];
 
 export const proposalTitle: Record<ProposalType, string> = {
   text: 'Text proposal',
@@ -27,7 +37,8 @@ export const proposalTitle: Record<ProposalType, string> = {
   nfts: 'Update whitelisted NFTs',
   execute: 'Proposal to execute message',
   members: 'Update multisig members',
-  spend: 'Spend treasury',
+  spend: 'Spend treasury proposal',
+  mint: 'Mint token proposal',
 };
 
 const title = 'Create a proposal';
@@ -57,7 +68,8 @@ export const Page = () => {
 
   const renderOptions = () => {
     const { type } = assertDefined(dao);
-    const options = type === 'multisig' ? proposalTypes : proposalTypes.filter((type) => type !== 'members');
+    const options = daoProposalsRecord[type];
+
     return (
       <PrimarySelect
         label="Choose type"
