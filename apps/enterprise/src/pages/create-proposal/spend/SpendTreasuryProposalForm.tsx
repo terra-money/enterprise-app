@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';

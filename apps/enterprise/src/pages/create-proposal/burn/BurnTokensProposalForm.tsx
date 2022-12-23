@@ -1,14 +1,16 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import { proposalTitle } from '../Page';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';
-import { useCW20TokenInfoQuery } from 'queries';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
-import { TextInput } from 'lib/ui/inputs/TextInput';
-import { useMemo } from 'react';
 import { toBurnTokensMsg } from './helpers/toBurnTokensMsg';
+import { demicrofy } from '@terra-money/apps/libs/formatting';
+import { Text } from 'lib/ui/Text';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCurrentDaoTreasuryTokens } from '../spend/CurrentDAOTreasuryTokentsProvider';
+import Big from 'big.js';
 
 interface MintTokensProposalFormSchema {
   amount: number;
@@ -16,17 +18,20 @@ interface MintTokensProposalFormSchema {
 
 export const BurnTokensProposalForm = () => {
   const dao = useCurrentDao();
-  const { data: tokenInfo } = useCW20TokenInfoQuery(dao.membershipContractAddress);
+  const treasuryTokens = useCurrentDaoTreasuryTokens();
+  const token = treasuryTokens.find((token) => token.key === dao.membershipContractAddress);
 
-  const formSchema = useMemo(() => {
-    return z.object({
-      amount: z.number().positive().gt(0),
-    });
-  }, []);
+  const formSchema: z.ZodType<MintTokensProposalFormSchema> = z.object({
+    amount: z
+      .number()
+      .positive()
+      .gt(0)
+      .max(token ? demicrofy(token.amount, token.decimals).toNumber() : 0),
+  });
 
   const {
-    register,
     formState: { isValid, errors },
+    control,
     getValues,
   } = useForm<MintTokensProposalFormSchema>({
     mode: 'all',
@@ -35,10 +40,10 @@ export const BurnTokensProposalForm = () => {
 
   return (
     <ProposalForm
-      disabled={!isValid || !tokenInfo}
+      disabled={!isValid || !token || !token.amount}
       getProposalActions={() => {
         const { amount } = getValues();
-        const { decimals } = assertDefined(tokenInfo);
+        const { decimals } = assertDefined(token);
         return [
           {
             execute_msgs: {
@@ -54,15 +59,27 @@ export const BurnTokensProposalForm = () => {
       }}
       title={proposalTitle.burn}
     >
-      <TextInput
-        {...register('amount', {
-          valueAsNumber: true,
-        })}
-        type="number"
-        error={errors.amount?.message}
-        label="Amount"
-        placeholder="Enter amount"
-      />
+      {token && Big(token.amount).gt(0) ? (
+        <Controller
+          control={control}
+          name="amount"
+          render={({ field: { onChange, onBlur, value, name, ref } }) => (
+            <AmountTextInput
+              type="number"
+              error={errors.amount?.message}
+              label="Amount"
+              placeholder="Enter amount"
+              onValueChange={onChange}
+              value={value}
+              onBlur={onBlur}
+              ref={ref}
+              max={demicrofy(token.amount, token.decimals).toNumber()}
+            />
+          )}
+        />
+      ) : (
+        <Text color="alert">Treasury doesn't have DAO's tokens</Text>
+      )}
     </ProposalForm>
   );
 };

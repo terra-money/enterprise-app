@@ -21,7 +21,7 @@ interface MintTokensProposalFormSchema {
   members: MintMember[];
 }
 
-const mintTokensProposalFormSchema = z.object({
+const mintTokensProposalFormSchema: z.ZodType<MintTokensProposalFormSchema> = z.object({
   members: z
     .array(
       z.object({

@@ -5,6 +5,7 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { BurnTokensProposalForm } from './BurnTokensProposalForm';
+import { CurrentDAOMultisigMembersProvider } from '../multisig-members/CurrentDAOMultisigMembersProvider';
 
 export const BurnTokensProposalPage = () => {
   const { address } = useParams();
@@ -16,7 +17,9 @@ export const BurnTokensProposalPage = () => {
       <LoadingPage isLoading={isLoading}>
         {dao && (
           <CurrentDaoProvider value={dao}>
-            <BurnTokensProposalForm />
+            <CurrentDAOMultisigMembersProvider>
+              <BurnTokensProposalForm />
+            </CurrentDAOMultisigMembersProvider>
           </CurrentDaoProvider>
         )}
       </LoadingPage>
