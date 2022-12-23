@@ -20,7 +20,7 @@ const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'exe
 
 const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
-  token: [...sharedProposalTypes, 'mint'] as const,
+  token: [...sharedProposalTypes, 'mint', 'burn'] as const,
   nft: sharedProposalTypes,
 } as const;
 
@@ -39,6 +39,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   members: 'Update multisig members',
   spend: 'Spend treasury proposal',
   mint: 'Mint token proposal',
+  burn: 'Burn token proposal',
 };
 
 const title = 'Create a proposal';

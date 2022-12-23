@@ -39,6 +39,7 @@ import { ConnectWalletPrompt } from 'components/not-connected';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 import { SpendTreasuryProposalPage } from 'pages/create-proposal/spend/SpendTreasuryProposalPage';
 import { MintTokensProposalPage } from 'pages/create-proposal/mint/MintTokensProposalPage';
+import { BurnTokensProposalPage } from 'pages/create-proposal/burn/BurnTokensProposalPage';
 
 const queryClient = new QueryClient();
 
@@ -145,6 +146,15 @@ const AppBetaRoutes = () => {
             <ConditionalWallet
               notConnected={() => <ConnectWalletPrompt />}
               connected={() => <SpendTreasuryProposalPage />}
+            />
+          }
+        />
+        <Route
+          path="/dao/:address/proposals/create/burn"
+          element={
+            <ConditionalWallet
+              notConnected={() => <ConnectWalletPrompt />}
+              connected={() => <BurnTokensProposalPage />}
             />
           }
         />
