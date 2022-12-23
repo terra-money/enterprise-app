@@ -23,7 +23,7 @@ interface SpendTreasuryProposalFormSchema {
 export const SpendTreasuryProposalForm = () => {
   const [token, setToken] = useState<TreasuryToken | null>(null);
 
-  const formSchema = useMemo(() => {
+  const formSchema: z.ZodType<SpendTreasuryProposalFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (token) {
       amount = amount.lte(demicrofy(token.amount, token.decimals).toNumber());
@@ -32,7 +32,7 @@ export const SpendTreasuryProposalForm = () => {
       destinationAddress: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
       amount,
     });
-  }, [token]);
+  });
 
   const { register, formState, getValues, control } = useForm<SpendTreasuryProposalFormSchema>({
     mode: 'all',
