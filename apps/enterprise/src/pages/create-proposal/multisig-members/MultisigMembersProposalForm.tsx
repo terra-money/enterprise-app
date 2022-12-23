@@ -1,5 +1,5 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { useCurrentDaoMultisigMembers } from './CurrentDAOMultisigMembersProvider';
 import { useMemo, useState } from 'react';
 import { getRecord, isFormStateValid, removeByIndex, updateAtIndex } from '@terra-money/apps/utils';

@@ -4,7 +4,7 @@ import { MetadataFields } from './MetadataFields';
 import { GovConfigFields } from '../../create-dao/gov-config/GovConfigFields';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { getProposalActions } from './helpers/getProposalActions';
 import { SocialFields } from 'pages/create-dao/shared/SocialFields';

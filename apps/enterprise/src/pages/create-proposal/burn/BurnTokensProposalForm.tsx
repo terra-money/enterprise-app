@@ -1,5 +1,5 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';

@@ -4,7 +4,7 @@ import { AddButton } from 'components/add-button';
 import { FormSection } from 'components/form-section';
 import { fetchCW721ContractInfo } from 'queries';
 import { useState } from 'react';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvider';
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';

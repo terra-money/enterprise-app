@@ -1,10 +1,10 @@
-import { BurnTokensProposalForm } from './BurnTokensProposalForm';
 import { CurrentDAOTreasuryTokensProvider } from '../spend/CurrentDAOTreasuryTokentsProvider';
+import { DelegateProposalForm } from './DelegateProposalForm';
 
-export const BurnTokensProposalPage = () => {
+export const DelegateProposalPage = () => {
   return (
     <CurrentDAOTreasuryTokensProvider>
-      <BurnTokensProposalForm />
+      <DelegateProposalForm />
     </CurrentDAOTreasuryTokensProvider>
   );
 };

@@ -1,5 +1,5 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';

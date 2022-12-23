@@ -16,7 +16,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 
-const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'spend'] as const;
+const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'spend', 'delegate'] as const;
 
 const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
@@ -24,7 +24,7 @@ const daoProposalsRecord = {
   nft: sharedProposalTypes,
 } as const;
 
-type ProposalType =
+export type ProposalType =
   | typeof daoProposalsRecord.multisig[number]
   | typeof daoProposalsRecord.token[number]
   | typeof daoProposalsRecord.nft[number];
@@ -40,6 +40,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   spend: 'Spend treasury proposal',
   mint: 'Mint token proposal',
   burn: 'Burn token proposal',
+  delegate: 'Delegate LUNA proposal',
 };
 
 const title = 'Create a proposal';
@@ -56,7 +57,7 @@ const NormalScreenContent = styled.div`
   overflow-y: auto;
 `;
 
-export const Page = () => {
+export const SelectProposalTypePage = () => {
   const { address } = useParams();
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);

@@ -1,16 +1,10 @@
-import { LoadingPage } from 'pages/shared/LoadingPage';
-import { useParams } from 'react-router';
-import { useCW20TokenInfoQuery, useDAOQuery } from 'queries';
-import { CW20Addr } from '@terra-money/apps/types';
+import { useCW20TokenInfoQuery } from 'queries';
 import { ConfigProposalForm } from './ConfigProposalForm';
-import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
-import { Navigation } from 'components/Navigation';
 
 export const CreateConfigProposalPage = () => {
-  const { address } = useParams();
-
-  const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
+  const dao = useCurrentDao();
 
   const hasToken = dao && dao.type === 'token';
 
@@ -18,19 +12,13 @@ export const CreateConfigProposalPage = () => {
     enabled: hasToken,
   });
 
-  return (
-    <Navigation>
-      <LoadingPage isLoading={isLoading}>
-        {dao && (
-          <CurrentDaoProvider value={dao}>
-            {((hasToken && token) || !hasToken) && (
-              <CurrentTokenProvider value={{ token }}>
-                <ConfigProposalForm />
-              </CurrentTokenProvider>
-            )}
-          </CurrentDaoProvider>
-        )}
-      </LoadingPage>
-    </Navigation>
-  );
+  if ((hasToken && token) || !hasToken) {
+    return (
+      <CurrentTokenProvider value={{ token }}>
+        <ConfigProposalForm />
+      </CurrentTokenProvider>
+    );
+  }
+
+  return null;
 };

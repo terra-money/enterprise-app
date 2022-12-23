@@ -3,7 +3,7 @@ import { FormSection } from 'components/form-section';
 import { toWhitelistedAsset } from 'pages/create-dao/helpers/toWhitelistedAsset';
 import { AddTokenButton } from 'pages/create-dao/shared/AddTokenButton';
 import { useMemo, useState } from 'react';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedAssets } from './CurrentDAOWhitelistedAssetsProvider';
 import { hasAsset } from './helpers/areSameAssets';

@@ -17,29 +17,18 @@ import {
 } from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
-import { Page as CreateProposalPage } from 'pages/create-proposal';
+import { SelectProposalTypePage } from 'pages/create-proposal';
 import { Page as ProposalPage } from 'pages/proposal';
 import { PersonalizationProvider } from 'libs/personalization';
-import { CreateTextProposalPage } from 'pages/create-proposal/text/CreateTextProposalPage';
-import { CreateConfigProposalPage } from 'pages/create-proposal/config/CreateConfigProposalPage';
 import { BetaGuard } from 'components/beta-guard';
 import { LandingPage } from 'pages/landing';
 import { Path } from 'navigation';
-import { ConditionalWallet } from 'components/conditional-wallet';
-import { CreateUpgradeProposalPage } from 'pages/create-proposal/upgrade/CreateUpgradeProposalPage';
-import { UpdateWhitelistedAssetsProposalPage } from 'pages/create-proposal/whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
-import { ExecuteMessageProposalPage } from 'pages/create-proposal/execute/ExecuteMessageProposalPage';
-import { MultisigMembersProposalPage } from 'pages/create-proposal/multisig-members/MultisigMembersProposalPage';
 import styles from './App.module.sass';
-import { UpdateWhitelistedNFTsProposalPage } from 'pages/create-proposal/whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
 import { darkTheme } from 'lib/ui/theme/darkTheme';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
-import { ConnectWalletPrompt } from 'components/not-connected';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
-import { SpendTreasuryProposalPage } from 'pages/create-proposal/spend/SpendTreasuryProposalPage';
-import { MintTokensProposalPage } from 'pages/create-proposal/mint/MintTokensProposalPage';
-import { BurnTokensProposalPage } from 'pages/create-proposal/burn/BurnTokensProposalPage';
+import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 
 const queryClient = new QueryClient();
 
@@ -67,97 +56,8 @@ const AppBetaRoutes = () => {
           <Route path="staking" element={<DAOStakingPage />} />
           <Route path="members" element={<DAOMembersPage />} />
         </Route>
-        <Route path="/dao/:address/proposals/create" element={<CreateProposalPage />} />
-        <Route
-          path="/dao/:address/proposals/create/text"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <CreateTextProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/config"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <CreateConfigProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/upgrade"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <CreateUpgradeProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/assets"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <UpdateWhitelistedAssetsProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/nfts"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <UpdateWhitelistedNFTsProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/execute"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <ExecuteMessageProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/members"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <MultisigMembersProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/mint"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <MintTokensProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/spend"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <SpendTreasuryProposalPage />}
-            />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/burn"
-          element={
-            <ConditionalWallet
-              notConnected={() => <ConnectWalletPrompt />}
-              connected={() => <BurnTokensProposalPage />}
-            />
-          }
-        />
+        <Route path="/dao/:address/proposals/create" element={<SelectProposalTypePage />} />
+        <Route path="/dao/:address/proposals/create/:type" element={<CreateProposalPage />} />
         <Route path="/dao/create" element={<CreateDAOPage />} />
         <Route path="/dao/:address/proposals/:id" element={<ProposalPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,7 +1,7 @@
 import { removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
-import { proposalTitle } from '../Page';
+import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { toExecuteMsg } from './helpers/toExecuteMsg';
 import { validateWasmMsg } from './helpers/validateWasmMsg';
