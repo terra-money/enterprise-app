@@ -9,7 +9,7 @@ export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error'> & 
   onValueChange?: (value: string) => void;
 };
 
-type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
+export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
 
 export const TextInput = forwardRef(function TextInputInner(
   { onValueChange, label, error, height, ...props }: TextInputProps,

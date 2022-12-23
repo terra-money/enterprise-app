@@ -2,7 +2,7 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { proposalTitle } from '../Page';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -13,6 +13,7 @@ import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
 import { TreasuryToken } from 'queries';
 import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;
@@ -33,7 +34,7 @@ export const SpendTreasuryProposalForm = () => {
     });
   }, [token]);
 
-  const { register, formState, getValues } = useForm<SpendTreasuryProposalFormSchema>({
+  const { register, formState, getValues, control } = useForm<SpendTreasuryProposalFormSchema>({
     mode: 'all',
     resolver: zodResolver(formSchema),
   });
@@ -73,14 +74,22 @@ export const SpendTreasuryProposalForm = () => {
           />
           <TreasuryTokenInput value={token} onChange={setToken} />
           {token && (
-            <TextInput
-              {...register('amount', {
-                valueAsNumber: true,
-              })}
-              type="number"
-              error={formState.errors.amount?.message}
-              label="Amount"
-              placeholder="Enter amount"
+            <Controller
+              control={control}
+              name="amount"
+              render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                <AmountTextInput
+                  type="number"
+                  error={formState.errors.amount?.message}
+                  label="Amount"
+                  placeholder="Enter amount"
+                  onValueChange={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  ref={ref}
+                  max={demicrofy(token.amount, token.decimals).toNumber()}
+                />
+              )}
             />
           )}
         </VStack>
