@@ -12,6 +12,7 @@ export type Entity = {
   enterpriseFactoryContract: string;
   created: number;
   codeVersionId: string;
+  council: enterprise.DaoCouncil;
   socials: {
     discord_username?: string;
     github_username?: string;

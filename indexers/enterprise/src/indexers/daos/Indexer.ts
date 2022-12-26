@@ -67,6 +67,7 @@ export class Indexer extends EventIndexer<Entity> {
         telegram_username: response.metadata.socials.telegram_username,
         twitter_username: response.metadata.socials.twitter_username,
       },
+      council: response.dao_council,
       config: {
         quorum: Big(response.gov_config.quorum).toNumber(),
         threshold: Big(response.gov_config.threshold).toNumber(),

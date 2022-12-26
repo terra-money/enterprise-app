@@ -75,6 +75,9 @@ export module enterprise {
         update_gov_config: UpdateGovConfigMsg;
       }
     | {
+        update_council: UpdateCouncilMsg;
+      }
+    | {
         update_asset_whitelist: UpdateAssetWhitelistMsg;
       }
     | {
@@ -140,6 +143,17 @@ export module enterprise {
     | {
         change: Uint64;
       };
+  export type ProposalActionType =
+    | 'update_metadata'
+    | 'update_gov_config'
+    | 'update_council'
+    | 'update_asset_whitelist'
+    | 'update_nft_whitelist'
+    | 'request_funding_from_dao'
+    | 'upgrade_dao'
+    | 'execute_msgs'
+    | 'modify_multisig_membership';
+  export type Binary = string;
   export interface CreateProposalMsg {
     /**
      * Optional description text of the proposal
@@ -155,6 +169,7 @@ export module enterprise {
     title: string;
   }
   export interface UpdateMetadataMsg {
+    description: ModifyValueFor_Nullable_String;
     discord_username: ModifyValueFor_Nullable_String;
     github_username: ModifyValueFor_Nullable_String;
     logo: ModifyValueFor_Logo;
@@ -168,6 +183,19 @@ export module enterprise {
     threshold: ModifyValueFor_Decimal;
     unlocking_period: ModifyValueFor_Duration;
     voting_duration: ModifyValueFor_Uint64;
+  }
+  export interface UpdateCouncilMsg {
+    dao_council?: DaoCouncil | null;
+  }
+  export interface DaoCouncil {
+    /**
+     * Proposal action types allowed in proposals that are voted on by the council. Effectively defines what types of actions council can propose and vote on. If None, will default to a predefined set of actions.
+     */
+    allowed_proposal_action_types?: ProposalActionType[] | null;
+    /**
+     * Addresses of council members. Each member has equal voting power.
+     */
+    members: string[];
   }
   export interface UpdateAssetWhitelistMsg {
     /**
@@ -194,7 +222,7 @@ export module enterprise {
     recipient: string;
   }
   export interface UpgradeDaoMsg {
-    migrate_msg: string;
+    migrate_msg: Binary;
     new_dao_code_id: number;
   }
   export interface ExecuteMsgsMsg {
@@ -217,6 +245,7 @@ export module enterprise {
   export interface DaoInfoResponse {
     creation_date: Timestamp;
     dao_code_version: Uint64;
+    dao_council?: DaoCouncil | null;
     dao_membership_contract: Addr;
     dao_type: DaoType;
     enterprise_factory_contract: Addr;
@@ -246,9 +275,9 @@ export module enterprise {
     vote_duration: number;
   }
   export interface DaoMetadata {
+    description?: string | null;
     logo: Logo;
     name: string;
-    description?: string;
     socials: DaoSocialData;
   }
   export interface DaoSocialData {
@@ -262,10 +291,19 @@ export module enterprise {
         create_proposal: CreateProposalMsg;
       }
     | {
+        create_council_proposal: CreateProposalMsg;
+      }
+    | {
         cast_vote: CastVoteMsg;
       }
     | {
+        cast_council_vote: CastVoteMsg;
+      }
+    | {
         execute_proposal: ExecuteProposalMsg;
+      }
+    | {
+        execute_council_proposal: ExecuteProposalMsg;
       }
     | {
         unstake: UnstakeMsg;
@@ -287,7 +325,6 @@ export module enterprise {
     | {
         cw721: UnstakeCw721Msg;
       };
-  export type Binary = string;
   export interface CastVoteMsg {
     outcome: DefaultVoteOption;
     proposal_id: number;
@@ -333,6 +370,10 @@ export module enterprise {
      * Assets that are allowed to show in DAO's treasury
      */
     asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
+    /**
+     * Optional council structure that can manage certain aspects of the DAO
+     */
+    dao_council?: DaoCouncil | null;
     dao_gov_config: DaoGovConfig;
     dao_membership_info: DaoMembershipInfo;
     dao_metadata: DaoMetadata;
@@ -350,6 +391,10 @@ export module enterprise {
     membership_info: NewMembershipInfo;
   }
   export interface NewTokenMembershipInfo {
+    /**
+     * Optional amount of tokens to be minted to the DAO's address
+     */
+    initial_dao_balance?: Uint128 | null;
     initial_token_balances: Cw20Coin[];
     token_decimals: number;
     token_marketing?: TokenMarketingInfo | null;
@@ -424,25 +469,6 @@ export module enterprise {
   export interface NftWhitelistResponse {
     nfts: Addr[];
   }
-  export type PollType =
-    | 'default'
-    | {
-        multichoice: {
-          /**
-           * Number of outcomes, 0-indexed.
-           */
-          n_outcomes: number;
-          /**
-           * List of possible winning outcomes that will cause a poll's status to become "Rejected". Can for example be used to create a Yes/No poll.
-           */
-          rejecting_outcomes: number[];
-          /**
-           * Threshold ratio, i.e. sum(most_voted) / total_votes.
-           */
-          threshold: Decimal;
-        };
-      };
-  export type VotingScheme = 'coin_voting';
   export type PollStatus =
     | {
         in_progress: {
@@ -471,6 +497,51 @@ export module enterprise {
          */
         outcome_draw: [number, number, Uint128];
       };
+  export interface PollStatusResponse {
+    /**
+     * Poll end time.
+     */
+    ends_at: Timestamp;
+    /**
+     * Total vote-count (value) for each outcome (key).
+     */
+    results: [number, Uint128][];
+    /**
+     * Status of the poll.
+     */
+    status: PollStatus;
+  }
+  export interface PollVoterResponse {
+    /**
+     * The voter's vote on the specific poll.
+     */
+    vote?: Vote | null;
+  }
+  export interface PollVotersResponse {
+    /**
+     * All votes on the specific poll.
+     */
+    votes: Vote[];
+  }
+  export type PollType =
+    | 'default'
+    | {
+        multichoice: {
+          /**
+           * Number of outcomes, 0-indexed.
+           */
+          n_outcomes: number;
+          /**
+           * List of possible winning outcomes that will cause a poll's status to become "Rejected". Can for example be used to create a Yes/No poll.
+           */
+          rejecting_outcomes: number[];
+          /**
+           * Threshold ratio, i.e. sum(most_voted) / total_votes.
+           */
+          threshold: Decimal;
+        };
+      };
+  export type VotingScheme = 'coin_voting';
   export interface PollsResponse {
     /**
      * The polls.
@@ -527,32 +598,6 @@ export module enterprise {
      */
     status: PollStatus;
   }
-  export interface PollStatusResponse {
-    /**
-     * Poll end time.
-     */
-    ends_at: Timestamp;
-    /**
-     * Total vote-count (value) for each outcome (key).
-     */
-    results: [number, Uint128][];
-    /**
-     * Status of the poll.
-     */
-    status: PollStatus;
-  }
-  export interface PollVotersResponse {
-    /**
-     * All votes on the specific poll.
-     */
-    votes: Vote[];
-  }
-  export interface PollVoterResponse {
-    /**
-     * The voter's vote on the specific poll.
-     */
-    vote?: Vote | null;
-  }
   export type Expiration =
     | {
         at_height: number;
@@ -564,9 +609,6 @@ export module enterprise {
         never: {};
       };
   export type ProposalStatus = 'in_progress' | 'passed' | 'rejected' | 'executed';
-  export interface ProposalsResponse {
-    proposals: ProposalResponse[];
-  }
   export interface ProposalResponse {
     proposal: Proposal;
     /**
@@ -595,6 +637,9 @@ export module enterprise {
   export interface ProposalVotesResponse {
     votes: Vote[];
   }
+  export interface ProposalsResponse {
+    proposals: ProposalResponse[];
+  }
   export type QueryMsg =
     | {
         dao_info: {};
@@ -619,6 +664,15 @@ export module enterprise {
       }
     | {
         proposal_status: ProposalStatusParams;
+      }
+    | {
+        council_proposal: ProposalParams;
+      }
+    | {
+        council_proposals: ProposalsParams;
+      }
+    | {
+        council_proposal_status: ProposalStatusParams;
       }
     | {
         member_vote: MemberVoteParams;

@@ -1,3 +1,2 @@
-
-export * from './enterprise'
-export * from './enterprise_factory'
+export * from './enterprise';
+export * from './enterprise_factory';
