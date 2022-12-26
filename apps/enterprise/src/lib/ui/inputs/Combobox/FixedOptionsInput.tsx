@@ -18,6 +18,9 @@ import { InputWrapperWithErrorMessage } from '../InputWrapper';
 import { TextInputContainer } from '../TextInput';
 import { ComboboxOptions } from './ComboboxOptions';
 import { DropdownMenuPlacer } from './DropdownMenuPlacer';
+import { TextInputLoader } from '../TextInputLoader';
+import { Text } from 'lib/ui/Text';
+import { defaultInputShapeCSS, inputPaddingCSS } from '../config';
 
 interface Props<T> {
   label: React.ReactNode;
@@ -25,6 +28,9 @@ interface Props<T> {
   error?: string;
   value: T | null;
   onChange: (value: T | null) => void;
+
+  isLoading?: boolean;
+  noOptionsMessage?: string;
 
   options: T[];
   optionToString: (option: T) => string;
@@ -44,6 +50,14 @@ const ToggleWrapper = styled.div`
   display: flex;
 `;
 
+const NoOptions = styled.div`
+  ${defaultInputShapeCSS};
+  ${inputPaddingCSS};
+  background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
+  display: flex;
+  align-items: center;
+`;
+
 function FixedOptionsInputInner<T>(
   {
     label,
@@ -54,6 +68,10 @@ function FixedOptionsInputInner<T>(
     onChange,
 
     optionToString,
+
+    noOptionsMessage = 'No options left',
+
+    isLoading,
 
     error,
     renderOption = optionToString,
@@ -92,7 +110,7 @@ function FixedOptionsInputInner<T>(
         : options.filter((item) => optionToString(item).toLowerCase().includes(lowerCaseInputValue));
 
     setSuggestions(newSuggestions);
-  }, [inputValue, optionToString, options, value]);
+  }, [inputValue, onChange, optionToString, options, value]);
 
   const isSelectionAvailalbe = isMenuOpen && suggestions.length > 0;
 
@@ -137,39 +155,55 @@ function FixedOptionsInputInner<T>(
       }}
     >
       <InputWrapperWithErrorMessage label={label} error={error}>
-        <DropdownMenuPlacer
-          menu={
-            isMenuOpen && suggestions.length ? (
-              <ComboboxOptions
-                options={suggestions}
-                renderOption={renderOption}
-                optionToKey={optionToString}
-                onOptionHighlight={setHighlightedIndex}
-                onOptionSelect={handleSelectOption}
-                highlightedIndex={highlightedIndex}
-              />
-            ) : undefined
-          }
-        >
-          <TextInputContainer
-            onChange={({ currentTarget }) => setInputValue(currentTarget.value)}
-            value={inputValue}
-            isValid={!error}
-            placeholder={placeholder}
-            ref={inputRef}
-            onFocus={openMenu}
-          />
-        </DropdownMenuPlacer>
+        {isLoading ? (
+          <TextInputLoader />
+        ) : options.length === 0 ? (
+          <NoOptions>
+            <Text>{noOptionsMessage}</Text>
+          </NoOptions>
+        ) : (
+          <DropdownMenuPlacer
+            menu={
+              isMenuOpen && suggestions.length ? (
+                <ComboboxOptions
+                  options={suggestions}
+                  renderOption={renderOption}
+                  optionToKey={optionToString}
+                  onOptionHighlight={setHighlightedIndex}
+                  onOptionSelect={handleSelectOption}
+                  highlightedIndex={highlightedIndex}
+                />
+              ) : undefined
+            }
+          >
+            <TextInputContainer
+              onChange={({ currentTarget: { value } }) => {
+                setInputValue(value);
+
+                if (value === '') {
+                  onChange(null);
+                }
+              }}
+              value={inputValue}
+              isValid={!error}
+              placeholder={placeholder}
+              ref={inputRef}
+              onFocus={openMenu}
+            />
+          </DropdownMenuPlacer>
+        )}
       </InputWrapperWithErrorMessage>
-      <ToggleWrapper>
-        <CollapseToggleIconButton
-          size="l"
-          as="div"
-          isOpen={isMenuOpen}
-          onMouseDown={toggleMenu}
-          onTouchStart={toggleMenu}
-        />
-      </ToggleWrapper>
+      {!isLoading && options.length > 0 && (
+        <ToggleWrapper>
+          <CollapseToggleIconButton
+            size="l"
+            as="div"
+            isOpen={isMenuOpen}
+            onMouseDown={toggleMenu}
+            onTouchStart={toggleMenu}
+          />
+        </ToggleWrapper>
+      )}
     </Container>
   );
 }

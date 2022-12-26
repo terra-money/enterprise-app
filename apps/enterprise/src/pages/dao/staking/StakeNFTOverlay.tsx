@@ -1,25 +1,25 @@
 import { NumericPanel } from 'components/numeric-panel';
-import { useStakeNFTForm } from './useStakeNFTForm';
-import { useStakeNFTTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import { NftInfo } from 'chain/queries/useNftInfoQuery';
+import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useStakeNftTx } from 'dao/tx/useStakeNftTx';
+import { useState } from 'react';
+import { assertDefined } from '@terra-money/apps/utils';
+import { MyNftIdInput } from 'chain/components/MyNftIdInput';
 
 interface StakeNFTOverlayProps extends ClosableComponentProps {
-  walletAddress: string;
-  daoAddress: string;
-  tokenAddress: string;
-  nfts: NftInfo[];
   staked: string[];
   symbol: string;
 }
 
-export const StakeNFTOverlay = ({ daoAddress, tokenAddress, nfts, staked, symbol, onClose }: StakeNFTOverlayProps) => {
-  const [, { submitDisabled }] = useStakeNFTForm({ nfts });
+export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
+  const { address, membershipContractAddress } = useCurrentDao();
 
-  const [txResult, stakeNFTTx] = useStakeNFTTx();
+  const [txResult, stakeNft] = useStakeNftTx();
+
+  const [tokenId, setTokenId] = useState<string | null>(null);
 
   return (
     <Modal
@@ -27,24 +27,22 @@ export const StakeNFTOverlay = ({ daoAddress, tokenAddress, nfts, staked, symbol
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
-          <NumericPanel title="Currently staking" value={staked.length} suffix={symbol} />
-          <NumericPanel title="NFTs in wallet" value={nfts.length} suffix={symbol} />
+          <NumericPanel title="No of NFTs staked" value={staked.length} />
+          <MyNftIdInput nftAddress={membershipContractAddress} value={tokenId} onChange={setTokenId} />
         </VStack>
       )}
       footer={
         <VStack gap={12}>
           <PrimaryButton
-            isDisabled={submitDisabled}
+            isDisabled={!tokenId}
             isLoading={txResult.loading}
             onClick={async () => {
-              if (submitDisabled === false) {
-                await stakeNFTTx({
-                  daoAddress,
-                  tokenAddress,
-                  nfts,
-                });
-                onClose();
-              }
+              await stakeNft({
+                daoAddress: address,
+                collectionAddress: membershipContractAddress,
+                tokenId: assertDefined(tokenId),
+              });
+              onClose();
             }}
           >
             Stake

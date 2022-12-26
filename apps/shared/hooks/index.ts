@@ -9,5 +9,4 @@ export * from './useForm';
 export * from './useCarouselNavigation';
 export * from './useWasIt';
 export * from './useAssertConnectedWallet';
-export * from './useAssertMyAddress';
 export * from './useBoolean';

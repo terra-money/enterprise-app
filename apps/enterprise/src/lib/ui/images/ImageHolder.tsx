@@ -1,13 +1,14 @@
-import React, { forwardRef, ReactNode } from "react";
-import styled from "styled-components";
-import { Center } from "../Center";
-import { ImageIcon } from "../icons/ImageIcon";
+import React, { forwardRef, ReactNode } from 'react';
+import styled from 'styled-components';
+import { Center } from '../Center';
+import { ImageIcon } from '../icons/ImageIcon';
 
 interface Props {
-  width?: React.CSSProperties["width"];
-  height?: React.CSSProperties["height"];
+  width?: React.CSSProperties['width'];
+  height?: React.CSSProperties['height'];
   className?: string;
   children?: ReactNode;
+  style?: React.CSSProperties;
 }
 
 export const Container = styled.div`
@@ -28,11 +29,11 @@ const ImageIconWr = styled(Center)`
 `;
 
 export const ImageHolder = forwardRef(function ImageHolderInner(
-  { width, height, children }: Props,
+  { width, height, children, style }: Props,
   ref: React.Ref<HTMLDivElement> | null
 ) {
   return (
-    <Container style={{ width, height }} ref={ref}>
+    <Container style={{ ...style, width, height }} ref={ref}>
       <ImageIconWr>
         <ImageIcon />
       </ImageIconWr>

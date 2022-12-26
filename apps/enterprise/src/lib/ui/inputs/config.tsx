@@ -12,3 +12,7 @@ export const defaultInputShapeCSS = css`
 export const inputBackgroundCSS = css`
   background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
 `;
+
+export const inputPaddingCSS = css`
+  padding: 24px;
+`;

@@ -1,7 +1,7 @@
 import { ChangeEvent, InputHTMLAttributes, Ref, forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
-import { defaultInputShapeCSS } from './config';
+import { defaultInputShapeCSS, inputPaddingCSS } from './config';
 
 import { Props as InputWrapperProps, InputWrapperWithErrorMessage } from './InputWrapper';
 
@@ -38,7 +38,7 @@ export const commonInputCSS = css<{
   max-width: 100%;
 
   background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
-  padding: 24px;
+  ${inputPaddingCSS};
   color: ${({ theme }) => theme.colors.text.toCssValue()};
 
   ${defaultTransitionCSS};
