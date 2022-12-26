@@ -10,12 +10,10 @@ export const toDelegateMsg = ({ amount, address, tokenDecimals }: DelegateMsgPar
   return JSON.stringify({
     staking: {
       delegate: {
-        amount: [
-          {
-            denom: 'uluna',
-            amount: microfy(amount, tokenDecimals).toString(),
-          },
-        ],
+        amount: {
+          denom: 'uluna',
+          amount: microfy(amount, tokenDecimals).toString(),
+        },
         validator: address,
       },
     },
