@@ -3,7 +3,6 @@ import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
-import { Button } from 'components/primitives';
 import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
@@ -22,6 +21,7 @@ import { VStack } from 'lib/ui/Stack';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -82,9 +82,9 @@ export const NftStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="primary" disabled={isLoading || myNfts?.length === 0} onClick={onOpen}>
+                    <PrimaryButton isDisabled={isLoading || myNfts?.length === 0} onClick={onOpen}>
                       Stake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
@@ -93,13 +93,13 @@ export const NftStakingConnectedView = () => {
 
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button
-                      variant="secondary"
-                      disabled={isLoading || walletStaked.tokens.length === 0}
+                    <PrimaryButton
+                      kind="secondary"
+                      isDisabled={isLoading || walletStaked.tokens.length === 0}
                       onClick={onOpen}
                     >
                       Unstake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeNFTOverlay
@@ -122,23 +122,23 @@ export const NftStakingConnectedView = () => {
         <VStack gap={16}>
           <NumericPanel
             className={styles.claim}
-            title="Claimable tokens"
+            title="Claimable NFTs"
             value={claimableTokens.length}
             suffix={symbol}
             footnote={
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
                 <Container className={styles.actions} direction="row">
-                  <Button
-                    variant="secondary"
-                    disabled={isLoading || claimableTokens.length === 0}
-                    loading={claimTxResult.loading}
+                  <PrimaryButton
+                    kind="secondary"
+                    isDisabled={isLoading || claimableTokens.length === 0}
+                    isLoading={claimTxResult.loading}
                     onClick={() => {
                       claimTx({ daoAddress: dao.address });
                     }}
                   >
                     Claim all
-                  </Button>
+                  </PrimaryButton>
                 </Container>
               </VStack>
             }
