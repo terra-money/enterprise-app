@@ -36,6 +36,16 @@ export module enterprise_factory {
   export type ExecuteMsg = {
     create_dao: CreateDaoMsg;
   };
+  export type ProposalActionType =
+    | 'update_metadata'
+    | 'update_gov_config'
+    | 'update_council'
+    | 'update_asset_whitelist'
+    | 'update_nft_whitelist'
+    | 'request_funding_from_dao'
+    | 'upgrade_dao'
+    | 'execute_msgs'
+    | 'modify_multisig_membership';
   export type Uint128 = string;
   export type Decimal = string;
   export type Duration =
@@ -68,24 +78,32 @@ export module enterprise_factory {
     | {
         url: string;
       };
-
-  export interface DaoCouncil {
-    members: string[];
-  }
-
   export interface CreateDaoMsg {
     /**
      * assets that are allowed to show in DAO's treasury
      */
     asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
+    /**
+     * Optional council structure that can manage certain aspects of the DAO
+     */
+    dao_council?: DaoCouncil | null;
     dao_gov_config: DaoGovConfig;
     dao_membership: CreateDaoMembershipMsg;
     dao_metadata: DaoMetadata;
-    dao_council?: DaoCouncil | null;
     /**
      * NFTs that are allowed to show in DAO's treasury
      */
     nft_whitelist?: Addr[] | null;
+  }
+  export interface DaoCouncil {
+    /**
+     * Proposal action types allowed in proposals that are voted on by the council. Effectively defines what types of actions council can propose and vote on. If None, will default to a predefined set of actions.
+     */
+    allowed_proposal_action_types?: ProposalActionType[] | null;
+    /**
+     * Addresses of council members. Each member has equal voting power.
+     */
+    members: string[];
   }
   export interface DaoGovConfig {
     /**
@@ -110,6 +128,10 @@ export module enterprise_factory {
     vote_duration: number;
   }
   export interface NewTokenMembershipInfo {
+    /**
+     * Optional amount of tokens to be minted to the DAO's address
+     */
+    initial_dao_balance?: Uint128 | null;
     initial_token_balances: Cw20Coin[];
     token_decimals: number;
     token_marketing?: TokenMarketingInfo | null;
@@ -151,9 +173,9 @@ export module enterprise_factory {
     membership_contract_addr: string;
   }
   export interface DaoMetadata {
+    description?: string | null;
     logo: Logo;
     name: string;
-    description?: string;
     socials: DaoSocialData;
   }
   export interface DaoSocialData {
