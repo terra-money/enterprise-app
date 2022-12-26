@@ -25,6 +25,7 @@ export class DAO {
     public readonly membershipContractAddress: string,
     public readonly enterpriseFactoryContract: string,
     public readonly socials: DAOSocials,
-    public readonly governanceConfig: DAOGovernanceConfig
+    public readonly governanceConfig: DAOGovernanceConfig,
+    public readonly council: enterprise.DaoCouncil
   ) {}
 }

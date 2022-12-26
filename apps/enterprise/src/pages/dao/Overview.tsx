@@ -11,6 +11,7 @@ import { TokenDaoPricePanel } from './TokenDaoPricePanel';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { MultisigDaoMembersPanel } from './MultisigDaoMembersPanel';
+import { DaoCouncilOverview } from './DaoCouncilOverview';
 
 const Panels = styled.div`
   display: grid;
@@ -34,7 +35,7 @@ export const Overview = () => {
   const dao = useCurrentDao();
 
   return (
-    <VStack gap={24}>
+    <VStack gap={40}>
       <Panels>
         <TreasuryOverview />
         <SidePanel>
@@ -58,6 +59,7 @@ export const Overview = () => {
         </SidePanel>
       </Panels>
       <RecentProposals />
+      <DaoCouncilOverview />
       <SocialChannels />
     </VStack>
   );

@@ -30,7 +30,8 @@ export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> 
           entity.membershipContractAddress,
           entity.enterpriseFactoryContract,
           entity.socials,
-          entity.config
+          entity.config,
+          entity.council
         );
       }
 
