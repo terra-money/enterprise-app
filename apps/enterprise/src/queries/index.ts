@@ -21,7 +21,6 @@ export * from './useDAONFTTreasury';
 export * from './useGlobalAssetsWhitelist';
 export * from './useCW721NumTokensQuery';
 export * from './useCW721ContractInfoQuery';
-export * from './useCW721TokensQuery';
 export * from './useCW3ListVotersQuery';
 export * from './useNativeBalanceQuery';
 export * from './useTokenBalanceQuery';

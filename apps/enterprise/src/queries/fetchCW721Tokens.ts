@@ -11,6 +11,7 @@ export const fetchCW721Tokens = async (
   nftAddress: string
 ): Promise<string[]> => {
   const lcd = getNetworkOrLCD(network);
+  console.log(nftAddress, walletAddress);
 
   const response = await lcd.wasm.contractQuery<CW721TokensResponse>(nftAddress, {
     tokens: {
@@ -18,6 +19,8 @@ export const fetchCW721Tokens = async (
       limit: 1000000,
     },
   });
+
+  console.log(response);
 
   return response.tokens;
 };

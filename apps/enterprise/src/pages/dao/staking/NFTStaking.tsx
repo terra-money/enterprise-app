@@ -4,7 +4,7 @@ import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
 import { Button } from 'components/primitives';
-import { useVotingPowerQuery, useCW721TokensQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
+import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
@@ -21,6 +21,7 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
+import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -57,7 +58,7 @@ export const NftStakingConnectedView = () => {
     totalStaked
   );
 
-  const { data: tokens = [] } = useCW721TokensQuery(walletAddress, dao.membershipContractAddress);
+  const { data: myNfts } = useMyNftsQuery(dao.membershipContractAddress);
 
   const [claimTxResult, claimTx] = useClaimTx();
 
@@ -81,13 +82,13 @@ export const NftStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="primary" disabled={isLoading || tokens.length === 0} onClick={onOpen}>
+                    <Button variant="primary" disabled={isLoading || myNfts?.length === 0} onClick={onOpen}>
                       Stake
                     </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeNFTOverlay
-                      tokens={tokens}
+                      nfts={myNfts ?? []}
                       daoAddress={dao.address}
                       symbol={symbol}
                       onClose={onClose}
@@ -151,7 +152,7 @@ export const NftStakingConnectedView = () => {
             }
           />
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel title="Your wallet" value={tokens.length} suffix={symbol} />
+            <NumericPanel title="Your wallet" value={myNfts?.length} suffix={symbol} />
             <NumericPanel
               title="Your total staked"
               value={walletStaked.tokens.length}

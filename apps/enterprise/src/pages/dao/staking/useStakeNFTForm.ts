@@ -1,5 +1,6 @@
 import { useForm } from '@terra-money/apps/hooks';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
+import { NftInfo } from 'chain/queries/useNftInfoQuery';
 
 interface StakeNFTFormInput {}
 
@@ -12,12 +13,10 @@ const initialState: StakeNFTFormState = {
 };
 
 interface UseStakeNFTFormOptions {
-  tokens: string[];
+  nfts: NftInfo[];
 }
 
-export const useStakeNFTForm = (options: UseStakeNFTFormOptions) => {
-  const { tokens } = options;
-
+export const useStakeNFTForm = ({ nfts }: UseStakeNFTFormOptions) => {
   const connectedWallet = useConnectedWallet();
 
   return useForm<StakeNFTFormInput, StakeNFTFormState>(async (input, getState, dispatch) => {
@@ -30,7 +29,7 @@ export const useStakeNFTForm = (options: UseStakeNFTFormOptions) => {
       ...input,
     };
 
-    const submitDisabled = tokens.length === 0;
+    const submitDisabled = nfts.length === 0;
 
     dispatch({ ...state, submitDisabled });
   }, initialState);
