@@ -103,7 +103,12 @@ export class Indexer extends EventIndexer<Entity> {
     const entities = [];
 
     for (let [address, id] of proposals.map((p) => p.split(':'))) {
-      entities.push(await this.fetchProposal(lcd, address, +id));
+      try {
+        const proposal = await this.fetchProposal(lcd, address, +id);
+        entities.push(proposal);
+      } catch (err) {
+        this.logger.error(`Failed to fetch proposal with id ${id} for ${address} DAO: ${err}.`);
+      }
     }
 
     await this.persistence.save(entities);
