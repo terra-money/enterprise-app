@@ -17,7 +17,7 @@ import {
 } from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
-import { SelectProposalTypePage } from 'pages/create-proposal';
+import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
 import { Page as ProposalPage } from 'pages/proposal';
 import { PersonalizationProvider } from 'libs/personalization';
 import { BetaGuard } from 'components/beta-guard';
