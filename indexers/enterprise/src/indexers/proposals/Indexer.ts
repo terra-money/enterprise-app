@@ -26,6 +26,8 @@ export class Indexer extends EventIndexer<Entity> {
   }
 
   private getModifiedProposals = async (min: number, max: number): Promise<Array<string>> => {
+    this.logger.info(`Getting modified proposals between ${min} and ${max} blocks.`);
+
     const pks = [
       EnterpriseEventPK.dao('create_proposal'),
       EnterpriseEventPK.dao('execute_proposal'),
@@ -37,7 +39,9 @@ export class Indexer extends EventIndexer<Entity> {
       EnterpriseEventPK.dao('unstake_cw721'),
     ];
 
-    const promises = await Promise.all(
+    this.logger.info(`Fetching proposals with keys: ${pks}.`);
+
+    const groupedProposals = await Promise.all(
       pks.map((pk) =>
         fetchByHeight<DaoEvents, string>(this.events, pk, min, max, (event) => [
           `${event.payload._contract_address}:${event.payload.proposal_id}`,
@@ -45,15 +49,23 @@ export class Indexer extends EventIndexer<Entity> {
       )
     );
 
-    return Array.from(new Set<string>(promises.flatMap((s) => s))).filter(Boolean);
+    const proposals = Array.from(new Set<string>(groupedProposals.flatMap((s) => s))).filter(Boolean);
+
+    this.logger.info(`Received proposals: ${proposals}.`);
+
+    return proposals;
   };
 
   private fetchProposal = async (lcd: LCDClient, daoAddress: string, id: number): Promise<Entity> => {
+    this.logger.info(`Fetching proposal with id ${id} for ${daoAddress} DAO.`);
+
     const response = await lcd.wasm.contractQuery<enterprise.ProposalResponse>(daoAddress, {
       proposal: {
         proposal_id: id,
       },
     });
+
+    this.logger.info(`Received proposal response: ${response}.`);
 
     const [yesVotes, noVotes, abstainVotes, vetoVotes] = response.results.reduce(
       (previous, [t, v]) => {
