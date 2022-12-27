@@ -105,9 +105,10 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   return {
     create_dao: {
       dao_council:
-        council.length > 0
+        council.members.length > 0
           ? {
-              members: council.map((member) => member.address),
+              members: council.members.map((member) => member.address),
+              allowed_proposal_action_types: council.allowedProposalTypes,
             }
           : null,
       asset_whitelist: null,

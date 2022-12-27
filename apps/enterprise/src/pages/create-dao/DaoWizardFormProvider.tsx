@@ -1,10 +1,10 @@
 import { FormInput, FormState, useForm } from '@terra-money/apps/hooks';
-import { getLast, isFormStateValid, validateAddress } from '@terra-money/apps/utils';
+import { getLast, isFormStateValid } from '@terra-money/apps/utils';
 import { createContextHook } from '@terra-money/apps/utils/createContextHook';
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
-import { enterprise } from 'types/contracts';
+import { enterprise, enterprise_factory } from 'types/contracts';
 import { MultisigMember } from 'types/MultisigMember';
 import { fetchExistingToken } from './fetchExistingToken';
 import { fetchExistingNFT } from './fetchExistingNFT';
@@ -20,6 +20,7 @@ import { validateTokenInfo } from './token/helpers/validateTokenInfo';
 import { validateTokenMarketing } from './token/helpers/validateTokenMarketing';
 import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
+import { validateCouncil } from './shared/helpers/validateCouncil';
 
 export interface DaoSocialDataInput {
   githubUsername?: string;
@@ -43,6 +44,11 @@ export interface DaoImportInput {
   daoAddress?: string;
 }
 
+export interface CouncilInput {
+  members: FormState<CouncilMember>[];
+  allowedProposalTypes: enterprise_factory.ProposalActionType[];
+}
+
 export interface DaoWizardInput {
   type: enterprise.DaoType;
   daoImport: FormState<DaoImportInput>;
@@ -60,7 +66,7 @@ export interface DaoWizardInput {
   initialDaoBalance: number | undefined;
   tokenMarketing: FormState<TokenMarketing>;
 
-  council: FormState<CouncilMember>[];
+  council: FormState<CouncilInput>;
 
   existingTokenAddr: string;
   existingToken: CW20TokenInfoResponse | undefined;
@@ -178,7 +184,10 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
     daoAddress: undefined,
   },
 
-  council: [],
+  council: {
+    members: [],
+    allowedProposalTypes: ['upgrade_dao', 'update_metadata'],
+  },
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],
 
@@ -286,14 +295,11 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
     },
 
     council: () => {
-      const council = state.council.map(({ address }) => ({
-        address,
-        addressError: validateAddress(address),
-      }));
+      const council = validateCouncil(state.council);
 
       return {
         council,
-        isValid: council.every(isFormStateValid),
+        isValid: council.members.every(isFormStateValid) && isFormStateValid(council),
       };
     },
 
