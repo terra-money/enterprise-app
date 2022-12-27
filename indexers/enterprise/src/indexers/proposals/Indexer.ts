@@ -28,28 +28,21 @@ export class Indexer extends EventIndexer<Entity> {
   private getModifiedProposals = async (min: number, max: number): Promise<Array<ProposalKey>> => {
     this.logger.info(`Getting modified proposals between ${min} and ${max} blocks.`);
 
-    const pks = [
+    const proposalSpecificEventsKeys = [
       EnterpriseEventPK.dao('create_proposal'),
       EnterpriseEventPK.dao('execute_proposal'),
       EnterpriseEventPK.dao('cast_vote'),
-
-      EnterpriseEventPK.dao('stake_cw20'),
-      EnterpriseEventPK.dao('stake_cw721'),
-      EnterpriseEventPK.dao('unstake_cw20'),
-      EnterpriseEventPK.dao('unstake_cw721'),
     ];
 
-    this.logger.info(`Fetching proposals with keys: ${pks}.`);
+    const proposalsKeys: ProposalKey[] = [];
 
     const groupedProposals = await Promise.all(
-      pks.map((pk) =>
-        fetchByHeight<DaoEvents, string>(this.events, pk, min, max, (event) => [
-          `${event.payload._contract_address}:${event.payload.proposal_id}`,
+      proposalSpecificEventsKeys.map((pk) =>
+        fetchByHeight<DaoEvents, string>(this.events, pk, min, max, ({ payload }) => [
+          `${payload._contract_address}:${payload.proposal_id}`,
         ])
       )
     );
-
-    const proposalsKeys: ProposalKey[] = [];
 
     Array.from(new Set<string>(groupedProposals.flatMap((s) => s)))
       .filter(Boolean)
@@ -57,15 +50,40 @@ export class Indexer extends EventIndexer<Entity> {
         const [daoAddress, stringifiedId] = stringifiedKey.split(':');
         const id = Number(stringifiedId);
 
-        if (isNaN(id)) {
-          this.logger.error(`Received invalid proposal id: ${stringifiedId} for ${daoAddress} DAO.`);
-          return;
-        }
-
         proposalsKeys.push({ daoAddress, id });
       });
 
-    this.logger.info(`Received proposals keys: ${proposalsKeys}.`);
+    const daoSpecificEventsKeys = [
+      EnterpriseEventPK.dao('stake_cw20'),
+      EnterpriseEventPK.dao('stake_cw721'),
+      EnterpriseEventPK.dao('unstake_cw20'),
+      EnterpriseEventPK.dao('unstake_cw721'),
+    ];
+
+    const groupedDaos = await Promise.all(
+      daoSpecificEventsKeys.map((pk) =>
+        fetchByHeight<DaoEvents, string>(this.events, pk, min, max, ({ payload }) => [payload._contract_address])
+      )
+    );
+
+    const daoAddresses = Array.from(new Set<string>(groupedDaos.flatMap((s) => s))).filter(Boolean);
+    const lcd = createLCDClient();
+
+    await Promise.all(
+      daoAddresses.map(async (daoAddress) => {
+        const { proposals } = await lcd.wasm.contractQuery<enterprise.ProposalsResponse>(daoAddress, {
+          proposals: {
+            filter: 'in_progress',
+          },
+        });
+        proposals.forEach(({ proposal }) => {
+          const key: ProposalKey = { daoAddress, id: proposal.id };
+          if (!proposalsKeys.some((k) => k.daoAddress === key.daoAddress && k.id === key.id)) {
+            proposalsKeys.push(key);
+          }
+        });
+      })
+    );
 
     return proposalsKeys;
   };
