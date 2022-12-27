@@ -17,3 +17,8 @@ export type Entity = {
   vetoVotes: string;
   totalVotes: string;
 };
+
+export interface ProposalKey {
+  daoAddress: string;
+  id: number;
+}

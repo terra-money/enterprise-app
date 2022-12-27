@@ -1,5 +1,5 @@
 import { EventIndexer, IndexFnOptions } from 'indexers/EventIndexer';
-import { Entity } from './types';
+import { Entity, ProposalKey } from './types';
 import { LCDClient } from '@terra-money/terra.js';
 import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
 import { batch, createLCDClient } from '@apps-shared/indexers/utils';
@@ -25,7 +25,7 @@ export class Indexer extends EventIndexer<Entity> {
     });
   }
 
-  private getModifiedProposals = async (min: number, max: number): Promise<Array<string>> => {
+  private getModifiedProposals = async (min: number, max: number): Promise<Array<ProposalKey>> => {
     this.logger.info(`Getting modified proposals between ${min} and ${max} blocks.`);
 
     const pks = [
@@ -49,11 +49,25 @@ export class Indexer extends EventIndexer<Entity> {
       )
     );
 
-    const proposals = Array.from(new Set<string>(groupedProposals.flatMap((s) => s))).filter(Boolean);
+    const proposalsKeys: ProposalKey[] = [];
 
-    this.logger.info(`Received proposals: ${proposals}.`);
+    Array.from(new Set<string>(groupedProposals.flatMap((s) => s)))
+      .filter(Boolean)
+      .forEach((stringifiedKey) => {
+        const [daoAddress, stringifiedId] = stringifiedKey.split(':');
+        const id = Number(stringifiedId);
 
-    return proposals;
+        if (isNaN(id)) {
+          this.logger.error(`Received invalid proposal id: ${stringifiedId} for ${daoAddress} DAO.`);
+          return;
+        }
+
+        proposalsKeys.push({ daoAddress, id });
+      });
+
+    this.logger.info(`Received proposals keys: ${proposalsKeys}.`);
+
+    return proposalsKeys;
   };
 
   private fetchProposal = async (lcd: LCDClient, daoAddress: string, id: number): Promise<Entity> => {
@@ -97,19 +111,21 @@ export class Indexer extends EventIndexer<Entity> {
     };
   };
 
-  private synchronize = async (proposals: string[]): Promise<void> => {
+  private synchronize = async (proposalsKeys: ProposalKey[]): Promise<void> => {
     const lcd = createLCDClient();
 
     const entities = [];
 
-    for (let [address, id] of proposals.map((p) => p.split(':'))) {
-      try {
-        const proposal = await this.fetchProposal(lcd, address, +id);
-        entities.push(proposal);
-      } catch (err) {
-        this.logger.error(`Failed to fetch proposal with id ${id} for ${address} DAO: ${err}.`);
-      }
-    }
+    await Promise.all(
+      proposalsKeys.map(async ({ daoAddress, id }) => {
+        try {
+          const proposal = await this.fetchProposal(lcd, daoAddress, id);
+          entities.push(proposal);
+        } catch (err) {
+          this.logger.error(`Failed to fetch proposal with id ${id} for ${daoAddress} DAO: ${err}.`);
+        }
+      })
+    );
 
     await this.persistence.save(entities);
   };
