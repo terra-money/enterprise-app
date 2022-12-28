@@ -4,7 +4,16 @@ import { DAO } from './DAO';
 
 export type ProposalStatusName = 'Active' | 'Pending' | 'Passed' | 'Rejected' | 'Executed';
 
-export type ProposalType = 'Text' | 'Config' | 'Upgrade' | 'Other' | 'Assets' | 'NFTs' | 'Execute' | 'Members';
+export type ProposalType =
+  | 'Text'
+  | 'Config'
+  | 'Upgrade'
+  | 'Other'
+  | 'Assets'
+  | 'NFTs'
+  | 'Execute'
+  | 'Members'
+  | 'Council';
 
 export class Proposal {
   public readonly type: ProposalType;
@@ -95,6 +104,10 @@ export class Proposal {
 
       if ('modify_multisig_membership' in action) {
         return 'Members';
+      }
+
+      if ('update_council' in action) {
+        return 'Council';
       }
     }
 

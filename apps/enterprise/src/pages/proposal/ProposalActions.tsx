@@ -4,6 +4,7 @@ import { ConfigProposalActions } from './ConfigProposalActions';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import { ExecuteMessagesProposalAction } from './ExecuteMessagesProposalAction';
 import { UpdateAssetsWhitelistAction } from './UpdateAssetsWhitelistAction';
+import { UpdateCouncilAction } from './UpdateCouncilAction';
 import { UpdateMultisigMembersAction } from './UpdateMultisigMembersAction';
 import { UpdateNFTsWhitelistAction } from './UpdateNFTWhitelistAction';
 import { UpgradeProposalAction } from './UpgradeProposalAction';
@@ -16,6 +17,7 @@ export const ProposalActions = () => {
       value={type}
       Text={() => null}
       Other={() => null}
+      Council={() => <UpdateCouncilAction />}
       Members={() => (
         <CurrentDAOMultisigMembersProvider>
           <UpdateMultisigMembersAction />
