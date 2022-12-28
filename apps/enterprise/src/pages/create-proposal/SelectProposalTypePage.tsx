@@ -16,6 +16,8 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 import { without } from 'lodash';
+import { DAO } from 'types';
+import { enterprise } from 'types/contracts';
 
 const sharedProposalTypes = [
   'text',
@@ -39,6 +41,20 @@ export type ProposalType =
   | typeof daoProposalsRecord.multisig[number]
   | typeof daoProposalsRecord.token[number]
   | typeof daoProposalsRecord.nft[number];
+
+const contractsProposalTypeRecord: Partial<Record<enterprise.ProposalActionType, ProposalType>> = {
+  // TODO
+  // update_metadata
+  // update_config
+  // request_funding_from_dao
+
+  update_council: 'council',
+  update_asset_whitelist: 'assets',
+  update_nft_whitelist: 'nfts',
+  upgrade_dao: 'upgrade',
+  execute_msgs: 'execute',
+  modify_multisig_membership: 'members',
+};
 
 export const proposalTitle: Record<ProposalType, string> = {
   text: 'Text proposal',
@@ -78,6 +94,28 @@ const proposalVotingTypeName: Record<ProposalVotingType, string> = {
   council: 'Emergency',
 };
 
+const getProposalOptions = ({ type, council }: DAO, proposalVotingType: ProposalVotingType) => {
+  const options = daoProposalsRecord[type];
+  if (council) {
+    if (proposalVotingType === 'regular') {
+      return options;
+    }
+    const { allowed_proposal_action_types } = council;
+    if (allowed_proposal_action_types) {
+      return allowed_proposal_action_types.reduce((acc, type) => {
+        const proposalType = contractsProposalTypeRecord[type];
+        if (proposalType) {
+          acc.push(proposalType);
+        }
+
+        return acc;
+      }, [] as ProposalType[]);
+    }
+  }
+
+  return without(options, 'council');
+};
+
 export const SelectProposalTypePage = () => {
   const { address } = useParams();
 
@@ -108,8 +146,7 @@ export const SelectProposalTypePage = () => {
   };
 
   const renderOptions = () => {
-    const { type, council } = assertDefined(dao);
-    const options = council ? daoProposalsRecord[type] : without(daoProposalsRecord[type], 'council');
+    const options = getProposalOptions(assertDefined(dao), proposalVotingType);
 
     return (
       <PrimarySelect
