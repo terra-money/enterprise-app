@@ -5,7 +5,7 @@ import { Header } from './Header';
 import { useNavigate, useParams } from 'react-router';
 import { useDAOQuery } from 'queries';
 import { CW20Addr } from '@terra-money/apps/types';
-import { Button } from 'components/primitives';
+import { Button, Text } from 'components/primitives';
 import { FormFooter } from 'components/form-footer';
 import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
@@ -17,7 +17,7 @@ import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 
 const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'spend', 'delegate'] as const;
-
+const executeMessage: string = `Execute custom messages that will allow you to interact with smart contracts, send assets and more. Click here <a href="https://docs.enterprise.money/guides/messages">messages</a> for more information on message templates.`
 const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
   token: [...sharedProposalTypes, 'mint', 'burn'] as const,
@@ -43,6 +43,20 @@ export const proposalTitle: Record<ProposalType, string> = {
   delegate: 'Delegate LUNA proposal',
 };
 
+export const proposalDescription: Record<ProposalType, string> = {
+  text: 'Create general-purpose petitions, such as asking the DAO to partner with another protocol or for the DAO to implement a new feature',
+  config: 'Update DAO configurations such as governance parameters and DAO metadata',
+  upgrade: 'Upgrade your DAO to the latest contracts to get upgraded features',
+  assets: 'Update whitelisted assets',
+  nfts: 'Add/remove assets thats displayed on the Treasury page',
+  execute: executeMessage,
+  members: 'Add/remove members from the Multisig',
+  spend: 'Submit this proposal to send assets in your treasury to another address',
+  mint: 'Mint DAO governance tokens to accounts. This only works if the minter of the CW20 token is the DAO treasury address.',
+  burn: 'Undelegate LUNA from a validator that you have delegated to',
+  delegate: 'Delegate LUNA in your treasury with a validator of your choice to earn staking rewards'
+};
+
 const title = 'Create a proposal';
 
 // TODO: turn into a reusable component
@@ -56,6 +70,12 @@ const NormalScreenContent = styled.div`
   flex: 1;
   overflow-y: auto;
 `;
+
+const ProposalScreenContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+`
 
 export const SelectProposalTypePage = () => {
   const { address } = useParams();
@@ -115,7 +135,13 @@ export const SelectProposalTypePage = () => {
                 <AnimatedPage>
                   <NormalScreenContainer>
                     <Header ref={ref} title={title} />
-                    <NormalScreenContent>{renderOptions()}</NormalScreenContent>
+                    <ProposalScreenContainer>
+                      <NormalScreenContent>{renderOptions()}</NormalScreenContent>
+                      <VStack gap={8} style={{ width: '50%', marginLeft: '10%' }}>
+                        <Text variant="heading4">What is a {proposalTitle[proposalType]}?</Text>
+                        <Text variant="text">{proposalDescription[proposalType]}</Text>
+                      </VStack>
+                    </ProposalScreenContainer>
                     {renderFooter()}
                   </NormalScreenContainer>
                 </AnimatedPage>
