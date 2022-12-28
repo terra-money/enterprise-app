@@ -186,7 +186,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
 
   council: {
     members: [],
-    allowedProposalTypes: ['upgrade_dao', 'update_metadata'],
+    allowedProposalTypes: ['upgrade_dao'],
   },
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],
