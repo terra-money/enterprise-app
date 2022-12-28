@@ -69,6 +69,15 @@ const NormalScreenContent = styled.div`
   overflow-y: auto;
 `;
 
+const proposalVotingTypes = ['regular', 'council'] as const;
+
+type ProposalVotingType = typeof proposalVotingTypes[number];
+
+const proposalVotingTypeName: Record<ProposalVotingType, string> = {
+  regular: 'Regular',
+  council: 'Emergency',
+};
+
 export const SelectProposalTypePage = () => {
   const { address } = useParams();
 
@@ -79,6 +88,24 @@ export const SelectProposalTypePage = () => {
   const [proposalType, setProposalType] = useState<ProposalType>('text');
 
   const navigate = useNavigate();
+
+  const [proposalVotingType, setProposalVotingType] = useState<ProposalVotingType>('regular');
+
+  const renderVotingTypePicker = () => {
+    if (!dao?.council) return null;
+
+    return (
+      <PrimarySelect
+        direction="row"
+        label="Choose category"
+        options={proposalVotingTypes}
+        getName={(view) => proposalVotingTypeName[view]}
+        selectedOption={proposalVotingType}
+        onSelect={setProposalVotingType}
+        groupName="proposal-voting-type"
+      />
+    );
+  };
 
   const renderOptions = () => {
     const { type, council } = assertDefined(dao);
@@ -119,6 +146,7 @@ export const SelectProposalTypePage = () => {
               small={() => (
                 <VStack gap={24}>
                   <MobileCreateProposalHeader title={title} />
+                  {renderVotingTypePicker()}
                   {renderOptions()}
                   {renderFooter()}
                 </VStack>
@@ -127,6 +155,7 @@ export const SelectProposalTypePage = () => {
                 <AnimatedPage>
                   <NormalScreenContainer>
                     <Header ref={ref} title={title} />
+                    {renderVotingTypePicker()}
                     <NormalScreenContent>{renderOptions()}</NormalScreenContent>
                     {renderFooter()}
                   </NormalScreenContainer>

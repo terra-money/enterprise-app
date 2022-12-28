@@ -1,23 +1,19 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 
 interface Props {
-  gap?: React.CSSProperties["gap"];
-  alignItems?: React.CSSProperties["alignItems"];
-  justifyContent?: React.CSSProperties["justifyContent"];
-  wrap?: React.CSSProperties["flexWrap"];
+  gap?: React.CSSProperties['gap'];
+  alignItems?: React.CSSProperties['alignItems'];
+  justifyContent?: React.CSSProperties['justifyContent'];
+  wrap?: React.CSSProperties['flexWrap'];
   children: React.ReactNode;
   fullWidth?: boolean;
   fullHeight?: boolean;
 }
 
-const formatFlexAlignment = (
-  value:
-    | React.CSSProperties["alignItems"]
-    | React.CSSProperties["justifyContent"]
-) => {
-  if (value === "end" || value === "start") {
+const formatFlexAlignment = (value: React.CSSProperties['alignItems'] | React.CSSProperties['justifyContent']) => {
+  if (value === 'end' || value === 'start') {
     return `flex-${value}`;
   }
 
@@ -68,8 +64,8 @@ export const HStack = styled.div`
   flex-direction: row;
 `;
 
-interface StackProps extends Props {
-  direction: React.CSSProperties["direction"];
+export interface StackProps extends Props {
+  direction: 'row' | 'column';
 }
 
 export const Stack = styled.div<StackProps>`
