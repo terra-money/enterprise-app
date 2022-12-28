@@ -18,7 +18,7 @@ const proposalTypeName: Record<enterprise_factory.ProposalActionType, string> = 
   modify_multisig_membership: 'Modify multisig membership',
 };
 
-const proposalTypes = Object.keys(proposalTypeName) as enterprise_factory.ProposalActionType[];
+export const proposalTypes = Object.keys(proposalTypeName) as enterprise_factory.ProposalActionType[];
 
 interface Props {
   value: enterprise_factory.ProposalActionType[];

@@ -20,6 +20,7 @@ import { TextProposalForm } from './text/TextProposalForm';
 import { UpgradeProposalForm } from './upgrade/UpgradeProposalForm';
 import { ExecuteMessageProposalForm } from './execute/ExecuteMessageProposalForm';
 import { MintTokensProposalForm } from './mint/MintTokensProposalForm';
+import { CouncilForm } from './council/CouncilForm';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -41,6 +42,7 @@ export const CreateProposalPage = () => {
               <CurrentDaoProvider value={dao}>
                 <ConditionalRender
                   value={assertDefined(type)}
+                  council={() => <CouncilForm />}
                   text={() => <TextProposalForm />}
                   config={() => <CreateConfigProposalPage />}
                   upgrade={() => <UpgradeProposalForm />}

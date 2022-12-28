@@ -15,8 +15,19 @@ import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
 import { assertDefined } from '@terra-money/apps/utils';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
+import { without } from 'lodash';
 
-const sharedProposalTypes = ['text', 'config', 'upgrade', 'assets', 'nfts', 'execute', 'spend', 'delegate'] as const;
+const sharedProposalTypes = [
+  'text',
+  'config',
+  'upgrade',
+  'assets',
+  'nfts',
+  'execute',
+  'spend',
+  'delegate',
+  'council',
+] as const;
 
 const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
@@ -41,6 +52,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   mint: 'Mint token proposal',
   burn: 'Burn token proposal',
   delegate: 'Delegate LUNA proposal',
+  council: 'Update council',
 };
 
 const title = 'Create a proposal';
@@ -69,8 +81,8 @@ export const SelectProposalTypePage = () => {
   const navigate = useNavigate();
 
   const renderOptions = () => {
-    const { type } = assertDefined(dao);
-    const options = daoProposalsRecord[type];
+    const { type, council } = assertDefined(dao);
+    const options = council ? daoProposalsRecord[type] : without(daoProposalsRecord[type], 'council');
 
     return (
       <PrimarySelect
