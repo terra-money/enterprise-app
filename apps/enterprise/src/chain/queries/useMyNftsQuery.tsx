@@ -10,9 +10,11 @@ interface MyNftIdsParams {
   };
 }
 
-interface MyNftIdsResponse {
-  ids: string[];
-}
+// some NFT contracts use ids, some use tokens
+type MyNftIdsResponse = {
+  ids?: string[];
+  tokens?: string[];
+};
 
 export const useMyNftsQuery = (collectionAddr: string) => {
   const { query } = useContract();
@@ -22,10 +24,10 @@ export const useMyNftsQuery = (collectionAddr: string) => {
   const address = useAssertMyAddress();
 
   return useQuery([QUERY_KEY.MY_NFTS, collectionAddr], async () => {
-    const { ids } = await query<MyNftIdsParams, MyNftIdsResponse>(collectionAddr, {
+    const { ids, tokens } = await query<MyNftIdsParams, MyNftIdsResponse>(collectionAddr, {
       tokens: { owner: address },
     });
 
-    return Promise.all(ids.map((token) => queryNftInfo(collectionAddr, token)));
+    return Promise.all((ids || tokens || []).map((token) => queryNftInfo(collectionAddr, token)));
   });
 };
