@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useRef } from "react";
-import { useKeyPress } from "lib/shared/hooks/useKeyPress";
-import styled, { css } from "styled-components";
-import { inputBorderRadiusCSS } from "../config";
+import { ReactNode, useEffect, useRef } from 'react';
+import { useKeyPress } from 'lib/shared/hooks/useKeyPress';
+import styled, { css } from 'styled-components';
+import { inputBorderRadiusCSS } from '../config';
 
 interface Props<T> {
-  options: T[];
+  options: readonly T[];
   renderOption: (option: T) => ReactNode;
   optionToKey: (option: T) => string;
   onOptionHighlight: (index: number) => void;
@@ -15,9 +15,7 @@ interface Props<T> {
 const Container = styled.div`
   width: 100%;
   background: ${({ theme }) =>
-    theme.name === "light"
-      ? theme.colors.background.toCssValue()
-      : theme.colors.foreground.toCssValue()};
+    theme.name === 'light' ? theme.colors.background.toCssValue() : theme.colors.foreground.toCssValue()};
   box-shadow: ${({ theme }) => theme.shadows.small};
   ${inputBorderRadiusCSS};
   overflow: hidden;
@@ -52,17 +50,14 @@ export function ComboboxOptions<T>({
 
   const getHandleStep = (step: number) => () => {
     const adjustedIndex = (highlightedIndex || 0) + step;
-    const newIndex =
-      adjustedIndex < 0
-        ? options.length + adjustedIndex
-        : adjustedIndex % options.length;
+    const newIndex = adjustedIndex < 0 ? options.length + adjustedIndex : adjustedIndex % options.length;
 
     onOptionHighlight(newIndex);
 
     const element = optionsRefs.current[newIndex];
     element?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
+      behavior: 'smooth',
+      block: 'center',
     });
   };
 
@@ -72,9 +67,9 @@ export function ComboboxOptions<T>({
     }
   }, [highlightedIndex, onOptionHighlight, options.length]);
 
-  useKeyPress("ArrowUp", getHandleStep(-1));
+  useKeyPress('ArrowUp', getHandleStep(-1));
 
-  useKeyPress("ArrowDown", getHandleStep(1));
+  useKeyPress('ArrowDown', getHandleStep(1));
 
   return (
     <Container>

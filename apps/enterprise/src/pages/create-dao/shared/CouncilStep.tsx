@@ -6,7 +6,7 @@ import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { CouncilMember, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardStep } from '../WizardStep';
-import { ProposalTypesInput } from './ProposalTypesInput';
+import { CouncilProposalActionType, ProposalTypesInput } from './ProposalTypesInput';
 
 export function CouncilStep() {
   const {
@@ -22,7 +22,7 @@ export function CouncilStep() {
     <WizardStep title="Add council members to your DAO" subTitle="(Optional)">
       <VStack gap={40}>
         <ProposalTypesInput
-          value={allowedProposalTypes}
+          value={allowedProposalTypes as CouncilProposalActionType[]}
           onChange={(allowedProposalTypes) => formInput({ council: { ...council, allowedProposalTypes } })}
           error={council.allowedProposalTypesError}
         />

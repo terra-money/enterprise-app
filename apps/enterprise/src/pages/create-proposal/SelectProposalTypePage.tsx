@@ -87,7 +87,7 @@ const NormalScreenContent = styled.div`
 
 const proposalVotingTypes = ['regular', 'council'] as const;
 
-type ProposalVotingType = typeof proposalVotingTypes[number];
+export type ProposalVotingType = typeof proposalVotingTypes[number];
 
 const proposalVotingTypeName: Record<ProposalVotingType, string> = {
   regular: 'Regular',
@@ -165,7 +165,12 @@ export const SelectProposalTypePage = () => {
     return (
       <FormFooter
         primary={
-          <Button onClick={() => navigate(`/dao/${address}/proposals/create/${proposalType}`)} variant="primary">
+          <Button
+            onClick={() =>
+              navigate(`/dao/${address}/proposals/create/${proposalType}?votingType=${proposalVotingType}`)
+            }
+            variant="primary"
+          >
             Next
           </Button>
         }

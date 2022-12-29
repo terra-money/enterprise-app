@@ -10,7 +10,7 @@ import { BurnTokensProposalPage } from './burn/BurnTokensProposalPage';
 import { CreateConfigProposalPage } from './config/CreateConfigProposalPage';
 import { DelegateProposalPage } from './delegate/DelegateProposalPage';
 import { MultisigMembersProposalPage } from './multisig-members/MultisigMembersProposalPage';
-import { ProposalType } from './SelectProposalTypePage';
+import { ProposalType, ProposalVotingType } from './SelectProposalTypePage';
 import { SpendTreasuryProposalPage } from './spend/SpendTreasuryProposalPage';
 import { UpdateWhitelistedAssetsProposalPage } from './whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
 import { UpdateWhitelistedNFTsProposalPage } from './whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
@@ -21,6 +21,7 @@ import { UpgradeProposalForm } from './upgrade/UpgradeProposalForm';
 import { ExecuteMessageProposalForm } from './execute/ExecuteMessageProposalForm';
 import { MintTokensProposalForm } from './mint/MintTokensProposalForm';
 import { CouncilForm } from './council/CouncilForm';
+import { useSearchParams } from 'react-router-dom';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -29,6 +30,10 @@ type CreateProposalPageParams = {
 
 export const CreateProposalPage = () => {
   const { type, address } = useParams<CreateProposalPageParams>();
+  const [searchParams] = useSearchParams();
+
+  const proposalVotingType = (searchParams.get('votingType') || 'regular') as ProposalVotingType;
+  console.log(proposalVotingType);
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 

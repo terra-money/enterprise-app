@@ -6,10 +6,10 @@ import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { CouncilMember } from 'pages/create-dao/DaoWizardFormProvider';
-import { ProposalTypesInput } from 'pages/create-dao/shared/ProposalTypesInput';
+import { CouncilProposalActionType, ProposalTypesInput } from 'pages/create-dao/shared/ProposalTypesInput';
 import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { enterprise, enterprise_factory } from 'types/contracts';
+import { enterprise } from 'types/contracts';
 import * as z from 'zod';
 import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
@@ -81,7 +81,7 @@ export const CouncilForm = () => {
           name="allowedProposalTypes"
           render={({ field: { value, onChange } }) => (
             <ProposalTypesInput
-              value={value as enterprise_factory.ProposalActionType[]}
+              value={value as CouncilProposalActionType[]}
               onChange={onChange}
               error={errors.allowedProposalTypes?.message}
             />

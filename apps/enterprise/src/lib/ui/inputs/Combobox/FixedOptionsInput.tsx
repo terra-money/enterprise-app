@@ -32,7 +32,7 @@ interface Props<T> {
   isLoading?: boolean;
   noOptionsMessage?: string;
 
-  options: T[];
+  options: readonly T[];
   optionToString: (option: T) => string;
   renderOption?: (option: T) => ReactNode;
   clearAfterOptionSelected?: boolean;

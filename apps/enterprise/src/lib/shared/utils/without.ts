@@ -1,4 +1,4 @@
-export function without<T>(array: T[], values: T[]): T[] {
+export function without<T>(array: readonly T[], values: T[]): T[] {
   const set = new Set(array);
 
   values.forEach((value) => {
