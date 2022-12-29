@@ -7,7 +7,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useStakeNftTx } from 'dao/tx/useStakeNftTx';
 import { useState } from 'react';
 import { assertDefined } from '@terra-money/apps/utils';
-import { MyNftIdInput } from 'chain/components/MyNftIdInput';
+import { MyNftIdInput } from 'chain/components/NftIdInput/MyNftIdInput';
 
 interface StakeNFTOverlayProps extends ClosableComponentProps {
   staked: string[];

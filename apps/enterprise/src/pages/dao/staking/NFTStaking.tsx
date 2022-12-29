@@ -102,13 +102,7 @@ export const NftStakingConnectedView = () => {
                     </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
-                    <UnstakeNFTOverlay
-                      daoAddress={dao.address}
-                      symbol={symbol}
-                      onClose={onClose}
-                      walletAddress={walletAddress}
-                      staked={walletStaked.tokens}
-                    />
+                    <UnstakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
                   )}
                 />
               </Container>
