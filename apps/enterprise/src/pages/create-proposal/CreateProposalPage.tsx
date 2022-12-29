@@ -26,6 +26,7 @@ import { AnimatedPage } from '@terra-money/apps/components';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { Header } from './Header';
+import { CreateProposalProvider } from './CreateProposalProvider';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -52,43 +53,44 @@ export const CreateProposalPage = () => {
   const [searchParams] = useSearchParams();
 
   const proposalVotingType = (searchParams.get('votingType') || 'regular') as ProposalVotingType;
-  console.log(proposalVotingType);
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 
   return (
-    <Navigation>
-      <LoadingPage isLoading={isLoading}>
-        <ConditionalWallet
-          notConnected={() => <ConnectWalletPrompt />}
-          connected={() => (
-            <AnimatedPage>
-              <Container>
-                {dao ? (
-                  <CurrentDaoProvider value={dao}>
-                    <Header title={proposalTitle[type]} />
-                    <ConditionalRender
-                      value={assertDefined(type)}
-                      council={() => <CouncilForm />}
-                      text={() => <TextProposalForm />}
-                      config={() => <CreateConfigProposalPage />}
-                      upgrade={() => <UpgradeProposalForm />}
-                      assets={() => <UpdateWhitelistedAssetsProposalPage />}
-                      nfts={() => <UpdateWhitelistedNFTsProposalPage />}
-                      execute={() => <ExecuteMessageProposalForm />}
-                      members={() => <MultisigMembersProposalPage />}
-                      mint={() => <MintTokensProposalForm />}
-                      spend={() => <SpendTreasuryProposalPage />}
-                      burn={() => <BurnTokensProposalPage />}
-                      delegate={() => <DelegateProposalPage />}
-                    />
-                  </CurrentDaoProvider>
-                ) : null}
-              </Container>
-            </AnimatedPage>
-          )}
-        />
-      </LoadingPage>
-    </Navigation>
+    <CreateProposalProvider value={{ proposalVotingType }}>
+      <Navigation>
+        <LoadingPage isLoading={isLoading}>
+          <ConditionalWallet
+            notConnected={() => <ConnectWalletPrompt />}
+            connected={() => (
+              <AnimatedPage>
+                <Container>
+                  {dao ? (
+                    <CurrentDaoProvider value={dao}>
+                      <Header title={proposalTitle[type]} />
+                      <ConditionalRender
+                        value={assertDefined(type)}
+                        council={() => <CouncilForm />}
+                        text={() => <TextProposalForm />}
+                        config={() => <CreateConfigProposalPage />}
+                        upgrade={() => <UpgradeProposalForm />}
+                        assets={() => <UpdateWhitelistedAssetsProposalPage />}
+                        nfts={() => <UpdateWhitelistedNFTsProposalPage />}
+                        execute={() => <ExecuteMessageProposalForm />}
+                        members={() => <MultisigMembersProposalPage />}
+                        mint={() => <MintTokensProposalForm />}
+                        spend={() => <SpendTreasuryProposalPage />}
+                        burn={() => <BurnTokensProposalPage />}
+                        delegate={() => <DelegateProposalPage />}
+                      />
+                    </CurrentDaoProvider>
+                  ) : null}
+                </Container>
+              </AnimatedPage>
+            )}
+          />
+        </LoadingPage>
+      </Navigation>
+    </CreateProposalProvider>
   );
 };

@@ -2,6 +2,7 @@ import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { useNavigate } from 'react-router';
 import { useCreateProposalTx } from 'tx';
 import { enterprise } from 'types/contracts';
+import { useCreateProposal } from '../CreateProposalProvider';
 import { DescriptionInput } from './DescriptionInput';
 import { toCreateProposalMsg } from './helpers/toCreateProposalMsg';
 import { ProposalFormContainer } from './ProposalFormContainer';
@@ -20,7 +21,8 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
   const { title, titleError, description, descriptionError, submitDisabled } = formState;
 
   const dao = useCurrentDao();
-  const [txResult, tx] = useCreateProposalTx(dao);
+  const { proposalVotingType } = useCreateProposal();
+  const [txResult, tx] = useCreateProposalTx(dao, proposalVotingType);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {

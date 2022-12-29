@@ -1,12 +1,13 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
 import Big from 'big.js';
+import { ProposalVotingType } from 'pages/create-proposal';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 
 export type CreateProposalMsgType = Extract<enterprise.ExecuteMsg, { create_proposal: {} }>;
 
-export const useCreateProposalTx = (dao: DAO) => {
+export const useCreateProposalTx = (dao: DAO, proposalVotingType: ProposalVotingType) => {
   const {
     type,
     address: daoAddress,
@@ -27,9 +28,17 @@ export const useCreateProposalTx = (dao: DAO) => {
       }
 
       return TxBuilder.new()
-        .execute<enterprise.ExecuteMsg>(wallet.walletAddress, daoAddress, {
-          create_proposal,
-        })
+        .execute<enterprise.ExecuteMsg>(
+          wallet.walletAddress,
+          daoAddress,
+          proposalVotingType === 'regular'
+            ? {
+                create_proposal,
+              }
+            : {
+                create_council_proposal: create_proposal,
+              }
+        )
         .build();
     },
     {
