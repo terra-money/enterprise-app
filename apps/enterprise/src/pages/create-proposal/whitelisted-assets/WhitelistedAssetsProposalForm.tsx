@@ -3,7 +3,6 @@ import { FormSection } from 'components/form-section';
 import { toWhitelistedAsset } from 'pages/create-dao/helpers/toWhitelistedAsset';
 import { AddTokenButton } from 'pages/create-dao/shared/AddTokenButton';
 import { useMemo, useState } from 'react';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedAssets } from './CurrentDAOWhitelistedAssetsProvider';
 import { hasAsset } from './helpers/areSameAssets';
@@ -23,7 +22,6 @@ export const WhitelistedAssetsProposalForm = () => {
 
   return (
     <ProposalForm
-      title={proposalTitle.assets}
       disabled={!msg.add.length && !msg.remove.length}
       getProposalActions={() => [{ update_asset_whitelist: msg }]}
     >

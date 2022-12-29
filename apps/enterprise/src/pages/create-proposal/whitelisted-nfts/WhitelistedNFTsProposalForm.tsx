@@ -4,7 +4,6 @@ import { AddButton } from 'components/add-button';
 import { FormSection } from 'components/form-section';
 import { fetchCW721ContractInfo } from 'queries';
 import { useState } from 'react';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvider';
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
@@ -71,11 +70,7 @@ export const WhitelistedNFTsProposalForm = () => {
   };
 
   return (
-    <ProposalForm
-      title={proposalTitle.nfts}
-      disabled={!isFormValid}
-      getProposalActions={() => [{ update_nft_whitelist: msg }]}
-    >
+    <ProposalForm disabled={!isFormValid} getProposalActions={() => [{ update_nft_whitelist: msg }]}>
       <FormSection name="Whitelisted NFTs">
         <div className={styles.root}>
           <div className={styles.list}>

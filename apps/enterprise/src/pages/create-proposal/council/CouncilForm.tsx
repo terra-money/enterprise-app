@@ -11,7 +11,6 @@ import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { enterprise } from 'types/contracts';
 import * as z from 'zod';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { toUpdateCouncilMsg } from './toUpdateCouncilMsg';
 
@@ -62,7 +61,6 @@ export const CouncilForm = () => {
   return (
     <ProposalForm
       disabled={!isValid}
-      title={proposalTitle.council}
       getProposalActions={() => {
         const { members, allowedProposalTypes } = getValues();
         return [

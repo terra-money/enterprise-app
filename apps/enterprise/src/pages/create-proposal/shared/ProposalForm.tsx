@@ -9,20 +9,13 @@ import { TitleInput } from './TitleInput';
 import { ProposalFormState, useProposalForm } from './useProposalForm';
 
 interface ProposalFormProps {
-  title: string;
   children?: React.ReactNode;
   disabled?: boolean;
   initialState?: Partial<ProposalFormState>;
   getProposalActions: () => enterprise.CreateProposalMsg['proposal_actions'];
 }
 
-export const ProposalForm = ({
-  title: formTitle,
-  children,
-  disabled,
-  getProposalActions,
-  initialState = {},
-}: ProposalFormProps) => {
+export const ProposalForm = ({ children, disabled, getProposalActions, initialState = {} }: ProposalFormProps) => {
   const [input, formState] = useProposalForm(initialState);
   const { title, titleError, description, descriptionError, submitDisabled } = formState;
 
@@ -40,12 +33,7 @@ export const ProposalForm = ({
   };
 
   return (
-    <ProposalFormContainer
-      disabled={disabled || submitDisabled}
-      title={formTitle}
-      loading={txResult.loading}
-      onSubmit={handleSubmit}
-    >
+    <ProposalFormContainer disabled={disabled || submitDisabled} loading={txResult.loading} onSubmit={handleSubmit}>
       <TitleInput
         label="Title"
         value={title}

@@ -10,7 +10,7 @@ import { BurnTokensProposalPage } from './burn/BurnTokensProposalPage';
 import { CreateConfigProposalPage } from './config/CreateConfigProposalPage';
 import { DelegateProposalPage } from './delegate/DelegateProposalPage';
 import { MultisigMembersProposalPage } from './multisig-members/MultisigMembersProposalPage';
-import { ProposalType, ProposalVotingType } from './SelectProposalTypePage';
+import { proposalTitle, ProposalType, ProposalVotingType } from './SelectProposalTypePage';
 import { SpendTreasuryProposalPage } from './spend/SpendTreasuryProposalPage';
 import { UpdateWhitelistedAssetsProposalPage } from './whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
 import { UpdateWhitelistedNFTsProposalPage } from './whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
@@ -22,14 +22,33 @@ import { ExecuteMessageProposalForm } from './execute/ExecuteMessageProposalForm
 import { MintTokensProposalForm } from './mint/MintTokensProposalForm';
 import { CouncilForm } from './council/CouncilForm';
 import { useSearchParams } from 'react-router-dom';
+import { AnimatedPage } from '@terra-money/apps/components';
+import styled from 'styled-components';
+import { VStack } from 'lib/ui/Stack';
+import { Header } from './Header';
 
 type CreateProposalPageParams = {
   type: ProposalType;
   address: CW20Addr;
 };
 
+const Container = styled(VStack)`
+  height: 100%;
+  width: 100%;
+  padding: 48px 48px 0 48px;
+  gap: 32px;
+
+  overflow-y: auto;
+
+  @media (max-width: 600px) {
+    padding: 0;
+  }
+`;
+
 export const CreateProposalPage = () => {
-  const { type, address } = useParams<CreateProposalPageParams>();
+  const params = useParams<CreateProposalPageParams>();
+  const type = assertDefined(params.type);
+  const address = assertDefined(params.address);
   const [searchParams] = useSearchParams();
 
   const proposalVotingType = (searchParams.get('votingType') || 'regular') as ProposalVotingType;
@@ -42,27 +61,32 @@ export const CreateProposalPage = () => {
       <LoadingPage isLoading={isLoading}>
         <ConditionalWallet
           notConnected={() => <ConnectWalletPrompt />}
-          connected={() =>
-            dao ? (
-              <CurrentDaoProvider value={dao}>
-                <ConditionalRender
-                  value={assertDefined(type)}
-                  council={() => <CouncilForm />}
-                  text={() => <TextProposalForm />}
-                  config={() => <CreateConfigProposalPage />}
-                  upgrade={() => <UpgradeProposalForm />}
-                  assets={() => <UpdateWhitelistedAssetsProposalPage />}
-                  nfts={() => <UpdateWhitelistedNFTsProposalPage />}
-                  execute={() => <ExecuteMessageProposalForm />}
-                  members={() => <MultisigMembersProposalPage />}
-                  mint={() => <MintTokensProposalForm />}
-                  spend={() => <SpendTreasuryProposalPage />}
-                  burn={() => <BurnTokensProposalPage />}
-                  delegate={() => <DelegateProposalPage />}
-                />
-              </CurrentDaoProvider>
-            ) : null
-          }
+          connected={() => (
+            <AnimatedPage>
+              <Container>
+                {dao ? (
+                  <CurrentDaoProvider value={dao}>
+                    <Header title={proposalTitle[type]} />
+                    <ConditionalRender
+                      value={assertDefined(type)}
+                      council={() => <CouncilForm />}
+                      text={() => <TextProposalForm />}
+                      config={() => <CreateConfigProposalPage />}
+                      upgrade={() => <UpgradeProposalForm />}
+                      assets={() => <UpdateWhitelistedAssetsProposalPage />}
+                      nfts={() => <UpdateWhitelistedNFTsProposalPage />}
+                      execute={() => <ExecuteMessageProposalForm />}
+                      members={() => <MultisigMembersProposalPage />}
+                      mint={() => <MintTokensProposalForm />}
+                      spend={() => <SpendTreasuryProposalPage />}
+                      burn={() => <BurnTokensProposalPage />}
+                      delegate={() => <DelegateProposalPage />}
+                    />
+                  </CurrentDaoProvider>
+                ) : null}
+              </Container>
+            </AnimatedPage>
+          )}
         />
       </LoadingPage>
     </Navigation>

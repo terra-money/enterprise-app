@@ -1,4 +1,3 @@
-import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
@@ -26,7 +25,6 @@ export const UpgradeProposalForm = () => {
   return (
     <LoadingPage isLoading={isLoadingContract || isLoadingCodes}>
       <ProposalForm
-        title={proposalTitle.upgrade}
         disabled={isUpToDate}
         initialState={{
           title: upgradeMessage,

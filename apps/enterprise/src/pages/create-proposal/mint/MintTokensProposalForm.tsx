@@ -1,5 +1,4 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -82,7 +81,6 @@ export const MintTokensProposalForm = () => {
           },
         ];
       }}
-      title={proposalTitle.mint}
     >
       <VStack gap={16}>
         {fields.map((field, index) => (

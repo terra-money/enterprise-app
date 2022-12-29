@@ -1,7 +1,6 @@
 import { removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { ProposalForm } from '../shared/ProposalForm';
 import { toExecuteMsg } from './helpers/toExecuteMsg';
 import { validateWasmMsg } from './helpers/validateWasmMsg';
@@ -19,7 +18,6 @@ export const ExecuteMessageProposalForm = () => {
 
   return (
     <ProposalForm
-      title={proposalTitle.execute}
       disabled={submitDisabled}
       getProposalActions={() => [{ execute_msgs: { msgs: messages.map(toExecuteMsg) } }]}
     >

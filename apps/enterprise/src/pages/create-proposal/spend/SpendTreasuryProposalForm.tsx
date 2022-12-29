@@ -1,5 +1,4 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
@@ -63,7 +62,6 @@ export const SpendTreasuryProposalForm = () => {
           },
         ];
       }}
-      title={proposalTitle.spend}
     >
       {treasuryTokens.length > 0 ? (
         <VStack alignItems="start" gap={8}>

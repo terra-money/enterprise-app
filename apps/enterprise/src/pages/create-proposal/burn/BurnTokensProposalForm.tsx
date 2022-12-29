@@ -1,5 +1,4 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../SelectProposalTypePage';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';
@@ -57,7 +56,6 @@ export const BurnTokensProposalForm = () => {
           },
         ];
       }}
-      title={proposalTitle.burn}
     >
       {token && Big(token.amount).gt(0) ? (
         <Controller

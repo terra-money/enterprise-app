@@ -1,5 +1,4 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../SelectProposalTypePage';
 import { useCurrentDaoMultisigMembers } from './CurrentDAOMultisigMembersProvider';
 import { useMemo, useState } from 'react';
 import { getRecord, isFormStateValid, removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
@@ -34,7 +33,6 @@ export const MultisigMembersProposalForm = () => {
       getProposalActions={() => [
         { modify_multisig_membership: toUpdateMultisigMembershipMsg(initialMembers, members) },
       ]}
-      title={proposalTitle.members}
     >
       {members.map((member, index) => {
         return (

@@ -1,5 +1,4 @@
 import { ProposalForm } from '../shared/ProposalForm';
-import { proposalTitle } from '../SelectProposalTypePage';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
@@ -61,7 +60,6 @@ export const DelegateProposalForm = () => {
           },
         ];
       }}
-      title={proposalTitle.delegate}
     >
       <VStack alignItems="start" gap={8}>
         <TextInput {...register('address')} label="Validator address" placeholder="Enter address" />
