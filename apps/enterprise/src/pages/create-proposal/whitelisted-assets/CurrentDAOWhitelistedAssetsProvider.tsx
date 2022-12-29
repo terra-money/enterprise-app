@@ -1,6 +1,6 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { Throbber } from 'components/primitives';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDAOAssetsWhitelist } from 'queries';
 import { enterprise } from 'types/contracts';
 

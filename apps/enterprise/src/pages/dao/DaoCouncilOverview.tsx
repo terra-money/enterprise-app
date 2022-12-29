@@ -3,7 +3,7 @@ import { Panel } from 'components/panel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const DaoCouncilOverview = () => {
   const { council } = useCurrentDao();

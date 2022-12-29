@@ -2,7 +2,7 @@ import { Container } from '@terra-money/apps/components';
 import classNames from 'classnames';
 import { DAOLogo } from 'components/dao-logo';
 import { Text } from 'components/primitives';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { forwardRef, Ref } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './Header.module.sass';

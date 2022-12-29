@@ -18,7 +18,7 @@ import { DAOLogo } from 'components/dao-logo';
 import { usePendingClaims } from 'hooks';
 import { PendingClaims } from './PendingClaims';
 import styles from './TokenStaking.module.sass';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
 import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';

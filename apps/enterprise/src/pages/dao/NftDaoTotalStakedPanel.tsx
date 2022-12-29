@@ -2,7 +2,7 @@ import { NumericPanel } from 'components/numeric-panel';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { AnimateNumber } from '@terra-money/apps/components';
 import { useNftDaoStakingInfo } from 'dao/hooks/useNftDaoStakingInfo';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const NftDaoTotalStakedPanel = () => {
   const dao = useCurrentDao();

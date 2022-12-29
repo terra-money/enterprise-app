@@ -11,7 +11,7 @@ import { StakeNFTOverlay } from './StakeNFTOverlay';
 import { PendingClaims } from './PendingClaims';
 import styles from './NFTStaking.module.sass';
 import { usePendingClaims } from 'hooks';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { useNftDaoStakingInfo } from 'dao/hooks/useNftDaoStakingInfo';
 import { NftDaoTotalSupplyPanel } from '../NftDaoTotalSupplyPanel';

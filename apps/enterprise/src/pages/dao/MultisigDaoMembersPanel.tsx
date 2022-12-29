@@ -1,6 +1,6 @@
 import { CW20Addr } from '@terra-money/apps/types';
 import { NumericPanel } from 'components/numeric-panel';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
 
 export const MultisigDaoMembersPanel = () => {

@@ -2,7 +2,7 @@ import { DAOLogo } from 'components/dao-logo';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 interface MobileCreateProposalHeaderProps {
   title: string;

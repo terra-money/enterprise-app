@@ -2,7 +2,7 @@ import { useCreateConfigProposalForm } from './useCreateConfigProposalForm';
 import { FormSection } from 'components/form-section';
 import { MetadataFields } from './MetadataFields';
 import { GovConfigFields } from '../../create-dao/gov-config/GovConfigFields';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
 import { ProposalForm } from '../shared/ProposalForm';
 import { getProposalActions } from './helpers/getProposalActions';

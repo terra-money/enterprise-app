@@ -6,7 +6,7 @@ import { useDAOQuery } from 'queries/useDAOQuery';
 import { CW20Addr } from '@terra-money/apps/types';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { PageLayout } from 'components/layout';
-import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';

@@ -5,7 +5,7 @@ import { FavouriteToggle } from 'components/favourite-toggle';
 import { Text } from 'components/primitives';
 import { Line } from 'lib/ui/Line';
 import { VStack } from 'lib/ui/Stack';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { forwardRef, Ref } from 'react';
 import { useNavigate } from 'react-router';
 import { DaoNavigation } from './DaoNavigation';

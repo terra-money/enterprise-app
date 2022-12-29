@@ -1,6 +1,6 @@
 import { useCW20TokenInfoQuery } from 'queries';
 import { ConfigProposalForm } from './ConfigProposalForm';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
 
 export const CreateConfigProposalPage = () => {

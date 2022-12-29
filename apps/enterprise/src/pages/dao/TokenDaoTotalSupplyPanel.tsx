@@ -1,4 +1,4 @@
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCW20TokenInfoQuery } from 'queries/useCW20TokenInfoQuery';
 import Big from 'big.js';
 import { demicrofy } from '@terra-money/apps/libs/formatting';

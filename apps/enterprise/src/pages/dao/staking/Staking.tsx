@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router';
 import { TokenStakingConnectedView } from './TokenStaking';
 import { NftStakingConnectedView } from './NFTStaking';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ConditionalRender } from 'components/primitives';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';

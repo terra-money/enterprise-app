@@ -1,6 +1,6 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { Throbber } from 'components/primitives';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDAONFTsWhitelist } from 'queries/useDAONFTsWhitelist';
 
 interface Props {

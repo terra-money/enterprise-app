@@ -1,4 +1,4 @@
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useTreasuryTokensQuery } from 'queries';
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';

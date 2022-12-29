@@ -2,7 +2,7 @@ import { ProposalForm } from '../shared/ProposalForm';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { toBurnTokensMsg } from './helpers/toBurnTokensMsg';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { Text } from 'lib/ui/Text';

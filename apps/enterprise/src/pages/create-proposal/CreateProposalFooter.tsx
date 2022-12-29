@@ -6,7 +6,7 @@ import { u } from '@terra-money/apps/types';
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
 import { Container } from '@terra-money/apps/components';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import styles from './CreateProposalFooter.module.sass';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 

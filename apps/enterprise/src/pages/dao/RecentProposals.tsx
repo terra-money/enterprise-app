@@ -1,7 +1,7 @@
 import { Text } from 'components/primitives';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useProposalsQuery } from 'queries';
 import { ProposalCard } from '../shared/ProposalCard';
 

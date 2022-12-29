@@ -11,7 +11,7 @@ import { CurrentProposalProvider } from './CurrentProposalProvider';
 import { ProposalActions } from './ProposalActions';
 import { PageLayout } from 'components/layout';
 import { ProposalSummaryText } from './ProposalSummaryText';
-import { CurrentDaoProvider } from 'pages/shared/CurrentDaoProvider';
+import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';

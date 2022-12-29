@@ -1,5 +1,5 @@
 import { Throbber } from 'components/primitives';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { Navigate } from 'react-router';
 import { MultisigMembers } from './MultisigMembers';
 

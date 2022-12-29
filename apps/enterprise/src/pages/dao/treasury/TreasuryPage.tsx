@@ -5,7 +5,7 @@ import { TxItem } from './TxItem';
 import { useTxsQuery } from 'queries/useTxsQuery';
 import { CW20Addr } from '@terra-money/apps/types';
 import styles from './TreasuryPage.module.sass';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TreasuryPage = () => {
   const dao = useCurrentDao();

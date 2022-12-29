@@ -3,7 +3,7 @@ import { FavouriteToggle } from 'components/favourite-toggle';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { DaoNavigation } from './DaoNavigation';
 
 export const MobileDaoHeader = () => {

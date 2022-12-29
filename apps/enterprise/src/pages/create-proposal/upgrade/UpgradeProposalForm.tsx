@@ -1,7 +1,7 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useEnterpriseCodeIdsQuery } from 'queries/useEnterpriseCodeIdsQuery';
 import { Text, Throbber } from 'components/primitives';
 import { assertDefined } from '@terra-money/apps/utils';

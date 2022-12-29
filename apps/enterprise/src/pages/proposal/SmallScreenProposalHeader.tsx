@@ -1,7 +1,7 @@
 import { DAOLogo } from 'components/dao-logo';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentProposal } from './CurrentProposalProvider';
 
 export const SmallScreenProposalHeader = () => {

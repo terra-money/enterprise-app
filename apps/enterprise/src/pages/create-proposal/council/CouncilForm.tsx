@@ -7,7 +7,7 @@ import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { CouncilMember } from 'pages/create-dao/DaoWizardFormProvider';
 import { CouncilProposalActionType, ProposalTypesInput } from 'pages/create-dao/shared/ProposalTypesInput';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { enterprise } from 'types/contracts';
 import * as z from 'zod';

@@ -6,7 +6,7 @@ import { Text } from 'components/primitives';
 import { useDAONFTTreasury } from 'queries';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TreasuryOverview = () => {
   const dao = useCurrentDao();

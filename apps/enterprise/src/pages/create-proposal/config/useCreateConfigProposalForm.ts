@@ -13,7 +13,7 @@ import {
   validateTelegramUsername,
   validateTwitterUsername,
 } from 'pages/create-dao/shared/helpers/validateSocials';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
 import { useCallback, useMemo } from 'react';
 import { areChangesInConfig } from './helpers/areChangesInConfig';

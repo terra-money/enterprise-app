@@ -6,9 +6,10 @@ import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { useMemo, useState } from 'react';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 
 const LIMIT = 10;
 
@@ -38,7 +39,9 @@ export const ProposalsPage = () => {
 
   const navigate = useNavigate();
 
-  const newProposalsDisabled = votingPower.lte(0);
+  const amICouncilMember = useAmICouncilMember();
+
+  const newProposalsDisabled = votingPower.lte(0) || !amICouncilMember;
 
   return (
     <Container direction="column" gap={32}>

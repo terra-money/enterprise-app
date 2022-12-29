@@ -5,7 +5,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { useCW20TokenInfoQuery } from 'queries';
 import { toMintTokenMsg } from './helpers/toMintTokensMsg';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { DeleteIconButton } from 'components/delete-icon-button';

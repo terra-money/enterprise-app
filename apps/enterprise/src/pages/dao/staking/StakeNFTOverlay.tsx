@@ -3,7 +3,7 @@ import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useStakeNftTx } from 'dao/tx/useStakeNftTx';
 import { useState } from 'react';
 import { assertDefined } from '@terra-money/apps/utils';

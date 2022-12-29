@@ -1,5 +1,5 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { ProposalVotingType } from './SelectProposalTypePage';
+import { ProposalVotingType } from 'dao/shared/proposal';
 
 interface CreateProposalState {
   proposalVotingType: ProposalVotingType;

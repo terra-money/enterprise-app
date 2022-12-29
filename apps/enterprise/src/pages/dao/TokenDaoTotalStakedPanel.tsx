@@ -4,7 +4,7 @@ import { useCW20TokenInfoQuery, useTokenStakingAmountQuery } from 'queries';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import Big from 'big.js';
 import { u } from '@terra-money/apps/types';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TokenDaoTotalStakedPanel = () => {
   const dao = useCurrentDao();

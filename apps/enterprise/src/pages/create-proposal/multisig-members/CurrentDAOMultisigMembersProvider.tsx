@@ -1,7 +1,7 @@
 import { CW20Addr } from '@terra-money/apps/types';
 import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { Throbber } from 'components/primitives';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
 import { MultisigMember } from 'types/MultisigMember';
 

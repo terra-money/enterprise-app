@@ -1,6 +1,6 @@
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import Big from 'big.js';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCW721NumTokensQuery } from 'queries/useCW721NumTokensQuery';
 import { NumericPanel } from 'components/numeric-panel';
 

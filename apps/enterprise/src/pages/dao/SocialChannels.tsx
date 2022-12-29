@@ -8,7 +8,7 @@ import { createDiscordURL, createGithubProfileURL, createTelegramURL, createTwit
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Panel } from 'lib/ui/Panel/Panel';
 import styled from 'styled-components';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 const Container = styled(HStack)`
   gap: 32px;

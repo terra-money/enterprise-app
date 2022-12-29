@@ -1,6 +1,6 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
 import Big from 'big.js';
-import { ProposalVotingType } from 'pages/create-proposal';
+import { ProposalVotingType } from 'dao/shared/proposal';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';

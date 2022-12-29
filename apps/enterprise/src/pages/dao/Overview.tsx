@@ -1,7 +1,7 @@
 import { RecentProposals } from './RecentProposals';
 import { TreasuryOverview } from './TreasuryOverview';
 import { SocialChannels } from './SocialChannels';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ConditionalRender } from 'components/primitives';
 import { TokenDaoTotalSupplyPanel } from './TokenDaoTotalSupplyPanel';
 import { NftDaoTotalSupplyPanel } from './NftDaoTotalSupplyPanel';

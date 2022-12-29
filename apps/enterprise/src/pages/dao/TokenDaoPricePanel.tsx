@@ -1,7 +1,7 @@
 import { usePrice } from '@terra-money/apps/hooks';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { NumericPanel } from 'components/numeric-panel';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TokenDaoPricePanel = () => {
   const dao = useCurrentDao();

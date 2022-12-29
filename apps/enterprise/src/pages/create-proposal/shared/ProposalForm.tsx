@@ -1,4 +1,4 @@
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useNavigate } from 'react-router';
 import { useCreateProposalTx } from 'tx';
 import { enterprise } from 'types/contracts';

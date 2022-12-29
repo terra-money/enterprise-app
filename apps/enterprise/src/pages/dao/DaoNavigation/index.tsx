@@ -1,6 +1,6 @@
 import { getLast } from 'lib/shared/utils/getlast';
 import { ViewSelector } from 'lib/ui/inputs/Select/ViewSelector';
-import { useCurrentDao } from 'pages/shared/CurrentDaoProvider';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
