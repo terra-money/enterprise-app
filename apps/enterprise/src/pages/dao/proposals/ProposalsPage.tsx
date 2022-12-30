@@ -41,7 +41,7 @@ export const ProposalsPage = () => {
 
   const amICouncilMember = useAmICouncilMember();
 
-  const newProposalsDisabled = votingPower.lte(0) || !amICouncilMember;
+  const newProposalsDisabled = votingPower.lte(0) && !amICouncilMember;
 
   return (
     <Container direction="column" gap={32}>
