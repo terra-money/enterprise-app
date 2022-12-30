@@ -1,22 +1,16 @@
 import { Text } from 'components/primitives';
+import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { HStack } from 'lib/ui/Stack';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
 import { enterprise } from 'types/contracts';
-import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './UpdateAssetsWhitelistAction.module.sass';
 
 export const UpdateAssetsWhitelistAction = () => {
-  const { proposal_actions } = useCurrentProposal();
-
-  const action = proposal_actions.find((action) => 'update_asset_whitelist' in action);
-  if (!action) return null;
-
-  const updateAssetsAction = 'update_asset_whitelist' in action ? action.update_asset_whitelist : undefined;
-  if (!updateAssetsAction) return null;
+  const { msg } = useCurrentProposalAction();
 
   return (
     <div className={styles.root}>
-      {Object.entries(updateAssetsAction).map(([action, assets]) => {
+      {Object.entries(msg as enterprise.UpdateAssetWhitelistMsg).map(([action, assets]) => {
         if (!assets.length) return null;
 
         return (

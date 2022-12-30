@@ -1,14 +1,9 @@
 import { Text } from 'components/primitives';
-import { useCurrentProposal } from './CurrentProposalProvider';
+import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
+import { enterprise } from 'types/contracts';
 
 export const UpgradeProposalAction = () => {
-  const { proposal_actions } = useCurrentProposal();
+  const { msg } = useCurrentProposalAction() as { msg: enterprise.UpgradeDaoMsg };
 
-  const action = proposal_actions.find((action) => 'upgrade_dao' in action);
-  if (!action) return null;
-
-  const upgradeDaoAction = 'upgrade_dao' in action ? action.upgrade_dao : undefined;
-  if (!upgradeDaoAction) return null;
-
-  return <Text variant="heading4">Upgrade Code Id to {upgradeDaoAction.new_dao_code_id}</Text>;
+  return <Text variant="heading4">Upgrade Code Id to {msg.new_dao_code_id}</Text>;
 };

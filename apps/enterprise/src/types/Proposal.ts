@@ -4,20 +4,7 @@ import { DAO } from './DAO';
 
 export type ProposalStatusName = 'Active' | 'Pending' | 'Passed' | 'Rejected' | 'Executed';
 
-export type ProposalType =
-  | 'Text'
-  | 'Config'
-  | 'Upgrade'
-  | 'Other'
-  | 'Assets'
-  | 'NFTs'
-  | 'Execute'
-  | 'Members'
-  | 'Council';
-
 export class Proposal {
-  public readonly type: ProposalType;
-
   constructor(
     public readonly dao: DAO,
     public readonly id: number,
@@ -32,9 +19,7 @@ export class Proposal {
     public readonly abstainVotes: Big,
     public readonly vetoVotes: Big,
     public readonly totalVotes: Big
-  ) {
-    this.type = Proposal.calculateType(proposal_actions);
-  }
+  ) {}
 
   hasExpired = (blockHeight: number, timestamp: number): boolean => {
     if ('at_time' in this.expires) {
@@ -73,44 +58,5 @@ export class Proposal {
       : this.status === 'rejected'
       ? 'Rejected'
       : 'Executed';
-  };
-
-  private static calculateType = (actions: enterprise.ProposalAction[]): ProposalType => {
-    // TOOD: work out what type this should be based on the actions
-    if (actions.length === 0) {
-      return 'Text';
-    }
-
-    for (const action of actions) {
-      if ('upgrade_dao' in action) {
-        return 'Upgrade';
-      }
-
-      if ('update_gov_config' in action || 'update_metadata' in action) {
-        return 'Config';
-      }
-
-      if ('update_asset_whitelist' in action) {
-        return 'Assets';
-      }
-
-      if ('update_nft_whitelist' in action) {
-        return 'NFTs';
-      }
-
-      if ('execute_msgs' in action) {
-        return 'Execute';
-      }
-
-      if ('modify_multisig_membership' in action) {
-        return 'Members';
-      }
-
-      if ('update_council' in action) {
-        return 'Council';
-      }
-    }
-
-    return 'Other';
   };
 }

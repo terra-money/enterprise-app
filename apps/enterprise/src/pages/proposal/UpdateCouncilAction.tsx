@@ -1,20 +1,15 @@
 import { Address } from 'components/address';
 import { Panel } from 'components/panel';
+import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentProposal } from './CurrentProposalProvider';
+import { enterprise } from 'types/contracts';
 
 export const UpdateCouncilAction = () => {
-  const { proposal_actions } = useCurrentProposal();
+  const { msg } = useCurrentProposalAction() as { msg: enterprise.UpdateCouncilMsg };
 
-  const action = proposal_actions.find((action) => 'update_council' in action);
-  if (!action) return null;
-
-  const updateCouncilAction = 'update_council' in action ? action.update_council : undefined;
-  if (!updateCouncilAction) return null;
-
-  const { dao_council } = updateCouncilAction;
+  const { dao_council } = msg;
 
   if (!dao_council) {
     return <Text weight="semibold"> Proposal to remove council</Text>;

@@ -1,21 +1,16 @@
 import { Address } from 'components/address';
 import { Text } from 'components/primitives';
 import { HStack } from 'lib/ui/Stack';
-import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './UpdateAssetsWhitelistAction.module.sass';
+import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
+import { enterprise } from 'types/contracts';
 
 export const UpdateNFTsWhitelistAction = () => {
-  const { proposal_actions } = useCurrentProposal();
-
-  const action = proposal_actions.find((action) => 'update_nft_whitelist' in action);
-  if (!action) return null;
-
-  const updateNFTsAction = 'update_nft_whitelist' in action ? action.update_nft_whitelist : undefined;
-  if (!updateNFTsAction) return null;
+  const { msg } = useCurrentProposalAction();
 
   return (
     <div className={styles.root}>
-      {Object.entries(updateNFTsAction).map(([action, nfts]) => {
+      {Object.entries(msg as enterprise.UpdateNftWhitelistMsg).map(([action, nfts]) => {
         if (!nfts.length) return null;
 
         return (

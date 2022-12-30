@@ -3,7 +3,6 @@ import { Address } from 'components/address';
 import { Text } from 'components/primitives';
 import { ValueDiff } from 'components/value-diff';
 import { useCurrentDaoMultisigMembers } from 'pages/create-proposal/multisig-members/CurrentDAOMultisigMembersProvider';
-import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './UpdateMultisigMembersAction.module.sass';
 import { ReactComponent as MinusIcon } from 'components/assets/Minus.svg';
 import { ReactComponent as PlusIcon } from 'components/assets/Plus.svg';
@@ -11,24 +10,21 @@ import classNames from 'classnames';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
+import { enterprise } from 'types/contracts';
 
 // TODO: highlight what members will be added and removed
 export const UpdateMultisigMembersAction = () => {
-  const { proposal_actions } = useCurrentProposal();
   const currentMembers = useCurrentDaoMultisigMembers();
   const currentMembersRecord = getRecord(currentMembers, (member) => member.addr);
 
-  const action = proposal_actions.find((action) => 'modify_multisig_membership' in action);
-  if (!action) return null;
-
-  const updateMembersAction = 'modify_multisig_membership' in action ? action.modify_multisig_membership : undefined;
-  if (!updateMembersAction) return null;
+  const { msg } = useCurrentProposalAction() as { msg: enterprise.ModifyMultisigMembershipMsg };
 
   return (
     <VStack gap={24}>
       <Text variant="heading4">Update members</Text>
       <SameWidthChildrenRow gap={20} minChildrenWidth={320} maxColumns={2}>
-        {updateMembersAction.edit_members.map(({ address, weight }) => {
+        {msg.edit_members.map(({ address, weight }) => {
           const renderChange = () => {
             if (weight === '0') {
               return (
