@@ -1,4 +1,4 @@
-import { DynamoDBClient, ListTablesCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ListTablesCommand } from '@aws-sdk/client-dynamodb';
 
 export const tableNameExists = async (
   dynamoClient: DynamoDBClient,
@@ -8,17 +8,13 @@ export const tableNameExists = async (
   const response = await dynamoClient.send(
     new ListTablesCommand({
       ExclusiveStartTableName: lastEvaluatedTableName,
-      Limit: 100,
+      Limit: 1000,
     })
   );
 
   return response.TableNames?.includes(tableName)
     ? true
     : response.LastEvaluatedTableName
-    ? await tableNameExists(
-        dynamoClient,
-        tableName,
-        response.LastEvaluatedTableName
-      )
+    ? await tableNameExists(dynamoClient, tableName, response.LastEvaluatedTableName)
     : false;
 };
