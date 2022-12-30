@@ -68,35 +68,39 @@ export const useProposalsQuery = (
     async () => {
       const response = await fetch(endpoint);
 
+      const proposals: Proposal[] = [];
+
       if (response.status !== 404) {
         const json: ProposalsQueryResponse = await response.json();
 
-        return json.map((entity) => {
+        json.forEach((entity) => {
           const dao = daos.find((d) => compareAddress(d.address, entity.daoAddress));
 
           if (dao === undefined) {
-            throw Error('Could not find the correct DAO for the proposal');
+            reportError('Could not find the correct DAO for the proposal');
+          } else {
+            proposals.push(
+              new Proposal(
+                dao,
+                entity.id,
+                entity.title,
+                entity.description,
+                entity.created,
+                entity.expires,
+                entity.proposalActions,
+                entity.status,
+                Big(entity.yesVotes),
+                Big(entity.noVotes),
+                Big(entity.abstainVotes),
+                Big(entity.vetoVotes ?? '0'),
+                Big(entity.totalVotes ?? '0')
+              )
+            );
           }
-
-          return new Proposal(
-            dao,
-            entity.id,
-            entity.title,
-            entity.description,
-            entity.created,
-            entity.expires,
-            entity.proposalActions,
-            entity.status,
-            Big(entity.yesVotes),
-            Big(entity.noVotes),
-            Big(entity.abstainVotes),
-            Big(entity.vetoVotes ?? '0'),
-            Big(entity.totalVotes ?? '0')
-          );
         });
       }
 
-      return [];
+      return proposals;
     },
     {
       refetchOnMount: false,
