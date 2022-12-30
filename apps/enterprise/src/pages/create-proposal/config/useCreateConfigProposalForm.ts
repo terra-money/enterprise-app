@@ -1,49 +1,26 @@
 import { useForm, FormState } from '@terra-money/apps/hooks';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
-import { isFormStateValid, validateLength, validateUrl } from '@terra-money/apps/utils';
+import { isFormStateValid } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import { useEnv } from 'hooks';
-import { DaoInfoInput, DaoSocialDataInput } from 'pages/create-dao/DaoWizardFormProvider';
 import { DaoGovConfigInput } from 'pages/create-dao/gov-config/DaoGovConfigInput';
 import { validateUnlockingPeriod } from 'pages/create-dao/gov-config/helpers/validateGovConfig';
-import {
-  validateDiscordUsername,
-  validateGithubUsername,
-  validateTelegramUsername,
-  validateTwitterUsername,
-} from 'pages/create-dao/shared/helpers/validateSocials';
+
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
 import { useCallback, useMemo } from 'react';
-import { areChangesInConfig } from './helpers/areChangesInConfig';
+import { hasChangedFields } from '../metadata/toUpdateMetadataMsg';
+import { toUpdateGovConfigMsg } from './helpers/toUpdateGovConfigMsg';
 
-export type ConfigProposalFormInput = DaoSocialDataInput & DaoInfoInput & DaoGovConfigInput;
-
-export interface ConfigProposalFormState extends FormState<ConfigProposalFormInput> {
+export interface ConfigProposalFormState extends FormState<DaoGovConfigInput> {
   timeConversionFactor: number;
   submitDisabled: boolean;
 }
 
 const validators: Partial<
-  Record<keyof ConfigProposalFormInput, (value: any, inputState: ConfigProposalFormInput) => string | undefined>
+  Record<keyof DaoGovConfigInput, (value: any, inputState: DaoGovConfigInput) => string | undefined>
 > = {
-  logo: (value) => {
-    if (value) {
-      return validateUrl(value);
-    }
-  },
-  name: (value) => validateLength(value, 3, 140, 'name'),
-  description: (value) => {
-    if (value) {
-      return validateLength(value, 3, 2000, 'description');
-    }
-  },
-
-  discordUsername: validateDiscordUsername,
-  githubUsername: validateGithubUsername,
-  telegramUsername: validateTelegramUsername,
-  twitterUsername: validateTwitterUsername,
   unlockingPeriod: (unlockingPeriod, { voteDuration }) => validateUnlockingPeriod(unlockingPeriod, voteDuration),
 };
 
@@ -53,9 +30,9 @@ export const useCreateConfigProposalForm = () => {
   const dao = useCurrentDao();
   const { token } = useCurrentToken();
 
-  const validateInput = (input: Partial<ConfigProposalFormInput>, inputState: ConfigProposalFormInput) => {
+  const validateInput = (input: Partial<DaoGovConfigInput>, inputState: DaoGovConfigInput) => {
     return Object.entries(input).reduce((acc, [key, value]) => {
-      const field = key as keyof ConfigProposalFormInput;
+      const field = key as keyof DaoGovConfigInput;
       const validator = validators[field];
 
       if (validator) {
@@ -67,12 +44,13 @@ export const useCreateConfigProposalForm = () => {
   };
 
   const getSubmitDisabled = useCallback(
-    (inputState: ConfigProposalFormState) => !isFormStateValid(inputState) || !areChangesInConfig(inputState, dao),
+    (inputState: ConfigProposalFormState) =>
+      !isFormStateValid(inputState) || !hasChangedFields(toUpdateGovConfigMsg(dao, inputState)),
     [dao]
   );
 
   const initialState: ConfigProposalFormState = useMemo(() => {
-    const { name, logo, description, socials, governanceConfig } = dao;
+    const { governanceConfig } = dao;
 
     const unlockingPeriodInSeconds =
       'time' in governanceConfig.unlockingPeriod ? governanceConfig.unlockingPeriod.time : 0;
@@ -81,16 +59,7 @@ export const useCreateConfigProposalForm = () => {
 
     const voteDuration = Math.max(1, governanceConfig.voteDuration / timeConversionFactor);
 
-    const initialInput: ConfigProposalFormInput = {
-      discordUsername: socials.discord_username || undefined,
-      githubUsername: socials.github_username || undefined,
-      telegramUsername: socials.telegram_username || undefined,
-      twitterUsername: socials.twitter_username || undefined,
-
-      logo: logo || '',
-      name: name || '',
-      description: description || '',
-
+    const initialInput: DaoGovConfigInput = {
       quorum: governanceConfig.quorum,
       threshold: governanceConfig.threshold,
       unlockingPeriod,
@@ -117,7 +86,7 @@ export const useCreateConfigProposalForm = () => {
     };
   }, [dao, getSubmitDisabled, token, timeConversionFactor]);
 
-  return useForm<ConfigProposalFormInput, ConfigProposalFormState>(async (input, getState, dispatch) => {
+  return useForm<DaoGovConfigInput, ConfigProposalFormState>(async (input, getState, dispatch) => {
     const newState = {
       ...getState(),
       ...input,

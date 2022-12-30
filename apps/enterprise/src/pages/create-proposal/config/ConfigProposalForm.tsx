@@ -1,13 +1,9 @@
 import { useCreateConfigProposalForm } from './useCreateConfigProposalForm';
-import { FormSection } from 'components/form-section';
-import { MetadataFields } from './MetadataFields';
 import { GovConfigFields } from '../../create-dao/gov-config/GovConfigFields';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
 import { ProposalForm } from '../shared/ProposalForm';
-import { getProposalActions } from './helpers/getProposalActions';
-import { SocialFields } from 'pages/create-dao/shared/SocialFields';
-import styles from './ConfigProposalForm.module.sass';
+import { toUpdateGovConfigMsg } from './helpers/toUpdateGovConfigMsg';
 
 export const ConfigProposalForm = () => {
   const dao = useCurrentDao();
@@ -19,18 +15,10 @@ export const ConfigProposalForm = () => {
 
   return (
     <ProposalForm
-      getProposalActions={() => getProposalActions(formState, dao, token?.decimals)}
+      getProposalActions={() => [{ update_gov_config: toUpdateGovConfigMsg(dao, formState, token?.decimals) }]}
       disabled={submitDisabled}
     >
-      <FormSection className={styles.section} name="Metadata">
-        <MetadataFields formInput={formInput} formState={formState} />
-      </FormSection>
-      <FormSection className={styles.section} name="Socials">
-        <SocialFields {...formState} onChange={formInput} />
-      </FormSection>
-      <FormSection className={styles.section} name="Governance Parameters">
-        <GovConfigFields daoType={dao.type} onChange={formInput} value={formState} />
-      </FormSection>
+      <GovConfigFields daoType={dao.type} onChange={formInput} value={formState} />
     </ProposalForm>
   );
 };
