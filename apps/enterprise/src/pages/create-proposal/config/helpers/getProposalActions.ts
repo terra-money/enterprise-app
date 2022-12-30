@@ -2,7 +2,7 @@ import { ConfigProposalFormState } from '../useCreateConfigProposalForm';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { toUpdateGovConfigMsg } from './toUpdateGovConfigMsg';
-import { toUpdateMetadataMsg } from './toUpdateMetadataMsg';
+import { toUpdateMetadataMsg } from '../../metadata/toUpdateMetadataMsg';
 
 const hasChangedFields = (msg: Record<string, any>) => Object.values(msg).some((value) => value !== 'no_change');
 

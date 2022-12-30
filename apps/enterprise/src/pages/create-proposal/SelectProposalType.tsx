@@ -12,64 +12,20 @@ import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
 import { without } from 'lodash';
 import { DAO } from 'types';
-import { enterprise } from 'types/contracts';
 import { Text } from 'lib/ui/Text';
 import { useMyVotingPower } from 'dao/components/MyVotingPowerProvider';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
+import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
+import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 
-const sharedProposalTypes = [
-  'text',
-  'config',
-  'upgrade',
-  'assets',
-  'nfts',
-  'execute',
-  'spend',
-  'delegate',
-  'council',
-] as const;
+const title = 'Create a proposal';
 
-const daoProposalsRecord = {
-  multisig: [...sharedProposalTypes, 'members'] as const,
-  token: [...sharedProposalTypes, 'mint', 'burn'] as const,
-  nft: sharedProposalTypes,
-} as const;
-
-export type ProposalType =
-  | typeof daoProposalsRecord.multisig[number]
-  | typeof daoProposalsRecord.token[number]
-  | typeof daoProposalsRecord.nft[number];
-
-const contractsProposalTypeRecord: Partial<Record<enterprise.ProposalActionType, ProposalType>> = {
-  // TODO
-  // update_metadata
-  // update_config
-  // request_funding_from_dao
-
-  update_council: 'council',
+const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
   update_asset_whitelist: 'assets',
   update_nft_whitelist: 'nfts',
   upgrade_dao: 'upgrade',
-  execute_msgs: 'execute',
-  modify_multisig_membership: 'members',
+  update_metadata: 'metadata',
 };
-
-export const proposalTitle: Record<ProposalType, string> = {
-  text: 'Text proposal',
-  config: 'Update configuration proposal',
-  upgrade: 'Upgrade proposal',
-  assets: 'Update whitelisted assets',
-  nfts: 'Update whitelisted NFTs',
-  execute: 'Proposal to execute message',
-  members: 'Update multisig members',
-  spend: 'Spend treasury proposal',
-  mint: 'Mint token proposal',
-  burn: 'Burn token proposal',
-  delegate: 'Delegate LUNA proposal',
-  council: 'Update council',
-};
-
-const title = 'Create a proposal';
 
 // TODO: turn into a reusable component
 const NormalScreenContainer = styled(VStack)`
@@ -101,7 +57,7 @@ const getProposalOptions = ({ type, council }: DAO, proposalVotingType: Proposal
     const { allowed_proposal_action_types } = council;
     if (allowed_proposal_action_types) {
       return allowed_proposal_action_types.reduce((acc, type) => {
-        const proposalType = contractsProposalTypeRecord[type];
+        const proposalType = contractsProposalTypeRecord[type as CouncilProposalActionType];
         if (proposalType) {
           acc.push(proposalType);
         }

@@ -1,5 +1,6 @@
-const sharedProposalTypes = [
+export const sharedProposalTypes = [
   'text',
+  'metadata',
   'config',
   'upgrade',
   'assets',
@@ -10,7 +11,7 @@ const sharedProposalTypes = [
   'council',
 ] as const;
 
-const daoProposalsRecord = {
+export const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
   token: [...sharedProposalTypes, 'mint', 'burn'] as const,
   nft: sharedProposalTypes,
@@ -23,6 +24,7 @@ export type ProposalType =
 
 export const proposalTitle: Record<ProposalType, string> = {
   text: 'Text proposal',
+  metadata: 'Update metadata proposal',
   config: 'Update configuration proposal',
   upgrade: 'Upgrade proposal',
   assets: 'Update whitelisted assets',

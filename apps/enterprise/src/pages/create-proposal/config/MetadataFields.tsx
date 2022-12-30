@@ -1,15 +1,15 @@
-import { ConfigProposalFormInput, ConfigProposalFormState } from './useCreateConfigProposalForm';
 import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
 import { FormInput } from '@terra-money/apps/hooks';
 import { DescriptionInput } from '../shared/DescriptionInput';
+import { MetadataProposalFormInput, MetadataProposalFormState } from '../metadata/useMetadataForm';
 
-interface ConfigProposalFormProps {
-  formInput: FormInput<ConfigProposalFormInput>;
-  formState: ConfigProposalFormState;
+interface MetadataProposalFormProps {
+  formInput: FormInput<MetadataProposalFormInput>;
+  formState: MetadataProposalFormState;
 }
 
-export const MetadataFields = ({ formInput, formState }: ConfigProposalFormProps) => {
+export const MetadataFields = ({ formInput, formState }: MetadataProposalFormProps) => {
   const { name, nameError, logo, logoError, description, descriptionError } = formState;
 
   return (

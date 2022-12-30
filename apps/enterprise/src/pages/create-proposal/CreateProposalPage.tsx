@@ -27,6 +27,7 @@ import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { Header } from './Header';
 import { CreateProposalProvider } from './CreateProposalProvider';
+import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -70,6 +71,7 @@ export const CreateProposalPage = () => {
                       <Header title={proposalTitle[type]} />
                       <ConditionalRender
                         value={assertDefined(type)}
+                        metadata={() => <MetadataProposalForm />}
                         council={() => <CouncilForm />}
                         text={() => <TextProposalForm />}
                         config={() => <CreateConfigProposalPage />}

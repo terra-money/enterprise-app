@@ -29,6 +29,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
+import { ConditionalWallet } from 'components/conditional-wallet';
 
 const queryClient = new QueryClient();
 
@@ -56,7 +57,10 @@ const AppBetaRoutes = () => {
           <Route path="staking" element={<DAOStakingPage />} />
           <Route path="members" element={<DAOMembersPage />} />
         </Route>
-        <Route path="/dao/:address/proposals/create" element={<SelectProposalTypePage />} />
+        <Route
+          path="/dao/:address/proposals/create"
+          element={<ConditionalWallet connected={() => <SelectProposalTypePage />} />}
+        />
         <Route path="/dao/:address/proposals/create/:type" element={<CreateProposalPage />} />
         <Route path="/dao/create" element={<CreateDAOPage />} />
         <Route path="/dao/:address/proposals/:id" element={<ProposalPage />} />

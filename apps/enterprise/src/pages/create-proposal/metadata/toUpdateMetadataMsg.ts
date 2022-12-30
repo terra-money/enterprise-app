@@ -1,6 +1,8 @@
-import { ConfigProposalFormInput } from '../useCreateConfigProposalForm';
 import { enterprise } from 'types/contracts';
 import { DAO } from 'types';
+import { MetadataProposalFormInput } from './useMetadataForm';
+
+export const hasChangedFields = (msg: Record<string, any>) => Object.values(msg).some((value) => value !== 'no_change');
 
 const hasSocialChanged = (one: string | null | undefined, another: string | null | undefined) => {
   if (!one && !another) {
@@ -20,7 +22,7 @@ export const toUpdateMetadataMsg = (
     logo,
     name,
     description,
-  }: ConfigProposalFormInput
+  }: MetadataProposalFormInput
 ): enterprise.UpdateMetadataMsg => {
   const msg: enterprise.UpdateMetadataMsg = {
     discord_username: 'no_change',
