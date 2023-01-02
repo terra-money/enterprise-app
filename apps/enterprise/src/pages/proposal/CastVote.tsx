@@ -35,7 +35,7 @@ export const CastVote = () => {
 
   const navigate = useNavigate();
 
-  const [txResult, tx] = useCastVoteTx();
+  const [txResult, tx] = useCastVoteTx('regular');
 
   const [vote, setVote] = useState<enterprise.DefaultVoteOption | undefined>();
 

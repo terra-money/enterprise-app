@@ -52,7 +52,7 @@ export const getUpdatedFields = (msg: enterprise.UpdateMetadataMsg): Partial<Met
     view.name = msg.name.change || noValue;
   }
 
-  if (msg.description !== 'no_change') {
+  if (msg.description && msg.description !== 'no_change') {
     view.description = msg.description.change || noValue;
   }
 
