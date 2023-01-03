@@ -1,7 +1,7 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
-import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
+import { assertDefined } from '@terra-money/apps/utils';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { Text } from 'lib/ui/Text';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
@@ -11,6 +11,7 @@ import Big from 'big.js';
 import { toDelegateMsg } from './helpers/toDelegateMsg';
 import { VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
+import { zodAddressValidator } from 'chain/utils/validators';
 
 interface DelegateProposalFormSchema {
   amount: number;
@@ -22,7 +23,7 @@ export const DelegateProposalForm = () => {
   const token = treasuryTokens.find((token) => token.key === 'uluna');
 
   const formSchema: z.ZodType<DelegateProposalFormSchema> = z.object({
-    address: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
+    address: zodAddressValidator,
     amount: z
       .number()
       .positive()
@@ -82,7 +83,7 @@ export const DelegateProposalForm = () => {
             )}
           />
         ) : (
-          <Text color="alert">Treasury doesn't LUNA</Text>
+          <Text color="alert">Treasury doesn't have LUNA</Text>
         )}
       </VStack>
     </ProposalForm>
