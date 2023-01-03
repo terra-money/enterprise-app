@@ -28,6 +28,7 @@ import { VStack } from 'lib/ui/Stack';
 import { Header } from './Header';
 import { CreateProposalProvider } from './CreateProposalProvider';
 import { MetadataProposalForm } from './metadata/MetadataProposalForm';
+import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -84,6 +85,7 @@ export const CreateProposalPage = () => {
                         spend={() => <SpendTreasuryProposalPage />}
                         burn={() => <BurnTokensProposalPage />}
                         delegate={() => <DelegateProposalPage />}
+                        undelegate={() => <UndelegateProposalForm />}
                       />
                     </CurrentDaoProvider>
                   ) : null}
