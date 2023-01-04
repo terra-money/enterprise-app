@@ -1,7 +1,7 @@
 import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
 import { FormInput } from '@terra-money/apps/hooks';
-import { DescriptionInput } from '../shared/DescriptionInput';
+// import { DescriptionInput } from '../shared/DescriptionInput';
 import { MetadataProposalFormInput, MetadataProposalFormState } from '../metadata/useMetadataForm';
 
 interface MetadataProposalFormProps {
@@ -10,7 +10,15 @@ interface MetadataProposalFormProps {
 }
 
 export const MetadataFields = ({ formInput, formState }: MetadataProposalFormProps) => {
-  const { name, nameError, logo, logoError, description, descriptionError } = formState;
+  const {
+    name,
+    nameError,
+    logo,
+    logoError,
+
+    // description,
+    // descriptionError
+  } = formState;
 
   return (
     <>
@@ -30,12 +38,12 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
           onChange={({ currentTarget }) => formInput({ logo: currentTarget.value })}
         />
       </FormControl>
-      <DescriptionInput
+      {/* <DescriptionInput
         label="Description"
         value={description}
         error={descriptionError}
         onChange={(description) => formInput({ description })}
-      />
+      /> */}
     </>
   );
 };

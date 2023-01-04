@@ -31,7 +31,7 @@ export interface DaoSocialDataInput {
 
 export interface DaoInfoInput {
   name: string;
-  description: string;
+  description?: string;
   logo?: string;
 }
 
@@ -66,7 +66,7 @@ export interface DaoWizardInput {
   initialDaoBalance: number | undefined;
   tokenMarketing: FormState<TokenMarketing>;
 
-  council: FormState<CouncilInput>;
+  council?: FormState<CouncilInput>;
 
   existingTokenAddr: string;
   existingToken: CW20TokenInfoResponse | undefined;
@@ -134,7 +134,12 @@ export interface DaoWizardState extends DaoWizardInput {
 }
 
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
-const sharedLastSteps: DaoWizardStep[] = ['govConfig', 'council', 'socials', 'confirm'];
+const sharedLastSteps: DaoWizardStep[] = [
+  'govConfig',
+  // 'council',
+  'socials',
+  'confirm',
+];
 
 const daoTypeSpecificSteps: Record<enterprise.DaoType, DaoWizardStep[]> = {
   multisig: ['members'],
@@ -160,7 +165,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   type: defaultDaoType,
   info: {
     name: '',
-    description: '',
+    // description: '',
     logo: undefined,
   },
   isValid: true,
@@ -295,6 +300,9 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
     },
 
     council: () => {
+      // TODO: remove TEMP changes
+      if (!state.council) return {};
+
       const council = validateCouncil(state.council);
 
       return {
