@@ -1,49 +1,46 @@
 import { Container } from '@terra-money/apps/components';
+import { formatAmount, demicrofy } from '@terra-money/apps/libs/formatting';
+import { toPercents, assertDefined } from '@terra-money/apps/utils';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
-import { Skeleton } from 'components/skeleton';
 import { useNFTInfoQuery } from 'queries';
 import styles from './NFTCard.module.sass';
 
 
 interface NFTCardProps {
     className?: string;
-    skeleton: boolean;
     nftCollectionAdress: string;
     tokenIds: string[];
 }
 
 export const NFTCard = (props: NFTCardProps) => {
-    const { skeleton, nftCollectionAdress, tokenIds } = props;
-    const nftInfo = useNFTInfoQuery(nftCollectionAdress)
-    console.log(nftInfo);
+    const { nftCollectionAdress, tokenIds } = props;
+    const nftData = useNFTInfoQuery(nftCollectionAdress, tokenIds)
+    const nftObject = nftData.data as any;
 
-    // if (nftCollectionAdress === undefined || skeleton) {
-    //     return (
-    //         <Container className={classNames(className, styles.root, styles.skeleton)}>
-    //             <Skeleton className={styles.logo} />
-    //             <Skeleton className={styles.name} />
-    //             <Skeleton className={styles.favourite} />
-    //         </Container>
-    //     );
-    // }
-
-    // const logo = <DAOLogo logo={dao.logo} className={styles.logo} />;
 
 
 
     return (
-        <Container className={classNames(styles.card, styles.root)}>
-            <img src="/images/NFT-Placeholder.png" width={156} className={styles.nftPreview} alt="NFT Preview" />
-            <Container direction='column' className={styles.nftInfo} gap={16}>
-                <Text className={styles.name} variant="label">
-                    name
-                </Text>
-                <Text className={styles.price} variant="label">
-                    nft price
-                </Text>
-            </Container>
+        <>
+            {tokenIds.map((index) => {
+                const nft = nftObject[parseInt(index)]["data"]["tokensPage"]["token"];
+                return (
+                    <Container className={classNames(styles.card, styles.root)}>
+                        <img src={nft.imageUrlFileserver} width={156} className={styles.nftPreview} alt="NFT Preview" />
+                        <Container direction='column' className={styles.nftInfo} gap={16}>
+                            <Text className={styles.name} variant="label">
+                                {nft.name}
+                            </Text>
+                            <Text className={styles.price} variant="label">
+                                {nft.denom} {formatAmount(demicrofy(nft.price, 2))}{' '}
+                            </Text>
+                        </Container>
+                    </Container>
+                )
+            })}
 
-        </Container>
+        </>
+
     );
 };

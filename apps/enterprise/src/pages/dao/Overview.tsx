@@ -37,7 +37,7 @@ export const Overview = () => {
   return (
     <VStack gap={40}>
       <Panels>
-        <TreasuryOverview />
+        {/* <TreasuryOverview /> */}
         <SidePanel>
           <ConditionalRender
             value={dao.type}
