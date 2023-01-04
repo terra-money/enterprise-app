@@ -10,12 +10,10 @@ export const toUndelegateMsg = ({ amount, address }: DelegateMsgParams) => {
   return JSON.stringify({
     staking: {
       undelegate: {
-        amount: [
-          {
-            denom: 'uluna',
-            amount: microfy(amount, lunaDecimals),
-          },
-        ],
+        amount: {
+          denom: 'uluna',
+          amount: microfy(amount, lunaDecimals),
+        },
         validator: address,
       },
     },
