@@ -89,7 +89,7 @@ export const useMetadataForm = () => {
       ...state,
       submitDisabled: getSubmitDisabled(state),
     };
-  }, []);
+  }, [dao, getSubmitDisabled, timeConversionFactor]);
 
   return useForm<MetadataProposalFormInput, MetadataProposalFormState>(async (input, getState, dispatch) => {
     const newState = {
