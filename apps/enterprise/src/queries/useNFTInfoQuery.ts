@@ -1,50 +1,83 @@
 import { useQuery, UseQueryResult } from 'react-query';
+import { enterprise } from 'types/contracts';
 
-const GET_COLLECTION = `
-  query getCollection($collectionAddr: String!, $sorting: String!, $limit: Int!, $offset: Int!, $ASC: Boolean!, $sellNow: Boolean!, $withoutNullCount: Boolean!) {
-    collection(collectionAddr: $collectionAddr, sorting: $sorting, limit: $limit, offset: $offset, ASC: $ASC, sellNow: $sellNow, withoutNullCount: $withoutNullCount) {
-      collections {
-        volume
-        floorPrice
-        traitsMap
+type Variables = {
+  collectionAddr: string;
+  tokenId: string;
+};
+
+type TokenIds = string[];
+const createCollectionQuery = (vars: Variables) => {
+  return `
+  query MyQuery {
+    tokensPage(collectionAddr:"${vars.collectionAddr}", tokenId: "${vars.tokenId}") {
+      collection {
+        collectionAddr
+        collectionName
+        collectionInfo
+        traitsCount
+      }
+      token {
+        name
+        imageUrlFileserver
+        market
+        traits
+        listing
+        price
+        denom
+        marketListing
+        rarity
+        rank
+        expiration
+        status
+        owner
+        dealScore
+        collectionAddr
+        tokenId
       }
     }
   }
-`;
+`
+}
 
-export const fetchNFTInfo = async (collectionAddr: string): Promise<number> => {
-  const variables = {
+const fetchNFTData = async (collectionAddr: string, tokenId: string): Promise<enterprise.NftCollection[]> => {
+  const variables: Variables = {
     collectionAddr,
-    sorting: "volume",
-    limit: 48,
-    offset: 0,
-    ASC: true,
-    sellNow: true,
-    withoutNullCount: false
+    tokenId
   };
-  const response = await fetch('/graphql', {
+  const response = await fetch('https://nft-terra2.tfm.dev/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      query: GET_COLLECTION,
-      variables: variables
+      query: createCollectionQuery(variables)
     })
   });
 
   const json = await response.json();
 
   return json;
-};
+}
 
-export const useNFTInfoQuery = (collectionAddr: string): UseQueryResult<number> => {
+async function fetchNFTDataForMultipleTokenIds(collectionAddr: string, tokenIds: TokenIds): Promise<{ [tokenId: string]: any }> {
+  const result: { [tokenId: string]: any } = {};
+
+  for (const tokenId of tokenIds) {
+    const data = await fetchNFTData(collectionAddr, tokenId);
+    result[tokenId] = data;
+  }
+
+  return result;
+}
+
+export const useNFTInfoQuery = (collectionAddr: string, tokenIds: string[]): UseQueryResult<enterprise.NftCollection[]> => {
 
 
   return useQuery(
-    [collectionAddr],
+    [collectionAddr, tokenIds],
     () => {
-      return fetchNFTInfo(collectionAddr);
+      return fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds);
     }
   );
 };
