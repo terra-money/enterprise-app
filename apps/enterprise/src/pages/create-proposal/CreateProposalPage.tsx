@@ -29,6 +29,7 @@ import { Header } from './Header';
 import { CreateProposalProvider } from './CreateProposalProvider';
 import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
+import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -86,6 +87,7 @@ export const CreateProposalPage = () => {
                         burn={() => <BurnTokensProposalPage />}
                         delegate={() => <DelegateProposalPage />}
                         undelegate={() => <UndelegateProposalForm />}
+                        redelegate={() => <RedelegateProposalForm />}
                       />
                     </CurrentDaoProvider>
                   ) : null}

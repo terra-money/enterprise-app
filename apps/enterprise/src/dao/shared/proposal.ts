@@ -13,6 +13,7 @@ export const sharedProposalTypes = [
   'spend',
   'delegate',
   'undelegate',
+  'redelegate',
   'council',
 ] as const;
 
@@ -41,6 +42,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   burn: 'Burn token proposal',
   delegate: 'Delegate LUNA proposal',
   undelegate: 'Undelegate LUNA proposal',
+  redelegate: 'Redelegate LUNA proposal',
   council: 'Update council',
 };
 
