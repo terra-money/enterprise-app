@@ -1,6 +1,5 @@
 import { Container } from '@terra-money/apps/components';
 import { formatAmount, demicrofy } from '@terra-money/apps/libs/formatting';
-import { toPercents, assertDefined } from '@terra-money/apps/utils';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
 import { useNFTInfoQuery } from 'queries';

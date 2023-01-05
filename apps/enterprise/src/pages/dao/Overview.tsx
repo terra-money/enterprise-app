@@ -1,5 +1,4 @@
 import { RecentProposals } from './RecentProposals';
-import { TreasuryOverview } from './TreasuryOverview';
 import { SocialChannels } from './SocialChannels';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ConditionalRender } from 'components/primitives';
@@ -37,7 +36,6 @@ export const Overview = () => {
   return (
     <VStack gap={40}>
       <Panels>
-        {/* <TreasuryOverview /> */}
         <SidePanel>
           <ConditionalRender
             value={dao.type}
