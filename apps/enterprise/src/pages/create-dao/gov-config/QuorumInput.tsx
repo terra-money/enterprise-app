@@ -10,7 +10,7 @@ export const QuorumInput = ({ value, onChange }: QuorumInputProps) => {
   return (
     <FormControl
       label="Quorum"
-      helpText="The portion of total available votes cast in a proposal to consider it valid e.g. quorum of 30% means that 30% of all available votes have to be cast in the proposal, otherwise it fails automatically when it expires."
+      helpText="The minimum percentage of voting power that needs to be cast on a proposal for the result to be valid. For example, quorum of 30% means that 30% of all available votes have to be cast in the proposal, otherwise it fails automatically upon expiration."
     >
       <SliderInput
         value={value}
