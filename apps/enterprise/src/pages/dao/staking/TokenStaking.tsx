@@ -3,7 +3,6 @@ import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
-import { Button } from 'components/primitives';
 import {
   useCW20BalanceQuery,
   useCW20TokenInfoQuery,
@@ -26,6 +25,7 @@ import { VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -114,9 +114,9 @@ export const TokenStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="primary" disabled={isLoading || balance.lte(0)} onClick={onOpen}>
+                    <PrimaryButton isDisabled={isLoading || balance.lte(0)} onClick={onOpen}>
                       Stake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
@@ -133,9 +133,9 @@ export const TokenStakingConnectedView = () => {
                 />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="secondary" disabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>
+                    <PrimaryButton kind="secondary" isDisabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>
                       Unstake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
@@ -169,16 +169,16 @@ export const TokenStakingConnectedView = () => {
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
                 <Container className={styles.actions} direction="row">
-                  <Button
-                    variant="secondary"
-                    disabled={isLoading || claimableAmount.lte(0)}
-                    loading={claimTxResult.loading}
+                  <PrimaryButton
+                    kind="secondary"
+                    isDisabled={claimableAmount.lte(0)}
+                    isLoading={claimTxResult.loading}
                     onClick={() => {
                       claimTx({ daoAddress: dao.address });
                     }}
                   >
                     Claim all
-                  </Button>
+                  </PrimaryButton>
                 </Container>
               </VStack>
             }
