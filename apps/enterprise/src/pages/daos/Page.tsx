@@ -1,7 +1,7 @@
-import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
-import { SearchInput } from 'components/primitives';
+import { IconButton, SearchInput } from 'components/primitives';
 import { usePreviousIfEmpty } from 'hooks';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -11,6 +11,8 @@ import { useRef, useState } from 'react';
 import { DAO } from 'types';
 import { Header } from './Header';
 import { List } from './List';
+import styles from './Page.module.sass';
+import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 
 const MAX_PREVIEW_SIZE = 30;
 
@@ -69,7 +71,17 @@ export const Page = () => {
               DAOs
             </Text>
             {searchInput}
-            <List items={items} isLoading={isLoading} />
+            {items && items.length ? (
+              <List items={items} isLoading={isLoading} />
+            ) : (
+              <Container className={styles.noResultsContainer}>
+                <IconButton className={styles.Icon} onClick={() => setSearch({
+                  input: '',
+                  searchText: '',
+                })}><ErrorIcon /></IconButton>
+                <Text className={styles.noResultsLabel}>We couldn’t find DAOs matching your criteria. Please try again.</Text>
+              </Container>
+            )}
           </VStack>
         )}
         normal={() => (
@@ -95,8 +107,17 @@ export const Page = () => {
                   searchInput={searchInput}
                 />
               }
-            >
+            >{items && items.length ? (
               <List items={items} isLoading={isLoading} />
+            ) : (
+              <Container className={styles.noResultsContainer}>
+                <IconButton className={styles.Icon} onClick={() => setSearch({
+                  input: '',
+                  searchText: '',
+                })}><ErrorIcon /></IconButton>
+                <Text className={styles.noResultsLabel}>We couldn’t find DAOs matching your criteria. Please try again.</Text>
+              </Container>
+            )}
             </PageLayout>
           </ScrollableContainer>
         )}
