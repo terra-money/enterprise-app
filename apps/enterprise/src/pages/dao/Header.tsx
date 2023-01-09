@@ -7,9 +7,10 @@ import { Line } from 'lib/ui/Line';
 import { VStack } from 'lib/ui/Stack';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { forwardRef, Ref } from 'react';
-import { useNavigate } from 'react-router';
 import { DaoNavigation } from './DaoNavigation';
 import styles from './Header.module.sass';
+import { InternalLink } from 'lib/navigation/Link/InternalLink';
+import { Path } from 'navigation';
 
 interface HeaderProps {
   className?: string;
@@ -19,8 +20,6 @@ interface HeaderProps {
 export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
   const dao = useCurrentDao();
   const { className, compact = false } = props;
-
-  const navigate = useNavigate();
 
   if (compact) {
     return (
@@ -41,9 +40,11 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     <Container className={classNames(className, styles.root)} direction="column">
       <VStack gap={16}>
         <Container className={styles.container}>
-          <Text className={styles.back} variant="link" onClick={() => navigate(-1)}>
-            Back
-          </Text>
+          <InternalLink to={Path.Daos}>
+            <Text className={styles.back} variant="link">
+              Back
+            </Text>
+          </InternalLink>
           <DAOLogo className={styles.logo} logo={dao.logo} />
           <FavouriteToggle className={styles.favourite} dao={dao} />
           <Text className={styles.name} variant="heading2">
