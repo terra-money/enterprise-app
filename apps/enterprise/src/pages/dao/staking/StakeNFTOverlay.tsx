@@ -4,10 +4,10 @@ import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { useStakeNftTx } from 'dao/tx/useStakeNftTx';
+import { useStakeNftsTx } from 'dao/tx/useStakeNftsTx';
 import { useState } from 'react';
-import { assertDefined } from '@terra-money/apps/utils';
-import { MyNftIdInput } from 'chain/components/NftIdInput/MyNftIdInput';
+import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
+import { NftIdsInput } from 'chain/components/NftIdInput';
 
 interface StakeNFTOverlayProps extends ClosableComponentProps {
   staked: string[];
@@ -17,9 +17,11 @@ interface StakeNFTOverlayProps extends ClosableComponentProps {
 export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
   const { address, membershipContractAddress } = useCurrentDao();
 
-  const [txResult, stakeNft] = useStakeNftTx();
+  const [txResult, stakeNfts] = useStakeNftsTx();
 
-  const [tokenId, setTokenId] = useState<string | null>(null);
+  const [tokenIds, setTokenIds] = useState<string[]>([]);
+
+  const { data: nfts = [], isLoading } = useMyNftsQuery(membershipContractAddress);
 
   return (
     <Modal
@@ -28,19 +30,19 @@ export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
       renderContent={() => (
         <VStack gap={16}>
           <NumericPanel title="No of NFTs staked" value={staked.length} />
-          <MyNftIdInput nftAddress={membershipContractAddress} value={tokenId} onChange={setTokenId} />
+          <NftIdsInput options={nfts} isLoading={isLoading} value={tokenIds} onChange={setTokenIds} />
         </VStack>
       )}
       footer={
         <VStack gap={12}>
           <PrimaryButton
-            isDisabled={!tokenId}
+            isDisabled={tokenIds.length < 1}
             isLoading={txResult.loading}
             onClick={async () => {
-              await stakeNft({
+              await stakeNfts({
                 daoAddress: address,
                 collectionAddress: membershipContractAddress,
-                tokenId: assertDefined(tokenId),
+                tokenIds,
               });
               onClose();
             }}
