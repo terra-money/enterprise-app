@@ -62,6 +62,12 @@ export const NftStakingConnectedView = () => {
 
   const [claimTxResult, claimTx] = useClaimTx();
 
+  const isUnstakeDisabled = walletStaked.tokens.length === 0;
+
+  const isStakingDisabled = myNfts?.length === 0;
+
+  const isClaimDisabled = claimableTokens.length === 0;
+
   return (
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
@@ -82,7 +88,12 @@ export const NftStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton isDisabled={isLoading || myNfts?.length === 0} onClick={onOpen}>
+                    <PrimaryButton
+                      isLoading={isLoading}
+                      tooltipText={isStakingDisabled ? `You don't have NFTs to stake` : undefined}
+                      isDisabled={isStakingDisabled}
+                      onClick={onOpen}
+                    >
                       Stake
                     </PrimaryButton>
                   )}
@@ -95,8 +106,10 @@ export const NftStakingConnectedView = () => {
                   renderOpener={({ onOpen }) => (
                     <PrimaryButton
                       kind="secondary"
-                      isDisabled={isLoading || walletStaked.tokens.length === 0}
+                      isDisabled={isUnstakeDisabled}
+                      isLoading={isLoading}
                       onClick={onOpen}
+                      tooltipText={isUnstakeDisabled ? `Your wallet doesn't have NFTs to stake` : undefined}
                     >
                       Unstake
                     </PrimaryButton>
@@ -125,7 +138,8 @@ export const NftStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={isLoading || claimableTokens.length === 0}
+                    isDisabled={isClaimDisabled}
+                    tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
                     onClick={() => {
                       claimTx({ daoAddress: dao.address });

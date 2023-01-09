@@ -94,6 +94,10 @@ export const TokenStakingConnectedView = () => {
 
   const [claimTxResult, claimTx] = useClaimTx();
 
+  const isStakeDisabled = balance.lte(0);
+  const isUnstakeDisabled = walletStaked.lte(0);
+  const isClaimDisabled = claimableAmount.lte(0);
+
   return (
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
@@ -114,7 +118,12 @@ export const TokenStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton isDisabled={isLoading || balance.lte(0)} onClick={onOpen}>
+                    <PrimaryButton
+                      isLoading={isLoading}
+                      tooltipText={isStakeDisabled ? 'No tokens to stake' : undefined}
+                      isDisabled={isStakeDisabled}
+                      onClick={onOpen}
+                    >
                       Stake
                     </PrimaryButton>
                   )}
@@ -133,7 +142,13 @@ export const TokenStakingConnectedView = () => {
                 />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton kind="secondary" isDisabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>
+                    <PrimaryButton
+                      kind="secondary"
+                      isLoading={isLoading}
+                      isDisabled={isUnstakeDisabled}
+                      tooltipText={isUnstakeDisabled && `You don't have staked tokens`}
+                      onClick={onOpen}
+                    >
                       Unstake
                     </PrimaryButton>
                   )}
@@ -171,8 +186,9 @@ export const TokenStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={claimableAmount.lte(0)}
+                    isDisabled={isClaimDisabled}
                     isLoading={claimTxResult.loading}
+                    tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {
                       claimTx({ daoAddress: dao.address });
                     }}
