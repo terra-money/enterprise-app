@@ -8,7 +8,7 @@ export const tableNameExists = async (
   const response = await dynamoClient.send(
     new ListTablesCommand({
       ExclusiveStartTableName: lastEvaluatedTableName,
-      Limit: 1000,
+      Limit: 100,
     })
   );
 
