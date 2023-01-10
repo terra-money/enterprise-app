@@ -4,7 +4,6 @@ import { DAO } from 'types';
 import { QUERY_KEY } from './queryKey';
 import { useApiEndpoint } from 'hooks';
 import { DAOsQueryResponse } from './useDAOsQuery';
-import { useNavigate } from 'react-router';
 
 export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> => {
   const endpoint = useApiEndpoint({
@@ -13,16 +12,11 @@ export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> 
       address,
     },
   });
-  const navigate = useNavigate();
   return useQuery(
     [QUERY_KEY.DAO, endpoint],
     async () => {
-
       const response = await fetch(endpoint);
 
-      if (response.status === 404) {
-        navigate('/');
-      }
       if (response.status !== 404) {
         const entity: DAOsQueryResponse[0] = await response.json();
 

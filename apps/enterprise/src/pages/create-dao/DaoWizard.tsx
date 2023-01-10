@@ -22,6 +22,8 @@ import { CouncilStep } from './shared/CouncilStep';
 import { useRefCallback } from '@terra-money/apps/hooks';
 import { CompletedTransaction, useTransactionSubscribers } from '@terra-money/apps/libs/transactions';
 import { reportError } from 'errors/errorMonitoring';
+import { indexerCompletion } from 'utils/indexerCompletion';
+import { useWallet } from '@terra-money/wallet-provider';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ export const DaoWizard = () => {
   const { formState, back, forward } = useDaoWizardForm();
 
   const { steps, predictedSteps, isValid } = formState;
+
+  const { network } = useWallet();
 
   const [txResult, createDaoTx] = useCreateDAOTx();
   const onCompleted = useRefCallback(
@@ -38,19 +42,19 @@ export const DaoWizard = () => {
       const { txhash } = txResult.value.result;
       if (txhash !== transaction.txHash) return;
 
-      let redirectTo = '/dashboard';
-
-      console.log(transaction);
-
       try {
         const address = transaction.logs[0].eventsByType.wasm.dao_address[0];
-
-        redirectTo = `/dao/${address}`;
+        indexerCompletion({
+          network,
+          height: transaction.height,
+          txKey: transaction.payload.txKey,
+          callback: () => {
+            navigate(`/dao/${address}`);
+          },
+        });
       } catch (error) {
         reportError(error, { msg: 'Fail to extract dao_address from transaction logs' });
       }
-
-      navigate(redirectTo);
     },
     [txResult]
   );

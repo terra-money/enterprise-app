@@ -50,7 +50,7 @@ const AppBetaRoutes = () => {
       <Routes>
         <Route path={Path.Dashboard} element={<DashboardPage />} />
         <Route path={Path.Daos} element={<DAOsPage />} />
-        <Route path="/dao/:address" element={<ConditionalWallet connected={() => <DAOPage />} />}>
+        <Route path="/dao/:address" element={<DAOPage />}>
           <Route index={true} element={<DAOOverviewPage />} />
           <Route path="treasury" element={<DAOTreasuryPage />} />
           <Route path="proposals" element={<DAOProposalsPage />} />
