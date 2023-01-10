@@ -1,6 +1,6 @@
 import { getLast } from '@terra-money/apps/utils';
 import { ConditionalRender } from 'components/primitives';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateDAOTx } from 'tx';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
@@ -19,6 +19,11 @@ import { TokenMarketingStep } from './token/TokenMarketingStep';
 import { WizardButtons, WizardButtonsProps } from './WizardButtons';
 import { WizardLayout } from './WizardLayout';
 import { CouncilStep } from './shared/CouncilStep';
+import { useRefCallback } from '@terra-money/apps/hooks';
+import { CompletedTransaction, useTransactionSubscribers } from '@terra-money/apps/libs/transactions';
+import { reportError } from 'errors/errorMonitoring';
+import { indexerCompletion } from 'utils/indexerCompletion';
+import { useWallet } from '@terra-money/wallet-provider';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();
@@ -27,12 +32,35 @@ export const DaoWizard = () => {
 
   const { steps, predictedSteps, isValid } = formState;
 
+  const { network } = useWallet();
+
   const [txResult, createDaoTx] = useCreateDAOTx();
-  useEffect(() => {
-    if (txResult.value) {
-      navigate('/dashboard');
-    }
-  }, [navigate, txResult.value]);
+  const onCompleted = useRefCallback(
+    (transaction: CompletedTransaction) => {
+      if (!txResult?.value) return;
+
+      const { txhash } = txResult.value.result;
+      if (txhash !== transaction.txHash) return;
+
+      try {
+        const address = transaction.logs[0].eventsByType.wasm.dao_address[0];
+        indexerCompletion({
+          network,
+          height: transaction.height,
+          txKey: transaction.payload.txKey,
+          callback: () => {
+            navigate(`/dao/${address}`);
+          },
+        });
+      } catch (error) {
+        reportError(error, { msg: 'Fail to extract dao_address from transaction logs' });
+      }
+    },
+    [txResult]
+  );
+  useTransactionSubscribers({
+    onCompleted,
+  });
 
   const buttonProps: WizardButtonsProps = useMemo(() => {
     return {

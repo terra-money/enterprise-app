@@ -3,11 +3,11 @@ import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import { useUnstakeNftTx } from 'dao/tx/useUnstakeNftTx';
+import { useUnstakeNftsTx } from 'dao/tx/useUnstakeNftsTx';
 import { useState } from 'react';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { assertDefined } from '@terra-money/apps/utils';
-import { NftIdInput } from 'chain/components/NftIdInput';
+import { NftIdsInput } from 'chain/components/NftIdInput';
+import { useNftsQuery } from 'chain/queries/useNftsQuery';
 
 interface UnstakeNFTOverlayProps extends ClosableComponentProps {
   staked: string[];
@@ -17,9 +17,11 @@ interface UnstakeNFTOverlayProps extends ClosableComponentProps {
 export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlayProps) => {
   const { address, membershipContractAddress } = useCurrentDao();
 
-  const [txResult, unstakeNft] = useUnstakeNftTx();
+  const [txResult, unstakeNft] = useUnstakeNftsTx();
 
-  const [tokenId, setTokenId] = useState<string | null>(null);
+  const [tokenIds, setTokenIds] = useState<string[]>([]);
+
+  const { data: nfts = [], isLoading } = useNftsQuery({ collectionAddress: membershipContractAddress, ids: staked });
 
   return (
     <Modal
@@ -28,23 +30,18 @@ export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlay
       renderContent={() => (
         <VStack gap={16}>
           <NumericPanel title="Currently staked" value={staked.length} suffix={symbol} />
-          <NftIdInput
-            collectionAddress={membershipContractAddress}
-            ids={staked}
-            value={tokenId}
-            onChange={setTokenId}
-          />
+          <NftIdsInput options={nfts} isLoading={isLoading} value={tokenIds} onChange={setTokenIds} />
         </VStack>
       )}
       footer={
         <VStack gap={12}>
           <PrimaryButton
-            isDisabled={!tokenId}
+            isDisabled={tokenIds.length < 1}
             isLoading={txResult.loading}
             onClick={async () => {
               await unstakeNft({
                 daoAddress: address,
-                tokenId: assertDefined(tokenId),
+                tokenIds,
               });
               onClose();
             }}

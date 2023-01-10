@@ -3,7 +3,6 @@ import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
-import { Button } from 'components/primitives';
 import {
   useCW20BalanceQuery,
   useCW20TokenInfoQuery,
@@ -26,6 +25,7 @@ import { VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -94,6 +94,10 @@ export const TokenStakingConnectedView = () => {
 
   const [claimTxResult, claimTx] = useClaimTx();
 
+  const isStakeDisabled = balance.lte(0);
+  const isUnstakeDisabled = walletStaked.lte(0);
+  const isClaimDisabled = claimableAmount.lte(0);
+
   return (
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
@@ -114,9 +118,14 @@ export const TokenStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="primary" disabled={isLoading || balance.lte(0)} onClick={onOpen}>
+                    <PrimaryButton
+                      isLoading={isLoading}
+                      tooltipText={isStakeDisabled ? 'No tokens to stake' : undefined}
+                      isDisabled={isStakeDisabled}
+                      onClick={onOpen}
+                    >
                       Stake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
@@ -133,9 +142,15 @@ export const TokenStakingConnectedView = () => {
                 />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <Button variant="secondary" disabled={isLoading || walletStaked.lte(0)} onClick={onOpen}>
+                    <PrimaryButton
+                      kind="secondary"
+                      isLoading={isLoading}
+                      isDisabled={isUnstakeDisabled}
+                      tooltipText={isUnstakeDisabled && `You don't have staked tokens`}
+                      onClick={onOpen}
+                    >
                       Unstake
-                    </Button>
+                    </PrimaryButton>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
@@ -169,16 +184,17 @@ export const TokenStakingConnectedView = () => {
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
                 <Container className={styles.actions} direction="row">
-                  <Button
-                    variant="secondary"
-                    disabled={isLoading || claimableAmount.lte(0)}
-                    loading={claimTxResult.loading}
+                  <PrimaryButton
+                    kind="secondary"
+                    isDisabled={isClaimDisabled}
+                    isLoading={claimTxResult.loading}
+                    tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {
                       claimTx({ daoAddress: dao.address });
                     }}
                   >
                     Claim all
-                  </Button>
+                  </PrimaryButton>
                 </Container>
               </VStack>
             }

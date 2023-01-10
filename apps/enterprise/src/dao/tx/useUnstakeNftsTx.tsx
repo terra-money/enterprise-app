@@ -5,17 +5,17 @@ import { enterprise } from 'types/contracts';
 
 interface StakeNftTxParams {
   daoAddress: string;
-  tokenId: string;
+  tokenIds: string[];
 }
 
-export const useUnstakeNftTx = () => {
+export const useUnstakeNftsTx = () => {
   const walletAddress = useAssertMyAddress();
 
   return useTx<StakeNftTxParams>(
-    ({ daoAddress, tokenId }: StakeNftTxParams) => {
+    ({ daoAddress, tokenIds }: StakeNftTxParams) => {
       return TxBuilder.new()
         .execute<enterprise.ExecuteMsg>(walletAddress, daoAddress, {
-          unstake: { cw721: { tokens: [tokenId] } },
+          unstake: { cw721: { tokens: tokenIds } },
         })
         .build();
     },

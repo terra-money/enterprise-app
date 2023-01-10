@@ -13,13 +13,14 @@ export const sharedProposalTypes = [
   'spend',
   'delegate',
   'undelegate',
+  'redelegate',
   'council',
 ] as const;
 
 export const daoProposalsRecord = {
   multisig: [...sharedProposalTypes, 'members'] as const,
   token: [...sharedProposalTypes, 'mint', 'burn'] as const,
-  nft: sharedProposalTypes,
+  nft: [...sharedProposalTypes, 'mintNft'] as const,
 } as const;
 
 export type ProposalType =
@@ -38,9 +39,11 @@ export const proposalTitle: Record<ProposalType, string> = {
   members: 'Update multisig members',
   spend: 'Spend treasury proposal',
   mint: 'Mint token proposal',
+  mintNft: 'Mint NFT proposal',
   burn: 'Burn token proposal',
   delegate: 'Delegate LUNA proposal',
   undelegate: 'Undelegate LUNA proposal',
+  redelegate: 'Redelegate LUNA proposal',
   council: 'Update council',
 };
 

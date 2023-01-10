@@ -7,6 +7,9 @@ import { Spinner } from 'lib/ui/Spinner';
 
 import { UnstyledButton } from '../UnstyledButton';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
+import { PopoverHolder } from 'lib/ui/popover/PopoverHolder';
+import { ReversedTooltip } from 'lib/ui/popover/ReversedTooltip';
+import { Text } from 'lib/ui/Text';
 
 export const rectButtonSizes = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -19,6 +22,7 @@ export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> &
     isDisabled?: boolean;
     isLoading?: boolean;
     isRounded?: boolean;
+    tooltipText?: string | false;
   };
 
 interface ContainerProps {
@@ -80,22 +84,39 @@ export const RectButton = ({
   size = 'm',
   isDisabled = false,
   isLoading = false,
+  tooltipText,
   onClick,
   ...rest
-}: Props) => (
-  <Container
-    size={size}
-    isDisabled={isDisabled}
-    isLoading={isLoading}
-    onClick={isDisabled || isLoading ? undefined : onClick}
-    {...rest}
-  >
-    {isLoading ? (
-      <div>
-        <Spinner />
-      </div>
-    ) : (
-      <>{children}</>
-    )}
-  </Container>
-);
+}: Props) => {
+  return (
+    <PopoverHolder
+      renderContainer={(props) => (
+        <Container
+          size={size}
+          isDisabled={isDisabled}
+          isLoading={isLoading}
+          onClick={isDisabled || isLoading ? undefined : onClick}
+          {...props}
+          {...rest}
+        >
+          {isLoading ? (
+            <div>
+              <Spinner />
+            </div>
+          ) : (
+            <>{children}</>
+          )}
+        </Container>
+      )}
+      tooltip={
+        tooltipText ? (
+          <ReversedTooltip>
+            <Text size={14} as="div">
+              {tooltipText}
+            </Text>
+          </ReversedTooltip>
+        ) : undefined
+      }
+    />
+  );
+};

@@ -28,7 +28,6 @@ export const fetchDAOsQuery = async (endpoint: string) => {
   const response = await fetch(endpoint);
 
   const json: DAOsQueryResponse = await response.json();
-
   return json.map((entity) => {
     return new DAO(
       entity.address,

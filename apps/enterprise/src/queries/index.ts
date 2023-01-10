@@ -28,3 +28,4 @@ export * from './fetchCW721ContractInfo';
 export * from './fetchCW3ListVoters';
 export * from './useProposalVoteQuery';
 export * from './useTreasuryTokensQuery';
+export * from './useNFTInfoQuery';

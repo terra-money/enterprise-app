@@ -8,7 +8,7 @@ export interface VoteDurationInputProps {
 
 export const VoteDurationInput = ({ value, onChange }: VoteDurationInputProps) => {
   return (
-    <FormControl label="Vote duration" helpText="The duration of proposals before they end.">
+    <FormControl label="Vote duration" helpText="The amount of time proposals are open for voting.">
       <SliderInput
         value={value}
         min={1}

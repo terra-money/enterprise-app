@@ -71,17 +71,22 @@ export class Indexer extends EventIndexer<Entity> {
 
     await Promise.all(
       daoAddresses.map(async (daoAddress) => {
-        const { proposals } = await lcd.wasm.contractQuery<enterprise.ProposalsResponse>(daoAddress, {
-          proposals: {
-            filter: 'in_progress',
-          },
-        });
-        proposals.forEach(({ proposal }) => {
-          const key: ProposalKey = { daoAddress, id: proposal.id };
-          if (!proposalsKeys.some((k) => k.daoAddress === key.daoAddress && k.id === key.id)) {
-            proposalsKeys.push(key);
-          }
-        });
+        try {
+          console.log(`Getting proposals for ${daoAddress} DAO.`);
+          const { proposals } = await lcd.wasm.contractQuery<enterprise.ProposalsResponse>(daoAddress, {
+            proposals: {
+              filter: 'in_progress',
+            },
+          });
+          proposals.forEach(({ proposal }) => {
+            const key: ProposalKey = { daoAddress, id: proposal.id };
+            if (!proposalsKeys.some((k) => k.daoAddress === key.daoAddress && k.id === key.id)) {
+              proposalsKeys.push(key);
+            }
+          });
+        } catch (err) {
+          console.error(`Failed to get proposals for ${daoAddress} DAO.`, err);
+        }
       })
     );
 

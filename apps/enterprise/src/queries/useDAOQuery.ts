@@ -12,7 +12,6 @@ export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> 
       address,
     },
   });
-
   return useQuery(
     [QUERY_KEY.DAO, endpoint],
     async () => {

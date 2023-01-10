@@ -6,21 +6,23 @@ import { enterprise } from 'types/contracts';
 interface StakeNftTxParams {
   daoAddress: string;
   collectionAddress: string;
-  tokenId: string;
+  tokenIds: string[];
 }
 
-export const useStakeNftTx = () => {
+export const useStakeNftsTx = () => {
   const walletAddress = useAssertMyAddress();
 
   return useTx<StakeNftTxParams>(
-    ({ daoAddress, collectionAddress, tokenId }: StakeNftTxParams) => {
-      const builder = TxBuilder.new();
+    ({ daoAddress, collectionAddress, tokenIds }: StakeNftTxParams) => {
+      let builder = TxBuilder.new();
 
-      return builder
-        .sendNft<enterprise.Cw721HookMsg>(walletAddress, collectionAddress, daoAddress, tokenId, {
+      tokenIds.forEach((tokenId) => {
+        builder = builder.sendNft<enterprise.Cw721HookMsg>(walletAddress, collectionAddress, daoAddress, tokenId, {
           stake: {},
-        })
-        .build();
+        });
+      });
+
+      return builder.build();
     },
     {
       txKey: TX_KEY.STAKE_NFT,

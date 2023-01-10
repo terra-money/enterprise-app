@@ -29,6 +29,8 @@ import { Header } from './Header';
 import { CreateProposalProvider } from './CreateProposalProvider';
 import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
+import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
+import { MintNftProposalForm } from './mint/MintNftProposalForm';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -82,10 +84,12 @@ export const CreateProposalPage = () => {
                         execute={() => <ExecuteMessageProposalForm />}
                         members={() => <MultisigMembersProposalPage />}
                         mint={() => <MintTokensProposalForm />}
+                        mintNft={() => <MintNftProposalForm />}
                         spend={() => <SpendTreasuryProposalPage />}
                         burn={() => <BurnTokensProposalPage />}
                         delegate={() => <DelegateProposalPage />}
                         undelegate={() => <UndelegateProposalForm />}
+                        redelegate={() => <RedelegateProposalForm />}
                       />
                     </CurrentDaoProvider>
                   ) : null}

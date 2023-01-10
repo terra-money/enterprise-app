@@ -1,27 +1,17 @@
-import { createReducer } from "react-use";
-import thunk from "redux-thunk";
-import { transactionsReducer } from "./transactionsReducer";
-import { TxDispatch, trackTxAction } from "./actions";
-import { TxState } from "./TxState";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { LocalStorageTxStore } from "./storage/LocalStorageTxStore";
-import { createTxStoreMiddleware } from "./storage";
-import {
-  pendingSubject,
-  completedSubject,
-  cancelledSubject,
-  failedSubject,
-} from "./rx";
-import { useLCDClient } from "@terra-money/wallet-provider";
-import {
-  CompletedTransaction,
-  FailedTransaction,
-  PendingTransaction,
-  TransactionStatus,
-} from "./types";
-import { UIElementProps } from "../../components";
+import { createReducer } from 'react-use';
+import thunk from 'redux-thunk';
+import { transactionsReducer } from './transactionsReducer';
+import { TxDispatch, trackTxAction } from './actions';
+import { TxState } from './TxState';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { LocalStorageTxStore } from './storage/LocalStorageTxStore';
+import { createTxStoreMiddleware } from './storage';
+import { pendingSubject, completedSubject, cancelledSubject, failedSubject } from './rx';
+import { useLCDClient } from '@terra-money/wallet-provider';
+import { CompletedTransaction, FailedTransaction, PendingTransaction, TransactionStatus } from './types';
+import { UIElementProps } from '../../components';
 
-const storage = new LocalStorageTxStore("__tx_store");
+const storage = new LocalStorageTxStore('__tx_store');
 
 const useThunkReducer = createReducer<any, TxState>(
   thunk.withExtraArgument({
@@ -49,14 +39,12 @@ type TxHelpers = {
   setEventHandlers: (eventHandlers: TxEventHandlers) => void;
 };
 
-const TransactionsContext = createContext<
-  [TxState, TxDispatch, TxHelpers] | undefined
->(undefined);
+const TransactionsContext = createContext<[TxState, TxDispatch, TxHelpers] | undefined>(undefined);
 
 const useTransactionsContext = (): [TxState, TxDispatch, TxHelpers] => {
   const context = useContext(TransactionsContext);
   if (context === undefined) {
-    throw Error("The TransactionsContext has not been defined.");
+    throw Error('The TransactionsContext has not been defined.');
   }
   return context;
 };
@@ -66,8 +54,7 @@ interface TransactionsProviderProps extends UIElementProps {}
 const TransactionsProvider = (props: TransactionsProviderProps) => {
   const { children } = props;
 
-  const [{ onPending, onCancelled, onCompleted, onFailed }, setEventHandlers] =
-    useState<TxEventHandlers>({});
+  const [{ onPending, onCancelled, onCompleted, onFailed }, setEventHandlers] = useState<TxEventHandlers>({});
 
   const lcd = useLCDClient();
 
@@ -99,6 +86,7 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
     });
 
     const completed = completedSubject.subscribe((transaction) => {
+      console.log('COMPLETED!', transaction);
       if (onCompleted && transaction.status === TransactionStatus.Completed) {
         onCompleted(transaction);
       }
@@ -125,18 +113,10 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
   }, [onCompleted, onCancelled, onFailed, onPending]);
 
   const newValue = useMemo(() => {
-    return [value[0], value[1], { setEventHandlers }] as [
-      TxState,
-      TxDispatch,
-      TxHelpers
-    ];
+    return [value[0], value[1], { setEventHandlers }] as [TxState, TxDispatch, TxHelpers];
   }, [value, setEventHandlers]);
 
-  return (
-    <TransactionsContext.Provider value={newValue}>
-      {children}
-    </TransactionsContext.Provider>
-  );
+  return <TransactionsContext.Provider value={newValue}>{children}</TransactionsContext.Provider>;
 };
 
 export { TransactionsProvider, useTransactionsContext };
