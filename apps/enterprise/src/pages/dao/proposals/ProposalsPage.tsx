@@ -11,7 +11,7 @@ import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 
-const LIMIT = 10;
+const LIMIT = 100;
 
 export const ProposalsPage = () => {
   const dao = useCurrentDao();
@@ -19,9 +19,8 @@ export const ProposalsPage = () => {
   const connectedWallet = useConnectedWallet();
 
   const { data: proposalsQuery } = useProposalsQuery({
-    daoAddress: dao?.address,
+    daoAddress: dao.address,
     limit: LIMIT,
-    enabled: Boolean(dao?.address),
   });
 
   const { data: votingPower = Big(0) } = useVotingPowerQuery(dao?.address, connectedWallet?.walletAddress);
