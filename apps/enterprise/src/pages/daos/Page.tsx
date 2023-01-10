@@ -1,7 +1,7 @@
 import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
-import { IconButton, SearchInput } from 'components/primitives';
+import { Button, IconButton, SearchInput } from 'components/primitives';
 import { usePreviousIfEmpty } from 'hooks';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -15,10 +15,26 @@ import styles from './Page.module.sass';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 
 const MAX_PREVIEW_SIZE = 30;
+export const filterDaos = (filter: string, items: DAO[]) => {
+  return items?.filter(item => item.type === filter)
+}
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<'nft' | 'token' | 'multisig'>('nft');
+  let [items, setItems] = useState<DAO[]>([]);
 
+
+  const handleToggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const daoFilters = [
+    { label: 'Multisig', value: 'multisig' },
+    { label: 'Token', value: 'token' },
+    { label: 'NFT', value: 'nft' }
+  ]
   const [search, setSearch] = useState({
     input: '',
     searchText: '',
@@ -29,7 +45,13 @@ export const Page = () => {
     limit: MAX_PREVIEW_SIZE,
   });
 
-  const items = usePreviousIfEmpty([...Array<DAO>(MAX_PREVIEW_SIZE)], data);
+  items = usePreviousIfEmpty([...Array<DAO>(MAX_PREVIEW_SIZE)], data);
+
+  const handleFilterChange = (event: any) => {
+    setSelectedFilter(event.target.value);
+    const filteredItems = filterDaos(event.target.value, items);
+    setItems([...items, ...filteredItems])
+  };
 
   const searchInput = (
     <SearchInput
@@ -71,6 +93,7 @@ export const Page = () => {
               DAOs
             </Text>
             {searchInput}
+
             {items && items.length ? (
               <List items={items} isLoading={isLoading} />
             ) : (
@@ -100,12 +123,33 @@ export const Page = () => {
           >
             <PageLayout
               header={
-                <Header
-                  ref={stickyRef}
-                  isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
-                  searchInput={searchInput}
-                />
+                <>
+                  <Header
+                    ref={stickyRef}
+                    isLoading={isLoading}
+                    totalCount={items?.length ?? 0}
+                    searchInput={searchInput}
+                  />
+                  <Container>
+                    <Button className={styles.filterButton} onClick={handleToggleDropdown}>Add Filters</Button>
+                    {showDropdown && (
+                      <Container className={styles.filterContainer} direction="column">
+                        {daoFilters.map(filter => (
+                          <div key={filter.value} className={styles.filterOption}>
+                            <input
+                              type="radio"
+                              name="filter"
+                              value={filter.value}
+                              checked={filter.value === selectedFilter}
+                              onChange={handleFilterChange}
+                            />
+                            <label>{filter.label}</label>
+                          </div>
+                        ))}
+                      </Container>
+                    )}
+                  </Container>
+                </>
               }
             >{items && items.length ? (
               <List items={items} isLoading={isLoading} />
