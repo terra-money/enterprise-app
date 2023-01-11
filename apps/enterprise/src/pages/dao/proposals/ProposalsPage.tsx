@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
 import { Button, SearchInput, Tooltip } from 'components/primitives';
-import { useProposalsQuery, useVotingPowerQuery } from 'queries';
+import { useVotingPowerQuery } from 'queries';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
@@ -10,6 +10,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
+import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
 
 const LIMIT = 100;
 
@@ -18,10 +19,7 @@ export const ProposalsPage = () => {
 
   const connectedWallet = useConnectedWallet();
 
-  const { data: proposalsQuery } = useProposalsQuery({
-    daoAddress: dao.address,
-    limit: LIMIT,
-  });
+  const { data: proposalsQuery } = useDaoProposalsQuery({ address: dao.address });
 
   const { data: votingPower = Big(0) } = useVotingPowerQuery(dao?.address, connectedWallet?.walletAddress);
 
