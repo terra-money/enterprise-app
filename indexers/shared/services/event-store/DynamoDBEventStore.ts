@@ -1,21 +1,9 @@
-import {
-  AttributeValue,
-  BatchWriteItemCommand,
-  DynamoDBClient,
-  QueryCommand,
-} from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { omit } from "lodash";
-import { Timestamp } from "types";
-import { batch } from "utils";
-import {
-  Event,
-  EventStore,
-  EventPK,
-  EventSK,
-  QueryOptions,
-  QueryResponse,
-} from "./types";
+import { AttributeValue, BatchWriteItemCommand, DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb';
+import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
+import { omit } from 'lodash';
+import { Timestamp } from 'types';
+import { batch } from 'utils';
+import { Event, EventStore, EventPK, EventSK, QueryOptions, QueryResponse } from './types';
 
 interface DynamoDBEventStoreOptions {
   tableName: string;
@@ -25,12 +13,12 @@ interface DynamoDBEventStoreOptions {
 
 const SK_LENGTH = 4 + 2 + 2 + 32;
 
-const DEFAULT_LIMIT = 1000;
+const DEFAULT_LIMIT = 100;
 
 export class DynamoDBEventStore implements EventStore {
   private readonly dynamoClient: DynamoDBClient;
   private readonly tableName: string;
-  private readonly timestampIndexName = "idx-timestamp";
+  private readonly timestampIndexName = 'idx-timestamp';
 
   constructor(options: Partial<DynamoDBEventStoreOptions>) {
     Object.assign(this, options);
@@ -43,11 +31,7 @@ export class DynamoDBEventStore implements EventStore {
     }
   };
 
-  private decompressTxHash = (
-    buffer: Buffer,
-    offset: number,
-    length: number = 32
-  ): string => {
+  private decompressTxHash = (buffer: Buffer, offset: number, length: number = 32): string => {
     const parts = [];
 
     for (let i = 0; i < length; i += 4) {
@@ -55,7 +39,7 @@ export class DynamoDBEventStore implements EventStore {
       parts.push(v.toString(16));
     }
 
-    return parts.join("");
+    return parts.join('');
   };
 
   private marshallSortingKey = (sk: EventSK): Buffer => {
@@ -83,12 +67,7 @@ export class DynamoDBEventStore implements EventStore {
 
   private marshall = (event: Event): Record<string, AttributeValue> => {
     // these attributes are stored in the keys and can be rehydrated
-    const properties: Array<keyof Event> = [
-      "contract",
-      "action",
-      "msgIndex",
-      "eventIndex",
-    ];
+    const properties: Array<keyof Event> = ['contract', 'action', 'msgIndex', 'eventIndex'];
     return marshall({
       ...omit(event, properties),
       pk: `${event.contract}/${event.action}`,
@@ -96,14 +75,12 @@ export class DynamoDBEventStore implements EventStore {
     });
   };
 
-  private unmarshall = <TEvent extends Event>(
-    attributes: Record<string, AttributeValue>
-  ): TEvent => {
-    const [contract, action] = attributes["pk"].S.split("/");
+  private unmarshall = <TEvent extends Event>(attributes: Record<string, AttributeValue>): TEvent => {
+    const [contract, action] = attributes['pk'].S.split('/');
 
     return {
-      ...omit(unmarshall(attributes), ["pk", "sk"]),
-      ...this.unmarshallSortingKey(Buffer.from(attributes["sk"].B)),
+      ...omit(unmarshall(attributes), ['pk', 'sk']),
+      ...this.unmarshallSortingKey(Buffer.from(attributes['sk'].B)),
       contract,
       action,
     } as TEvent;
@@ -124,12 +101,10 @@ export class DynamoDBEventStore implements EventStore {
           ],
         },
       };
-      const response = await this.dynamoClient.send(
-        new BatchWriteItemCommand(params)
-      );
+      const response = await this.dynamoClient.send(new BatchWriteItemCommand(params));
       if (Object.keys(response.UnprocessedItems).length > 0) {
         // TODO: should look and retrying these with an exponential backoff
-        throw Error("Failed to save all items.");
+        throw Error('Failed to save all items.');
       }
     });
   }
@@ -156,7 +131,7 @@ export class DynamoDBEventStore implements EventStore {
         KeyConditions: {
           pk: {
             AttributeValueList: [{ S: `${pk.contract}/${pk.action}` }],
-            ComparisonOperator: "EQ",
+            ComparisonOperator: 'EQ',
           },
           sk: {
             AttributeValueList: [
@@ -166,7 +141,7 @@ export class DynamoDBEventStore implements EventStore {
               // here doesn't contain a txHash
               { B: this.createHeightSortingKey(to + 1) },
             ],
-            ComparisonOperator: "BETWEEN",
+            ComparisonOperator: 'BETWEEN',
           },
         },
       })
@@ -194,14 +169,11 @@ export class DynamoDBEventStore implements EventStore {
         KeyConditions: {
           pk: {
             AttributeValueList: [{ S: `${pk.contract}/${pk.action}` }],
-            ComparisonOperator: "EQ",
+            ComparisonOperator: 'EQ',
           },
           timestamp: {
-            AttributeValueList: [
-              { N: `${from.toNumber()}` },
-              { N: `${to.toNumber()}` },
-            ],
-            ComparisonOperator: "BETWEEN",
+            AttributeValueList: [{ N: `${from.toNumber()}` }, { N: `${to.toNumber()}` }],
+            ComparisonOperator: 'BETWEEN',
           },
         },
       })
