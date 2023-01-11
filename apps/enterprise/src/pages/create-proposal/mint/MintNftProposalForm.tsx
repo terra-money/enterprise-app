@@ -11,12 +11,14 @@ import { TextInput } from 'lib/ui/inputs/TextInput';
 type MintNftProposalFormSchema = Omit<MintNftMsgParams, 'contract'>;
 
 // TODO: verify that ID is unique
-// TODO: figure out why optional() doesn't work
+const zodOptionalUrlValidator = z.string().url().optional();
+
+// @ts-ignore
 const mintNftProposalFormSchema: z.ZodType<MintNftProposalFormSchema> = z.object({
   tokenId: z.string(),
   owner: zodAddressValidator,
-  imageUrl: z.string().url().optional(),
-  tokenUri: z.string().url().optional(),
+  imageUrl: zodOptionalUrlValidator,
+  tokenUri: zodOptionalUrlValidator,
 });
 
 export const MintNftProposalForm = () => {
@@ -61,13 +63,17 @@ export const MintNftProposalForm = () => {
 
         <TextInput
           error={errors.imageUrl?.message}
-          {...register('imageUrl')}
+          {...register('imageUrl', {
+            setValueAs: (value) => (value === '' ? undefined : value),
+          })}
           placeholder="Enter URL"
           label="Image URL"
         />
         <TextInput
           error={errors.tokenUri?.message}
-          {...register('tokenUri')}
+          {...register('tokenUri', {
+            setValueAs: (value) => (value === '' ? undefined : value),
+          })}
           placeholder="Enter URI"
           label="Token URI"
         />
