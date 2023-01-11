@@ -1,9 +1,11 @@
 import { CW20Addr } from '@terra-money/apps/types';
-import Big from 'big.js';
-import { useApiEndpoint } from 'hooks';
-import { ProposalsQueryResponse, useDAOQuery } from 'queries';
+import { assertDefined } from '@terra-money/apps/utils';
+import { useContract } from 'chain/hooks/useContract';
+import { toProposal } from 'dao/utils/toProposal';
+import { useDAOQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
 import { Proposal } from 'types';
+import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 
 interface UseProposalQueryOptions {
@@ -12,49 +14,27 @@ interface UseProposalQueryOptions {
   enabled?: boolean;
 }
 
+type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
+
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
+  const { query } = useContract();
+
   const { id, daoAddress, enabled = true } = options;
 
-  const endpoint = useApiEndpoint({
-    path: 'v1/daos/{address}/proposals/{id}',
-    route: {
-      address: daoAddress,
-      id,
-    },
-  });
-
-  const { data: dao, isLoading } = useDAOQuery(daoAddress);
+  const { data: dao } = useDAOQuery(daoAddress as CW20Addr);
 
   return useQuery(
-    [QUERY_KEY.PROPOSAL, endpoint],
+    [QUERY_KEY.PROPOSAL, daoAddress, id],
     async () => {
-      const response = await fetch(endpoint);
+      const resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
+        proposal: { proposal_id: id },
+      });
 
-      if (response.status !== 404 && dao) {
-        const entity: ProposalsQueryResponse[0] = await response.json();
-
-        return new Proposal(
-          dao,
-          entity.id,
-          entity.title,
-          entity.description,
-          entity.created,
-          entity.expires,
-          entity.proposalActions,
-          entity.status,
-          Big(entity.yesVotes),
-          Big(entity.noVotes),
-          Big(entity.abstainVotes),
-          Big(entity.vetoVotes ?? '0'),
-          Big(entity.totalVotes ?? '0')
-        );
-      }
-
-      return undefined;
+      return toProposal(resp, assertDefined(dao));
     },
     {
       refetchOnMount: false,
-      enabled: enabled && isLoading === false,
+      enabled: !!(enabled && dao),
     }
   );
 };

@@ -46,7 +46,7 @@ interface MintNftMsg {
 }
 
 export const toMintNftMsg = ({ contract, tokenId, owner, tokenUri, imageUrl }: MintNftMsgParams) => {
-  const msg: MintNftMsg = {
+  const mint: MintNftMsg = {
     token_id: tokenId,
     owner,
     token_uri: tokenUri,
@@ -60,7 +60,7 @@ export const toMintNftMsg = ({ contract, tokenId, owner, tokenUri, imageUrl }: M
       execute: {
         contract_addr: contract,
         funds: [],
-        msg: base64Encode(msg),
+        msg: base64Encode({ mint }),
       },
     },
   });
