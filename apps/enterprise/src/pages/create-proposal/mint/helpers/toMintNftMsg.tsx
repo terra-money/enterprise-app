@@ -10,8 +10,8 @@ export interface MintNftMsgParams {
 
   tokenUri?: string;
   imageUrl?: string;
-  // imageData?: string;
-  // externalUrl?: string;
+  imageData?: string;
+  externalUrl?: string;
   // description?: string;
   // name?: string;
   // backgroundColor?: string;
@@ -45,13 +45,23 @@ interface MintNftMsg {
   extension: NftMetadata;
 }
 
-export const toMintNftMsg = ({ contract, tokenId, owner, tokenUri, imageUrl }: MintNftMsgParams) => {
+export const toMintNftMsg = ({
+  contract,
+  tokenId,
+  owner,
+  tokenUri,
+  imageUrl,
+  imageData,
+  externalUrl,
+}: MintNftMsgParams) => {
   const mint: MintNftMsg = {
     token_id: tokenId,
     owner,
     token_uri: tokenUri,
     extension: {
       image: imageUrl,
+      image_data: imageData,
+      external_url: externalUrl,
     },
   };
 

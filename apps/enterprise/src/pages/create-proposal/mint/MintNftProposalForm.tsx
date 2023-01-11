@@ -19,6 +19,8 @@ const mintNftProposalFormSchema: z.ZodType<MintNftProposalFormSchema> = z.object
   owner: zodAddressValidator,
   imageUrl: zodOptionalUrlValidator,
   tokenUri: zodOptionalUrlValidator,
+  imageData: zodOptionalUrlValidator,
+  externalUrl: zodOptionalUrlValidator,
 });
 
 export const MintNftProposalForm = () => {
@@ -31,6 +33,15 @@ export const MintNftProposalForm = () => {
   } = useForm<MintNftProposalFormSchema>({
     mode: 'all',
     resolver: zodResolver(mintNftProposalFormSchema),
+  });
+
+  const registerTextInput = (name: keyof MintNftProposalFormSchema, placeholder: string, label: string) => ({
+    error: errors[name]?.message,
+    ...register(name, {
+      setValueAs: (value) => (value === '' ? undefined : value),
+    }),
+    placeholder,
+    label,
   });
 
   return (
@@ -61,22 +72,10 @@ export const MintNftProposalForm = () => {
           label="Owner address"
         />
 
-        <TextInput
-          error={errors.imageUrl?.message}
-          {...register('imageUrl', {
-            setValueAs: (value) => (value === '' ? undefined : value),
-          })}
-          placeholder="Enter URL"
-          label="Image URL"
-        />
-        <TextInput
-          error={errors.tokenUri?.message}
-          {...register('tokenUri', {
-            setValueAs: (value) => (value === '' ? undefined : value),
-          })}
-          placeholder="Enter URI"
-          label="Token URI"
-        />
+        <TextInput {...registerTextInput('imageUrl', 'Enter URL', 'Image URL')} />
+        <TextInput {...registerTextInput('tokenUri', 'Enter URI', 'Token URI')} />
+        <TextInput {...registerTextInput('imageData', 'Enter URL', 'Image data URL')} />
+        <TextInput {...registerTextInput('externalUrl', 'Enter URL', 'External URL')} />
       </VStack>
     </ProposalForm>
   );
