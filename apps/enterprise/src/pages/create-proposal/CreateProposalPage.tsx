@@ -31,6 +31,7 @@ import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
 import { MintNftProposalForm } from './mint/MintNftProposalForm';
+import { MintNftProposalPage } from './mint/MintNftProposalPage';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -84,7 +85,7 @@ export const CreateProposalPage = () => {
                         execute={() => <ExecuteMessageProposalForm />}
                         members={() => <MultisigMembersProposalPage />}
                         mint={() => <MintTokensProposalForm />}
-                        mintNft={() => <MintNftProposalForm />}
+                        mintNft={() => <MintNftProposalPage />}
                         spend={() => <SpendTreasuryProposalPage />}
                         burn={() => <BurnTokensProposalPage />}
                         delegate={() => <DelegateProposalPage />}
