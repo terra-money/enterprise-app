@@ -1,17 +1,13 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Text, Throbber } from 'components/primitives';
-import { Container } from '@terra-money/apps/components/container';
 import { SearchTextInput } from 'components/search-text-input';
 import { useTokens } from '@terra-money/apps/hooks';
-import { Token, CW20Token } from '@terra-money/apps/types';
-import classNames from 'classnames';
+import { Token } from '@terra-money/apps/types';
 import { CW20Addr } from '@terra-money/apps/types';
-import { ListData } from './ListData';
 import { ListItem } from './ListItem';
-import styles from './TokenList.module.sass';
-import { pluralize } from '@terra-money/apps/utils';
 import { useCW20TokenInfoQuery } from 'queries';
 import { VStack } from 'lib/ui/Stack';
+import styled from 'styled-components';
+import { Spinner } from 'lib/ui/Spinner';
 
 const isMatchingToken = (token: Token, searchText: string): boolean => {
   if (searchText?.length === 0) {
@@ -30,6 +26,11 @@ interface TokenInputProps {
   onSelect: (token: Token) => void;
 }
 
+const Container = styled(VStack)`
+  height: 320px;
+  overflow-y: auto;
+`;
+
 export const TokenInput = ({ onSelect }: TokenInputProps) => {
   const [searchText, setSearchText] = useState('');
 
@@ -45,18 +46,12 @@ export const TokenInput = ({ onSelect }: TokenInputProps) => {
   );
 
   const tokenList = useMemo(() => {
-    return Object.values(tokens ?? {})
+    const result = Object.values(tokens ?? {})
       .filter((t) => t.symbol !== undefined && isMatchingToken(t, searchText))
       .sort((a, b) => a.symbol.localeCompare(b.symbol));
-  }, [tokens, searchText]);
 
-  const listData = useMemo<ListData>(() => {
-    const onSelectionChanged = (token: Token) => {
-      onSelect(token);
-    };
-
-    if (tokenList.length === 0 && cw20Token) {
-      const token: CW20Token = {
+    if (result.length === 0 && cw20Token) {
+      result.push({
         type: 'cw20',
         key: searchText,
         token: searchText as CW20Addr,
@@ -65,52 +60,30 @@ export const TokenInput = ({ onSelect }: TokenInputProps) => {
         decimals: cw20Token.decimals,
         icon: '',
         protocol: '',
-      };
-      return {
-        tokens: [token],
-        onSelectionChanged,
-      };
+      });
     }
 
-    return {
-      tokens: tokenList,
-      onSelectionChanged,
-    };
-  }, [cw20Token, onSelect, searchText, tokenList]);
+    return result;
+  }, [cw20Token, searchText, tokens]);
 
   const isLoading = areTokensLoading || cw20TokenLoading;
-  const areTokens = listData.tokens.length > 0;
 
   return (
     <VStack gap={24}>
       <SearchTextInput
-        className={styles.searchTextInput}
+        style={{ width: '100%' }}
         placeholder="Search for a token"
         searchText={searchText}
         onChange={onSearchTextChanged}
       />
 
-      <Container
-        className={classNames(styles.columns, {
-          [styles.hide]: isLoading && !areTokens,
-        })}
-        direction="row"
-      >
-        <Text variant="text">{`Displaying ${listData.tokens.length} ${pluralize(
-          'token',
-          listData.tokens.length
-        )}`}</Text>
-        <Text variant="text">Balance</Text>
+      <Container gap={8}>
+        {isLoading && tokenList.length < 1 ? (
+          <Spinner />
+        ) : (
+          tokenList.map((token) => <ListItem onSelect={() => onSelect(token)} token={token} />)
+        )}
       </Container>
-      {areTokens ? (
-        <VStack gap={8}>
-          {listData.tokens.map((token) => (
-            <ListItem onSelect={() => onSelect(token)} token={token} />
-          ))}
-        </VStack>
-      ) : isLoading ? (
-        <Throbber className={styles.throbber} />
-      ) : null}
     </VStack>
   );
 };
