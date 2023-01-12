@@ -6,7 +6,7 @@ import { defaultInputShapeCSS, inputPaddingCSS } from './config';
 import { Props as InputWrapperProps, InputWrapperWithErrorMessage } from './InputWrapper';
 import { Spinner } from '../Spinner';
 
-export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error'> & {
+export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error' | 'inputOverlay'> & {
   onValueChange?: (value: string) => void;
   isLoading?: boolean;
 };
@@ -16,6 +16,7 @@ export const commonInputCSS = css<{
 }>`
   ${defaultInputShapeCSS};
   max-width: 100%;
+  width: 100%;
 
   background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
   ${inputPaddingCSS};
@@ -61,11 +62,11 @@ export const TextInputLoader = () => (
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
 
 export const TextInput = forwardRef(function TextInputInner(
-  { onValueChange, label, error, height, isLoading, ...props }: TextInputProps,
+  { onValueChange, label, error, height, isLoading, inputOverlay, ...props }: TextInputProps,
   ref: Ref<HTMLInputElement> | null
 ) {
   return (
-    <InputWrapperWithErrorMessage error={error} label={label}>
+    <InputWrapperWithErrorMessage inputOverlay={inputOverlay} error={error} label={label}>
       {isLoading ? (
         <TextInputLoader />
       ) : (

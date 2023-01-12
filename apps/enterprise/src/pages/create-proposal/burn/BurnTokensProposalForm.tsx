@@ -6,7 +6,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { toBurnTokensMsg } from './helpers/toBurnTokensMsg';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { Text } from 'lib/ui/Text';
-import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentDaoTreasuryTokens } from '../spend/CurrentDAOTreasuryTokentsProvider';
 import Big from 'big.js';

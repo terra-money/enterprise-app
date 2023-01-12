@@ -4,7 +4,7 @@ import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositTx } from 'dao/tx/useDepositTx';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
 import { useTokenBalanceQuery } from 'queries';
 import { useEffect } from 'react';
@@ -72,6 +72,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             onBlur={onBlur}
             ref={ref}
             max={balance ? demicrofy(balance, token.decimals).toNumber() : undefined}
+            unit={token.name}
           />
         )}
       />

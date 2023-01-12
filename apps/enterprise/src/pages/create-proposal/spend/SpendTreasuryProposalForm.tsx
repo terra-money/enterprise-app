@@ -12,7 +12,7 @@ import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
 import { TreasuryToken } from 'queries';
 import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
-import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;

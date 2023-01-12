@@ -11,7 +11,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { lunaDecimals } from 'chain/constants';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AmountTextInput } from 'lib/ui/inputs/AmountTextInputProps';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { toRedelegateMsg } from './toRedelegateMsg';
 import { zodAddressValidator } from 'chain/utils/validators';
 import { TextInput } from 'lib/ui/inputs/TextInput';
