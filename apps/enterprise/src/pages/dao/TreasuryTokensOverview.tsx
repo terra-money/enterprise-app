@@ -10,9 +10,10 @@ import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { Address } from 'components/address';
 import { TreasuryTokensPieChart } from './TreasuryTokensPieChart';
 import styled from 'styled-components';
-import { VStack } from 'lib/ui/Stack';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { DepositIntoTreasury } from './deposit';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -113,18 +114,20 @@ export const TreasuryTokensOverview = () => {
             {renderPieChart()}
           </SmallScreenWidthContainer>
           {renderAssets()}
+          <DepositIntoTreasury />
         </VStack>
       )}
       normal={() => (
         <NormalScreenWidthContainer>
           {renderPieChart()}
 
-          <VStack fullHeight justifyContent="space-between" gap={8}>
-            <>
+          <HStack justifyContent="space-between" alignItems="end">
+            <VStack fullHeight justifyContent="space-between" gap={8}>
               {renderBasicInfo()}
               {renderAssets()}
-            </>
-          </VStack>
+            </VStack>
+            <DepositIntoTreasury />
+          </HStack>
         </NormalScreenWidthContainer>
       )}
     />

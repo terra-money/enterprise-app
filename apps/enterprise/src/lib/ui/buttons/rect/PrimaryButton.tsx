@@ -1,4 +1,4 @@
-import { gradientBackgroundCSS } from 'lib/ui/gradients';
+import { gradientBackgroundCSS, gradientColorCSS } from 'lib/ui/gradients';
 import styled, { css } from 'styled-components';
 
 import { RectButton, Props as RectButtonProps } from './RectButton';
@@ -29,7 +29,9 @@ const Container = styled(RectButton)<Props>`
       `,
       secondary: css`
         background: ${({ theme }) => theme.colors.foregroundAlt.toCssValue()};
-        color: ${({ theme }) => theme.colors.text.toCssValue()};
+        .content {
+          ${gradientColorCSS};
+        }
       `,
     }[kind])};
   ${({ isDisabled, isLoading, kind = defaultKind }) =>

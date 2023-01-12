@@ -99,13 +99,7 @@ export const RectButton = ({
           {...props}
           {...rest}
         >
-          {isLoading ? (
-            <div>
-              <Spinner />
-            </div>
-          ) : (
-            <>{children}</>
-          )}
+          <div className="content">{isLoading ? <Spinner /> : <>{children}</>}</div>
         </Container>
       )}
       tooltip={
