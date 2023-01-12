@@ -14,6 +14,7 @@ type QueryRefetchMap = Record<TX_KEY, (QUERY_KEY | QueryRefetch)[]>;
 // TODO: check refetch for create and cancel (probably off)
 const QUERY_REFETCH_MAP: QueryRefetchMap = {
   [TX_KEY.CREATE_DAO]: [QUERY_KEY.DAOS, QUERY_KEY.RECENT_DAOS],
+  [TX_KEY.DEPOSIT]: [QUERY_KEY.CW20_TREASURY],
   [TX_KEY.STAKE_TOKEN]: [
     QUERY_KEY.CW20_TOKEN_BALANCE,
     QUERY_KEY.TOKEN_STAKING_AMOUNT,

@@ -1,3 +1,6 @@
+import { TokenInput } from 'components/token-input';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { VStack } from 'lib/ui/Stack';
 import { Token } from 'types/Token';
 
 interface SelectAssetStepProps {
@@ -6,5 +9,15 @@ interface SelectAssetStepProps {
 }
 
 export const SelectAssetStep = ({ onSelect, onCancel }: SelectAssetStepProps) => {
-  return <p>coming soon!</p>;
+  return (
+    <>
+      <TokenInput onSelect={onSelect} />
+      <VStack gap={8}>
+        {/* <PrimaryButton>Next</PrimaryButton> */}
+        <PrimaryButton kind="secondary" onClick={onCancel}>
+          Cancel
+        </PrimaryButton>
+      </VStack>
+    </>
+  );
 };

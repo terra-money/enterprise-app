@@ -15,10 +15,9 @@ import { CollapseToggleIconButton } from 'lib/ui/buttons/square/CollapseToggleIc
 import { useKeyPress } from 'lib/shared/hooks/useKeyPress';
 
 import { InputWrapperWithErrorMessage } from '../InputWrapper';
-import { TextInputContainer } from '../TextInput';
+import { TextInputContainer, TextInputLoader } from '../TextInput';
 import { ComboboxOptions } from './ComboboxOptions';
 import { DropdownMenuPlacer } from './DropdownMenuPlacer';
-import { TextInputLoader } from '../TextInputLoader';
 import { Text } from 'lib/ui/Text';
 import { defaultInputShapeCSS, inputPaddingCSS } from '../config';
 

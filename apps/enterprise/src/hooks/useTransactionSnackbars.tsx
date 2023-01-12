@@ -24,6 +24,7 @@ const CompletedSnackbarMessages: TxMessages = {
   [TX_KEY.CREATE_PROPOSAL]: 'Your proposal was created.',
   [TX_KEY.EXECUTE_PROPOSAL]: 'The proposal was executed.',
   [TX_KEY.CAST_VOTE]: 'Your vote was cast.',
+  [TX_KEY.DEPOSIT]: 'Your tokens were deposited.',
 };
 
 const FailedSnackbarMessages: TxMessages = {
@@ -36,6 +37,7 @@ const FailedSnackbarMessages: TxMessages = {
   [TX_KEY.CREATE_PROPOSAL]: 'Failed to create your proposal.',
   [TX_KEY.EXECUTE_PROPOSAL]: 'Failed to execute the proposal.',
   [TX_KEY.CAST_VOTE]: 'Failed to vote on the proposal.',
+  [TX_KEY.DEPOSIT]: 'Failed to deposit your tokens.',
 };
 
 export const useTransactionSnackbars = () => {

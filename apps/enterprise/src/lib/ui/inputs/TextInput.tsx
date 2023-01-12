@@ -4,32 +4,12 @@ import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
 import { defaultInputShapeCSS, inputPaddingCSS } from './config';
 
 import { Props as InputWrapperProps, InputWrapperWithErrorMessage } from './InputWrapper';
+import { Spinner } from '../Spinner';
 
 export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error'> & {
   onValueChange?: (value: string) => void;
+  isLoading?: boolean;
 };
-
-export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
-
-export const TextInput = forwardRef(function TextInputInner(
-  { onValueChange, label, error, height, ...props }: TextInputProps,
-  ref: Ref<HTMLInputElement> | null
-) {
-  return (
-    <InputWrapperWithErrorMessage error={error} label={label}>
-      <TextInputContainer
-        {...props}
-        isValid={!error}
-        ref={ref}
-        onWheel={props.type === 'number' ? ({ currentTarget }) => currentTarget.blur() : undefined}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          props.onChange?.(event);
-          onValueChange?.(event.currentTarget.value);
-        }}
-      />
-    </InputWrapperWithErrorMessage>
-  );
-});
 
 export const commonInputCSS = css<{
   isValid: boolean;
@@ -71,3 +51,35 @@ export const commonInputCSS = css<{
 export const TextInputContainer = styled.input`
   ${commonInputCSS};
 `;
+
+export const TextInputLoader = () => (
+  <TextInputContainer as="div" isValid>
+    <Spinner />
+  </TextInputContainer>
+);
+
+export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & SharedTextInputProps;
+
+export const TextInput = forwardRef(function TextInputInner(
+  { onValueChange, label, error, height, isLoading, ...props }: TextInputProps,
+  ref: Ref<HTMLInputElement> | null
+) {
+  return (
+    <InputWrapperWithErrorMessage error={error} label={label}>
+      {isLoading ? (
+        <TextInputLoader />
+      ) : (
+        <TextInputContainer
+          {...props}
+          isValid={!error}
+          ref={ref}
+          onWheel={props.type === 'number' ? ({ currentTarget }) => currentTarget.blur() : undefined}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            props.onChange?.(event);
+            onValueChange?.(event.currentTarget.value);
+          }}
+        />
+      )}
+    </InputWrapperWithErrorMessage>
+  );
+});
