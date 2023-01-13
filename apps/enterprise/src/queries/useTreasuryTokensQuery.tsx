@@ -22,7 +22,7 @@ export const useTreasuryTokensQuery = (address: string) => {
   const { network } = useWallet();
 
   return useQuery(
-    [QUERY_KEY.TREASURY_TOKENS],
+    [QUERY_KEY.TREASURY_TOKENS, address],
     async () => {
       const result = [] as TreasuryToken[];
       await Promise.all(
