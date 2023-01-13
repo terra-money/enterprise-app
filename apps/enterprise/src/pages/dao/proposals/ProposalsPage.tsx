@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
-import { Button, SearchInput, Tooltip } from 'components/primitives';
+import { SearchInput } from 'components/primitives';
 import { useVotingPowerQuery } from 'queries';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
@@ -11,6 +11,9 @@ import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
+import { ExternalLink } from 'components/link';
 
 const LIMIT = 100;
 
@@ -19,7 +22,7 @@ export const ProposalsPage = () => {
 
   const connectedWallet = useConnectedWallet();
 
-  const { data: proposalsQuery } = useDaoProposalsQuery({ address: dao.address });
+  const { data: proposalsQuery, isLoading } = useDaoProposalsQuery({ address: dao.address });
 
   const { data: votingPower = Big(0) } = useVotingPowerQuery(dao?.address, connectedWallet?.walletAddress);
 
@@ -39,6 +42,8 @@ export const ProposalsPage = () => {
   const amICouncilMember = useAmICouncilMember();
 
   const newProposalsDisabled = votingPower.lte(0) && !amICouncilMember;
+
+  console.log(proposals, isLoading);
 
   return (
     <Container direction="column" gap={32}>
@@ -68,31 +73,44 @@ export const ProposalsPage = () => {
             })
           }
         />
-        <Tooltip
-          title={
-            newProposalsDisabled
-              ? 'You must have voting power for this DAO to be able to create a new proposal.'
-              : 'Create a new proposal for the DAO.'
+
+        <PrimaryButton
+          as="div"
+          isDisabled={
+            newProposalsDisabled && 'You must have voting power for this DAO to be able to create a new proposal.'
           }
+          onClick={() => {
+            if (newProposalsDisabled === false) {
+              navigate(`/dao/${dao?.address}/proposals/create`);
+            }
+          }}
         >
-          <Button
-            component="div"
-            variant="primary"
-            disabled={newProposalsDisabled}
-            onClick={() => {
-              if (newProposalsDisabled === false) {
-                navigate(`/dao/${dao?.address}/proposals/create`);
-              }
-            }}
-          >
-            <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
-          </Button>
-        </Tooltip>
+          <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
+        </PrimaryButton>
       </HStack>
       <Container direction="column" gap={16}>
-        {proposals === undefined
-          ? [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
-          : proposals.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)}
+        {!proposals || proposals.length < 1 ? (
+          isLoading ? (
+            [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
+          ) : (
+            <EmptyStatePlaceholder
+              message={`No proposals have been created for this DAO yet. ${
+                newProposalsDisabled ? '' : 'To create a new proposal click here'
+              }`}
+              action={
+                newProposalsDisabled ? undefined : (
+                  <ExternalLink to={`/dao/${dao?.address}/proposals/create`}>
+                    <PrimaryButton as="div" kind="secondary">
+                      Create
+                    </PrimaryButton>
+                  </ExternalLink>
+                )
+              }
+            />
+          )
+        ) : (
+          proposals.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)
+        )}
       </Container>
     </Container>
   );

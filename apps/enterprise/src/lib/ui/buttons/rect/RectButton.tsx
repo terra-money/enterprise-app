@@ -1,5 +1,5 @@
 import { ComponentWithChildrenProps } from 'lib/shared/props';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 import { getHorizontalPaddingCSS } from 'lib/ui/utils/getHorizontalPaddingCSS';
@@ -7,9 +7,9 @@ import { Spinner } from 'lib/ui/Spinner';
 
 import { UnstyledButton } from '../UnstyledButton';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
-import { PopoverHolder } from 'lib/ui/popover/PopoverHolder';
-import { ReversedTooltip } from 'lib/ui/popover/ReversedTooltip';
-import { Text } from 'lib/ui/Text';
+import { MouseEvent, useState } from 'react';
+import { Popover } from 'lib/ui/popover/Popover';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
 
 export const rectButtonSizes = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -19,7 +19,7 @@ export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> &
   ComponentWithChildrenProps & {
     as?: 'button' | 'div';
     size?: RectButtonSize;
-    isDisabled?: boolean;
+    isDisabled?: boolean | string;
     isLoading?: boolean;
     isRounded?: boolean;
     tooltipText?: string | false;
@@ -69,14 +69,38 @@ const Container = styled(UnstyledButton)<ContainerProps>`
     }[size])};
 
   font-weight: 600;
+  white-space: nowrap;
 
   cursor: ${({ isDisabled, isLoading }) => (isDisabled ? 'initial' : isLoading ? 'wait' : 'pointer')};
+
+  .content {
+    pointer-events: none;
+    user-select: none;
+  }
 
   ${({ isDisabled }) =>
     isDisabled &&
     css`
       opacity: 0.8;
     `};
+`;
+
+const tooltipAnimation = keyframes`
+  from {
+    transform: translateY(4px);
+    opacity: 0.6;
+  }
+`;
+
+const TooltipContainer = styled.div`
+  border-radius: 4px;
+  padding: 4px 8px;
+  background: ${({ theme }) => theme.colors.text.getVariant({ a: () => 1 }).toCssValue()};
+  color: ${({ theme }) => theme.colors.background.toCssValue()};
+  font-size: 14px;
+  max-width: 320px;
+  text-align: center;
+  animation: ${tooltipAnimation} 300ms ease-out;
 `;
 
 export const RectButton = ({
@@ -86,31 +110,39 @@ export const RectButton = ({
   isLoading = false,
   tooltipText,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   ...rest
 }: Props) => {
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+
+  const [isTooltipOpen, { unset: hideTooltip, set: showTooltip }] = useBoolean(false);
+
+  const isTooltipEnabled = typeof isDisabled === 'string';
+
   return (
-    <PopoverHolder
-      renderContainer={(props) => (
-        <Container
-          size={size}
-          isDisabled={isDisabled}
-          isLoading={isLoading}
-          onClick={isDisabled || isLoading ? undefined : onClick}
-          {...props}
-          {...rest}
-        >
-          <div className="content">{isLoading ? <Spinner /> : <>{children}</>}</div>
-        </Container>
+    <Container
+      size={size}
+      isDisabled={!!isDisabled}
+      isLoading={isLoading}
+      onClick={isDisabled || isLoading ? undefined : onClick}
+      onMouseEnter={(event: MouseEvent<HTMLButtonElement>) => {
+        onMouseEnter?.(event);
+        isTooltipEnabled && showTooltip();
+      }}
+      onMouseLeave={(event: MouseEvent<HTMLButtonElement>) => {
+        onMouseLeave?.(event);
+        isTooltipEnabled && hideTooltip();
+      }}
+      ref={setAnchor}
+      {...rest}
+    >
+      <div className="content">{isLoading ? <Spinner /> : <>{children}</>}</div>
+      {anchor && isTooltipOpen && (
+        <Popover placement="bottom" anchor={anchor}>
+          <TooltipContainer>{isDisabled}</TooltipContainer>
+        </Popover>
       )}
-      tooltip={
-        tooltipText ? (
-          <ReversedTooltip>
-            <Text size={14} as="div">
-              {tooltipText}
-            </Text>
-          </ReversedTooltip>
-        ) : undefined
-      }
-    />
+    </Container>
   );
 };
