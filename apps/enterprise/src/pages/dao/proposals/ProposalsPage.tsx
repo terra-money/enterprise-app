@@ -31,6 +31,10 @@ export const ProposalsPage = () => {
     searchText: '',
   });
 
+  // const filteredProposals = useMemo(() => { 
+  //   return proposalsQuery?.filter
+  // }, [proposalsQuery, ])
+
   const proposals = useMemo(() => {
     return proposalsQuery?.filter((proposal) => {
       return proposal.title.toLowerCase().includes(search.searchText);
@@ -94,9 +98,8 @@ export const ProposalsPage = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${
-                newProposalsDisabled ? '' : 'To create a new proposal click here'
-              }`}
+              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : 'To create a new proposal click here'
+                }`}
               action={
                 newProposalsDisabled ? undefined : (
                   <ExternalLink to={`/dao/${dao?.address}/proposals/create`}>

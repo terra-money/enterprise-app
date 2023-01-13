@@ -22,7 +22,7 @@ export const NFTCard = (props: NFTCardProps) => {
                 tokenIds.map((index) => {
                     const nftObject = nftData.data as any;
                     // TODO : add floor price of the collection or a placeholder of some sort 
-                    // const nftCollectionInfo = nftObject[parseInt(index)]["data"]["tokensPage"]["collection"]["collectionInfo"]
+                    // const nftCollectionInfo = nftObject[parseInt(index)]["data"]["tokensPage"]["collection"]["collectionInfo"] 
                     const nft = nftObject[parseInt(index)]["data"]["tokensPage"]["token"];
                     return (
                         <Container className={classNames(styles.card, styles.root)}>
