@@ -4,7 +4,7 @@ import { DAO } from 'types';
 
 interface ListProps {
   className?: string;
-  items: DAO[];
+  items: DAO[] | undefined;
   isLoading: boolean;
 }
 
@@ -13,7 +13,7 @@ export const List = (props: ListProps) => {
 
   return (
     <SameWidthChildrenRow gap={16} maxColumns={3} fullWidth minChildrenWidth={320}>
-      {items.map((dao, index) => (
+      {items?.map((dao, index) => (
         <DAOCard key={index} dao={dao} skeleton={isLoading} />
       ))}
     </SameWidthChildrenRow>

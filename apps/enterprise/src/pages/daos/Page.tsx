@@ -1,14 +1,12 @@
 import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
-import { IconButton, SearchInput } from 'components/primitives';
-import { usePreviousIfEmpty } from 'hooks';
+import { Button, IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useDAOsQuery } from 'queries';
-import { useRef, useState } from 'react';
-import { DAO } from 'types';
+import { useMemo, useRef, useState } from 'react';
 import { Header } from './Header';
 import { List } from './List';
 import styles from './Page.module.sass';
@@ -18,7 +16,19 @@ const MAX_PREVIEW_SIZE = 30;
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>('');
 
+
+  const handleToggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const daoFilters = [
+    { label: 'Multisig', value: 'multisig' },
+    { label: 'Token', value: 'token' },
+    { label: 'NFT', value: 'nft' }
+  ]
   const [search, setSearch] = useState({
     input: '',
     searchText: '',
@@ -29,7 +39,21 @@ export const Page = () => {
     limit: MAX_PREVIEW_SIZE,
   });
 
-  const items = usePreviousIfEmpty([...Array<DAO>(MAX_PREVIEW_SIZE)], data);
+  const filteredItems = useMemo(() => {
+    if (!selectedFilter) {
+      return data;
+    }
+    return data?.filter(item => item.type === selectedFilter)
+  }, [data, selectedFilter])
+
+
+  const handleFilterChange = (event: any) => {
+    if (event.target.value === selectedFilter) {
+      setSelectedFilter('')
+    } else {
+      setSelectedFilter(event.target.value)
+    }
+  };
 
   const searchInput = (
     <SearchInput
@@ -71,8 +95,8 @@ export const Page = () => {
               DAOs
             </Text>
             {searchInput}
-            {items && items.length ? (
-              <List items={items} isLoading={isLoading} />
+            {data && data?.length ? (
+              <List items={filteredItems} isLoading={isLoading} />
             ) : (
               <Container className={styles.noResultsContainer}>
                 <IconButton className={styles.Icon} onClick={() => setSearch({
@@ -92,7 +116,7 @@ export const Page = () => {
                 <Header
                   compact={true}
                   isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
+                  totalCount={filteredItems?.length ?? 0}
                   searchInput={searchInput}
                 />
               </StickyHeader>
@@ -100,15 +124,39 @@ export const Page = () => {
           >
             <PageLayout
               header={
-                <Header
-                  ref={stickyRef}
-                  isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
-                  searchInput={searchInput}
-                />
+                <>
+                  <Header
+                    ref={stickyRef}
+                    isLoading={isLoading}
+                    totalCount={filteredItems?.length ?? 0}
+                    searchInput={searchInput}
+                  />
+                  <Container>
+                    <Button className={styles.filterButton} onClick={handleToggleDropdown}>Add Filters</Button>
+                    {showDropdown && (
+                      <Container className={styles.filterContainer} direction="column">
+                        {daoFilters.map(filter => (
+                          <div key={filter.value} className={styles.filterOption}>
+                            <input
+                              type="radio"
+                              name="filter"
+                              value={filter.value}
+                              checked={filter.value === selectedFilter}
+                              onChange={handleFilterChange}
+                            />
+                            <label>{filter.label}</label>
+                            <IconButton className={styles.filterIcon} onClick={() => setSelectedFilter('')}><ErrorIcon /></IconButton>
+                          </div>
+
+                        ))}
+                      </Container>
+                    )}
+                  </Container>
+                </>
+
               }
-            >{items && items.length ? (
-              <List items={items} isLoading={isLoading} />
+            >{data && data?.length ? (
+              <List items={filteredItems} isLoading={isLoading} />
             ) : (
               <Container className={styles.noResultsContainer}>
                 <IconButton className={styles.Icon} onClick={() => setSearch({
