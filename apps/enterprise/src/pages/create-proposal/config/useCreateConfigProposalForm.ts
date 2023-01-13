@@ -62,6 +62,7 @@ export const useCreateConfigProposalForm = () => {
     const initialInput: DaoGovConfigInput = {
       quorum: governanceConfig.quorum,
       threshold: governanceConfig.threshold,
+      vetoThreshold: governanceConfig.vetoThreshold,
       unlockingPeriod,
       voteDuration,
     };

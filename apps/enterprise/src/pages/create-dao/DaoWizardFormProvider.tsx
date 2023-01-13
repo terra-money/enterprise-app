@@ -180,6 +180,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   govConfig: {
     quorum: 0.3,
     threshold: 0.51,
+    vetoThreshold: 0.51,
     unlockingPeriod: 14,
     voteDuration: 7,
   },

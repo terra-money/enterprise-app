@@ -138,6 +138,11 @@ export module enterprise {
     | {
         time: number;
       };
+  export type ModifyValueFor_Nullable_Decimal =
+    | 'no_change'
+    | {
+        change: Decimal | null;
+      };
   export type ModifyValueFor_Uint64 =
     | 'no_change'
     | {
@@ -182,6 +187,7 @@ export module enterprise {
     quorum: ModifyValueFor_Decimal;
     threshold: ModifyValueFor_Decimal;
     unlocking_period: ModifyValueFor_Duration;
+    veto_threshold: ModifyValueFor_Nullable_Decimal;
     voting_duration: ModifyValueFor_Uint64;
   }
   export interface UpdateCouncilMsg {
@@ -226,6 +232,7 @@ export module enterprise {
     new_dao_code_id: number;
   }
   export interface ExecuteMsgsMsg {
+    action_type: string;
     msgs: string[];
   }
   export interface ModifyMultisigMembershipMsg {
@@ -269,6 +276,10 @@ export module enterprise {
      * Duration that has to pass for unstaked membership tokens to be claimable
      */
     unlocking_period: Duration;
+    /**
+     * Portion of votes assigned to veto option from all the votes cast in the given proposal required to veto the proposal. If None, will default to the threshold set for all proposal options.
+     */
+    veto_threshold?: Decimal | null;
     /**
      * Duration of proposals before they end, expressed in seconds
      */
@@ -317,7 +328,7 @@ export module enterprise {
     | {
         receive_nft: Cw721ReceiveMsg;
       };
-  export type DefaultVoteOption = 'yes' | 'no' | 'abstain' | 'veto';
+  export type VoteOutcome = 'yes' | 'no' | 'abstain' | 'veto';
   export type UnstakeMsg =
     | {
         cw20: UnstakeCw20Msg;
@@ -326,7 +337,7 @@ export module enterprise {
         cw721: UnstakeCw721Msg;
       };
   export interface CastVoteMsg {
-    outcome: DefaultVoteOption;
+    outcome: VoteOutcome;
     proposal_id: number;
   }
   export interface ExecuteProposalMsg {
@@ -483,13 +494,17 @@ export module enterprise {
       }
     | {
         rejected: {
-          count?: Uint128 | null;
-          outcome?: number | null;
           reason: PollRejectionReason;
         };
       };
   export type PollRejectionReason =
-    | ('quorum_not_reached' | 'threshold_not_reached' | 'quorum_and_threshold_not_reached' | 'is_rejecting_outcome')
+    | (
+        | 'quorum_not_reached'
+        | 'threshold_not_reached'
+        | 'quorum_and_threshold_not_reached'
+        | 'is_rejecting_outcome'
+        | 'is_veto_outcome'
+      )
     | {
         /**
          * @minItems 3
@@ -523,24 +538,6 @@ export module enterprise {
      */
     votes: Vote[];
   }
-  export type PollType =
-    | 'default'
-    | {
-        multichoice: {
-          /**
-           * Number of outcomes, 0-indexed.
-           */
-          n_outcomes: number;
-          /**
-           * List of possible winning outcomes that will cause a poll's status to become "Rejected". Can for example be used to create a Yes/No poll.
-           */
-          rejecting_outcomes: number[];
-          /**
-           * Threshold ratio, i.e. sum(most_voted) / total_votes.
-           */
-          threshold: Decimal;
-        };
-      };
   export type VotingScheme = 'coin_voting';
   export interface PollsResponse {
     /**
@@ -570,15 +567,11 @@ export module enterprise {
      */
     label: string;
     /**
-     * Type of the poll
-     */
-    poll_type: PollType;
-    /**
      * Proposer address.
      */
     proposer: Addr;
     /**
-     * Quorum to be reached for the poll to be valid
+     * Quorum to be reached for the poll to be valid. Calculated as (total votes) / (total available votes).
      */
     quorum: Decimal;
     /**
@@ -597,6 +590,14 @@ export module enterprise {
      * Status of the poll.
      */
     status: PollStatus;
+    /**
+     * Threshold ratio for a vote option to be the winning one. Calculated as (votes for certain option) / (total available votes - abstaining votes).
+     */
+    threshold: Decimal;
+    /**
+     * Optional separate threshold ratio for a veto option to be the winning one. Calculated as (veto votes) / (total available votes - abstaining votes). If None, regular threshold will be used for veto option.
+     */
+    veto_threshold?: Decimal | null;
   }
   export type Expiration =
     | {

@@ -11,15 +11,24 @@ export const validateUnlockingPeriod = (unlockingPeriod: number, voteDuration: n
 export const validateGovConfig = ({
   quorum,
   threshold,
+  vetoThreshold,
   unlockingPeriod,
   voteDuration,
   minimumDeposit,
 }: DaoGovConfigInput): FormState<DaoGovConfigInput> => {
-  const formState: FormState<DaoGovConfigInput> = { quorum, threshold, unlockingPeriod, voteDuration, minimumDeposit };
+  const formState: FormState<DaoGovConfigInput> = {
+    quorum,
+    threshold,
+    unlockingPeriod,
+    voteDuration,
+    minimumDeposit,
+    vetoThreshold,
+  };
 
   formState.unlockingPeriodError = validateUnlockingPeriod(unlockingPeriod, voteDuration);
 
   formState.thresholdError = validateAmount(Math.round(threshold * 100), 50, 100, 'Threshold');
+  formState.vetoThresholdError = validateAmount(Math.round(threshold * 100), 50, 100, 'Veto threshold');
 
   return formState;
 };

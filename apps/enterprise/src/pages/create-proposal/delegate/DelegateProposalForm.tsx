@@ -50,6 +50,7 @@ export const DelegateProposalForm = () => {
         return [
           {
             execute_msgs: {
+              action_type: 'delegate',
               msgs: [
                 toDelegateMsg({
                   amount,

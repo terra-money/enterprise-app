@@ -123,6 +123,10 @@ export module enterprise_factory {
      */
     unlocking_period: Duration;
     /**
+     * Portion of votes assigned to veto option from all the votes cast in the given proposal required to veto the proposal. If None, will default to the threshold set for all proposal options.
+     */
+    veto_threshold?: Decimal | null;
+    /**
      * Duration of proposals before they end, expressed in seconds
      */
     vote_duration: number;

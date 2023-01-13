@@ -16,7 +16,7 @@ import styles from './CastVote.module.sass';
 import classNames from 'classnames';
 
 interface VoteOption {
-  outcome: enterprise.DefaultVoteOption;
+  outcome: enterprise.VoteOutcome;
   icon: ReactNode;
   tooltip: string;
 }
@@ -37,7 +37,7 @@ export const CastVote = () => {
 
   const [txResult, tx] = useCastVoteTx('regular');
 
-  const [vote, setVote] = useState<enterprise.DefaultVoteOption | undefined>();
+  const [vote, setVote] = useState<enterprise.VoteOutcome | undefined>();
 
   const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(
     proposal.dao.address as CW20Addr,

@@ -10,6 +10,7 @@ export type DAOSocials = {
 export type DAOGovernanceConfig = {
   quorum: number;
   threshold: number;
+  vetoThreshold: number;
   unlockingPeriod: enterprise.Duration;
   voteDuration: number;
   minimumDeposit?: string;

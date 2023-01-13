@@ -13,6 +13,7 @@ export const toUpdateGovConfigMsg = (
     minimum_deposit: 'no_change',
     quorum: 'no_change',
     threshold: 'no_change',
+    veto_threshold: 'no_change',
     unlocking_period: 'no_change',
     voting_duration: 'no_change',
   };
