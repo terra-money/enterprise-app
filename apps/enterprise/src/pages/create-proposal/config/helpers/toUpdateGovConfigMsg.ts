@@ -6,7 +6,15 @@ import { getDaoRatio } from 'pages/create-dao/helpers/toCreateDaoMsg';
 
 export const toUpdateGovConfigMsg = (
   dao: DAO,
-  { quorum, threshold, unlockingPeriod, voteDuration, minimumDeposit, timeConversionFactor }: ConfigProposalFormState,
+  {
+    quorum,
+    threshold,
+    vetoThreshold,
+    unlockingPeriod,
+    voteDuration,
+    minimumDeposit,
+    timeConversionFactor,
+  }: ConfigProposalFormState,
   tokenDecimals?: number
 ): enterprise.UpdateGovConfigMsg => {
   const msg: enterprise.UpdateGovConfigMsg = {
@@ -35,6 +43,12 @@ export const toUpdateGovConfigMsg = (
   const oldThreshold = getDaoRatio(dao.governanceConfig.threshold);
   if (newThreshold !== oldThreshold) {
     msg.threshold = { change: newThreshold };
+  }
+
+  const newVetoThreshold = getDaoRatio(vetoThreshold);
+  const oldVetoThreshold = getDaoRatio(dao.governanceConfig.vetoThreshold);
+  if (oldVetoThreshold !== newVetoThreshold) {
+    msg.veto_threshold = { change: newVetoThreshold };
   }
 
   const newUnlockingPeriod = unlockingPeriod * timeConversionFactor;
