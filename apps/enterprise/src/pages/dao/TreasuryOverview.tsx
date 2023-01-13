@@ -11,6 +11,7 @@ export const TreasuryOverview = () => {
   const dao = useCurrentDao();
   const { data: nfts = [] } = useDAONFTTreasury(dao.address);
 
+
   return (
     <>
       <Panel className={styles.root}>
@@ -25,7 +26,7 @@ export const TreasuryOverview = () => {
         <ScrollableContainer className={styles.scrollableContainer}>
           <Container direction="row" gap={8} className={styles.nftContainer}>
             <>
-              {nfts[0]?.token_ids.length !== 0 ? (
+              {nfts.length && nfts[0]?.token_ids.length !== 0 ? (
                 nfts.map((nft, index) => {
                   return <NFTCard key={index} nftCollectionAdress={nft.nft_address} tokenIds={nft.token_ids} />;
                 })
