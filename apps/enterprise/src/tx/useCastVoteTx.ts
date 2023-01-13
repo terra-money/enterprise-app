@@ -5,14 +5,14 @@ import { TX_KEY } from './txKey';
 
 interface VoteOnProposalTxOptions {
   id: number;
-  outcome: enterprise.DefaultVoteOption;
+  outcome: enterprise.VoteOutcome;
   contract: string;
 }
 
 interface MultisigExecuteMsg {
   cast_vote: {
     proposal_id: number;
-    vote: enterprise.DefaultVoteOption;
+    vote: enterprise.VoteOutcome;
   };
 }
 

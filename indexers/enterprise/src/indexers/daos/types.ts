@@ -22,6 +22,7 @@ export type Entity = {
   config: {
     quorum: number;
     threshold: number;
+    vetoThreshold: number;
     unlockingPeriod: enterprise.Duration;
     voteDuration: number;
     minimumDeposit?: string;

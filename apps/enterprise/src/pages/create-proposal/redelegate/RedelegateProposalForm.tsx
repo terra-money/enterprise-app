@@ -61,6 +61,7 @@ export const RedelegateProposalForm = () => {
         return [
           {
             execute_msgs: {
+              action_type: 'redelegate',
               msgs: [
                 toRedelegateMsg({
                   amount,

@@ -49,6 +49,7 @@ export const SpendTreasuryProposalForm = () => {
         return [
           {
             execute_msgs: {
+              action_type: 'spend',
               msgs: [
                 toSpendTreasuryMsg({
                   amount,

@@ -71,6 +71,7 @@ export class Indexer extends EventIndexer<Entity> {
       config: {
         quorum: Big(response.gov_config.quorum).toNumber(),
         threshold: Big(response.gov_config.threshold).toNumber(),
+        vetoThreshold: Big(response.gov_config.veto_threshold ?? response.gov_config.threshold).toNumber(),
         unlockingPeriod: response.gov_config.unlocking_period,
         voteDuration: response.gov_config.vote_duration,
         minimumDeposit: response.gov_config.minimum_deposit,

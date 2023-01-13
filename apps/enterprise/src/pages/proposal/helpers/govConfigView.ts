@@ -9,6 +9,7 @@ import { enterprise } from 'types/contracts';
 export interface GovConfigView extends Record<string, string> {
   quorum: string;
   threshold: string;
+  vetoThreshold: string;
   unlockingPeriod: string;
   votingDuration: string;
   minimumDeposit: string;
@@ -17,6 +18,7 @@ export interface GovConfigView extends Record<string, string> {
 export const govConfigViewFieldNameRecord: Record<keyof GovConfigView, string> = {
   quorum: 'Quorum',
   threshold: 'Threshold',
+  vetoThreshold: 'Veto threshold',
   unlockingPeriod: 'Unlocking period',
   votingDuration: 'Voting duration',
 };
@@ -63,6 +65,11 @@ export const getUpdatedFields = (
     view.threshold = threshold ? toPercents(Number(threshold)) : noValue;
   }
 
+  if (msg.veto_threshold !== 'no_change') {
+    const threshold = msg.veto_threshold.change;
+    view.veto_threshold = threshold ? toPercents(Number(threshold)) : noValue;
+  }
+
   if (msg.unlocking_period !== 'no_change') {
     const unlockingPeriod = msg.unlocking_period.change;
     view.unlockingPeriod = unlockingPeriod ? toDays(Number(unlockingPeriod)) : noValue;
@@ -83,6 +90,7 @@ export const fromDao = (dao: DAO, tokenDecimals: number = 6): GovConfigView => {
   return {
     quorum: toPercents(governanceConfig.quorum),
     threshold: toPercents(governanceConfig.threshold),
+    vetoThreshold: toPercents(governanceConfig.vetoThreshold),
     unlockingPeriod: formatDuration(governanceConfig.unlockingPeriod),
     votingDuration: toDays(Number(governanceConfig.voteDuration)),
     minimumDeposit: minimumDeposit ? formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, tokenDecimals)) : noValue,

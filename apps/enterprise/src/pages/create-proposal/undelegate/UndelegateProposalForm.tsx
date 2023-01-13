@@ -57,6 +57,7 @@ export const UndelegateProposalForm = () => {
         return [
           {
             execute_msgs: {
+              action_type: 'undelegate',
               msgs: [
                 toUndelegateMsg({
                   amount,

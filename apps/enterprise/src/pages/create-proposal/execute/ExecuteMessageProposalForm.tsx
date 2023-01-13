@@ -19,7 +19,7 @@ export const ExecuteMessageProposalForm = () => {
   return (
     <ProposalForm
       disabled={submitDisabled}
-      getProposalActions={() => [{ execute_msgs: { msgs: messages.map(toExecuteMsg) } }]}
+      getProposalActions={() => [{ execute_msgs: { msgs: messages.map(toExecuteMsg), action_type: 'execute' } }]}
     >
       <div className={styles.root}>
         {messages.map((message, index) => (

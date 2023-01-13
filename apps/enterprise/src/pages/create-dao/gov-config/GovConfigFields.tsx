@@ -6,6 +6,7 @@ import { VoteDurationInput } from './VoteDurationInput';
 import { enterprise } from 'types/contracts';
 import { MinimumDepositInput } from 'pages/create-dao/gov-config/MinimumDepositInput';
 import { DaoGovConfigInput } from './DaoGovConfigInput';
+import { VetoThresholdInput } from './VetoThresholdInput';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;
@@ -26,6 +27,7 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
       <VoteDurationInput value={value.voteDuration} onChange={(voteDuration) => onChange({ voteDuration })} />
       <QuorumInput value={value.quorum} onChange={(quorum) => onChange({ quorum })} />
       <ThresholdInput value={value.threshold} onChange={(threshold) => onChange({ threshold })} />
+      <VetoThresholdInput value={value.vetoThreshold} onChange={(vetoThreshold) => onChange({ vetoThreshold })} />
       {daoType !== 'multisig' && (
         <UnlockingPeriodInput
           value={value.unlockingPeriod}

@@ -46,6 +46,7 @@ export const BurnTokensProposalForm = () => {
         return [
           {
             execute_msgs: {
+              action_type: 'burn',
               msgs: [
                 toBurnTokensMsg({
                   amount,

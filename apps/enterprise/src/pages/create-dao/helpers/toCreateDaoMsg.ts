@@ -82,6 +82,8 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
   const config: enterprise_factory.DaoGovConfig = {
     quorum: getDaoRatio(govConfig.quorum),
     threshold: getDaoRatio(govConfig.threshold),
+    veto_threshold: getDaoRatio(govConfig.vetoThreshold),
+
     unlocking_period: {
       time: govConfig.unlockingPeriod * timeConversionFactor,
     },
