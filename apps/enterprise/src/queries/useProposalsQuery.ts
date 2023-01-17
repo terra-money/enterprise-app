@@ -1,9 +1,9 @@
 import { compareAddress } from '@terra-money/apps/utils';
 import Big from 'big.js';
+import { Proposal } from 'dao/shared/proposal';
 import { ApiEndpoints, Direction, useApiEndpoint } from 'hooks';
 import { useDAOsQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
-import { Proposal } from 'types';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 
@@ -79,23 +79,17 @@ export const useProposalsQuery = (
           if (dao === undefined) {
             reportError('Could not find the correct DAO for the proposal');
           } else {
-            proposals.push(
-              new Proposal(
-                dao,
-                entity.id,
-                entity.title,
-                entity.description,
-                entity.created,
-                entity.expires,
-                entity.proposalActions,
-                entity.status,
-                Big(entity.yesVotes),
-                Big(entity.noVotes),
-                Big(entity.abstainVotes),
-                Big(entity.vetoVotes ?? '0'),
-                Big(entity.totalVotes ?? '0')
-              )
-            );
+            proposals.push({
+              ...entity,
+              dao,
+              actions: entity.proposalActions,
+              yesVotes: Big(entity.yesVotes),
+              noVotes: Big(entity.noVotes),
+              abstainVotes: Big(entity.abstainVotes),
+              vetoVotes: Big(entity.vetoVotes ?? '0'),
+              totalVotes: Big(entity.totalVotes ?? '0'),
+              votingType: 'regular',
+            });
           }
         });
       }

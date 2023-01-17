@@ -1,4 +1,4 @@
-import { AnimatedPage, Container } from '@terra-money/apps/components';
+import { AnimatedPage } from '@terra-money/apps/components';
 import { useRef, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
@@ -18,7 +18,7 @@ import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
 import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
-import styles from './SelectProposalType.module.sass'
+import styles from './SelectProposalType.module.sass';
 
 const title = 'Create a proposal';
 const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
@@ -34,7 +34,8 @@ export const proposalDescription: Record<ProposalType, string> = {
   upgrade: 'Upgrade your DAO to the latest contracts to get upgraded features',
   assets: 'Update whitelisted assets',
   nfts: 'Add/remove assets thats displayed on the Treasury page',
-  execute: 'Execute custom messages that will allow you to interact with smart contracts, send assets and more. <a href="https://docs.enterprise.money/guides/messages">Click here</a> for more information on message templates.',
+  execute:
+    'Execute custom messages that will allow you to interact with smart contracts, send assets and more. <a href="https://docs.enterprise.money/guides/messages">Click here</a> for more information on message templates.',
   members: 'Add/remove members from the Multisig',
   spend: 'Submit this proposal to send assets in your treasury to another address',
   mint: 'Mint DAO governance tokens to accounts. This only works if the minter of the CW20 token is the DAO treasury address.',
@@ -44,7 +45,8 @@ export const proposalDescription: Record<ProposalType, string> = {
   undelegate: 'Undelegate LUNA from a validator that you have delegated to',
   redelegate: 'Redelegate LUNA from your current validator to a new validator',
   council: '',
-  mintNft: 'Mint a new DAO governance NFT to an account. This only works if the minter of the NFT is the DAO treasury address.'
+  mintNft:
+    'Mint a new DAO governance NFT to an account. This only works if the minter of the NFT is the DAO treasury address.',
 };
 
 // TODO: turn into a reusable component
@@ -71,7 +73,7 @@ const ProposalDescriptionContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   margin: 45px 30px;
-`
+`;
 
 const proposalVotingTypes = ['regular', 'council'] as const;
 
@@ -111,7 +113,7 @@ export const SelectProposalType = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [proposalType, setProposalType] = useState<ProposalType>('text');
-  const proposalDescriptionText = proposalDescription[proposalType]
+  const proposalDescriptionText = proposalDescription[proposalType];
   const navigate = useNavigate();
   const amICouncilMember = useAmICouncilMember();
 
@@ -195,7 +197,9 @@ export const SelectProposalType = () => {
             <ProposalsContainer>
               <NormalScreenContent>{renderOptions()}</NormalScreenContent>
               <ProposalDescriptionContainer>
-                <Text className={styles.proposalDescriptionTitle}>What is a {capitalizeFirstLetter(proposalType)} proposal?</Text>
+                <Text className={styles.proposalDescriptionTitle}>
+                  What is a {capitalizeFirstLetter(proposalType)} proposal?
+                </Text>
                 <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
               </ProposalDescriptionContainer>
             </ProposalsContainer>

@@ -1,7 +1,8 @@
 import { Container } from '@terra-money/apps/components';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
-import { Proposal } from 'types';
+import { Proposal } from 'dao/shared/proposal';
+
 import classNames from 'classnames';
 import { Skeleton } from 'components/skeleton';
 import { useNavigate } from 'react-router';
@@ -10,9 +11,10 @@ import { getExpirationMessage } from 'utils';
 import formatDistance from 'date-fns/formatDistance';
 import { useInterval } from 'react-use';
 import { useState } from 'react';
-import { useBlockHeightQuery, useTokenStakingAmountQuery } from 'queries';
+import { useTokenStakingAmountQuery } from 'queries';
 import Big, { BigSource } from 'big.js';
 import styles from './ProposalCard.module.sass';
+import { getProposalEstimatedExpiry } from 'dao/shared/proposal';
 
 type Variant = 'compact' | 'extended';
 
@@ -69,8 +71,6 @@ interface ProposalCardProps {
 export const ProposalCard = (props: ProposalCardProps) => {
   const { proposal, variant = 'compact' } = props;
 
-  const { data: blockHeight = Number.MAX_SAFE_INTEGER } = useBlockHeightQuery();
-
   const { data: totalStaked = Big(0) } = useTokenStakingAmountQuery(proposal?.dao.address ?? '', undefined, {
     enabled: proposal !== undefined && proposal.status === 'in_progress',
   });
@@ -90,7 +90,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const { dao, title, description } = proposal;
 
-  const expiry = proposal.getEstimatedExpiry(blockHeight);
+  const expiry = getProposalEstimatedExpiry(proposal);
 
   const totalVotes =
     dao.type === 'multisig'

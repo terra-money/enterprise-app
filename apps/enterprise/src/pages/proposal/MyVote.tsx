@@ -2,10 +2,10 @@ import { Stack } from '@mui/material';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { Tooltip } from 'components/primitives';
 import { useProposalVoteQuery } from 'queries';
-import { Proposal } from 'types';
 import { VoteOptions } from './CastVote';
 import classNames from 'classnames';
 import styles from './MyVote.module.sass';
+import { Proposal } from 'dao/shared/proposal';
 
 interface MyVoteProps {
   proposal: Proposal;

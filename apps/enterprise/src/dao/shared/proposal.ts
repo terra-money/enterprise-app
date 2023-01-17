@@ -1,6 +1,28 @@
+import Big from 'big.js';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
-import { Proposal } from 'types';
+import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
+
+export const proposalVotingTypes = ['regular', 'council'] as const;
+
+export type ProposalVotingType = typeof proposalVotingTypes[number];
+
+export interface Proposal {
+  dao: DAO;
+  id: number;
+  title: string;
+  description: string;
+  created: number;
+  expires: enterprise.Expiration;
+  actions: enterprise.ProposalAction[];
+  status: enterprise.ProposalStatus;
+  yesVotes: Big;
+  noVotes: Big;
+  abstainVotes: Big;
+  vetoVotes: Big;
+  totalVotes: Big;
+  votingType: ProposalVotingType;
+}
 
 export const sharedProposalTypes = [
   'text',
@@ -47,10 +69,6 @@ export const proposalTitle: Record<ProposalType, string> = {
   council: 'Update council',
 };
 
-export const proposalVotingTypes = ['regular', 'council'] as const;
-
-export type ProposalVotingType = typeof proposalVotingTypes[number];
-
 export const proposalActionShortName: Record<enterprise.ProposalActionType, string> = {
   update_metadata: 'metadata',
   update_gov_config: 'gov',
@@ -88,8 +106,8 @@ export const getProposalActionMsg = (action: enterprise.ProposalAction): Proposa
 };
 
 export const getProposalTypeName = (proposal: Proposal) => {
-  const { proposal_actions } = proposal;
-  const action = proposal_actions[0];
+  const { actions } = proposal;
+  const action = actions[0];
   if (!action) {
     return 'Text';
   }
@@ -99,4 +117,39 @@ export const getProposalTypeName = (proposal: Proposal) => {
   }
 
   return capitalizeFirstLetter(proposalActionShortName[type]);
+};
+
+export const hasProposalExpired = (proposal: Proposal, blockHeight: number, timestamp: number) => {
+  if ('at_time' in proposal.expires) {
+    return Number(proposal.expires.at_time) / 1000000 < timestamp;
+  }
+  if ('at_height' in proposal.expires) {
+    return Number(proposal.expires.at_height) < blockHeight;
+  }
+  return true;
+};
+
+export const getProposalEstimatedExpiry = (proposal: Proposal) => {
+  if ('at_time' in proposal.expires) {
+    return new Date(Number(proposal.expires.at_time) / 1000000);
+  }
+
+  // TODO: need to estimate the expiry time here
+  return undefined;
+};
+
+export type ProposalStatusName = 'Active' | 'Pending' | 'Passed' | 'Rejected' | 'Executed';
+
+export const getProposalStatusName = (proposal: Proposal, blockHeight: number): ProposalStatusName => {
+  if (proposal.status === 'in_progress' && hasProposalExpired(proposal, blockHeight, Date.now())) {
+    return 'Pending';
+  }
+
+  return proposal.status === 'in_progress'
+    ? 'Active'
+    : proposal.status === 'passed'
+    ? 'Passed'
+    : proposal.status === 'rejected'
+    ? 'Rejected'
+    : 'Executed';
 };

@@ -18,7 +18,7 @@ export const ProposalActions = () => {
 
   return (
     <VStack gap={40}>
-      {proposal.proposal_actions.map((action) => {
+      {proposal.actions.map((action) => {
         const type = getProposalActionType(action);
         const msg = getProposalActionMsg(action);
         return (

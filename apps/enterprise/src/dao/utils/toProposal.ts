@@ -1,8 +1,12 @@
 import Big from 'big.js';
-import { DAO, Proposal } from 'types';
+import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
+import { Proposal } from 'dao/shared/proposal';
 
-export const toProposal = ({ proposal, results, total_votes_available }: enterprise.ProposalResponse, dao: DAO) => {
+export const toProposal = (
+  { proposal, results, total_votes_available }: enterprise.ProposalResponse,
+  dao: DAO
+): Proposal => {
   const [yesVotes, noVotes, abstainVotes, vetoVotes] = results.reduce(
     (previous, [t, v]) => {
       previous[t] = v;
@@ -12,19 +16,16 @@ export const toProposal = ({ proposal, results, total_votes_available }: enterpr
   );
   const created = 'started_at' in proposal ? Math.trunc(Big(proposal.started_at).div(1000000).toNumber()) : 0;
 
-  return new Proposal(
+  return {
     dao,
-    proposal.id,
-    proposal.title,
-    proposal.description,
+    ...proposal,
+    actions: proposal.proposal_actions,
     created,
-    proposal.expires,
-    proposal.proposal_actions,
-    proposal.status,
-    Big(yesVotes),
-    Big(noVotes),
-    Big(abstainVotes),
-    Big(vetoVotes),
-    Big(total_votes_available)
-  );
+    yesVotes: Big(yesVotes),
+    noVotes: Big(noVotes),
+    abstainVotes: Big(abstainVotes),
+    vetoVotes: Big(vetoVotes),
+    totalVotes: Big(total_votes_available),
+    votingType: 'regular',
+  };
 };

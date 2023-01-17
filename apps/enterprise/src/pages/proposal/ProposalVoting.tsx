@@ -9,6 +9,7 @@ import { MyVote } from './MyVote';
 import styles from './ProposalVoting.module.sass';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Panel } from 'lib/ui/Panel/Panel';
+import { hasProposalExpired } from 'dao/shared/proposal';
 
 export const ProposalVoting = () => {
   const proposal = useCurrentProposal();
@@ -17,7 +18,7 @@ export const ProposalVoting = () => {
 
   const [txResult, tx] = useExecuteProposalTx();
 
-  const hasExpired = proposal.hasExpired(blockHeight, Date.now());
+  const hasExpired = hasProposalExpired(proposal, blockHeight, Date.now());
 
   return (
     <VStack gap={16}>

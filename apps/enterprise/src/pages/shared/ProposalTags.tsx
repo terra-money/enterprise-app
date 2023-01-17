@@ -1,10 +1,10 @@
-import { Proposal } from 'types';
 import { Tag } from 'components/tag';
 import classNames from 'classnames';
 import { Container } from '@terra-money/apps/components';
 import { useBlockHeightQuery } from 'queries';
 import styles from './ProposalTags.module.sass';
-import { getProposalTypeName } from 'dao/shared/proposal';
+import { getProposalStatusName, getProposalTypeName } from 'dao/shared/proposal';
+import { Proposal } from 'dao/shared/proposal';
 
 interface ProposalStatusProps {
   className?: string;
@@ -16,7 +16,7 @@ export const ProposalTags = (props: ProposalStatusProps) => {
 
   const { data: blockHeight = Number.MAX_SAFE_INTEGER } = useBlockHeightQuery();
 
-  const status = proposal.getCurrentStatus(blockHeight);
+  const status = getProposalStatusName(proposal, blockHeight);
 
   const proposalTypeName = getProposalTypeName(proposal);
 

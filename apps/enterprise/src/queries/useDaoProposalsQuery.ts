@@ -5,7 +5,7 @@ import { toProposal } from 'dao/utils/toProposal';
 import { Direction } from 'hooks';
 import { useDAOQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
-import { Proposal } from 'types';
+import { Proposal } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 
