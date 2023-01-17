@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
-import { SearchInput } from 'components/primitives';
+import { IconButton, SearchInput } from 'components/primitives';
 import { useVotingPowerQuery } from 'queries';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
@@ -14,6 +14,9 @@ import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
 import { ExternalLink } from 'components/link';
+import styles from './ProposalsPage.module.sass'
+import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
+import { Text } from 'lib/ui/Text';
 
 const LIMIT = 100;
 
@@ -31,15 +34,41 @@ export const ProposalsPage = () => {
     searchText: '',
   });
 
-  // const filteredProposals = useMemo(() => { 
-  //   return proposalsQuery?.filter
-  // }, [proposalsQuery, ])
+  const proposalStatuses = [
+    { label: 'Pending', value: 'in_progress' },
+    { label: 'Executed', value: 'executed' },
+    { label: 'Passed', value: 'passed' },
+    { label: 'Failed', value: 'rejected' }
+  ]
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('');
+
+  const handleToggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
 
   const proposals = useMemo(() => {
     return proposalsQuery?.filter((proposal) => {
       return proposal.title.toLowerCase().includes(search.searchText);
     });
   }, [proposalsQuery, search.searchText]);
+
+  const filteredProposals = useMemo(() => {
+    if (!selectedStatusFilter) {
+      return proposals;
+    }
+    return proposals?.filter(item => item.status === selectedStatusFilter)
+  }, [proposals, selectedStatusFilter])
+
+  const handleStatusFilterChange = (event: any) => {
+    if (event.target.value === selectedStatusFilter) {
+      setSelectedStatusFilter('')
+    } else {
+      setSelectedStatusFilter(event.target.value)
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -80,6 +109,33 @@ export const ProposalsPage = () => {
 
         <PrimaryButton
           as="div"
+          kind="secondary"
+          onClick={() => { handleToggleDropdown() }}
+        >
+          <ResponsiveView small={() => 'Filter'} normal={() => 'Filter'} />
+        </PrimaryButton>
+        {showDropdown && (
+          <Container className={styles.filterContainer} direction="column">
+            <Text className={styles.filterLabel}>Proposal Status</Text>
+            {proposalStatuses.map(filter => (
+              <div key={filter.value} className={styles.filterOption}>
+                <Container direction='row' gap={10}>
+                  <input
+                    type="radio"
+                    name="filter"
+                    value={filter.value}
+                    checked={filter.value === selectedStatusFilter}
+                    onChange={handleStatusFilterChange}
+                  />
+                  <label>{filter.label}</label>
+                </Container>
+                <IconButton className={styles.filterIcon} onClick={() => setSelectedStatusFilter('')}><ErrorIcon /></IconButton>
+              </div>
+            ))}
+          </Container>
+        )}
+        <PrimaryButton
+          as="div"
           isDisabled={
             newProposalsDisabled && 'You must have voting power for this DAO to be able to create a new proposal.'
           }
@@ -112,7 +168,7 @@ export const ProposalsPage = () => {
             />
           )
         ) : (
-          proposals.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)
+          filteredProposals?.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)
         )}
       </Container>
     </Container>
