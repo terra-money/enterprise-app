@@ -13,8 +13,8 @@ import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
-import { ExternalLink } from 'components/link';
-import styles from './ProposalsPage.module.sass'
+import { InternalLink } from 'components/link';
+import styles from './ProposalsPage.module.sass';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { Text } from 'lib/ui/Text';
 
@@ -38,8 +38,8 @@ export const ProposalsPage = () => {
     { label: 'Pending', value: 'in_progress' },
     { label: 'Executed', value: 'executed' },
     { label: 'Passed', value: 'passed' },
-    { label: 'Failed', value: 'rejected' }
-  ]
+    { label: 'Failed', value: 'rejected' },
+  ];
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('');
@@ -47,7 +47,6 @@ export const ProposalsPage = () => {
   const handleToggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-
 
   const proposals = useMemo(() => {
     return proposalsQuery?.filter((proposal) => {
@@ -59,14 +58,14 @@ export const ProposalsPage = () => {
     if (!selectedStatusFilter) {
       return proposals;
     }
-    return proposals?.filter(item => item.status === selectedStatusFilter)
-  }, [proposals, selectedStatusFilter])
+    return proposals?.filter((item) => item.status === selectedStatusFilter);
+  }, [proposals, selectedStatusFilter]);
 
   const handleStatusFilterChange = (event: any) => {
     if (event.target.value === selectedStatusFilter) {
-      setSelectedStatusFilter('')
+      setSelectedStatusFilter('');
     } else {
-      setSelectedStatusFilter(event.target.value)
+      setSelectedStatusFilter(event.target.value);
     }
   };
 
@@ -110,16 +109,18 @@ export const ProposalsPage = () => {
         <PrimaryButton
           as="div"
           kind="secondary"
-          onClick={() => { handleToggleDropdown() }}
+          onClick={() => {
+            handleToggleDropdown();
+          }}
         >
           <ResponsiveView small={() => 'Filter'} normal={() => 'Filter'} />
         </PrimaryButton>
         {showDropdown && (
           <Container className={styles.filterContainer} direction="column">
             <Text className={styles.filterLabel}>Proposal Status</Text>
-            {proposalStatuses.map(filter => (
+            {proposalStatuses.map((filter) => (
               <div key={filter.value} className={styles.filterOption}>
-                <Container direction='row' gap={10}>
+                <Container direction="row" gap={10}>
                   <input
                     type="radio"
                     name="filter"
@@ -129,7 +130,9 @@ export const ProposalsPage = () => {
                   />
                   <label>{filter.label}</label>
                 </Container>
-                <IconButton className={styles.filterIcon} onClick={() => setSelectedStatusFilter('')}><ErrorIcon /></IconButton>
+                <IconButton className={styles.filterIcon} onClick={() => setSelectedStatusFilter('')}>
+                  <ErrorIcon />
+                </IconButton>
               </div>
             ))}
           </Container>
@@ -154,21 +157,24 @@ export const ProposalsPage = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : 'To create a new proposal click here'
-                }`}
+              message={`No proposals have been created for this DAO yet. ${
+                newProposalsDisabled ? '' : 'To create a new proposal click here'
+              }`}
               action={
                 newProposalsDisabled ? undefined : (
-                  <ExternalLink to={`/dao/${dao?.address}/proposals/create`}>
+                  <InternalLink to={`/dao/${dao?.address}/proposals/create`}>
                     <PrimaryButton as="div" kind="secondary">
                       Create
                     </PrimaryButton>
-                  </ExternalLink>
+                  </InternalLink>
                 )
               }
             />
           )
         ) : (
-          filteredProposals?.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)
+          filteredProposals?.map((proposal, index) => (
+            <ProposalCard key={index} variant="extended" proposal={proposal} />
+          ))
         )}
       </Container>
     </Container>

@@ -30,7 +30,7 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
         proposal: { proposal_id: id },
       });
 
-      return toProposal(resp, assertDefined(dao));
+      return toProposal(resp, assertDefined(dao), 'regular');
     },
     {
       refetchOnMount: false,

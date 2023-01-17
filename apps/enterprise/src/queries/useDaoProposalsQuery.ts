@@ -16,6 +16,7 @@ interface UseProposalsQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposals: {} }>;
+type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposals: {} }>;
 
 export const useDaoProposalsQuery = ({
   address,
@@ -27,10 +28,26 @@ export const useDaoProposalsQuery = ({
   return useQuery(
     [QUERY_KEY.PROPOSALS, address],
     async () => {
-      const result = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, { proposals: {} });
-      const proposals = result.proposals.map((resp) => toProposal(resp, assertDefined(dao)));
+      const result: Proposal[] = [];
+      try {
+        const { proposals } = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
+          proposals: {},
+        });
+        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'regular')));
+      } catch (err) {
+        reportError(err);
+      }
 
-      return proposals.sort((a, b) => b.created - a.created);
+      try {
+        const { proposals } = await query<CouncilProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
+          council_proposals: {},
+        });
+        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'council')));
+      } catch (err) {
+        reportError(err);
+      }
+
+      return result.sort((a, b) => b.created - a.created);
     },
     {
       refetchOnMount: false,
