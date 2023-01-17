@@ -1,4 +1,5 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
+import { ProposalVotingType } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 // import { useTxOverrides } from './useFeeOverrides';
@@ -6,6 +7,7 @@ import { TX_KEY } from './txKey';
 interface ExecuteProposalTxOptions {
   daoAddress: string;
   proposalId: number;
+  votingType: ProposalVotingType;
 }
 
 export const useExecuteProposalTx = () => {
@@ -13,13 +15,22 @@ export const useExecuteProposalTx = () => {
 
   return useTx<ExecuteProposalTxOptions>(
     (options) => {
-      const { daoAddress, proposalId, wallet } = options;
+      const { daoAddress, proposalId, wallet, votingType } = options;
+      const msg = {
+        proposal_id: proposalId,
+      };
       const tx = TxBuilder.new()
-        .execute<enterprise.ExecuteMsg>(wallet.walletAddress, daoAddress, {
-          execute_proposal: {
-            proposal_id: proposalId,
-          },
-        })
+        .execute<enterprise.ExecuteMsg>(
+          wallet.walletAddress,
+          daoAddress,
+          votingType === 'regular'
+            ? {
+                execute_proposal: msg,
+              }
+            : {
+                execute_council_proposal: msg,
+              }
+        )
         .build();
 
       return {

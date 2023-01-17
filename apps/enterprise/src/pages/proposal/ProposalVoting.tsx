@@ -42,6 +42,7 @@ export const ProposalVoting = () => {
                   await tx({
                     daoAddress: proposal.dao.address,
                     proposalId: proposal.id,
+                    votingType: proposal.votingType,
                   });
                 }}
               >

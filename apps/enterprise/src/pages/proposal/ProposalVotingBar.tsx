@@ -5,23 +5,24 @@ import classNames from 'classnames';
 import { Text } from 'components/primitives';
 import { enforceRange } from 'lib/shared/utils/enforceRange';
 import { useTokenStakingAmountQuery } from 'queries';
+import { useMemo } from 'react';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
 
 export const ProposalVotingBar = () => {
-  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao } = useCurrentProposal();
+  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, votingType } = useCurrentProposal();
 
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
-  const totalAvailableVotes =
-    dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+  const totalAvailableVotes = useMemo(() => {
+    if (votingType === 'council') return totalVotes;
+    return dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+  }, [dao.type, status, totalStaked, totalVotes, votingType]);
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 
   const quorum = Number(dao.governanceConfig.quorum);
 
-  // the problem comes from the contract side
-  // remove enforceRange when the contract is fixed
   const yesRatio = enforceRange(getRatio(yesVotes, totalAvailableVotes).toNumber(), 0, 1);
 
   const totalBarWidth = toPercents(enforceRange(getRatio(total, totalAvailableVotes).toNumber(), 0, 1));
