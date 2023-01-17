@@ -44,6 +44,7 @@ export const useDaoProposalsQuery = ({
         });
         result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'council')));
       } catch (err) {
+        console.log('Council', err);
         reportError(err);
       }
 

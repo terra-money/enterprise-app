@@ -15,6 +15,7 @@ interface UseProposalQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
+type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
 
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { query } = useContract();
@@ -26,11 +27,17 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
   return useQuery(
     [QUERY_KEY.PROPOSAL, daoAddress, id],
     async () => {
-      const resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
-        proposal: { proposal_id: id },
-      });
-
-      return toProposal(resp, assertDefined(dao), 'regular');
+      try {
+        let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
+          proposal: { proposal_id: id },
+        });
+        return toProposal(resp, assertDefined(dao), 'regular');
+      } catch (err) {
+        const councilProposal = await query<CouncilProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
+          council_proposal: { proposal_id: id },
+        });
+        return toProposal(councilProposal, assertDefined(dao), 'council');
+      }
     },
     {
       refetchOnMount: false,
