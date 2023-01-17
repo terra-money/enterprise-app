@@ -1,4 +1,4 @@
-import { assertDefined, removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
+import { removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -11,11 +11,9 @@ import { CouncilProposalActionType, ProposalTypesInput } from './ProposalTypesIn
 export function CouncilStep() {
   const {
     formInput,
-    formState: { council: optionalCouncil, isValid },
+    formState: { council, isValid },
   } = useDaoWizardForm();
 
-  // TODO: temporary change
-  const council = assertDefined(optionalCouncil);
   const { members, allowedProposalTypes } = council;
 
   const updateMembers = (members: CouncilMember[]) => formInput({ council: { ...council, members } });

@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-// import { DescriptionInput } from 'pages/create-proposal/shared/DescriptionInput';
+import { DescriptionInput } from 'pages/create-proposal/shared/DescriptionInput';
 import { DaoInfoInput, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardInput } from '../WizardInput';
 import { WizardStep } from '../WizardStep';
@@ -27,12 +27,12 @@ export function InfoStep() {
           error={info.name?.length > 0 ? info.nameError : undefined}
           onChange={({ currentTarget }) => onChange({ name: currentTarget.value })}
         />
-        {/* <DescriptionInput
+        <DescriptionInput
           label="Description"
           value={info.description}
           error={info.descriptionError}
           onChange={(description) => onChange({ description })}
-        /> */}
+        />
         <WizardInput
           label="Logo URL"
           placeholder="Type the URL of your DAO's logo"
