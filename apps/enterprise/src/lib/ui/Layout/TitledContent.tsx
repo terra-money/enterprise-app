@@ -7,9 +7,9 @@ interface Props extends ComponentWithChildrenProps {
   title: ReactNode;
 }
 
-export const TitledSection = ({ title, children }: Props) => (
-  <VStack gap={32}>
-    <Text as="div" size={20} weight="bold">
+export const TitledContent = ({ title, children }: Props) => (
+  <VStack gap={16}>
+    <Text as="div" size={16} color="supporting">
       {title}
     </Text>
     {children}

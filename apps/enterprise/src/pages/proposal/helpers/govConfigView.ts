@@ -21,6 +21,7 @@ export const govConfigViewFieldNameRecord: Record<keyof GovConfigView, string> =
   vetoThreshold: 'Veto threshold',
   unlockingPeriod: 'Unlocking period',
   votingDuration: 'Voting duration',
+  minimumDeposit: 'Minimum deposit',
 };
 
 const noValue = 'null';
