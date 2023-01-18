@@ -37,30 +37,33 @@ const createCollectionQuery = (vars: Variables) => {
       }
     }
   }
-`
-}
+`;
+};
 
 const fetchNFTData = async (collectionAddr: string, tokenId: string): Promise<enterprise.NftCollection[]> => {
   const variables: Variables = {
     collectionAddr,
-    tokenId
+    tokenId,
   };
   const response = await fetch('https://nft-terra2.tfm.dev/graphql', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: createCollectionQuery(variables)
-    })
+      query: createCollectionQuery(variables),
+    }),
   });
 
   const json = await response.json();
 
   return json;
-}
+};
 
-async function fetchNFTDataForMultipleTokenIds(collectionAddr: string, tokenIds: TokenIds): Promise<{ [tokenId: string]: any }> {
+async function fetchNFTDataForMultipleTokenIds(
+  collectionAddr: string,
+  tokenIds: TokenIds
+): Promise<{ [tokenId: string]: any }> {
   const result: { [tokenId: string]: any } = {};
 
   for (const tokenId of tokenIds) {
@@ -71,13 +74,11 @@ async function fetchNFTDataForMultipleTokenIds(collectionAddr: string, tokenIds:
   return result;
 }
 
-export const useNFTInfoQuery = (collectionAddr: string, tokenIds: string[]): UseQueryResult<enterprise.NftCollection[]> => {
-
-
-  return useQuery(
-    [collectionAddr, tokenIds],
-    () => {
-      return fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds);
-    }
-  );
+export const useNFTInfoQuery = (
+  collectionAddr: string,
+  tokenIds: string[]
+): UseQueryResult<enterprise.NftCollection[]> => {
+  return useQuery([collectionAddr, tokenIds], () => {
+    return fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds);
+  });
 };
