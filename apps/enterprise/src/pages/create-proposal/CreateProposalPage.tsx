@@ -30,7 +30,6 @@ import { CreateProposalProvider } from './CreateProposalProvider';
 import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
-import { MintNftProposalForm } from './mint/MintNftProposalForm';
 import { MintNftProposalPage } from './mint/MintNftProposalPage';
 
 type CreateProposalPageParams = {
