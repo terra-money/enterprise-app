@@ -13,7 +13,7 @@ const membershipName: Record<enterprise.DaoType, string> = {
 };
 
 export const AddressesOverview = () => {
-  const { address, type } = useCurrentDao();
+  const { address, membershipContractAddress, type } = useCurrentDao();
 
   return (
     <TitledSection title="Addresses">
@@ -25,7 +25,7 @@ export const AddressesOverview = () => {
         </Panel>
         <Panel>
           <TitledContent title={`${membershipName[type]} address`}>
-            <Address address={address} />
+            <Address address={membershipContractAddress} />
           </TitledContent>
         </Panel>
       </SameWidthChildrenRow>
