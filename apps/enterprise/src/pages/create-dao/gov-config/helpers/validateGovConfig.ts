@@ -15,6 +15,7 @@ export const validateGovConfig = ({
   unlockingPeriod,
   voteDuration,
   minimumDeposit,
+  allowEarlyProposalExecution,
 }: DaoGovConfigInput): FormState<DaoGovConfigInput> => {
   const formState: FormState<DaoGovConfigInput> = {
     quorum,
@@ -23,6 +24,7 @@ export const validateGovConfig = ({
     voteDuration,
     minimumDeposit,
     vetoThreshold,
+    allowEarlyProposalExecution,
   };
 
   formState.unlockingPeriodError = validateUnlockingPeriod(unlockingPeriod, voteDuration);

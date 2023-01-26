@@ -39,18 +39,6 @@ export const ProposalVoting = () => {
             <MyVote proposal={proposal} />
           )}
         </HStack>
-        {/* <Button
-          variant="primary"
-          loading={txResult.loading}
-          onClick={async () => {
-            await tx({
-              daoAddress: proposal.dao.address,
-              proposalId: proposal.id,
-            });
-          }}
-        >
-          Execute
-        </Button> */}
       </Panel>
     </VStack>
   );
