@@ -16,14 +16,17 @@ export const ProposalVotingBar = () => {
 
   const totalAvailableVotes = useMemo(() => {
     if (votingType === 'council') return totalVotes;
-    return dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+
+    if (dao.type === 'multisig') return totalVotes;
+
+    return status === 'in_progress' ? totalStaked : totalVotes;
   }, [dao.type, status, totalStaked, totalVotes, votingType]);
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 
   const quorum = Number(dao.governanceConfig.quorum);
 
-  const yesRatio = enforceRange(getRatio(yesVotes, totalAvailableVotes).toNumber(), 0, 1);
+  const yesRatio = enforceRange(getRatio(yesVotes, total).toNumber(), 0, 1);
 
   const totalBarWidth = toPercents(enforceRange(getRatio(total, totalAvailableVotes).toNumber(), 0, 1));
 
