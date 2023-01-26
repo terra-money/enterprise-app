@@ -20,7 +20,7 @@ export const validateDiscordUsername = (value: string | undefined) => {
 };
 
 export const validateTelegramUsername = (value: string | undefined) => {
-  if (value && /^.{5,32}#[0-9]{4}$/.test(value) === false) {
+  if (value && /^(https:\/\/t\.me\/|t\.me\/|@|)(\w+)$/.test(value) === false) {
     return `Invalid Telegram Username`;
   }
 };
