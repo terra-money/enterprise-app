@@ -7,6 +7,7 @@ import { enterprise } from 'types/contracts';
 import { MinimumDepositInput } from 'pages/create-dao/gov-config/MinimumDepositInput';
 import { DaoGovConfigInput } from './DaoGovConfigInput';
 import { VetoThresholdInput } from './VetoThresholdInput';
+import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;
@@ -33,6 +34,13 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
           value={value.unlockingPeriod}
           error={value.unlockingPeriodError}
           onChange={(unlockingPeriod) => onChange({ unlockingPeriod })}
+        />
+      )}
+      {daoType === 'multisig' && (
+        <Checkbox
+          label="Allow early proposal execution"
+          value={!!value.allowEarlyProposalExecution}
+          onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
         />
       )}
     </>

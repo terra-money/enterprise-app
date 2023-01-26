@@ -14,6 +14,7 @@ export type DAOGovernanceConfig = {
   unlockingPeriod: enterprise.Duration;
   voteDuration: number;
   minimumDeposit?: string;
+  allowEarlyProposalExecution?: boolean;
 };
 
 export class DAO {
