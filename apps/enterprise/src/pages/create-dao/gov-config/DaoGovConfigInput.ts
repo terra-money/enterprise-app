@@ -6,4 +6,5 @@ export interface DaoGovConfigInput {
   voteDuration: number;
   minimumDeposit?: number;
   hasInstantExecute?: boolean;
+  allowEarlyProposalExecution?: boolean;
 }

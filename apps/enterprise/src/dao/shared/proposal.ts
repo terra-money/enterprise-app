@@ -3,7 +3,7 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
-export const proposalVotingTypes = ['regular', 'council'] as const;
+export const proposalVotingTypes = ['general', 'council'] as const;
 
 export type ProposalVotingType = typeof proposalVotingTypes[number];
 
