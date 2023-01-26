@@ -10,6 +10,7 @@ interface HeaderProps {
   isLoading: boolean;
   totalCount: number;
   searchInput: ReactNode;
+  filters: ReactNode;
 }
 
 export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
@@ -21,6 +22,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)} direction="row">
         {props.searchInput}
+        {props.filters}
         <Text className={styles.results} variant="label">
           {searchResultsLabel}
         </Text>
@@ -37,8 +39,9 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <Text className={styles.subHeading} variant="label">
           Manage your favourite DAOs
         </Text>
-        <Container ref={ref} direction="column">
+        <Container ref={ref} direction="row">
           {props.searchInput}
+          {props.filters}
         </Container>
       </Container>
       <Text className={styles.results} variant="label">
