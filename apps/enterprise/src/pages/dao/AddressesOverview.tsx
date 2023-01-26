@@ -17,7 +17,7 @@ export const AddressesOverview = () => {
 
   return (
     <TitledSection title="Addresses">
-      <SameWidthChildrenRow minChildrenWidth={320} gap={40}>
+      <SameWidthChildrenRow minChildrenWidth={320} gap={16}>
         <Panel>
           <TitledContent title="DAO address">
             <Address address={address} />

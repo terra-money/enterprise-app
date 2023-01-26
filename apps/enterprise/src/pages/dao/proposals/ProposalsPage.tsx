@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
-import { IconButton, SearchInput } from 'components/primitives';
+import { SearchInput } from 'components/primitives';
 import { useVotingPowerQuery } from 'queries';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
@@ -15,8 +15,8 @@ import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
 import { InternalLink } from 'components/link';
 import styles from './ProposalsPage.module.sass';
-import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { Text } from 'lib/ui/Text';
+import { Divider } from '@mui/material';
 
 const LIMIT = 100;
 
@@ -43,10 +43,24 @@ export const ProposalsPage = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('');
-
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const handleToggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
+  useEffect(() => {
+    if (showDropdown) {
+      const handleClick = (event: MouseEvent) => {
+        if (!dropdownRef.current || !dropdownRef.current.contains(event.target as Node)) {
+          setShowDropdown(false);
+        }
+      };
+      document.addEventListener('mousedown', handleClick);
+      return () => {
+        document.removeEventListener('mousedown', handleClick);
+      };
+    }
+  }, [showDropdown]);
 
   const proposals = useMemo(() => {
     return proposalsQuery?.filter((proposal) => {
@@ -75,68 +89,74 @@ export const ProposalsPage = () => {
 
   const newProposalsDisabled = votingPower.lte(0) && !amICouncilMember;
 
-  console.log(proposals, isLoading);
-
   return (
     <Container direction="column" gap={32}>
       <HStack justifyContent="space-between" gap={16} fullWidth>
-        <SearchInput
-          value={search.input}
-          onChange={(input) =>
-            setSearch((previous) => {
-              return {
-                ...previous,
-                input,
-              };
-            })
-          }
-          onClear={() =>
-            setSearch({
-              input: '',
-              searchText: '',
-            })
-          }
-          onSearch={() =>
-            setSearch((previous) => {
-              return {
-                ...previous,
-                searchText: previous.input,
-              };
-            })
-          }
-        />
+        <Container direction='row' gap={16}>
+          <SearchInput
+            value={search.input}
+            onChange={(input) =>
+              setSearch((previous) => {
+                return {
+                  ...previous,
+                  input,
+                };
+              })
+            }
+            onClear={() =>
+              setSearch({
+                input: '',
+                searchText: '',
+              })
+            }
+            onSearch={() =>
+              setSearch((previous) => {
+                return {
+                  ...previous,
+                  searchText: previous.input,
+                };
+              })
+            }
+          />
 
-        <PrimaryButton
-          as="div"
-          kind="secondary"
-          onClick={() => {
-            handleToggleDropdown();
-          }}
-        >
-          <ResponsiveView small={() => 'Filter'} normal={() => 'Filter'} />
-        </PrimaryButton>
-        {showDropdown && (
-          <Container className={styles.filterContainer} direction="column">
-            <Text className={styles.filterLabel}>Proposal Status</Text>
-            {proposalStatuses.map((filter) => (
-              <div key={filter.value} className={styles.filterOption}>
-                <Container direction="row" gap={10}>
-                  <input
-                    type="radio"
-                    name="filter"
-                    value={filter.value}
-                    checked={filter.value === selectedStatusFilter}
-                    onChange={handleStatusFilterChange}
-                  />
-                  <label>{filter.label}</label>
+          <PrimaryButton
+            className={styles.filterButton}
+            as="div"
+            kind="secondary"
+            onClick={() => {
+              handleToggleDropdown();
+            }}
+          >
+            <ResponsiveView small={() => 'Filter'} normal={() => 'Filter'} />
+          </PrimaryButton>
+          <Container ref={dropdownRef}>
+            {showDropdown && (
+              <div ref={dropdownRef}>
+                <Container className={styles.filterContainer} direction="column">
+                  <Text className={styles.filterLabel}>Proposal Status</Text>
+                  <Container direction='column' gap={10}>
+                    {proposalStatuses.map((filter) => (
+                      <div key={filter.value} className={styles.filterOption}>
+                        <Container direction="row" gap={10}>
+                          <input
+                            type="radio"
+                            name="filter"
+                            value={filter.value}
+                            checked={filter.value === selectedStatusFilter}
+                            onChange={handleStatusFilterChange}
+                          />
+                          <label>{filter.label}</label>
+                        </Container>
+                      </div>
+                    ))}
+                  </Container>
+                  <Divider></Divider>
+                  <Text className={styles.resetButton} onClick={() => setSelectedStatusFilter('')}>Reset all filters</Text>
                 </Container>
-                <IconButton className={styles.filterIcon} onClick={() => setSelectedStatusFilter('')}>
-                  <ErrorIcon />
-                </IconButton>
               </div>
-            ))}
+            )}
           </Container>
-        )}
+        </Container>
         <PrimaryButton
           as="div"
           isDisabled={
@@ -157,9 +177,8 @@ export const ProposalsPage = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${
-                newProposalsDisabled ? '' : 'To create a new proposal click here'
-              }`}
+              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : 'To create a new proposal click here'
+                }`}
               action={
                 newProposalsDisabled ? undefined : (
                   <InternalLink to={`/dao/${dao?.address}/proposals/create`}>
