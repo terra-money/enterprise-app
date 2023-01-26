@@ -1,3 +1,4 @@
+import { getDaoRatio } from 'pages/create-dao/helpers/toCreateDaoMsg';
 import { enterprise } from 'types/contracts';
 
 export type AssetType = 'native' | 'cw20';
@@ -5,11 +6,15 @@ export type AssetType = 'native' | 'cw20';
 interface ToUpdateCouncilMsgParams {
   members: string[];
   allowedProposalTypes: enterprise.ProposalActionType[];
+  quorum: number;
+  threshold: number;
 }
 
 export const toUpdateCouncilMsg = ({
   members,
   allowedProposalTypes,
+  quorum,
+  threshold,
 }: ToUpdateCouncilMsgParams): enterprise.UpdateCouncilMsg => {
   if (members.length === 0) {
     return {
@@ -22,8 +27,8 @@ export const toUpdateCouncilMsg = ({
       members,
       allowed_proposal_action_types: allowedProposalTypes,
       // TODO: receive from the form
-      quorum: '0.3',
-      threshold: '0.51',
+      quorum: getDaoRatio(quorum),
+      threshold: getDaoRatio(threshold),
     },
   };
 };

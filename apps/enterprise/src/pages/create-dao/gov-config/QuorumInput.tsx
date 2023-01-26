@@ -4,9 +4,10 @@ import { FormControl } from 'components/form-control';
 export interface QuorumInputProps {
   value: number;
   onChange: (value: number) => void;
+  min?: number;
 }
 
-export const QuorumInput = ({ value, onChange }: QuorumInputProps) => {
+export const QuorumInput = ({ value, onChange, min = 0 }: QuorumInputProps) => {
   return (
     <FormControl
       label="Quorum"
@@ -15,7 +16,7 @@ export const QuorumInput = ({ value, onChange }: QuorumInputProps) => {
       <SliderInput
         value={value}
         step={0.01}
-        min={0}
+        min={min}
         max={1}
         formatValue={(v) => `${Math.floor(v * 100)}%`}
         onChange={(_, value) => onChange(value as number)}

@@ -112,9 +112,8 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
           ? {
               members: council.members.map((member) => member.address),
               allowed_proposal_action_types: council.allowedProposalTypes,
-              // TODO: receive from the form
-              quorum: '0.3',
-              threshold: '0.51',
+              quorum: getDaoRatio(council.quorum),
+              threshold: getDaoRatio(council.threshold),
             }
           : null,
       asset_whitelist: null,

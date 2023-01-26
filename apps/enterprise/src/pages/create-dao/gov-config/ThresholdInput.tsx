@@ -4,9 +4,10 @@ import { FormControl } from 'components/form-control';
 export interface ThresholdInputProps {
   value: number;
   onChange: (value: number) => void;
+  min?: number;
 }
 
-export const ThresholdInput = ({ value, onChange }: ThresholdInputProps) => {
+export const ThresholdInput = ({ value, onChange, min = 0 }: ThresholdInputProps) => {
   return (
     <FormControl
       label="Threshold"
@@ -15,7 +16,7 @@ export const ThresholdInput = ({ value, onChange }: ThresholdInputProps) => {
       <SliderInput
         value={value}
         step={0.01}
-        min={0}
+        min={min}
         max={1}
         formatValue={(v) => `${Math.floor(v * 100)}%`}
         onChange={(_, value) => onChange(value as number)}
