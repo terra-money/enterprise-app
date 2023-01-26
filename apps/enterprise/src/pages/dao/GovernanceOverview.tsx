@@ -10,7 +10,7 @@ const Container = styled.div`
   display: grid;
   gap: 8px;
   grid-template-columns: 228px 1fr;
-
+  font-size: 14px;
   @media (max-width: 768px) {
     display: flex;
     align-items: center;
