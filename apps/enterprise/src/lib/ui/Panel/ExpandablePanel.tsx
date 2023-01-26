@@ -12,6 +12,7 @@ import { Panel, PanelProps } from "./Panel";
 
 interface ExpandableProps extends PanelProps {
   header: ReactNode;
+  children: ReactNode;
   renderContent: () => ReactNode;
 }
 
@@ -39,6 +40,7 @@ const Header = styled(UnstyledButton)`
 
 export const ExpandablePanel = ({
   header,
+  children,
   renderContent,
   ...panelProps
 }: ExpandableProps) => {
