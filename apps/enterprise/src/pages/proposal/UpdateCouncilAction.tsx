@@ -5,8 +5,12 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { enterprise } from 'types/contracts';
+import { useCurrentProposal } from './CurrentProposalProvider';
+import * as councilConfigView from './helpers/councilConfigView';
+import { ProposalActionDiff } from './ProposalActionDiff';
 
 export const UpdateCouncilAction = () => {
+  const { dao } = useCurrentProposal();
   const { msg } = useCurrentProposalAction() as { msg: enterprise.UpdateCouncilMsg };
 
   const { dao_council } = msg;
@@ -19,6 +23,12 @@ export const UpdateCouncilAction = () => {
 
   return (
     <VStack gap={40}>
+      <ProposalActionDiff
+        fieldNameRecord={councilConfigView.councilConfigViewFieldNameRecord}
+        title="Configuration"
+        oldView={councilConfigView.fromDao(dao)}
+        updatedFields={councilConfigView.getUpdatedFields(dao_council)}
+      />
       <VStack gap={24}>
         <Text weight="semibold">New council members</Text>
         <SameWidthChildrenRow gap={16} minChildrenWidth={320}>
