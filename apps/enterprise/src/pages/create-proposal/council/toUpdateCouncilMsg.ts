@@ -21,6 +21,9 @@ export const toUpdateCouncilMsg = ({
     dao_council: {
       members,
       allowed_proposal_action_types: allowedProposalTypes,
+      // TODO: receive from the form
+      quorum: '0.3',
+      threshold: '0.51',
     },
   };
 };

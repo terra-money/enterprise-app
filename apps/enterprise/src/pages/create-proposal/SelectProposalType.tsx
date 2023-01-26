@@ -75,19 +75,19 @@ const ProposalDescriptionContainer = styled.div`
   margin: 45px 30px;
 `;
 
-const proposalVotingTypes = ['regular', 'council'] as const;
+const proposalVotingTypes = ['general', 'council'] as const;
 
 export type ProposalVotingType = typeof proposalVotingTypes[number];
 
 const proposalVotingTypeName: Record<ProposalVotingType, string> = {
-  regular: 'Regular',
+  general: 'General',
   council: 'Emergency',
 };
 
 const getProposalOptions = ({ type, council }: DAO, proposalVotingType: ProposalVotingType) => {
   const options = daoProposalsRecord[type];
   if (council) {
-    if (proposalVotingType === 'regular') {
+    if (proposalVotingType === 'general') {
       return options;
     }
     const { allowed_proposal_action_types } = council;
@@ -118,7 +118,7 @@ export const SelectProposalType = () => {
   const amICouncilMember = useAmICouncilMember();
 
   const [proposalVotingType, setProposalVotingType] = useState<ProposalVotingType>(() =>
-    amICouncilMember ? 'council' : 'regular'
+    amICouncilMember ? 'council' : 'general'
   );
 
   const renderVotingTypePicker = () => {
@@ -144,7 +144,7 @@ export const SelectProposalType = () => {
       return <Text>Only council members can create emergency proposals.</Text>;
     }
 
-    if (proposalVotingType === 'regular' && myVotingPower.eq(0)) {
+    if (proposalVotingType === 'general' && myVotingPower.eq(0)) {
       return <Text>You don't have voting power to create a regular proposal.</Text>;
     }
 

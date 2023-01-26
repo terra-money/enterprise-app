@@ -79,7 +79,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
 export const getDaoRatio = (ratio: number) => ratio.toFixed(2);
 
 const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardState) => {
-  const config: enterprise_factory.DaoGovConfig = {
+  const config: enterprise_factory.GovConfig = {
     quorum: getDaoRatio(govConfig.quorum),
     threshold: getDaoRatio(govConfig.threshold),
     veto_threshold: getDaoRatio(govConfig.vetoThreshold),
@@ -88,6 +88,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
       time: govConfig.unlockingPeriod * timeConversionFactor,
     },
     vote_duration: govConfig.voteDuration * timeConversionFactor,
+    allow_early_proposal_execution: !!govConfig.allowEarlyProposalExecution,
   };
 
   if (type === 'token') {
@@ -111,6 +112,9 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
           ? {
               members: council.members.map((member) => member.address),
               allowed_proposal_action_types: council.allowedProposalTypes,
+              // TODO: receive from the form
+              quorum: '0.3',
+              threshold: '0.51',
             }
           : null,
       asset_whitelist: null,

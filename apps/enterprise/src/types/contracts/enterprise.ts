@@ -115,6 +115,11 @@ export module enterprise {
     | {
         change: string;
       };
+  export type ModifyValueFor_Boolean =
+    | 'no_change'
+    | {
+        change: boolean;
+      };
   export type ModifyValueFor_Nullable_Uint128 =
     | 'no_change'
     | {
@@ -183,6 +188,7 @@ export module enterprise {
     twitter_username: ModifyValueFor_Nullable_String;
   }
   export interface UpdateGovConfigMsg {
+    allow_early_proposal_execution: ModifyValueFor_Boolean;
     minimum_deposit: ModifyValueFor_Nullable_Uint128;
     quorum: ModifyValueFor_Decimal;
     threshold: ModifyValueFor_Decimal;
@@ -202,6 +208,14 @@ export module enterprise {
      * Addresses of council members. Each member has equal voting power.
      */
     members: string[];
+    /**
+     * Portion of total available votes cast in a proposal to consider it valid e.g. quorum of 30% means that 30% of all available votes have to be cast in the proposal, otherwise it fails automatically when it expires
+     */
+    quorum: Decimal;
+    /**
+     * Portion of votes assigned to a single option from all the votes cast in the given proposal required to determine the 'winning' option e.g. 51% threshold means that an option has to have at least 51% of the cast votes to win
+     */
+    threshold: Decimal;
   }
   export interface UpdateAssetWhitelistMsg {
     /**
@@ -256,10 +270,14 @@ export module enterprise {
     dao_membership_contract: Addr;
     dao_type: DaoType;
     enterprise_factory_contract: Addr;
-    gov_config: DaoGovConfig;
+    gov_config: GovConfig;
     metadata: DaoMetadata;
   }
-  export interface DaoGovConfig {
+  export interface GovConfig {
+    /**
+     * If set to true, this will allow DAOs to execute proposals that have reached quorum and threshold, even before their voting period ends.
+     */
+    allow_early_proposal_execution: boolean;
     /**
      * Optional minimum amount of DAO's governance unit to be required to create a deposit.
      */
@@ -385,13 +403,14 @@ export module enterprise {
      * Optional council structure that can manage certain aspects of the DAO
      */
     dao_council?: DaoCouncil | null;
-    dao_gov_config: DaoGovConfig;
+    dao_gov_config: GovConfig;
     dao_membership_info: DaoMembershipInfo;
     dao_metadata: DaoMetadata;
     /**
      * Address of enterprise-factory contract that is creating this DAO
      */
     enterprise_factory_contract: string;
+    governance_code_id: number;
     /**
      * NFTs (CW721) that are allowed to show in DAO's treasury
      */
@@ -700,6 +719,7 @@ export module enterprise {
         nft_treasury: {};
       };
   export type ProposalStatusFilter = 'in_progress' | 'passed' | 'rejected';
+  export type ProposalType = 'general' | 'council';
   export interface QueryMemberInfoMsg {
     member_address: string;
   }
@@ -724,10 +744,12 @@ export module enterprise {
   export interface MemberVoteParams {
     member: string;
     proposal_id: number;
+    proposal_type: ProposalType;
   }
   export interface ProposalVotesParams {
     limit?: number | null;
     proposal_id: number;
+    proposal_type: ProposalType;
     /**
      * Optional pagination data, will return votes after the given voter address
      */

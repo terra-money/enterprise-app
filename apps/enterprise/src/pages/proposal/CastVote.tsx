@@ -70,7 +70,7 @@ export const CastVote = () => {
     return <Text variant="text">Council members only</Text>;
   }
 
-  if (proposal.votingType === 'regular' && votingPower && votingPower.eq(0)) {
+  if (proposal.votingType === 'general' && votingPower && votingPower.eq(0)) {
     if (proposal.dao.type === 'multisig') {
       return null;
     }
