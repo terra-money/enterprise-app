@@ -31,7 +31,7 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: ProposalVoting
         .execute<enterprise.ExecuteMsg>(
           wallet.walletAddress,
           daoAddress,
-          proposalVotingType === 'regular'
+          proposalVotingType === 'general'
             ? {
                 create_proposal,
               }

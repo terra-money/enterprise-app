@@ -56,7 +56,7 @@ export const CreateProposalPage = () => {
   const address = assertDefined(params.address);
   const [searchParams] = useSearchParams();
 
-  const proposalVotingType = (searchParams.get('votingType') || 'regular') as ProposalVotingType;
+  const proposalVotingType = (searchParams.get('votingType') || 'general') as ProposalVotingType;
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 

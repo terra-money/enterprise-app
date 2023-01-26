@@ -31,7 +31,7 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
         let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
           proposal: { proposal_id: id },
         });
-        return toProposal(resp, assertDefined(dao), 'regular');
+        return toProposal(resp, assertDefined(dao), 'general');
       } catch (err) {
         const councilProposal = await query<CouncilProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
           council_proposal: { proposal_id: id },

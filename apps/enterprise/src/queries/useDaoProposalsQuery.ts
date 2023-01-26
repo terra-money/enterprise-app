@@ -33,7 +33,7 @@ export const useDaoProposalsQuery = ({
         const { proposals } = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
           proposals: {},
         });
-        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'regular')));
+        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'general')));
       } catch (err) {
         reportError(err);
       }

@@ -15,7 +15,7 @@ export const getExecuteProposalMsg = ({ id, votingType }: Pick<Proposal, 'id' | 
     proposal_id: id,
   };
 
-  return votingType === 'regular'
+  return votingType === 'general'
     ? {
         execute_proposal: msg,
       }

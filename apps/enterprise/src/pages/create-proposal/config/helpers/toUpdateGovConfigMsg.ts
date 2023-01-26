@@ -24,6 +24,7 @@ export const toUpdateGovConfigMsg = (
     veto_threshold: 'no_change',
     unlocking_period: 'no_change',
     voting_duration: 'no_change',
+    allow_early_proposal_execution: 'no_change',
   };
 
   if (minimumDeposit) {

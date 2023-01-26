@@ -88,7 +88,7 @@ export const useProposalsQuery = (
               abstainVotes: Big(entity.abstainVotes),
               vetoVotes: Big(entity.vetoVotes ?? '0'),
               totalVotes: Big(entity.totalVotes ?? '0'),
-              votingType: 'regular',
+              votingType: 'general',
             });
           }
         });
