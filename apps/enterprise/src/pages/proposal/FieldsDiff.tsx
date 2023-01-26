@@ -4,7 +4,7 @@ import React from 'react';
 import { ValueDiff } from 'components/value-diff';
 import styled from 'styled-components';
 
-interface FieldChangeInfo {
+export interface FieldChangeInfo {
   name: string;
   oldValue: string;
   newValue: string;
