@@ -13,10 +13,14 @@ import { enterprise } from 'types/contracts';
 import * as z from 'zod';
 import { ProposalForm } from '../shared/ProposalForm';
 import { toUpdateCouncilMsg } from './toUpdateCouncilMsg';
+import { QuorumInput } from 'pages/create-dao/gov-config/QuorumInput';
+import { ThresholdInput } from 'pages/create-dao/gov-config/ThresholdInput';
 
 interface CouncilFormSchema {
   members: CouncilMember[];
   allowedProposalTypes: string[];
+  threshold: number;
+  quorum: number;
 }
 
 const councilFormSchema: z.ZodType<CouncilFormSchema> = z.object({
@@ -34,6 +38,8 @@ const councilFormSchema: z.ZodType<CouncilFormSchema> = z.object({
       { message: 'Duplicate addresses' }
     ),
   allowedProposalTypes: z.array(z.string()).nonempty(),
+  threshold: z.number().min(0.5).max(1),
+  quorum: z.number(),
 });
 
 export const CouncilForm = () => {
@@ -50,6 +56,8 @@ export const CouncilForm = () => {
     defaultValues: {
       members: council.members.map((address) => ({ address })),
       allowedProposalTypes: council.allowed_proposal_action_types || [],
+      threshold: Number(council.threshold),
+      quorum: Number(council.quorum),
     },
   });
 
@@ -62,29 +70,43 @@ export const CouncilForm = () => {
     <ProposalForm
       disabled={!isValid}
       getProposalActions={() => {
-        const { members, allowedProposalTypes } = getValues();
+        const { members, allowedProposalTypes, quorum, threshold } = getValues();
         return [
           {
             update_council: toUpdateCouncilMsg({
               members: members.map((member) => member.address),
               allowedProposalTypes: allowedProposalTypes as enterprise.ProposalActionType[],
+              quorum,
+              threshold,
             }),
           },
         ];
       }}
     >
       <VStack gap={40}>
-        <Controller
-          control={control}
-          name="allowedProposalTypes"
-          render={({ field: { value, onChange } }) => (
-            <ProposalTypesInput
-              value={value as CouncilProposalActionType[]}
-              onChange={onChange}
-              error={errors.allowedProposalTypes?.message}
-            />
-          )}
-        />
+        <VStack gap={8}>
+          <Controller
+            control={control}
+            name="allowedProposalTypes"
+            render={({ field: { value, onChange } }) => (
+              <ProposalTypesInput
+                value={value as CouncilProposalActionType[]}
+                onChange={onChange}
+                error={errors.allowedProposalTypes?.message}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="quorum"
+            render={({ field: { value, onChange } }) => <QuorumInput value={value} onChange={onChange} />}
+          />
+          <Controller
+            control={control}
+            name="threshold"
+            render={({ field: { value, onChange } }) => <ThresholdInput value={value} onChange={onChange} />}
+          />
+        </VStack>
         <Line />
         <VStack gap={8}>
           {fields.map((member, index) => (

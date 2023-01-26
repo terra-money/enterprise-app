@@ -47,6 +47,8 @@ export interface DaoImportInput {
 export interface CouncilInput {
   members: FormState<CouncilMember>[];
   allowedProposalTypes: enterprise_factory.ProposalActionType[];
+  quorum: number;
+  threshold: number;
 }
 
 export interface DaoWizardInput {
@@ -188,6 +190,8 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   council: {
     members: [],
     allowedProposalTypes: ['upgrade_dao'],
+    quorum: 0.3,
+    threshold: 0.51,
   },
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],

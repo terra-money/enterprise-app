@@ -5,6 +5,8 @@ import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { CouncilMember, useDaoWizardForm } from '../DaoWizardFormProvider';
+import { QuorumInput } from '../gov-config/QuorumInput';
+import { ThresholdInput } from '../gov-config/ThresholdInput';
 import { WizardStep } from '../WizardStep';
 import { CouncilProposalActionType, ProposalTypesInput } from './ProposalTypesInput';
 
@@ -21,11 +23,18 @@ export function CouncilStep() {
   return (
     <WizardStep title="Add council members to your DAO" subTitle="(Optional)">
       <VStack gap={40}>
-        <ProposalTypesInput
-          value={allowedProposalTypes as CouncilProposalActionType[]}
-          onChange={(allowedProposalTypes) => formInput({ council: { ...council, allowedProposalTypes } })}
-          error={council.allowedProposalTypesError}
-        />
+        <VStack gap={8}>
+          <ProposalTypesInput
+            value={allowedProposalTypes as CouncilProposalActionType[]}
+            onChange={(allowedProposalTypes) => formInput({ council: { ...council, allowedProposalTypes } })}
+            error={council.allowedProposalTypesError}
+          />
+          <QuorumInput value={council.quorum} onChange={(quorum) => formInput({ council: { ...council, quorum } })} />
+          <ThresholdInput
+            value={council.threshold}
+            onChange={(threshold) => formInput({ council: { ...council, threshold } })}
+          />
+        </VStack>
         <Line />
         <VStack gap={8}>
           {members.map((member, index) => (
