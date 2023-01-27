@@ -1,7 +1,7 @@
 import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
-import { Button, Divider, IconButton, SearchInput } from 'components/primitives';
+import { Divider, IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
@@ -20,7 +20,6 @@ export const Page = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [selectedFilter, setSelectedFilter] = useState<string>('');
-
 
   const handleToggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -43,8 +42,8 @@ export const Page = () => {
   const daoFilters = [
     { label: 'Multisig', value: 'multisig' },
     { label: 'Token', value: 'token' },
-    { label: 'NFT', value: 'nft' }
-  ]
+    { label: 'NFT', value: 'nft' },
+  ];
   const [search, setSearch] = useState({
     input: '',
     searchText: '',
@@ -59,15 +58,14 @@ export const Page = () => {
     if (!selectedFilter) {
       return data;
     }
-    return data?.filter(item => item.type === selectedFilter)
-  }, [data, selectedFilter])
-
+    return data?.filter((item) => item.type === selectedFilter);
+  }, [data, selectedFilter]);
 
   const handleFilterChange = (event: any) => {
     if (event.target.value === selectedFilter) {
-      setSelectedFilter('')
+      setSelectedFilter('');
     } else {
-      setSelectedFilter(event.target.value)
+      setSelectedFilter(event.target.value);
     }
   };
 
@@ -88,7 +86,7 @@ export const Page = () => {
           <div ref={dropdownRef}>
             <Container className={styles.filterContainer} direction="column">
               <Text className={styles.filterLabel}>DAO Type</Text>
-              <Container direction='column' gap={10}>
+              <Container direction="column" gap={10}>
                 {daoFilters.map((filter) => (
                   <div key={filter.value} className={styles.filterOption}>
                     <Container direction="row" gap={10}>
@@ -105,13 +103,15 @@ export const Page = () => {
                 ))}
               </Container>
               <Divider></Divider>
-              <Text className={styles.resetButton} onClick={() => setSelectedFilter('')}>Reset all filters</Text>
+              <Text className={styles.resetButton} onClick={() => setSelectedFilter('')}>
+                Reset all filters
+              </Text>
             </Container>
           </div>
         )}
       </Container>
     </>
-  )
+  );
 
   const searchInput = (
     <SearchInput
@@ -157,11 +157,20 @@ export const Page = () => {
               <List items={filteredItems} isLoading={isLoading} />
             ) : (
               <Container className={styles.noResultsContainer}>
-                <IconButton className={styles.Icon} onClick={() => setSearch({
-                  input: '',
-                  searchText: '',
-                })}><ErrorIcon /></IconButton>
-                <Text className={styles.noResultsLabel}>We couldn’t find DAOs matching your criteria. Please try again.</Text>
+                <IconButton
+                  className={styles.Icon}
+                  onClick={() =>
+                    setSearch({
+                      input: '',
+                      searchText: '',
+                    })
+                  }
+                >
+                  <ErrorIcon />
+                </IconButton>
+                <Text className={styles.noResultsLabel}>
+                  We couldn’t find DAOs matching your criteria. Please try again.
+                </Text>
               </Container>
             )}
           </VStack>
@@ -191,17 +200,27 @@ export const Page = () => {
                   filters={filters}
                 />
               }
-            >{data && data?.length ? (
-              <List items={filteredItems} isLoading={isLoading} />
-            ) : (
-              <Container className={styles.noResultsContainer}>
-                <IconButton className={styles.Icon} onClick={() => setSearch({
-                  input: '',
-                  searchText: '',
-                })}><ErrorIcon /></IconButton>
-                <Text className={styles.noResultsLabel}>We couldn’t find DAOs matching your criteria. Please try again.</Text>
-              </Container>
-            )}
+            >
+              {data && data?.length ? (
+                <List items={filteredItems} isLoading={isLoading} />
+              ) : (
+                <Container className={styles.noResultsContainer}>
+                  <IconButton
+                    className={styles.Icon}
+                    onClick={() =>
+                      setSearch({
+                        input: '',
+                        searchText: '',
+                      })
+                    }
+                  >
+                    <ErrorIcon />
+                  </IconButton>
+                  <Text className={styles.noResultsLabel}>
+                    We couldn’t find DAOs matching your criteria. Please try again.
+                  </Text>
+                </Container>
+              )}
             </PageLayout>
           </ScrollableContainer>
         )}

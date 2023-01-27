@@ -30,6 +30,7 @@ import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 import { ConditionalWallet } from 'components/conditional-wallet';
+import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
 
 const queryClient = new QueryClient();
 
@@ -50,20 +51,87 @@ const AppBetaRoutes = () => {
       <Routes>
         <Route path={Path.Dashboard} element={<DashboardPage />} />
         <Route path={Path.Daos} element={<DAOsPage />} />
-        <Route path="/dao/:address" element={<DAOPage />}>
-          <Route index={true} element={<DAOOverviewPage />} />
-          <Route path="treasury" element={<DAOTreasuryPage />} />
-          <Route path="proposals" element={<DAOProposalsPage />} />
-          <Route path="staking" element={<DAOStakingPage />} />
-          <Route path="members" element={<DAOMembersPage />} />
+        <Route
+          path="/dao/:address"
+          element={
+            <InitizalizedWalletOnly>
+              <DAOPage />
+            </InitizalizedWalletOnly>
+          }
+        >
+          <Route
+            index={true}
+            element={
+              <InitizalizedWalletOnly>
+                <DAOOverviewPage />
+              </InitizalizedWalletOnly>
+            }
+          />
+          <Route
+            path="treasury"
+            element={
+              <InitizalizedWalletOnly>
+                <DAOTreasuryPage />
+              </InitizalizedWalletOnly>
+            }
+          />
+          <Route
+            path="proposals"
+            element={
+              <InitizalizedWalletOnly>
+                <DAOProposalsPage />
+              </InitizalizedWalletOnly>
+            }
+          />
+          <Route
+            path="staking"
+            element={
+              <InitizalizedWalletOnly>
+                <DAOStakingPage />
+              </InitizalizedWalletOnly>
+            }
+          />
+          <Route
+            path="members"
+            element={
+              <InitizalizedWalletOnly>
+                <DAOMembersPage />
+              </InitizalizedWalletOnly>
+            }
+          />
         </Route>
         <Route
           path="/dao/:address/proposals/create"
-          element={<ConditionalWallet connected={() => <SelectProposalTypePage />} />}
+          element={
+            <InitizalizedWalletOnly>
+              <ConditionalWallet connected={() => <SelectProposalTypePage />} />
+            </InitizalizedWalletOnly>
+          }
         />
-        <Route path="/dao/:address/proposals/create/:type" element={<CreateProposalPage />} />
-        <Route path="/dao/create" element={<CreateDAOPage />} />
-        <Route path="/dao/:address/proposals/:id" element={<ProposalPage />} />
+        <Route
+          path="/dao/:address/proposals/create/:type"
+          element={
+            <InitizalizedWalletOnly>
+              <CreateProposalPage />
+            </InitizalizedWalletOnly>
+          }
+        />
+        <Route
+          path="/dao/create"
+          element={
+            <InitizalizedWalletOnly>
+              <CreateDAOPage />
+            </InitizalizedWalletOnly>
+          }
+        />
+        <Route
+          path="/dao/:address/proposals/:id"
+          element={
+            <InitizalizedWalletOnly>
+              <ProposalPage />
+            </InitizalizedWalletOnly>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BetaGuard>
@@ -84,8 +152,8 @@ const AppProviders = () => {
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />
           <main className={styles.root}>
-            <NetworkGuard>
-              <QueryClientProvider client={queryClient}>
+            <QueryClientProvider client={queryClient}>
+              <NetworkGuard>
                 <TransactionsProvider>
                   <TransactionErrorProvider>
                     <SnackbarProvider
@@ -98,8 +166,8 @@ const AppProviders = () => {
                     </SnackbarProvider>
                   </TransactionErrorProvider>
                 </TransactionsProvider>
-              </QueryClientProvider>
-            </NetworkGuard>
+              </NetworkGuard>
+            </QueryClientProvider>
           </main>
         </ThemeProvider>
       </WalletProvider>

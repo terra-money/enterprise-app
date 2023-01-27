@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { terraAddressRegex } from '@terra-money/apps/utils';
+import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -43,7 +43,8 @@ const councilFormSchema: z.ZodType<CouncilFormSchema> = z.object({
 });
 
 export const CouncilForm = () => {
-  const { council } = useCurrentDao();
+  const dao = useCurrentDao();
+  const council = assertDefined(dao.council);
 
   const {
     register,
