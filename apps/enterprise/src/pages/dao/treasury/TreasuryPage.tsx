@@ -18,7 +18,13 @@ export const TreasuryPage = () => {
       <Container direction="column" gap={16}>
         <Text variant="heading4">Transactions</Text>
         <Container gap={16} direction="column">
-          {txs && txs.map((tx) => <TxItem tx={tx} />)}
+          {txs ? (txs.map((tx) => <TxItem tx={tx} />)) : (
+            <Container className={styles.noTransactionsToDisplay}>
+              <Text className={styles.noTransactionsLabel} variant="label">
+                No NFTs were added to the treasury yet.
+              </Text>
+            </Container>
+          )}
         </Container>
       </Container>
     </Container>
