@@ -27,7 +27,7 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
       <VoteDurationInput value={value.voteDuration} onChange={(voteDuration) => onChange({ voteDuration })} />
       <QuorumInput value={value.quorum} onChange={(quorum) => onChange({ quorum })} />
       <ThresholdInput value={value.threshold} onChange={(threshold) => onChange({ threshold })} />
-      <VetoThresholdInput value={value.vetoThreshold} onChange={(vetoThreshold) => onChange({ vetoThreshold })} />
+      {/* <VetoThresholdInput value={value.vetoThreshold} onChange={(vetoThreshold) => onChange({ vetoThreshold })} /> */}
       {daoType !== 'multisig' && (
         <UnlockingPeriodInput
           value={value.unlockingPeriod}

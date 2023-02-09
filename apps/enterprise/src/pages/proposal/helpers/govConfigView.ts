@@ -66,10 +66,10 @@ export const getUpdatedFields = (
     view.threshold = threshold ? toPercents(Number(threshold)) : noValue;
   }
 
-  if (msg.veto_threshold !== 'no_change') {
-    const threshold = msg.veto_threshold.change;
-    view.veto_threshold = threshold ? toPercents(Number(threshold)) : noValue;
-  }
+  // if (msg.veto_threshold !== 'no_change') {
+  //   const threshold = msg.veto_threshold.change;
+  //   view.veto_threshold = threshold ? toPercents(Number(threshold)) : noValue;
+  // }
 
   if (msg.unlocking_period !== 'no_change') {
     const unlockingPeriod = msg.unlocking_period.change;

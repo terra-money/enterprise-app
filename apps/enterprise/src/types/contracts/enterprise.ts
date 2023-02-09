@@ -2,18 +2,18 @@ export module enterprise {
   export type Uint128 = string;
   export type AssetInfoBaseFor_Addr =
     | {
-        native: string;
-      }
+      native: string;
+    }
     | {
-        cw20: Addr;
-      }
+      cw20: Addr;
+    }
     | {
-        /**
-         * @minItems 2
-         * @maxItems 2
-         */
-        cw1155: [Addr, string];
-      };
+      /**
+       * @minItems 2
+       * @maxItems 2
+       */
+      cw1155: [Addr, string];
+    };
   export type Addr = string;
   export interface AssetTreasuryResponse {
     assets: AssetBaseFor_Addr[];
@@ -33,18 +33,18 @@ export module enterprise {
   }
   export type ClaimAsset =
     | {
-        cw20: Cw20ClaimAsset;
-      }
+      cw20: Cw20ClaimAsset;
+    }
     | {
-        cw721: Cw721ClaimAsset;
-      };
+      cw721: Cw721ClaimAsset;
+    };
   export type ReleaseAt =
     | {
-        timestamp: Timestamp;
-      }
+      timestamp: Timestamp;
+    }
     | {
-        height: Uint64;
-      };
+      height: Uint64;
+    };
   export type Timestamp = Uint64;
   export type Uint64 = string;
   export interface ClaimsResponse {
@@ -62,92 +62,92 @@ export module enterprise {
   }
   export type Cw20HookMsg =
     | {
-        stake: {};
-      }
+      stake: {};
+    }
     | {
-        create_proposal: CreateProposalMsg;
-      };
+      create_proposal: CreateProposalMsg;
+    };
   export type ProposalAction =
     | {
-        update_metadata: UpdateMetadataMsg;
-      }
+      update_metadata: UpdateMetadataMsg;
+    }
     | {
-        update_gov_config: UpdateGovConfigMsg;
-      }
+      update_gov_config: UpdateGovConfigMsg;
+    }
     | {
-        update_council: UpdateCouncilMsg;
-      }
+      update_council: UpdateCouncilMsg;
+    }
     | {
-        update_asset_whitelist: UpdateAssetWhitelistMsg;
-      }
+      update_asset_whitelist: UpdateAssetWhitelistMsg;
+    }
     | {
-        update_nft_whitelist: UpdateNftWhitelistMsg;
-      }
+      update_nft_whitelist: UpdateNftWhitelistMsg;
+    }
     | {
-        request_funding_from_dao: RequestFundingFromDaoMsg;
-      }
+      request_funding_from_dao: RequestFundingFromDaoMsg;
+    }
     | {
-        upgrade_dao: UpgradeDaoMsg;
-      }
+      upgrade_dao: UpgradeDaoMsg;
+    }
     | {
-        execute_msgs: ExecuteMsgsMsg;
-      }
+      execute_msgs: ExecuteMsgsMsg;
+    }
     | {
-        modify_multisig_membership: ModifyMultisigMembershipMsg;
-      };
+      modify_multisig_membership: ModifyMultisigMembershipMsg;
+    };
   export type ModifyValueFor_Nullable_String =
     | 'no_change'
     | {
-        change: string | null;
-      };
+      change: string | null;
+    };
   export type ModifyValueFor_Logo =
     | 'no_change'
     | {
-        change: Logo;
-      };
+      change: Logo;
+    };
   export type Logo =
     | 'none'
     | {
-        url: string;
-      };
+      url: string;
+    };
   export type ModifyValueFor_String =
     | 'no_change'
     | {
-        change: string;
-      };
+      change: string;
+    };
   export type ModifyValueFor_Nullable_Uint128 =
     | 'no_change'
     | {
-        change: Uint128 | null;
-      };
+      change: Uint128 | null;
+    };
   export type ModifyValueFor_Decimal =
     | 'no_change'
     | {
-        change: Decimal;
-      };
+      change: Decimal;
+    };
   export type Decimal = string;
   export type ModifyValueFor_Duration =
     | 'no_change'
     | {
-        change: Duration;
-      };
+      change: Duration;
+    };
   export type Duration =
     | {
-        height: number;
-      }
+      height: number;
+    }
     | {
-        time: number;
-      };
+      time: number;
+    };
   export type ModifyValueFor_Nullable_Decimal =
     | 'no_change'
     | {
-        change: Decimal | null;
-      };
+      change: Decimal | null;
+    };
   export type ModifyValueFor_Uint64 =
     | 'no_change'
     | {
-        change: Uint64;
-      };
+      change: Uint64;
+    };
   export type ProposalActionType =
     | 'update_metadata'
     | 'update_gov_config'
@@ -187,7 +187,7 @@ export module enterprise {
     quorum: ModifyValueFor_Decimal;
     threshold: ModifyValueFor_Decimal;
     unlocking_period: ModifyValueFor_Duration;
-    veto_threshold: ModifyValueFor_Nullable_Decimal;
+    // veto_threshold: ModifyValueFor_Nullable_Decimal;
     voting_duration: ModifyValueFor_Uint64;
   }
   export interface UpdateCouncilMsg {
@@ -299,43 +299,43 @@ export module enterprise {
   }
   export type ExecuteMsg =
     | {
-        create_proposal: CreateProposalMsg;
-      }
+      create_proposal: CreateProposalMsg;
+    }
     | {
-        create_council_proposal: CreateProposalMsg;
-      }
+      create_council_proposal: CreateProposalMsg;
+    }
     | {
-        cast_vote: CastVoteMsg;
-      }
+      cast_vote: CastVoteMsg;
+    }
     | {
-        cast_council_vote: CastVoteMsg;
-      }
+      cast_council_vote: CastVoteMsg;
+    }
     | {
-        execute_proposal: ExecuteProposalMsg;
-      }
+      execute_proposal: ExecuteProposalMsg;
+    }
     | {
-        execute_council_proposal: ExecuteProposalMsg;
-      }
+      execute_council_proposal: ExecuteProposalMsg;
+    }
     | {
-        unstake: UnstakeMsg;
-      }
+      unstake: UnstakeMsg;
+    }
     | {
-        claim: {};
-      }
+      claim: {};
+    }
     | {
-        receive: Cw20ReceiveMsg;
-      }
+      receive: Cw20ReceiveMsg;
+    }
     | {
-        receive_nft: Cw721ReceiveMsg;
-      };
+      receive_nft: Cw721ReceiveMsg;
+    };
   export type VoteOutcome = 'yes' | 'no' | 'abstain' | 'veto';
   export type UnstakeMsg =
     | {
-        cw20: UnstakeCw20Msg;
-      }
+      cw20: UnstakeCw20Msg;
+    }
     | {
-        cw721: UnstakeCw721Msg;
-      };
+      cw721: UnstakeCw721Msg;
+    };
   export interface CastVoteMsg {
     outcome: VoteOutcome;
     proposal_id: number;
@@ -361,21 +361,21 @@ export module enterprise {
   }
   export type DaoMembershipInfo =
     | {
-        new: NewDaoMembershipMsg;
-      }
+      new: NewDaoMembershipMsg;
+    }
     | {
-        existing: ExistingDaoMembershipMsg;
-      };
+      existing: ExistingDaoMembershipMsg;
+    };
   export type NewMembershipInfo =
     | {
-        new_token: NewTokenMembershipInfo;
-      }
+      new_token: NewTokenMembershipInfo;
+    }
     | {
-        new_nft: NewNftMembershipInfo;
-      }
+      new_nft: NewNftMembershipInfo;
+    }
     | {
-        new_multisig: NewMultisigMembershipInfo;
-      };
+      new_multisig: NewMultisigMembershipInfo;
+    };
   export interface InstantiateMsg {
     /**
      * Assets that are allowed to show in DAO's treasury
@@ -466,7 +466,7 @@ export module enterprise {
      */
     voter: Addr;
   }
-  export interface MigrateMsg {}
+  export interface MigrateMsg { }
   export interface MultisigMembersResponse {
     members: MultisigMember[];
   }
@@ -482,36 +482,36 @@ export module enterprise {
   }
   export type PollStatus =
     | {
-        in_progress: {
-          ends_at: Timestamp;
-        };
-      }
-    | {
-        passed: {
-          count: Uint128;
-          outcome: number;
-        };
-      }
-    | {
-        rejected: {
-          reason: PollRejectionReason;
-        };
+      in_progress: {
+        ends_at: Timestamp;
       };
+    }
+    | {
+      passed: {
+        count: Uint128;
+        outcome: number;
+      };
+    }
+    | {
+      rejected: {
+        reason: PollRejectionReason;
+      };
+    };
   export type PollRejectionReason =
     | (
-        | 'quorum_not_reached'
-        | 'threshold_not_reached'
-        | 'quorum_and_threshold_not_reached'
-        | 'is_rejecting_outcome'
-        | 'is_veto_outcome'
-      )
+      | 'quorum_not_reached'
+      | 'threshold_not_reached'
+      | 'quorum_and_threshold_not_reached'
+      | 'is_rejecting_outcome'
+      | 'is_veto_outcome'
+    )
     | {
-        /**
-         * @minItems 3
-         * @maxItems 3
-         */
-        outcome_draw: [number, number, Uint128];
-      };
+      /**
+       * @minItems 3
+       * @maxItems 3
+       */
+      outcome_draw: [number, number, Uint128];
+    };
   export interface PollStatusResponse {
     /**
      * Poll end time.
@@ -601,14 +601,14 @@ export module enterprise {
   }
   export type Expiration =
     | {
-        at_height: number;
-      }
+      at_height: number;
+    }
     | {
-        at_time: Timestamp;
-      }
+      at_time: Timestamp;
+    }
     | {
-        never: {};
-      };
+      never: {};
+    };
   export type ProposalStatus = 'in_progress' | 'passed' | 'rejected' | 'executed';
   export interface ProposalResponse {
     proposal: Proposal;
@@ -643,62 +643,62 @@ export module enterprise {
   }
   export type QueryMsg =
     | {
-        dao_info: {};
-      }
+      dao_info: {};
+    }
     | {
-        member_info: QueryMemberInfoMsg;
-      }
+      member_info: QueryMemberInfoMsg;
+    }
     | {
-        list_multisig_members: ListMultisigMembersMsg;
-      }
+      list_multisig_members: ListMultisigMembersMsg;
+    }
     | {
-        asset_whitelist: {};
-      }
+      asset_whitelist: {};
+    }
     | {
-        nft_whitelist: {};
-      }
+      nft_whitelist: {};
+    }
     | {
-        proposal: ProposalParams;
-      }
+      proposal: ProposalParams;
+    }
     | {
-        proposals: ProposalsParams;
-      }
+      proposals: ProposalsParams;
+    }
     | {
-        proposal_status: ProposalStatusParams;
-      }
+      proposal_status: ProposalStatusParams;
+    }
     | {
-        council_proposal: ProposalParams;
-      }
+      council_proposal: ProposalParams;
+    }
     | {
-        council_proposals: ProposalsParams;
-      }
+      council_proposals: ProposalsParams;
+    }
     | {
-        council_proposal_status: ProposalStatusParams;
-      }
+      council_proposal_status: ProposalStatusParams;
+    }
     | {
-        member_vote: MemberVoteParams;
-      }
+      member_vote: MemberVoteParams;
+    }
     | {
-        proposal_votes: ProposalVotesParams;
-      }
+      proposal_votes: ProposalVotesParams;
+    }
     | {
-        user_stake: UserStakeParams;
-      }
+      user_stake: UserStakeParams;
+    }
     | {
-        total_staked_amount: {};
-      }
+      total_staked_amount: {};
+    }
     | {
-        claims: ClaimsParams;
-      }
+      claims: ClaimsParams;
+    }
     | {
-        releasable_claims: ClaimsParams;
-      }
+      releasable_claims: ClaimsParams;
+    }
     | {
-        cw20_treasury: {};
-      }
+      cw20_treasury: {};
+    }
     | {
-        nft_treasury: {};
-      };
+      nft_treasury: {};
+    };
   export type ProposalStatusFilter = 'in_progress' | 'passed' | 'rejected';
   export interface QueryMemberInfoMsg {
     member_address: string;
@@ -745,11 +745,11 @@ export module enterprise {
   export type UserStake =
     | 'none'
     | {
-        token: TokenUserStake;
-      }
+      token: TokenUserStake;
+    }
     | {
-        nft: NftUserStake;
-      };
+      nft: NftUserStake;
+    };
   export interface UserStakeResponse {
     user_stake: UserStake;
   }

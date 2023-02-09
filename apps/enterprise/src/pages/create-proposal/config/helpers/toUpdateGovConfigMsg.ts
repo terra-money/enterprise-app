@@ -21,7 +21,7 @@ export const toUpdateGovConfigMsg = (
     minimum_deposit: 'no_change',
     quorum: 'no_change',
     threshold: 'no_change',
-    veto_threshold: 'no_change',
+    // veto_threshold: 'no_change',
     unlocking_period: 'no_change',
     voting_duration: 'no_change',
   };
@@ -48,7 +48,7 @@ export const toUpdateGovConfigMsg = (
   const newVetoThreshold = getDaoRatio(vetoThreshold);
   const oldVetoThreshold = getDaoRatio(dao.governanceConfig.vetoThreshold);
   if (oldVetoThreshold !== newVetoThreshold) {
-    msg.veto_threshold = { change: newVetoThreshold };
+    // msg.veto_threshold = { change: newVetoThreshold };
   }
 
   const newUnlockingPeriod = unlockingPeriod * timeConversionFactor;
