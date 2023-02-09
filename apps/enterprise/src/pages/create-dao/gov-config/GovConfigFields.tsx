@@ -6,7 +6,7 @@ import { VoteDurationInput } from './VoteDurationInput';
 import { enterprise } from 'types/contracts';
 import { MinimumDepositInput } from 'pages/create-dao/gov-config/MinimumDepositInput';
 import { DaoGovConfigInput } from './DaoGovConfigInput';
-import { VetoThresholdInput } from './VetoThresholdInput';
+// import { VetoThresholdInput } from './VetoThresholdInput';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;
