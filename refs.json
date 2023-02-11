@@ -20,12 +20,12 @@
   },
   "testnet": {
     "enterprise": {
-      "codeId": "7592",
+      "codeId": "7594",
       "address": "terra1rl9fnr4xce4ca5we9rwnqyyv89h422rwe3fpe7ycrpjn0egfulrsp2n4l9"
     },
     "enterprise-factory": {
-      "codeId": "7593",
-      "address": "terra102gdtqu7z5yf7u74y07542hw6fgr4zrw4zhfcwjhr8jrznap2kws7g3c5s"
+      "codeId": "7595",
+      "address": "terra10uzze5k72pwach66t7fhdhkfs0psrhs7p9nsp79xrw30ejtjlphqhy79jc"
     },
     "cw20_base": {
       "codeId": "5350"
