@@ -35,7 +35,7 @@ export const proposalDescription: Record<ProposalType, string> = {
   assets: 'Update whitelisted assets',
   nfts: 'Add/remove assets thats displayed on the Treasury page',
   execute:
-    'Execute custom messages that will allow you to interact with smart contracts, send assets and more. <a href="https://docs.enterprise.money/guides/messages">Click here</a> for more information on message templates.',
+    'Execute custom messages that will allow you to interact with smart contracts, send assets and more. Refer to https://docs.enterprise.money/guides/messages for more information on message templates.',
   members: 'Add/remove members from the Multisig',
   spend: 'Submit this proposal to send assets in your treasury to another address',
   mint: 'Mint DAO governance tokens to accounts. This only works if the minter of the CW20 token is the DAO treasury address.',
