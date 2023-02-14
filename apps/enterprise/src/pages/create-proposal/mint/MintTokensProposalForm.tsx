@@ -69,7 +69,8 @@ export const MintTokensProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'mint',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'mint',
               msgs: members.map(({ address, amount }) =>
                 toMintTokenMsg({
                   tokenAddress: dao.membershipContractAddress,

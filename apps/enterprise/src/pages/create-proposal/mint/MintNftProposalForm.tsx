@@ -52,7 +52,8 @@ export const MintNftProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'mint',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'mint',
               msgs: [toMintNftMsg({ contract: dao.membershipContractAddress, ...params })],
             },
           },
