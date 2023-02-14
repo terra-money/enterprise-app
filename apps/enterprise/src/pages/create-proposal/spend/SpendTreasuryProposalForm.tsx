@@ -49,7 +49,8 @@ export const SpendTreasuryProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'spend',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'spend',
               msgs: [
                 toSpendTreasuryMsg({
                   amount,

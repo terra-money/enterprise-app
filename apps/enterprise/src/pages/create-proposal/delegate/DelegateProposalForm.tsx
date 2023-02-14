@@ -50,7 +50,8 @@ export const DelegateProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'delegate',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'delegate',
               msgs: [
                 toDelegateMsg({
                   amount,

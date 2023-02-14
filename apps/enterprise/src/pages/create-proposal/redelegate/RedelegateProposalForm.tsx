@@ -61,7 +61,8 @@ export const RedelegateProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'redelegate',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'redelegate',
               msgs: [
                 toRedelegateMsg({
                   amount,
