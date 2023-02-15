@@ -1,4 +1,3 @@
-import { removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { ProposalForm } from '../shared/ProposalForm';
@@ -6,7 +5,6 @@ import { toExecuteMsg } from './helpers/toExecuteMsg';
 import { validateWasmMsg } from './helpers/validateWasmMsg';
 import styles from './ExecuteMessageProposalForm.module.sass';
 import { AddButton } from 'components/add-button';
-import { DeleteIconButton } from 'components/delete-icon-button';
 
 export const ExecuteMessageProposalForm = () => {
   const [messages, setMessages] = useState<string>('');
