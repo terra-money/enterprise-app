@@ -9,7 +9,7 @@ import { useMemo, useState } from 'react';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
-import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
+// import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
@@ -71,9 +71,9 @@ export const ProposalsPage = () => {
 
   const navigate = useNavigate();
 
-  const amICouncilMember = useAmICouncilMember();
+  // const amICouncilMember = useAmICouncilMember();
 
-  const newProposalsDisabled = votingPower.lte(0) && !amICouncilMember;
+  const newProposalsDisabled = votingPower.lte(0);
 
   console.log(proposals, isLoading);
 
@@ -157,9 +157,8 @@ export const ProposalsPage = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${
-                newProposalsDisabled ? '' : 'To create a new proposal click here'
-              }`}
+              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : 'To create a new proposal click here'
+                }`}
               action={
                 newProposalsDisabled ? undefined : (
                   <InternalLink to={`/dao/${dao?.address}/proposals/create`}>

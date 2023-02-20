@@ -51,7 +51,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
             {dao.name}
           </Text>
         </Container>
-        {dao.description && <Text variant="text">{dao.description}</Text>}
+        {/* {dao.description && <Text variant="text">{dao.description}</Text>} */}
         <Line />
       </VStack>
       <Container ref={ref} className={styles.tabs}>

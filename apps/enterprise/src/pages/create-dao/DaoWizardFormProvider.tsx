@@ -4,7 +4,7 @@ import { createContextHook } from '@terra-money/apps/utils/createContextHook';
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
-import { enterprise, enterprise_factory } from 'types/contracts';
+import { enterprise } from 'types/contracts';
 import { MultisigMember } from 'types/MultisigMember';
 import { fetchExistingToken } from './fetchExistingToken';
 import { fetchExistingNFT } from './fetchExistingNFT';
@@ -20,7 +20,6 @@ import { validateTokenInfo } from './token/helpers/validateTokenInfo';
 import { validateTokenMarketing } from './token/helpers/validateTokenMarketing';
 import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
-import { validateCouncil } from './shared/helpers/validateCouncil';
 
 export interface DaoSocialDataInput {
   githubUsername?: string;
@@ -35,19 +34,11 @@ export interface DaoInfoInput {
   logo?: string;
 }
 
-export interface CouncilMember {
-  address: string;
-}
-
 export interface DaoImportInput {
   shouldImport: boolean;
   daoAddress?: string;
 }
 
-export interface CouncilInput {
-  members: FormState<CouncilMember>[];
-  allowedProposalTypes: enterprise_factory.ProposalActionType[];
-}
 
 export interface DaoWizardInput {
   type: enterprise.DaoType;
@@ -65,8 +56,6 @@ export interface DaoWizardInput {
   initialBalances: FormState<InitialBalance>[];
   initialDaoBalance: number | undefined;
   tokenMarketing: FormState<TokenMarketing>;
-
-  council?: FormState<CouncilInput>;
 
   existingTokenAddr: string;
   existingToken: CW20TokenInfoResponse | undefined;
@@ -112,7 +101,6 @@ export type DaoWizardStep =
   | 'type'
   | 'daoImport'
   | 'info'
-  | 'council'
   | 'socials'
   | 'govConfig'
   | 'confirm'
@@ -136,7 +124,6 @@ export interface DaoWizardState extends DaoWizardInput {
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
 const sharedLastSteps: DaoWizardStep[] = [
   'govConfig',
-  // 'council',
   'socials',
   'confirm',
 ];
@@ -188,11 +175,6 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   daoImport: {
     shouldImport: false,
     daoAddress: undefined,
-  },
-
-  council: {
-    members: [],
-    allowedProposalTypes: ['upgrade_dao'],
   },
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],
@@ -297,18 +279,6 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
       return {
         members,
         isValid: members.every(isFormStateValid) && members.length > 1,
-      };
-    },
-
-    council: () => {
-      // TODO: remove TEMP changes
-      if (!state.council) return {};
-
-      const council = validateCouncil(state.council);
-
-      return {
-        council,
-        isValid: council.members.every(isFormStateValid) && isFormStateValid(council),
       };
     },
 

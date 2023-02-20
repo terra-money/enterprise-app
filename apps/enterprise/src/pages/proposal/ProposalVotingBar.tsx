@@ -15,7 +15,7 @@ export const ProposalVotingBar = () => {
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
-    if (votingType === 'council') return totalVotes;
+    if (votingType === 'regular') return totalVotes;
     return dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
   }, [dao.type, status, totalStaked, totalVotes, votingType]);
 

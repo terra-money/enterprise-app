@@ -52,9 +52,9 @@ export const getUpdatedFields = (msg: enterprise.UpdateMetadataMsg): Partial<Met
     view.name = msg.name.change || noValue;
   }
 
-  if (msg.description && msg.description !== 'no_change') {
-    view.description = msg.description.change || noValue;
-  }
+  // if (msg.description && msg.description !== 'no_change') {
+  //   view.description = msg.description.change || noValue;
+  // }
 
   return view;
 };
@@ -63,7 +63,6 @@ export const fromDao = (dao: DAO): MetadataView => {
   const {
     name,
     logo = noValue,
-    description = noValue,
     socials: {
       discord_username = noValue,
       github_username = noValue,
@@ -79,6 +78,5 @@ export const fromDao = (dao: DAO): MetadataView => {
     twitter: twitter_username,
     logo,
     name,
-    description,
   };
 };

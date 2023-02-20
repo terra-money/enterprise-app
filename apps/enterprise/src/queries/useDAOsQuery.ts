@@ -21,7 +21,7 @@ export type DAOsQueryResponse = Array<{
   enterpriseFactoryContract: string;
   socials: DAOSocials;
   config: DAOGovernanceConfig;
-  council: enterprise.DaoCouncil;
+  // council: enterprise.DaoCouncil;
 }>;
 
 export const fetchDAOsQuery = async (endpoint: string) => {
@@ -34,13 +34,11 @@ export const fetchDAOsQuery = async (endpoint: string) => {
       entity.address,
       entity.type,
       entity.name,
-      entity.description,
       entity.logo,
       entity.membershipContractAddress,
       entity.enterpriseFactoryContract,
       entity.socials,
       entity.config,
-      entity.council
     );
   });
 };

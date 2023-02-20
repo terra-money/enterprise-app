@@ -37,16 +37,16 @@ export const useDaoProposalsQuery = ({
       } catch (err) {
         reportError(err);
       }
-
-      try {
-        const { proposals } = await query<CouncilProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
-          council_proposals: {},
-        });
-        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'council')));
-      } catch (err) {
-        console.log('Council', err);
-        reportError(err);
-      }
+      // TODO: Add back when new version of contracts is added
+      // try {
+      //   const { proposals } = await query<CouncilProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
+      //     council_proposals: {},
+      //   });
+      //   result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'council')));
+      // } catch (err) {
+      //   console.log('Council', err);
+      //   reportError(err);
+      // }
 
       return result.sort((a, b) => b.created - a.created);
     },

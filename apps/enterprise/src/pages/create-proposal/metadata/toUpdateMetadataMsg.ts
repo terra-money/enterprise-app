@@ -22,7 +22,7 @@ export const toUpdateMetadataMsg = (
     logo,
     name,
   }: // description,
-  MetadataProposalFormInput
+    MetadataProposalFormInput
 ): enterprise.UpdateMetadataMsg => {
   const msg: enterprise.UpdateMetadataMsg = {
     discord_username: 'no_change',
@@ -31,7 +31,7 @@ export const toUpdateMetadataMsg = (
     twitter_username: 'no_change',
     logo: 'no_change',
     name: 'no_change',
-    description: 'no_change',
+    // description: 'no_change',
   };
 
   if (hasSocialChanged(dao.socials.discord_username, discordUsername)) {

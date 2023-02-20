@@ -24,13 +24,11 @@ export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> 
           entity.address,
           entity.type,
           entity.name,
-          entity.description,
           entity.logo,
           entity.membershipContractAddress,
           entity.enterpriseFactoryContract,
           entity.socials,
           entity.config,
-          entity.council
         );
       }
 

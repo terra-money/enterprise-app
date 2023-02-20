@@ -50,7 +50,7 @@ export const ProposalVotes = () => {
                 {totalAvailableVotes.gt(0) && (
                   <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber())}</Text>
                 )}
-                {proposal.votingType !== 'council' && token && (
+                {token && (
                   <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>
                 )}
               </HStack>

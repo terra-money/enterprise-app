@@ -8,7 +8,7 @@ import { ExecuteMessagesProposalAction } from './ExecuteMessagesProposalAction';
 import { GovConfigProposalAction } from './GovConfigProposalAction';
 import { MetadataProposalAction } from './MetadataProposalAction';
 import { UpdateAssetsWhitelistAction } from './UpdateAssetsWhitelistAction';
-import { UpdateCouncilAction } from './UpdateCouncilAction';
+// import { UpdateCouncilAction } from './UpdateCouncilAction';
 import { UpdateMultisigMembersAction } from './UpdateMultisigMembersAction';
 import { UpdateNFTsWhitelistAction } from './UpdateNFTWhitelistAction';
 import { UpgradeProposalAction } from './UpgradeProposalAction';
@@ -31,7 +31,7 @@ export const ProposalActions = () => {
               update_nft_whitelist={() => <UpdateNFTsWhitelistAction />}
               request_funding_from_dao={() => null}
               execute_msgs={() => <ExecuteMessagesProposalAction />}
-              update_council={() => <UpdateCouncilAction />}
+              // update_council={() => <UpdateCouncilAction />}
               upgrade_dao={() => <UpgradeProposalAction />}
               modify_multisig_membership={() => (
                 <CurrentDAOMultisigMembersProvider>

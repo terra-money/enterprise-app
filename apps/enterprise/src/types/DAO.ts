@@ -15,18 +15,16 @@ export type DAOGovernanceConfig = {
   voteDuration: number;
   minimumDeposit?: string;
 };
-
+// TODO: Revert this when audit is done
 export class DAO {
   constructor(
     public readonly address: string,
     public readonly type: enterprise.DaoType,
     public readonly name: string,
-    public readonly description: string | undefined = undefined,
     public readonly logo: string | undefined = undefined,
     public readonly membershipContractAddress: string,
     public readonly enterpriseFactoryContract: string,
     public readonly socials: DAOSocials,
     public readonly governanceConfig: DAOGovernanceConfig,
-    public readonly council: enterprise.DaoCouncil
-  ) {}
+  ) { }
 }
