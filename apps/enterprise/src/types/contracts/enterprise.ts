@@ -174,7 +174,7 @@ export module enterprise {
     title: string;
   }
   export interface UpdateMetadataMsg {
-//     description: ModifyValueFor_Nullable_String;
+    description: ModifyValueFor_Nullable_String;
     discord_username: ModifyValueFor_Nullable_String;
     github_username: ModifyValueFor_Nullable_String;
     logo: ModifyValueFor_Logo;
@@ -287,7 +287,7 @@ export module enterprise {
     vote_duration: number;
   }
   export interface DaoMetadata {
-//     description?: string | null;
+    description?: string | null;
     logo: Logo;
     name: string;
     socials: DaoSocialData;
