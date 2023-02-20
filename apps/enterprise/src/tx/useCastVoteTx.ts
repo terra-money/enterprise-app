@@ -5,7 +5,7 @@ import { TX_KEY } from './txKey';
 
 interface VoteOnProposalTxOptions {
   id: number;
-  outcome: enterprise.VoteOutcome;
+  outcome: enterprise.DefaultVoteOption;
   contract: string;
 }
 

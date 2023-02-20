@@ -15,7 +15,7 @@ import { DAO } from 'types';
 import { Text } from 'lib/ui/Text';
 import { useMyVotingPower } from 'dao/components/MyVotingPowerProvider';
 import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
-import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
+import { CouncilProposalActionType, councilProposalActionTypes } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import styles from './SelectProposalType.module.sass';
 
@@ -84,24 +84,7 @@ const proposalVotingTypeName: Record<ProposalVotingType, string> = {
 
 const getProposalOptions = ({ type }: DAO, proposalVotingType: ProposalVotingType) => {
   const options = daoProposalsRecord[type];
-  if (council) {
-    if (proposalVotingType === 'regular') {
-      return options;
-    }
-    const { allowed_proposal_action_types } = council;
-    if (allowed_proposal_action_types) {
-      return allowed_proposal_action_types.reduce((acc, type) => {
-        const proposalType = contractsProposalTypeRecord[type as CouncilProposalActionType];
-        if (proposalType) {
-          acc.push(proposalType);
-        }
-
-        return acc;
-      }, [] as ProposalType[]);
-    }
-  }
-
-  return without(options, 'council');
+  return options;
 };
 
 export const SelectProposalType = () => {
@@ -135,7 +118,7 @@ export const SelectProposalType = () => {
   };
 
   const renderOptions = () => {
-    const options = getProposalOptions(dao, proposalVotingType);
+    const options = getProposalOptions(dao, 'regular');
 
     if (proposalVotingType === 'council') {
       return <Text>Only council members can create emergency proposals.</Text>;
