@@ -16,7 +16,7 @@ interface UseProposalsQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposals: {} }>;
-type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposals: {} }>;
+// type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposals: {} }>;
 
 export const useDaoProposalsQuery = ({
   address,

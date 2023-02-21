@@ -30,7 +30,7 @@ export const useExecuteProposalTx = () => {
 
   return useTx<ExecuteProposalTxOptions>(
     (options) => {
-      const { daoAddress, proposalId, wallet, votingType } = options;
+      const { daoAddress, proposalId, wallet } = options;
       const tx = TxBuilder.new()
         .execute<enterprise.ExecuteMsg>(
           wallet.walletAddress,

@@ -15,7 +15,7 @@ interface UseProposalQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
-type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
+// type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
 
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { query } = useContract();

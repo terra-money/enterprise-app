@@ -10,22 +10,21 @@ import { VStack } from 'lib/ui/Stack';
 import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
-import { without } from 'lodash';
 import { DAO } from 'types';
 import { Text } from 'lib/ui/Text';
 import { useMyVotingPower } from 'dao/components/MyVotingPowerProvider';
 import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
-import { CouncilProposalActionType, councilProposalActionTypes } from 'pages/create-dao/shared/ProposalTypesInput';
+// import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import styles from './SelectProposalType.module.sass';
 
 const title = 'Create a proposal';
-const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
-  update_asset_whitelist: 'assets',
-  update_nft_whitelist: 'nfts',
-  upgrade_dao: 'upgrade',
-  update_metadata: 'metadata',
-};
+// const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
+//   update_asset_whitelist: 'assets',
+//   update_nft_whitelist: 'nfts',
+//   upgrade_dao: 'upgrade',
+//   update_metadata: 'metadata',
+// };
 
 export const proposalDescription: Record<ProposalType, string> = {
   text: 'Create general-purpose petitions, such as asking the DAO to partner with another protocol or for the DAO to implement a new feature',

@@ -99,7 +99,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
 
 export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
-    info: { name, logo, description },
+    info: { name, logo },
     socials,
   } = input;
 
