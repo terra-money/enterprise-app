@@ -12,7 +12,10 @@
   ],
   "scripts": {
     "docker:enterprise-api": "docker build . -f apps/enterprise-api/Dockerfile -t payments/api",
-    "docker:enterprise-indexers": "docker build . -f indexers/enterprise/Dockerfile -t payments/indexers"
+    "docker:enterprise-indexers": "docker build . -f indexers/enterprise/Dockerfile -t payments/indexers",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
   },
   "dependencies": {
     "@types/node": "^16.11.56",
@@ -24,7 +27,8 @@
     "husky": "^8.0.1",
     "jest-watch-typeahead": "2.1.1",
     "json-schema-to-typescript": "^11.0.2",
-    "lorem-ipsum": "^2.0.8"
+    "lorem-ipsum": "^2.0.8",
+    "react-app-rewired": "^2.2.1"
   },
   "packageManager": "yarn@3.2.3"
 }

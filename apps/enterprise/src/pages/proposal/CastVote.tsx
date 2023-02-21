@@ -14,10 +14,9 @@ import { ReactComponent as VoteAbstain } from 'components/assets/VoteAbstain.svg
 import { ReactComponent as VoteVeto } from 'components/assets/VoteVeto.svg';
 import styles from './CastVote.module.sass';
 import classNames from 'classnames';
-import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 
 interface VoteOption {
-  outcome: enterprise.VoteOutcome;
+  outcome: enterprise.DefaultVoteOption;
   icon: ReactNode;
   tooltip: string;
 }
@@ -38,9 +37,8 @@ export const CastVote = () => {
 
   const [txResult, tx] = useCastVoteTx(proposal.votingType);
 
-  const amICouncilMember = useAmICouncilMember();
 
-  const [vote, setVote] = useState<enterprise.VoteOutcome | undefined>();
+  const [vote, setVote] = useState<enterprise.DefaultVoteOption | undefined>();
 
   const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(
     proposal.dao.address as CW20Addr,
@@ -66,9 +64,6 @@ export const CastVote = () => {
     return <Text variant="text">Loading voting power ...</Text>;
   }
 
-  if (proposal.votingType === 'council' && !amICouncilMember) {
-    return <Text variant="text">Council members only</Text>;
-  }
 
   if (proposal.votingType === 'regular' && votingPower && votingPower.eq(0)) {
     if (proposal.dao.type === 'multisig') {

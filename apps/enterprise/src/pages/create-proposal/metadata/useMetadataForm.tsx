@@ -65,7 +65,7 @@ export const useMetadataForm = () => {
   );
 
   const initialState: MetadataProposalFormState = useMemo(() => {
-    const { name, logo, description, socials } = dao;
+    const { name, logo, socials } = dao;
 
     const initialInput: MetadataProposalFormInput = {
       discordUsername: socials.discord_username || undefined,
@@ -74,8 +74,7 @@ export const useMetadataForm = () => {
       twitterUsername: socials.twitter_username || undefined,
 
       logo: logo || '',
-      name: name || '',
-      description: description || '',
+      name: name || ''
     };
 
     const state = {

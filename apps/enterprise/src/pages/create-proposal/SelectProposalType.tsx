@@ -10,23 +10,21 @@ import { VStack } from 'lib/ui/Stack';
 import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import styled from '@emotion/styled';
-import { without } from 'lodash';
 import { DAO } from 'types';
 import { Text } from 'lib/ui/Text';
 import { useMyVotingPower } from 'dao/components/MyVotingPowerProvider';
-import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
-import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
+// import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import styles from './SelectProposalType.module.sass';
 
 const title = 'Create a proposal';
-const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
-  update_asset_whitelist: 'assets',
-  update_nft_whitelist: 'nfts',
-  upgrade_dao: 'upgrade',
-  update_metadata: 'metadata',
-};
+// const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
+//   update_asset_whitelist: 'assets',
+//   update_nft_whitelist: 'nfts',
+//   upgrade_dao: 'upgrade',
+//   update_metadata: 'metadata',
+// };
 
 export const proposalDescription: Record<ProposalType, string> = {
   text: 'Create general-purpose petitions, such as asking the DAO to partner with another protocol or for the DAO to implement a new feature',
@@ -44,7 +42,6 @@ export const proposalDescription: Record<ProposalType, string> = {
   metadata: 'Update metadata of your DAO',
   undelegate: 'Undelegate LUNA from a validator that you have delegated to',
   redelegate: 'Redelegate LUNA from your current validator to a new validator',
-  council: '',
   mintNft:
     'Mint a new DAO governance NFT to an account. This only works if the minter of the NFT is the DAO treasury address.',
 };
@@ -84,26 +81,9 @@ const proposalVotingTypeName: Record<ProposalVotingType, string> = {
   council: 'Emergency',
 };
 
-const getProposalOptions = ({ type, council }: DAO, proposalVotingType: ProposalVotingType) => {
+const getProposalOptions = ({ type }: DAO, proposalVotingType: ProposalVotingType) => {
   const options = daoProposalsRecord[type];
-  if (council) {
-    if (proposalVotingType === 'regular') {
-      return options;
-    }
-    const { allowed_proposal_action_types } = council;
-    if (allowed_proposal_action_types) {
-      return allowed_proposal_action_types.reduce((acc, type) => {
-        const proposalType = contractsProposalTypeRecord[type as CouncilProposalActionType];
-        if (proposalType) {
-          acc.push(proposalType);
-        }
-
-        return acc;
-      }, [] as ProposalType[]);
-    }
-  }
-
-  return without(options, 'council');
+  return options;
 };
 
 export const SelectProposalType = () => {
@@ -115,14 +95,13 @@ export const SelectProposalType = () => {
   const [proposalType, setProposalType] = useState<ProposalType>('text');
   const proposalDescriptionText = proposalDescription[proposalType];
   const navigate = useNavigate();
-  const amICouncilMember = useAmICouncilMember();
 
   const [proposalVotingType, setProposalVotingType] = useState<ProposalVotingType>(() =>
-    amICouncilMember ? 'council' : 'regular'
+    'regular'
   );
 
   const renderVotingTypePicker = () => {
-    if (!dao?.council) return null;
+    if (!dao) return null;
 
     return (
       <PrimarySelect
@@ -138,9 +117,9 @@ export const SelectProposalType = () => {
   };
 
   const renderOptions = () => {
-    const options = getProposalOptions(dao, proposalVotingType);
+    const options = getProposalOptions(dao, 'regular');
 
-    if (proposalVotingType === 'council' && !amICouncilMember) {
+    if (proposalVotingType === 'council') {
       return <Text>Only council members can create emergency proposals.</Text>;
     }
 

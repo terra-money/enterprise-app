@@ -5,7 +5,7 @@ import { TX_KEY } from './txKey';
 
 interface VoteOnProposalTxOptions {
   id: number;
-  outcome: enterprise.VoteOutcome;
+  outcome: enterprise.DefaultVoteOption;
   contract: string;
 }
 
@@ -30,7 +30,7 @@ export const useCastVoteTx = (proposalVotingType: ProposalVotingType) => {
         .execute<MultisigExecuteMsg | enterprise.ExecuteMsg>(
           wallet.walletAddress,
           contract,
-          proposalVotingType === 'council' ? { cast_council_vote: cast_vote } : { cast_vote }
+          { cast_vote }
         )
         .build();
     },

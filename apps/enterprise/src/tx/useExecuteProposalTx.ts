@@ -10,18 +10,19 @@ interface ExecuteProposalTxOptions {
   votingType: ProposalVotingType;
 }
 
-export const getExecuteProposalMsg = ({ id, votingType }: Pick<Proposal, 'id' | 'votingType'>) => {
+export const getExecuteProposalMsg = ({ id }: Pick<Proposal, 'id'>) => {
   const msg = {
     proposal_id: id,
   };
-
-  return votingType === 'regular'
-    ? {
-        execute_proposal: msg,
-      }
-    : {
-        execute_council_proposal: msg,
-      };
+  return { execute_proposal: msg }
+  // TODO: Add back when audit is done
+  // return votingType === 'regular'
+  //   ? {
+  //       execute_proposal: msg,
+  //     }
+  //   : {
+  //       execute_council_proposal: msg,
+  //     };
 };
 
 export const useExecuteProposalTx = () => {
@@ -29,12 +30,12 @@ export const useExecuteProposalTx = () => {
 
   return useTx<ExecuteProposalTxOptions>(
     (options) => {
-      const { daoAddress, proposalId, wallet, votingType } = options;
+      const { daoAddress, proposalId, wallet } = options;
       const tx = TxBuilder.new()
         .execute<enterprise.ExecuteMsg>(
           wallet.walletAddress,
           daoAddress,
-          getExecuteProposalMsg({ id: proposalId, votingType })
+          getExecuteProposalMsg({ id: proposalId })
         )
         .build();
 

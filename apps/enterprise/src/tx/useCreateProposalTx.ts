@@ -31,13 +31,15 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: ProposalVoting
         .execute<enterprise.ExecuteMsg>(
           wallet.walletAddress,
           daoAddress,
-          proposalVotingType === 'regular'
-            ? {
-                create_proposal,
-              }
-            : {
-                create_council_proposal: create_proposal,
-              }
+          // TODO: Remove this after auidit is done 
+          { create_proposal },
+          // proposalVotingType === 'regular'
+          //   ? {
+          //       create_proposal,
+          //     }
+          //   : {
+          //       create_council_proposal: create_proposal,
+          //     }
         )
         .build();
     },

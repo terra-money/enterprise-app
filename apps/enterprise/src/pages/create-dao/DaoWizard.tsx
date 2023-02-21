@@ -18,7 +18,6 @@ import { TokenInfoStep } from './token/TokenInfoStep';
 import { TokenMarketingStep } from './token/TokenMarketingStep';
 import { WizardButtons, WizardButtonsProps } from './WizardButtons';
 import { WizardLayout } from './WizardLayout';
-import { CouncilStep } from './shared/CouncilStep';
 import { useRefCallback } from '@terra-money/apps/hooks';
 import { CompletedTransaction, useTransactionSubscribers } from '@terra-money/apps/libs/transactions';
 import { reportError } from 'errors/errorMonitoring';
@@ -86,7 +85,6 @@ export const DaoWizard = () => {
         info={() => <InfoStep />}
         members={() => <MembersStep />}
         govConfig={() => <GovConfigStep />}
-        council={() => <CouncilStep />}
         socials={() => <SocialsStep />}
         confirm={() => <ConfirmationStep pending={txResult.loading} />}
         membership={() => <NftMembershipStep />}

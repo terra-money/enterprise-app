@@ -9,7 +9,6 @@ import { TokenDaoTotalStakedPanel } from './TokenDaoTotalStakedPanel';
 import { TokenDaoPricePanel } from './TokenDaoPricePanel';
 import { VStack } from 'lib/ui/Stack';
 import { MultisigDaoMembersPanel } from './MultisigDaoMembersPanel';
-import { DaoCouncilOverview } from './DaoCouncilOverview';
 import { AddressesOverview } from './AddressesOverview';
 import { GovernanceOverview } from './GovernanceOverview';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
@@ -43,7 +42,6 @@ export const Overview = () => {
       </SameWidthChildrenRow>
       <RecentProposals />
       <AddressesOverview />
-      <DaoCouncilOverview />
       <SocialChannels />
     </VStack>
   );

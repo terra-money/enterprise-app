@@ -20,7 +20,7 @@ import { TextProposalForm } from './text/TextProposalForm';
 import { UpgradeProposalForm } from './upgrade/UpgradeProposalForm';
 import { ExecuteMessageProposalForm } from './execute/ExecuteMessageProposalForm';
 import { MintTokensProposalForm } from './mint/MintTokensProposalForm';
-import { CouncilForm } from './council/CouncilForm';
+// import { CouncilForm } from './council/CouncilForm';
 import { useSearchParams } from 'react-router-dom';
 import { AnimatedPage } from '@terra-money/apps/components';
 import styled from 'styled-components';
@@ -75,7 +75,7 @@ export const CreateProposalPage = () => {
                       <ConditionalRender
                         value={assertDefined(type)}
                         metadata={() => <MetadataProposalForm />}
-                        council={() => <CouncilForm />}
+                        // council={() => <CouncilForm />}
                         text={() => <TextProposalForm />}
                         config={() => <CreateConfigProposalPage />}
                         upgrade={() => <UpgradeProposalForm />}

@@ -3,9 +3,22 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
-export const proposalVotingTypes = ['regular', 'council'] as const;
+export const proposalVotingTypes = ['regular'] as const;
 
 export type ProposalVotingType = typeof proposalVotingTypes[number];
+
+
+// TODO: Remove this when contracts version is updated after audit 
+export type ProposalActionType =
+  | 'update_metadata'
+  | 'update_gov_config'
+  | 'update_asset_whitelist'
+  | 'update_nft_whitelist'
+  | 'request_funding_from_dao'
+  | 'upgrade_dao'
+  | 'execute_msgs'
+  | 'modify_multisig_membership';
+
 
 export interface Proposal {
   dao: DAO;
@@ -36,7 +49,6 @@ export const sharedProposalTypes = [
   'delegate',
   'undelegate',
   'redelegate',
-  'council',
 ] as const;
 
 export const daoProposalsRecord = {
@@ -66,13 +78,11 @@ export const proposalTitle: Record<ProposalType, string> = {
   delegate: 'Delegate LUNA proposal',
   undelegate: 'Undelegate LUNA proposal',
   redelegate: 'Redelegate LUNA proposal',
-  council: 'Update council',
 };
 
-export const proposalActionShortName: Record<enterprise.ProposalActionType, string> = {
+export const proposalActionShortName: Record<ProposalActionType, string> = {
   update_metadata: 'metadata',
   update_gov_config: 'gov',
-  update_council: 'council',
   update_asset_whitelist: 'assets',
   update_nft_whitelist: 'nfts',
   request_funding_from_dao: 'funding',
@@ -81,14 +91,13 @@ export const proposalActionShortName: Record<enterprise.ProposalActionType, stri
   modify_multisig_membership: 'members',
 };
 
-export const getProposalActionType = (action: enterprise.ProposalAction): enterprise.ProposalActionType => {
-  return Object.keys(action)[0] as enterprise.ProposalActionType;
+export const getProposalActionType = (action: enterprise.ProposalAction): ProposalActionType => {
+  return Object.keys(action)[0] as ProposalActionType;
 };
 
 export type ProposalActionMsg =
   | enterprise.UpdateMetadataMsg
   | enterprise.UpdateGovConfigMsg
-  | enterprise.UpdateCouncilMsg
   | enterprise.UpdateAssetWhitelistMsg
   | enterprise.UpdateNftWhitelistMsg
   | enterprise.RequestFundingFromDaoMsg
@@ -97,7 +106,7 @@ export type ProposalActionMsg =
   | enterprise.ModifyMultisigMembershipMsg;
 
 export interface ProposalAction {
-  type: enterprise.ProposalActionType;
+  type: ProposalActionType;
   msg: ProposalActionMsg;
 }
 
@@ -148,8 +157,8 @@ export const getProposalStatusName = (proposal: Proposal, blockHeight: number): 
   return proposal.status === 'in_progress'
     ? 'Active'
     : proposal.status === 'passed'
-    ? 'Passed'
-    : proposal.status === 'rejected'
-    ? 'Rejected'
-    : 'Executed';
+      ? 'Passed'
+      : proposal.status === 'rejected'
+        ? 'Rejected'
+        : 'Executed';
 };

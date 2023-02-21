@@ -3,7 +3,7 @@ import { microfy } from '@terra-money/apps/libs/formatting';
 import { DaoWizardInput, DaoWizardState } from '../DaoWizardFormProvider';
 import { enterprise_factory } from 'types/contracts';
 import { assertDefined } from '@terra-money/apps/utils';
-
+// TODO: Revert this when audit si done 
 const getDaoMembership = (input: DaoWizardInput) => {
   const {
     type,
@@ -99,26 +99,17 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
 
 export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
-    info: { name, logo, description },
+    info: { name, logo },
     socials,
-    council,
   } = input;
 
   return {
     create_dao: {
-      dao_council:
-        council && council.members.length > 0
-          ? {
-            members: council.members.map((member) => member.address),
-            allowed_proposal_action_types: council.allowedProposalTypes,
-          }
-          : null,
       asset_whitelist: null,
       dao_membership: getDaoMembership(input),
       dao_metadata: {
         logo: logo ? { url: logo } : 'none',
         name,
-        description,
         socials: {
           github_username: socials.githubUsername,
           twitter_username: socials.twitterUsername,

@@ -15,7 +15,7 @@ interface UseProposalQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
-type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
+// type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
 
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { query } = useContract();
@@ -33,10 +33,12 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
         });
         return toProposal(resp, assertDefined(dao), 'regular');
       } catch (err) {
-        const councilProposal = await query<CouncilProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
-          council_proposal: { proposal_id: id },
-        });
-        return toProposal(councilProposal, assertDefined(dao), 'council');
+        // TODO: Add back when new version of contracts is added
+        // const councilProposal = await query<CouncilProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
+        //   council_proposal: { proposal_id: id },
+        // });
+        // return toProposal(councilProposal, assertDefined(dao), 'council');
+        reportError(err);
       }
     },
     {
