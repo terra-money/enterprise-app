@@ -13,7 +13,7 @@ interface ProposalStatusProps {
 
 export const ProposalTags = (props: ProposalStatusProps) => {
   const { className, proposal } = props;
-
+  console.log(proposal)
   const { data: blockHeight = Number.MAX_SAFE_INTEGER } = useBlockHeightQuery();
 
   const status = getProposalStatusName(proposal, blockHeight);
@@ -24,7 +24,7 @@ export const ProposalTags = (props: ProposalStatusProps) => {
     <Container className={classNames(className, styles.root)}>
       <Tag className={classNames(styles.status, styles[status.toLowerCase()])}>{status}</Tag>
       <Tag className={classNames(styles.type, styles[proposalTypeName.toLowerCase()])}>{proposalTypeName}</Tag>
-      {proposal.votingType === 'regular' && <Tag className={styles.emergency}>Emergency</Tag>}
+      {proposal.votingType !== 'regular' && <Tag className={styles.emergency}>Emergency</Tag>}
     </Container>
   );
 };
