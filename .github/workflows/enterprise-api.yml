@@ -210,6 +210,8 @@ jobs:
             echo "TF_GITHUB_REF=phoenix-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "TF_GITHUB_REF=pisco-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
+            echo "TF_GITHUB_REF=pisco-1" >> $GITHUB_ENV
           fi
 
       - name: Invoke Terraform Workflow
