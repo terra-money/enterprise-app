@@ -7,6 +7,8 @@ on:
     branches:
       - main
       - develop
+      - staging
+
     paths:
       - indexers/enterprise/src/**
       - indexers/shared/src/**
@@ -20,6 +22,8 @@ on:
     branches:
       - main
       - develop
+      - staging
+
     paths:
       - indexers/enterprise/src/**
       - apps/enterprise-api/src/**
@@ -133,6 +137,8 @@ jobs:
             echo "DOCKER_IMAGE_TAG=phoenix-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
+            echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
           fi
@@ -184,6 +190,8 @@ jobs:
             echo "DOCKER_IMAGE_TAG=phoenix-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
+            echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
           fi
@@ -210,6 +218,8 @@ jobs:
             echo "TF_GITHUB_REF=phoenix-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
             echo "TF_GITHUB_REF=pisco-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
+            echo "TF_GITHUB_REF=pisco-1-staging" >> $GITHUB_ENV
           fi
 
       - name: Invoke Terraform Workflow
