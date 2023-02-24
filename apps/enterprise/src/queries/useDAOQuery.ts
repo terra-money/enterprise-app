@@ -26,6 +26,7 @@ export const useDAOQuery = (address: CW20Addr): UseQueryResult<DAO | undefined> 
         response.metadata.logo === 'none' ? undefined : response.metadata.logo.url,
         response.dao_membership_contract,
         response.enterprise_factory_contract,
+        response.funds_distributor_contract,
         {
           discord_username: response.metadata.socials.discord_username || undefined,
           github_username: response.metadata.socials.github_username || undefined,

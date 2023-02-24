@@ -19,6 +19,7 @@ export type DAOsQueryResponse = Array<{
   logo: string | undefined;
   membershipContractAddress: string;
   enterpriseFactoryContract: string;
+  fundsDistributorContract: string,
   socials: DAOSocials;
   config: DAOGovernanceConfig;
   council: enterprise.DaoCouncil;
@@ -38,6 +39,7 @@ export const fetchDAOsQuery = async (endpoint: string) => {
       entity.logo,
       entity.membershipContractAddress,
       entity.enterpriseFactoryContract,
+      entity.fundsDistributorContract,
       entity.socials,
       entity.config,
       entity.council

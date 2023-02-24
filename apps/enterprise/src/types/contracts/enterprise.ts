@@ -270,6 +270,7 @@ export module enterprise {
     dao_membership_contract: Addr;
     dao_type: DaoType;
     enterprise_factory_contract: Addr;
+    funds_distributor_contract: Addr,
     gov_config: GovConfig;
     metadata: DaoMetadata;
   }

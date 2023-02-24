@@ -26,6 +26,7 @@ export class DAO {
     public readonly logo: string | undefined = undefined,
     public readonly membershipContractAddress: string,
     public readonly enterpriseFactoryContract: string,
+    public readonly fundsDistributorContract: string,
     public readonly socials: DAOSocials,
     public readonly governanceConfig: DAOGovernanceConfig,
     public readonly council?: enterprise.DaoCouncil
