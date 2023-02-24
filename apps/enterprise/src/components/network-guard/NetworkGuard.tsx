@@ -16,8 +16,8 @@ export const NetworkGuard = (props: UIElementProps) => {
 
   const { network } = useWallet();
 
-  if (network.name === 'classic') {
-    return <div>The Classic network is not supported.</div>;
+  if (network.name === 'classic' || network.name === 'mainnet') {
+    return <div>Enterprise Protocol Staging is currently available on the Pisco Testnet. Please switch networks and refresh.</div>;
   }
 
   return <>{children}</>;
