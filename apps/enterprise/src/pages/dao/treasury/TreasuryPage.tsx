@@ -21,7 +21,7 @@ export const TreasuryPage = () => {
           {txs ? (txs.map((tx) => <TxItem tx={tx} />)) : (
             <Container className={styles.noTransactionsToDisplay}>
               <Text className={styles.noTransactionsLabel} variant="label">
-                No NFTs were added to the treasury yet.
+                No transactions have been completed with the treasury.
               </Text>
             </Container>
           )}

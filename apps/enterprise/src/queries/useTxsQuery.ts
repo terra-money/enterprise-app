@@ -9,11 +9,15 @@ export const fetchTxs = async (
   offset: number,
   limit: number
 ): Promise<any> => {
-  const response = await fetch(`${network.api}/txs?offset=${offset}&limit=${limit}&account=${address}`);
+
+  //todo: include sent transactions and completed messages
+  const url = `${network.lcd}/cosmos/tx/v1beta1/txs?events=transfer.recipient%3D%27${address}%27&pagination.reverse=true&pagination.limit=${limit}`
+
+  const response = await fetch(url);
 
   const json = await response.json();
 
-  return json.txs as TxResponse[];
+  return json.tx_responses as TxResponse[];
 };
 
 export const useTxsQuery = (
