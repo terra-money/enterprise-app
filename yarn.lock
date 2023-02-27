@@ -5856,6 +5856,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.14.2":
+  version: 18.14.2
+  resolution: "@types/node@npm:18.14.2"
+  checksum: 53c07e721f6ae33de71306f6a0b75dae6066a4f55bd5484c93bd59ff25f0c5f004ceafeef509a4d0cb9e24a247efc34d50489bcc1b05a53ecc68e2fc088e65cb
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -9493,7 +9500,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "enterprise@workspace:."
   dependencies:
-    "@types/node": ^16.11.56
+    "@types/node": ^18.14.2
     husky: ^8.0.1
     jest-watch-typeahead: 2.1.1
     json-schema-to-typescript: ^11.0.2
