@@ -1,13 +1,13 @@
 import { Text } from 'components/primitives';
 import styles from './FieldsDiff.module.sass';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ValueDiff } from 'components/value-diff';
 import styled from 'styled-components';
 
-interface FieldChangeInfo {
+export interface FieldChangeInfo {
   name: string;
-  oldValue: string;
-  newValue: string;
+  oldValue: ReactNode;
+  newValue: ReactNode;
 }
 
 interface FieldsDiffProps {

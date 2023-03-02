@@ -1,13 +1,15 @@
+import { ReactNode } from 'react';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
+import { LogoValueView } from '../LogoValueView';
 
-export interface MetadataView extends Record<string, string> {
-  discord: string;
-  github: string;
-  telegram: string;
-  twitter: string;
-  logo: string;
-  name: string;
+export interface MetadataView extends Record<string, ReactNode> {
+  discord: ReactNode;
+  github: ReactNode;
+  telegram: ReactNode;
+  twitter: ReactNode;
+  logo: ReactNode;
+  name: ReactNode;
 }
 
 export const metadataViewFieldNameRecord: Record<keyof MetadataView, string> = {
@@ -45,7 +47,7 @@ export const getUpdatedFields = (msg: enterprise.UpdateMetadataMsg): Partial<Met
   }
 
   if (msg.logo !== 'no_change') {
-    view.twitter = formatLogo(msg.logo.change);
+    view.logo = <LogoValueView value={formatLogo(msg.logo.change)} />
   }
 
   if (msg.name !== 'no_change') {
@@ -76,7 +78,7 @@ export const fromDao = (dao: DAO): MetadataView => {
     github: github_username,
     telegram: telegram_username,
     twitter: twitter_username,
-    logo,
+    logo: logo === noValue ? noValue : <LogoValueView value={logo} />,
     name,
   };
 };
