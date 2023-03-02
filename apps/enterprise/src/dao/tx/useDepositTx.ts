@@ -1,7 +1,8 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
-import { TxBuilder, useTx } from '@terra-money/apps/libs/transactions';
+import { useTx } from '@terra-money/apps/libs/transactions';
+import { MsgExecuteContract, MsgSend } from '@terra-money/terra.js';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TX_KEY } from 'tx';
+import { isDenom, toAmount } from "@terra.kitchen/utils"
 
 interface DepositTxParams {
   address: string;
@@ -15,12 +16,24 @@ export const useDepositTx = () => {
 
   return useTx<DepositTxParams>(
     ({ address, amount, decimals, denom }) => {
-      const tx = TxBuilder.new()
-        .send(walletAddress, address, { [denom]: microfy(amount, decimals).toString() })
-        .build();
+      const msgs = isDenom(denom)
+        ? [
+          new MsgSend(
+            walletAddress,
+            address,
+            toAmount(amount, { decimals })
+          ),
+        ]
+        : [
+          new MsgExecuteContract(
+            walletAddress,
+            denom,
+            { transfer: { recipient: address, amount: toAmount(amount, { decimals }) } }
+          ),
+        ]
 
       return {
-        ...tx,
+        msgs
       };
     },
     {
