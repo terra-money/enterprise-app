@@ -1,10 +1,11 @@
 import { Text } from 'components/primitives';
 import styles from './ValueDiff.module.sass';
 import { ReactComponent as ArrowRightIcon } from 'components/assets/ArrowRight.svg';
+import { ReactNode } from 'react';
 
 interface ValueDiffProps {
-  oldValue: string;
-  newValue: string;
+  oldValue: ReactNode;
+  newValue: ReactNode;
 }
 
 export const ValueDiff = ({ oldValue, newValue }: ValueDiffProps) => (

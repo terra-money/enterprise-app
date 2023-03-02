@@ -1,12 +1,12 @@
 import { TitledCard } from 'components/titled-card';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { FieldChangeInfo, FieldsDiff } from './FieldsDiff';
 
 interface Props {
   title: string;
   fieldNameRecord: Record<string, string>;
-  oldView: Record<string, string | undefined>;
-  updatedFields: Record<string, string | undefined>;
+  oldView: Record<string, ReactNode | undefined>;
+  updatedFields: Record<string, ReactNode | undefined>;
 }
 
 export const ProposalActionDiff = ({ title, oldView, updatedFields, fieldNameRecord }: Props) => {
@@ -17,7 +17,7 @@ export const ProposalActionDiff = ({ title, oldView, updatedFields, fieldNameRec
       const oldValue = oldView[name];
       if (oldValue === undefined || newValue === undefined) return;
 
-      result.push({ name: fieldNameRecord[name] || name, oldValue, newValue: newValue as string });
+      result.push({ name: fieldNameRecord[name] || name, oldValue, newValue });
     });
     return result;
   }, [fieldNameRecord, oldView, updatedFields]);
