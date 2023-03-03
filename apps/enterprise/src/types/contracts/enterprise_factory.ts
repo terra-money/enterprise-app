@@ -28,7 +28,8 @@ export module enterprise_factory {
     cw3_fixed_multisig_code_id: number;
     cw721_code_id: number;
     enterprise_code_id: number;
-    governance_code_id: number;
+    enterprise_governance_code_id: number;
+    funds_distributor_code_id: number;
   }
   export type Uint64 = string;
   export interface EnterpriseCodeIdsResponse {
@@ -46,7 +47,8 @@ export module enterprise_factory {
     | 'request_funding_from_dao'
     | 'upgrade_dao'
     | 'execute_msgs'
-    | 'modify_multisig_membership';
+    | 'modify_multisig_membership'
+    | 'distribute_funds';
   export type Decimal = string;
   export type Uint128 = string;
   export type Duration =
@@ -87,8 +89,8 @@ export module enterprise_factory {
     /**
      * Optional council structure that can manage certain aspects of the DAO
      */
-    dao_council?: DaoCouncil | null;
-    dao_gov_config: GovConfig;
+    dao_council?: DaoCouncilSpec | null;
+    dao_gov_config: DaoGovConfig;
     dao_membership: CreateDaoMembershipMsg;
     dao_metadata: DaoMetadata;
     /**
@@ -96,7 +98,7 @@ export module enterprise_factory {
      */
     nft_whitelist?: Addr[] | null;
   }
-  export interface DaoCouncil {
+  export interface DaoCouncilSpec {
     /**
      * Proposal action types allowed in proposals that are voted on by the council. Effectively defines what types of actions council can propose and vote on. If None, will default to a predefined set of actions.
      */
@@ -114,7 +116,7 @@ export module enterprise_factory {
      */
     threshold: Decimal;
   }
-  export interface GovConfig {
+  export interface DaoGovConfig {
     /**
      * If set to true, this will allow DAOs to execute proposals that have reached quorum and threshold, even before their voting period ends.
      */
@@ -210,8 +212,9 @@ export module enterprise_factory {
     is_enterprise_code_id: boolean;
   }
   export interface MigrateMsg {
-    governance_code_id: number;
-    new_enterprise_code_id?: number | null;
+    new_enterprise_code_id: number;
+    new_enterprise_governance_code_id: number;
+    new_funds_distributor_code_id: number;
   }
   export interface NftWhitelistResponse {
     nfts: Addr[];

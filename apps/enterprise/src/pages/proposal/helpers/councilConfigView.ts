@@ -12,7 +12,7 @@ export const councilConfigViewFieldNameRecord: Record<keyof CouncilConfigView, s
   threshold: 'Threshold',
 };
 
-export const getUpdatedFields = (msg: enterprise.DaoCouncil): Partial<CouncilConfigView> => {
+export const getUpdatedFields = (msg: enterprise.DaoCouncilSpec): Partial<CouncilConfigView> => {
   const view: Partial<CouncilConfigView> = {};
 
   view.quorum = toPercents(Number(msg.quorum), 'round');

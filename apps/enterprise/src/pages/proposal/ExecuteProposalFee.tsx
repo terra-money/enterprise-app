@@ -5,7 +5,7 @@ import { useEstimatedFeeQuery } from 'chain/hooks/useEstimatedFee';
 import { Spinner } from 'lib/ui/Spinner';
 import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { getExecuteProposalMsg } from 'tx';
+import { getExecuteProposalMsg } from 'tx/useExecuteProposalTx';
 import { useCurrentProposal } from './CurrentProposalProvider';
 
 export const ExecuteProposalFee = () => {
@@ -16,7 +16,6 @@ export const ExecuteProposalFee = () => {
 
   const { data, isLoading } = useEstimatedFeeQuery([msg]);
 
-  console.log(data);
 
   if (!isLoading && !data) return null;
 

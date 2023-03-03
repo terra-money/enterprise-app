@@ -21,10 +21,10 @@ const getDaoMembership = (input: DaoWizardInput) => {
       type === 'token'
         ? input.existingTokenAddr
         : type === 'nft'
-        ? input.existingNFTAddr
-        : type === 'multisig'
-        ? input.existingMultisigAddr
-        : undefined;
+          ? input.existingNFTAddr
+          : type === 'multisig'
+            ? input.existingMultisigAddr
+            : undefined;
 
     return {
       existing_membership: {
@@ -79,7 +79,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
 export const getDaoRatio = (ratio: number) => ratio.toFixed(2);
 
 const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardState) => {
-  const config: enterprise_factory.GovConfig = {
+  const config: enterprise_factory.DaoGovConfig = {
     quorum: getDaoRatio(govConfig.quorum),
     threshold: getDaoRatio(govConfig.threshold),
     veto_threshold: getDaoRatio(govConfig.vetoThreshold),
@@ -110,11 +110,11 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
       dao_council:
         council && council.members.length > 0
           ? {
-              members: council.members.map((member) => member.address),
-              allowed_proposal_action_types: council.allowedProposalTypes,
-              quorum: getDaoRatio(council.quorum),
-              threshold: getDaoRatio(council.threshold),
-            }
+            members: council.members.map((member) => member.address),
+            allowed_proposal_action_types: council.allowedProposalTypes,
+            quorum: getDaoRatio(council.quorum),
+            threshold: getDaoRatio(council.threshold),
+          }
           : null,
       asset_whitelist: null,
       dao_membership: getDaoMembership(input),

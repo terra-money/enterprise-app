@@ -16,7 +16,6 @@ interface UseProposalsQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposals: {} }>;
-type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposals: {} }>;
 
 export const useDaoProposalsQuery = ({
   address,
@@ -35,16 +34,6 @@ export const useDaoProposalsQuery = ({
         });
         result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'general')));
       } catch (err) {
-        reportError(err);
-      }
-
-      try {
-        const { proposals } = await query<CouncilProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
-          council_proposals: {},
-        });
-        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao), 'council')));
-      } catch (err) {
-        console.log('Council', err);
         reportError(err);
       }
 

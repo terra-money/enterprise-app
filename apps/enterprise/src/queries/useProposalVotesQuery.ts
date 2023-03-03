@@ -28,8 +28,6 @@ export const useProposalVotesQuery = (options: UseProposalVotesQueryOptions) => 
         proposal_votes: {
           proposal_id: proposalId,
           start_after: pageParam,
-          // TODO: remove when the contract is updated
-          proposal_type: 'general',
           limit,
         },
       });

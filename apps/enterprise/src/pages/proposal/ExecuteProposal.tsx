@@ -6,7 +6,7 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import { ExecuteProposalFee } from './ExecuteProposalFee';
 
 export const ExecuteProposal = () => {
-  const { dao, id, votingType } = useCurrentProposal();
+  const { dao, id } = useCurrentProposal();
 
   const [txResult, tx] = useExecuteProposalTx();
 
@@ -18,7 +18,6 @@ export const ExecuteProposal = () => {
           tx({
             daoAddress: dao.address,
             proposalId: id,
-            votingType: votingType,
           });
         }}
       >

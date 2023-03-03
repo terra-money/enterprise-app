@@ -116,7 +116,8 @@
   "generate-types": {
     "contracts": [
       "enterprise",
-      "enterprise-factory"
+      "enterprise-factory",
+      "funds-distributor"
     ],
     "output": "src/types/contracts"
   },

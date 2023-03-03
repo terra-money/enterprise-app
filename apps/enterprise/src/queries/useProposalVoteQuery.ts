@@ -23,8 +23,6 @@ export const useProposalVoteQuery = (
           member_vote: {
             member,
             proposal_id: proposalId,
-            // TODO: remove when the contract is updated
-            proposal_type: 'general',
           },
         }
       );

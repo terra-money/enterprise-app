@@ -79,6 +79,7 @@ export const proposalActionShortName: Record<enterprise.ProposalActionType, stri
   upgrade_dao: 'upgrade',
   execute_msgs: 'execute',
   modify_multisig_membership: 'members',
+  distribute_funds: 'distribute',
 };
 
 export const getProposalActionType = (action: enterprise.ProposalAction): enterprise.ProposalActionType => {
@@ -148,8 +149,8 @@ export const getProposalStatusName = (proposal: Proposal, blockHeight: number): 
   return proposal.status === 'in_progress'
     ? 'Active'
     : proposal.status === 'passed'
-    ? 'Passed'
-    : proposal.status === 'rejected'
-    ? 'Rejected'
-    : 'Executed';
+      ? 'Passed'
+      : proposal.status === 'rejected'
+        ? 'Rejected'
+        : 'Executed';
 };
