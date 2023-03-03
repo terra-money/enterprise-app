@@ -24,7 +24,9 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
   if (compact) {
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
-        <DAOLogo className={styles.logo} logo={dao.logo} />
+        <div className={styles.logo}>
+          <DAOLogo size="m" logo={dao.logo} />
+        </div>
         <FavouriteToggle className={styles.favourite} dao={dao} />
         <Text className={styles.name} variant="heading2">
           {dao.name}
@@ -45,7 +47,9 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
               Back
             </Text>
           </InternalLink>
-          <DAOLogo className={styles.logo} logo={dao.logo} />
+          <div className={styles.logo}>
+            <DAOLogo size="m" logo={dao.logo} />
+          </div>
           <FavouriteToggle className={styles.favourite} dao={dao} />
           <Text className={styles.name} variant="heading2">
             {dao.name}

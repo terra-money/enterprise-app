@@ -105,7 +105,7 @@ export const TokenStakingConnectedView = () => {
           <Container className={styles.staking} component="section" direction="column">
             <VStack gap={40}>
               <Container className={styles.header}>
-                <DAOLogo logo={dao.logo} variant="large" />
+                <DAOLogo logo={dao.logo} size="l" />
                 <Text variant="label" className={styles.title}>
                   Voting power
                 </Text>

@@ -29,20 +29,20 @@ export const DAOCard = (props: DAOCardProps) => {
     );
   }
 
-  const logo = <DAOLogo logo={dao.logo} className={styles.logo} />;
-
   const description =
     dao.type === undefined
       ? undefined
       : dao.type === 'multisig'
-      ? 'Multisig DAO'
-      : dao.type === 'nft'
-      ? 'NFT Community DAO'
-      : 'Community Token DAO';
+        ? 'Multisig DAO'
+        : dao.type === 'nft'
+          ? 'NFT Community DAO'
+          : 'Community Token DAO';
 
   return (
     <Container className={classNames(className, styles.root)} onClick={() => navigate(`/dao/${dao.address}`)}>
-      {logo}
+      <div className={styles.logo}>
+        <DAOLogo logo={dao.logo} />
+      </div>
       <Text className={styles.name} variant="heading4">
         {dao.name}
       </Text>
