@@ -14,7 +14,7 @@ export const MobileCreateProposalHeader = ({ title }: MobileCreateProposalHeader
   return (
     <VStack gap={24}>
       <HStack gap={8} alignItems="center">
-        <DAOLogo logo={dao.logo} />
+        <DAOLogo size="s" logo={dao.logo} />
         <Text size={24} weight="bold">
           {title}
         </Text>

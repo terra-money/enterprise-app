@@ -96,8 +96,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
     dao.type === 'multisig'
       ? proposal.totalVotes
       : proposal.status === 'in_progress'
-      ? totalStaked
-      : proposal.totalVotes;
+        ? totalStaked
+        : proposal.totalVotes;
 
   return (
     <Container
@@ -119,7 +119,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
           {description}
         </Text>
         <Container className={styles.footer}>
-          <DAOLogo logo={dao.logo} />
+          <DAOLogo size="s" logo={dao.logo} />
           <Text className={styles.name} variant="text">
             {dao.name}
           </Text>

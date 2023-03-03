@@ -8,7 +8,7 @@ interface LogoValueViewProps {
 export const LogoValueView = ({ value }: LogoValueViewProps) => {
   return (
     <HStack alignItems="center" gap={4}>
-      <DAOLogo logo={value} />
+      <DAOLogo size="s" logo={value} />
       {value}
     </HStack>
   )

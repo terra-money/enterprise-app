@@ -11,7 +11,7 @@ export const SmallScreenProposalHeader = () => {
   return (
     <VStack gap={24}>
       <HStack gap={8}>
-        <DAOLogo logo={dao.logo} />
+        <DAOLogo size="s" logo={dao.logo} />
       </HStack>
       <Text size={24} weight="bold">
         {proposal.title}
