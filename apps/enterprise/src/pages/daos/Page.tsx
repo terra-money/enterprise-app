@@ -1,17 +1,19 @@
 import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
 import { Navigation } from 'components/Navigation';
-import { Divider, IconButton, SearchInput } from 'components/primitives';
+import { IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useDAOsQuery } from 'queries';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { List } from './List';
 import styles from './Page.module.sass';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { enterprise } from 'types/contracts';
+import { daoTypes } from 'dao';
+import { DaoFilter } from './DaoFilter';
 
 const MAX_PREVIEW_SIZE = 30;
 
@@ -19,11 +21,7 @@ export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [selectedFilter, setSelectedFilter] = useState<string>('');
-
-  const handleToggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+  const [daoTypesToDisplay, setDaoTypesToDisplay] = useState<enterprise.DaoType[]>(daoTypes);
 
   useEffect(() => {
     if (showDropdown) {
@@ -39,11 +37,7 @@ export const Page = () => {
     }
   }, [showDropdown]);
 
-  const daoFilters = [
-    { label: 'Multisig', value: 'multisig' },
-    { label: 'Token', value: 'token' },
-    { label: 'NFT', value: 'nft' },
-  ];
+
   const [search, setSearch] = useState({
     input: '',
     searchText: '',
@@ -54,64 +48,7 @@ export const Page = () => {
     limit: MAX_PREVIEW_SIZE,
   });
 
-  const filteredItems = useMemo(() => {
-    if (!selectedFilter) {
-      return data;
-    }
-    return data?.filter((item) => item.type === selectedFilter);
-  }, [data, selectedFilter]);
-
-  const handleFilterChange = (event: any) => {
-    if (event.target.value === selectedFilter) {
-      setSelectedFilter('');
-    } else {
-      setSelectedFilter(event.target.value);
-    }
-  };
-
-  const filters = (
-    <>
-      <PrimaryButton
-        className={styles.filterButton}
-        as="div"
-        kind="secondary"
-        onClick={() => {
-          handleToggleDropdown();
-        }}
-      >
-        <ResponsiveView small={() => 'Filter'} normal={() => 'Filter'} />
-      </PrimaryButton>
-      <Container ref={dropdownRef}>
-        {showDropdown && (
-          <div ref={dropdownRef}>
-            <Container className={styles.filterContainer} direction="column">
-              <Text className={styles.filterLabel}>DAO Type</Text>
-              <Container direction="column" gap={10}>
-                {daoFilters.map((filter) => (
-                  <div key={filter.value} className={styles.filterOption}>
-                    <Container direction="row" gap={10}>
-                      <input
-                        type="radio"
-                        name="filter"
-                        value={filter.value}
-                        checked={filter.value === selectedFilter}
-                        onChange={handleFilterChange}
-                      />
-                      <label>{filter.label}</label>
-                    </Container>
-                  </div>
-                ))}
-              </Container>
-              <Divider></Divider>
-              <Text className={styles.resetButton} onClick={() => setSelectedFilter('')}>
-                Reset all filters
-              </Text>
-            </Container>
-          </div>
-        )}
-      </Container>
-    </>
-  );
+  const items = data?.filter(item => daoTypesToDisplay.includes(item.type));
 
   const searchInput = (
     <SearchInput
@@ -144,6 +81,13 @@ export const Page = () => {
     />
   );
 
+  const filters = (
+    <DaoFilter
+      value={daoTypesToDisplay}
+      onChange={setDaoTypesToDisplay}
+    />
+  )
+
   return (
     <Navigation>
       <ResponsiveView
@@ -154,7 +98,7 @@ export const Page = () => {
             </Text>
             {searchInput}
             {data && data?.length ? (
-              <List items={filteredItems} isLoading={isLoading} />
+              <List items={items} isLoading={isLoading} />
             ) : (
               <Container className={styles.noResultsContainer}>
                 <IconButton
@@ -183,7 +127,7 @@ export const Page = () => {
                 <Header
                   compact={true}
                   isLoading={isLoading}
-                  totalCount={filteredItems?.length ?? 0}
+                  totalCount={items?.length ?? 0}
                   searchInput={searchInput}
                   filters={filters}
                 />
@@ -195,14 +139,14 @@ export const Page = () => {
                 <Header
                   ref={stickyRef}
                   isLoading={isLoading}
-                  totalCount={filteredItems?.length ?? 0}
+                  totalCount={items?.length ?? 0}
                   searchInput={searchInput}
                   filters={filters}
                 />
               }
             >
               {data && data?.length ? (
-                <List items={filteredItems} isLoading={isLoading} />
+                <List items={items} isLoading={isLoading} />
               ) : (
                 <Container className={styles.noResultsContainer}>
                   <IconButton
