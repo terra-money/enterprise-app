@@ -22,6 +22,7 @@ import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { RewardsPanel } from './RewardsPanel';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -127,30 +128,33 @@ export const NftStakingConnectedView = () => {
           </SameWidthChildrenRow>
         </VStack>
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claimable NFTs"
-            value={claimableTokens.length}
-            suffix={symbol}
-            footnote={
-              <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
-                <Container className={styles.actions} direction="row">
-                  <PrimaryButton
-                    kind="secondary"
-                    isDisabled={isClaimDisabled}
-                    tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
-                    isLoading={claimTxResult.loading}
-                    onClick={() => {
-                      claimTx({ daoAddress: dao.address });
-                    }}
-                  >
-                    Claim all
-                  </PrimaryButton>
-                </Container>
-              </VStack>
-            }
-          />
+          <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
+            <NumericPanel
+              className={styles.claim}
+              title="Claimable NFTs"
+              value={claimableTokens.length}
+              suffix={symbol}
+              footnote={
+                <VStack alignItems="stretch" fullWidth gap={40}>
+                  <div />
+                  <Container className={styles.actions} direction="row">
+                    <PrimaryButton
+                      kind="secondary"
+                      isDisabled={isClaimDisabled}
+                      tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
+                      isLoading={claimTxResult.loading}
+                      onClick={() => {
+                        claimTx({ daoAddress: dao.address });
+                      }}
+                    >
+                      Claim all
+                    </PrimaryButton>
+                  </Container>
+                </VStack>
+              }
+            />
+            <RewardsPanel />
+          </SameWidthChildrenRow>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NumericPanel title="Your wallet" value={myNfts?.length} suffix={symbol} />
             <NumericPanel
