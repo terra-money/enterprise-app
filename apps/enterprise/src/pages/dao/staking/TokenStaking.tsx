@@ -26,6 +26,7 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { RewardsPanel } from './RewardsPanel';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -174,31 +175,34 @@ export const TokenStakingConnectedView = () => {
         </VStack>
 
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claimable tokens"
-            value={demicrofy(claimableAmount, tokenDecimals)}
-            decimals={2}
-            suffix={tokenSymbol}
-            footnote={
-              <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
-                <Container className={styles.actions} direction="row">
-                  <PrimaryButton
-                    kind="secondary"
-                    isDisabled={isClaimDisabled}
-                    isLoading={claimTxResult.loading}
-                    tooltipText={isClaimDisabled && 'No tokens to claim'}
-                    onClick={() => {
-                      claimTx({ daoAddress: dao.address });
-                    }}
-                  >
-                    Claim all
-                  </PrimaryButton>
-                </Container>
-              </VStack>
-            }
-          />
+          <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
+            <NumericPanel
+              className={styles.claim}
+              title="Claimable tokens"
+              value={demicrofy(claimableAmount, tokenDecimals)}
+              decimals={2}
+              suffix={tokenSymbol}
+              footnote={
+                <VStack alignItems="stretch" fullWidth gap={40}>
+                  <div />
+                  <Container className={styles.actions} direction="row">
+                    <PrimaryButton
+                      kind="secondary"
+                      isDisabled={isClaimDisabled}
+                      isLoading={claimTxResult.loading}
+                      tooltipText={isClaimDisabled && 'No tokens to claim'}
+                      onClick={() => {
+                        claimTx({ daoAddress: dao.address });
+                      }}
+                    >
+                      Claim all
+                    </PrimaryButton>
+                  </Container>
+                </VStack>
+              }
+            />
+            <RewardsPanel />
+          </SameWidthChildrenRow>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NumericPanel title="Your wallet" value={demicrofy(balance, tokenDecimals)} suffix={tokenSymbol} />
             <NumericPanel
