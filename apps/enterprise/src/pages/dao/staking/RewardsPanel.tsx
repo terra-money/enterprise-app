@@ -8,10 +8,9 @@ import { useDAOAssetsWhitelist, useGlobalAssetsWhitelist } from "queries";
 import { useMemo } from "react";
 
 export const RewardsPanel = () => {
-  const { address, type, membershipContractAddress } = useCurrentDao()
+  const { fundsDistributorContract, address, type, membershipContractAddress } = useCurrentDao()
   const { data: globalWhitelist } = useGlobalAssetsWhitelist()
   const { data: daoWhitelist } = useDAOAssetsWhitelist(address)
-  console.log(daoWhitelist, globalWhitelist)
 
   const tokensToClaim = useMemo(() => {
     if (!daoWhitelist || !globalWhitelist) return
@@ -52,7 +51,7 @@ export const RewardsPanel = () => {
           onClick={() => {
             const { cw20, native } = assertDefined(tokensToClaim)
             claimRewards({
-              daoAddress: address,
+              fundsDistributorAddress: fundsDistributorContract,
               cw20Assets: Array.from(cw20),
               nativeDenoms: Array.from(native),
             });

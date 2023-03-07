@@ -352,9 +352,6 @@ export module enterprise {
         claim: {};
       }
     | {
-        claim_rewards: ClaimRewardsMsg;
-      }
-    | {
         receive: Cw20ReceiveMsg;
       }
     | {
@@ -380,17 +377,6 @@ export module enterprise {
   }
   export interface UnstakeCw721Msg {
     tokens: string[];
-  }
-  export interface ClaimRewardsMsg {
-    /**
-     * CW20 token addresses for which the rewards are to be claimed
-     */
-    cw20_assets: string[];
-    member: string;
-    /**
-     * Native denominations for which the rewards are to be claimed
-     */
-    native_denoms: string[];
   }
   export interface Cw20ReceiveMsg {
     amount: Uint128;

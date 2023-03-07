@@ -21,7 +21,7 @@ export const useDepositTx = () => {
           new MsgSend(
             walletAddress,
             address,
-            toAmount(amount, { decimals })
+            { [denom]: toAmount(amount, { decimals }) }
           ),
         ]
         : [

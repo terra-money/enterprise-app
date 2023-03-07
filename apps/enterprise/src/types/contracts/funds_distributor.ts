@@ -20,9 +20,9 @@ export module funds_distributor {
      */
     new_total_weight: Uint128;
     /**
-     * Previous weights that the users had, before the change
+     * New weights that the users have, after the change
      */
-    old_user_weights: UserWeight[];
+    new_user_weights: UserWeight[];
   }
   export interface UserWeight {
     user: string;
@@ -38,7 +38,6 @@ export module funds_distributor {
      */
     native_denoms: string[];
     user: string;
-    user_weight: Uint128;
   }
   export interface Cw20ReceiveMsg {
     amount: Uint128;
@@ -62,9 +61,5 @@ export module funds_distributor {
      */
     native_denoms: string[];
     user: string;
-    /**
-     * Current user's weight
-     */
-    user_weight: Uint128;
   }
 }
