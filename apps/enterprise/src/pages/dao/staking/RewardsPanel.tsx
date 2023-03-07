@@ -1,6 +1,7 @@
 import { assertDefined } from "@terra-money/apps/utils";
 import { Panel } from "components/panel"
 import { useCurrentDao } from "dao/components/CurrentDaoProvider";
+import { useMyDaoRewardsQuery } from "dao/hooks/useMyDaoRewardsQuery";
 import { useClaimRewardsTx } from "dao/tx/useClaimRewardsTx";
 import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton";
 import { VStack } from "lib/ui/Stack";
@@ -12,7 +13,7 @@ export const RewardsPanel = () => {
   const { data: globalWhitelist } = useGlobalAssetsWhitelist()
   const { data: daoWhitelist } = useDAOAssetsWhitelist(address)
 
-  const tokensToClaim = useMemo(() => {
+  const tokensToCheck = useMemo(() => {
     if (!daoWhitelist || !globalWhitelist) return
 
     const result = {
@@ -37,6 +38,14 @@ export const RewardsPanel = () => {
     return result
   }, [daoWhitelist, globalWhitelist, membershipContractAddress, type])
 
+  const { data: rewards } = useMyDaoRewardsQuery(tokensToCheck ? {
+    fundsDistributorAddress: fundsDistributorContract,
+    nativeDenoms: Array.from(tokensToCheck.native),
+    cw20Assets: Array.from(tokensToCheck.cw20),
+  } : undefined)
+
+  const areRewardsAvailable = rewards && [...rewards.cw20Rewards, ...rewards.nativeRewards].length > 0
+
   const [txResult, claimRewards] = useClaimRewardsTx()
 
   return (
@@ -45,11 +54,12 @@ export const RewardsPanel = () => {
         <div />
         <PrimaryButton
           kind="secondary"
-          isDisabled={!tokensToClaim}
+          isDisabled={!areRewardsAvailable}
           isLoading={txResult.loading}
           // tooltipText={isClaimDisabled && 'No tokens to claim'}
           onClick={() => {
-            const { cw20, native } = assertDefined(tokensToClaim)
+            // try to claim everything just in case
+            const { cw20, native } = assertDefined(tokensToCheck)
             claimRewards({
               fundsDistributorAddress: fundsDistributorContract,
               cw20Assets: Array.from(cw20),

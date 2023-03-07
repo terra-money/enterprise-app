@@ -12,7 +12,21 @@ interface UseMyDaoRewardsQueryParams {
 }
 
 type RewardsQueryArguments = Extract<funds_distributor.QueryMsg, { user_rewards: {} }>;
-interface RewardsResponse { }
+
+interface CW20Reward {
+  asset: string;
+  amount: string
+}
+
+interface NativeReward {
+  denom: string;
+  amount: string
+}
+
+interface RewardsResponse {
+  cw20_rewards: CW20Reward[],
+  native_rewards: NativeReward[]
+}
 
 export const useMyDaoRewardsQuery = (params?: UseMyDaoRewardsQueryParams) => {
   const { query } = useContract();
@@ -20,7 +34,7 @@ export const useMyDaoRewardsQuery = (params?: UseMyDaoRewardsQueryParams) => {
 
   return useQuery([QUERY_KEY.MY_DAO_REWARDS, params], async () => {
     const { fundsDistributorAddress, nativeDenoms, cw20Assets } = assertDefined(params)
-    const result = await query<RewardsQueryArguments, RewardsResponse>(fundsDistributorAddress, {
+    const { cw20_rewards, native_rewards } = await query<RewardsQueryArguments, RewardsResponse>(fundsDistributorAddress, {
       user_rewards: {
         native_denoms: nativeDenoms,
         cw20_assets: cw20Assets,
@@ -28,7 +42,10 @@ export const useMyDaoRewardsQuery = (params?: UseMyDaoRewardsQueryParams) => {
       }
     })
 
-    return result
+    return {
+      cw20Rewards: cw20_rewards.filter(reward => reward.amount !== "0"),
+      nativeRewards: native_rewards.filter(reward => reward.amount !== "0")
+    }
   }, {
     enabled: !!params,
   });
