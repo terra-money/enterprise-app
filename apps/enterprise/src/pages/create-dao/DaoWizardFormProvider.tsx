@@ -138,7 +138,7 @@ export interface DaoWizardState extends DaoWizardInput {
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
 const sharedLastSteps: DaoWizardStep[] = [
   'govConfig',
-  // 'council',
+  'council',
   'socials',
   'confirm',
 ];
@@ -167,7 +167,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   type: defaultDaoType,
   info: {
     name: '',
-    // description: '',
+    description: '',
     logo: undefined,
   },
   isValid: true,
@@ -305,7 +305,6 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
     },
 
     council: () => {
-      // TODO: remove TEMP changes
       if (!state.council) return {};
 
       const council = validateCouncil(state.council);
