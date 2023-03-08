@@ -13,6 +13,8 @@ import { DaoCouncilOverview } from './DaoCouncilOverview';
 import { AddressesOverview } from './AddressesOverview';
 import { GovernanceOverview } from './GovernanceOverview';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { ConditionalWallet } from 'components/conditional-wallet';
+import { RewardsPanel } from './staking/RewardsPanel';
 
 export const Overview = () => {
   const dao = useCurrentDao();
@@ -23,7 +25,14 @@ export const Overview = () => {
         <VStack justifyContent="space-between" gap={16}>
           <ConditionalRender
             value={dao.type}
-            multisig={() => <MultisigDaoMembersPanel />}
+            multisig={() => (
+              <VStack gap={16}>
+                <MultisigDaoMembersPanel />
+                <ConditionalWallet
+                  connected={() => <RewardsPanel />}
+                />
+              </VStack>
+            )}
             token={() => (
               <>
                 <TokenDaoTotalSupplyPanel />
