@@ -31,6 +31,7 @@ import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvi
 import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
+import { DistributePage } from 'pages/dao/distribute/DistributePage';
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,14 @@ const AppBetaRoutes = () => {
             element={
               <InitizalizedWalletOnly>
                 <DAOProposalsPage />
+              </InitizalizedWalletOnly>
+            }
+          />
+          <Route
+            path="distribute"
+            element={
+              <InitizalizedWalletOnly>
+                <DistributePage />
               </InitizalizedWalletOnly>
             }
           />
