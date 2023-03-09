@@ -13,7 +13,6 @@ export const SelectAssetStep = ({ onSelect, onCancel }: SelectAssetStepProps) =>
     <>
       <TokenInput onSelect={onSelect} />
       <VStack gap={8}>
-        {/* <PrimaryButton>Next</PrimaryButton> */}
         <PrimaryButton kind="secondary" onClick={onCancel}>
           Cancel
         </PrimaryButton>

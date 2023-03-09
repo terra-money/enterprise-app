@@ -1,4 +1,7 @@
 export module funds_distributor {
+  export type Cw20HookMsg = {
+    distribute: {};
+  };
   export type ExecuteMsg =
     | {
         update_user_weights: UpdateUserWeightsMsg;
