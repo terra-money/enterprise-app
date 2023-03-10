@@ -134,24 +134,21 @@ export class Indexer extends EventIndexer<Entity> {
     };
   };
 
-  private synchronize = async (proposalsKeys: ProposalKey[]): Promise<void> => {
-    const lcd = createLCDClient();
-
-    const entities = [];
-
-    await Promise.all(
-      proposalsKeys.map(async ({ daoAddress, id }) => {
-        try {
-          const proposal = await this.fetchProposal(lcd, daoAddress, id);
-          entities.push(proposal);
-        } catch (err) {
-          this.logger.error(`Failed to fetch proposal with id ${id} for ${daoAddress} DAO: ${err}.`);
-        }
-      })
+  private getExecutedProposals = async (min: number, max: number): Promise<Array<ProposalKey & { txHash: string }>> => {
+    const proposals = await Promise.all(
+      [EnterpriseEventPK.dao('execute_proposal')].map((pk) =>
+        fetchByHeight<DaoEvents, ProposalKey & { txHash: string }>(this.events, pk, min, max, ({ payload, txHash }) => [
+          {
+            daoAddress: payload.dao_address,
+            id: Number(payload.proposal_id),
+            txHash,
+          }
+        ])
+      )
     );
 
-    await this.persistence.save(entities);
-  };
+    return proposals.flatMap(p => p)
+  }
 
   override index = async (options: IndexFnOptions): Promise<void> => {
     const { current, genesis } = options;
@@ -161,7 +158,30 @@ export class Indexer extends EventIndexer<Entity> {
     await batch(height, current.height, 1000, async ({ min, max }) => {
       this.logger.info(`Processing blocks between ${min} and ${max}.`);
 
-      await this.synchronize(await this.getModifiedProposals(min, max));
+      const modifiedProposalsKeys = await this.getModifiedProposals(min, max);
+      const executedProposalsHashes = await this.getExecutedProposals(min, max);
+
+      const lcd = createLCDClient();
+
+      const entities = [];
+
+      await Promise.all(
+        modifiedProposalsKeys.map(async ({ daoAddress, id }) => {
+          try {
+            const proposal = await this.fetchProposal(lcd, daoAddress, id);
+            const execution = executedProposalsHashes.find(p => p.daoAddress === daoAddress && p.id === id)
+            if (execution) {
+              proposal.executionTxHash = execution.txHash
+            }
+
+            entities.push(proposal);
+          } catch (err) {
+            this.logger.error(`Failed to fetch proposal with id ${id} for ${daoAddress} DAO: ${err}.`);
+          }
+        })
+      );
+
+      this.persistence.save(entities)
 
       await this.state.set({ height: max });
     });

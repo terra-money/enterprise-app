@@ -3,6 +3,7 @@ import { enterprise } from 'types/contracts';
 export type Entity = {
   _type: string;
   daoAddress: string;
+  executionTxHash?: string;
   id: number;
   created: number;
   started_at: number;
