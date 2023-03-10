@@ -1,8 +1,8 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { ProposalVotingType } from 'dao/shared/proposal';
+import { enterprise } from 'types/contracts';
 
 interface CreateProposalState {
-  proposalVotingType: ProposalVotingType;
+  proposalVotingType: enterprise.ProposalType;
 }
 
 export const { provider: CreateProposalProvider, useValue: useCreateProposal } =

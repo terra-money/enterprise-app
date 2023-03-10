@@ -26,6 +26,8 @@ export const Page = () => {
     id: proposalId,
   });
 
+  console.log('Execution hash:', proposal?.executionTxHash)
+
   const ref = useRef<HTMLDivElement>(null);
 
   return (

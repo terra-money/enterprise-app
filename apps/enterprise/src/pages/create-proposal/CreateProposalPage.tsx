@@ -10,7 +10,7 @@ import { BurnTokensProposalPage } from './burn/BurnTokensProposalPage';
 import { CreateConfigProposalPage } from './config/CreateConfigProposalPage';
 import { DelegateProposalPage } from './delegate/DelegateProposalPage';
 import { MultisigMembersProposalPage } from './multisig-members/MultisigMembersProposalPage';
-import { proposalTitle, ProposalType, ProposalVotingType } from 'dao/shared/proposal';
+import { proposalTitle, ProposalType } from 'dao/shared/proposal';
 import { SpendTreasuryProposalPage } from './spend/SpendTreasuryProposalPage';
 import { UpdateWhitelistedAssetsProposalPage } from './whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
 import { UpdateWhitelistedNFTsProposalPage } from './whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
@@ -31,6 +31,7 @@ import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
 import { MintNftProposalPage } from './mint/MintNftProposalPage';
+import { enterprise } from 'types/contracts';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -56,7 +57,7 @@ export const CreateProposalPage = () => {
   const address = assertDefined(params.address);
   const [searchParams] = useSearchParams();
 
-  const proposalVotingType = (searchParams.get('votingType') || 'general') as ProposalVotingType;
+  const proposalVotingType = (searchParams.get('votingType') || 'general') as enterprise.ProposalType;
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 

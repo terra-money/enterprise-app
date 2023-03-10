@@ -42,7 +42,7 @@ export const ProposalVotingAction = () => {
   const now = useRhythmicRerender(2000);
   const hasExpired = hasProposalExpired(proposal, blockHeight, now);
 
-  if (proposal.status === 'executed') {
+  if (proposal.status === 'executed' || proposal.executionTxHash) {
     return (
       <Text color="success" weight="semibold">
         Executed

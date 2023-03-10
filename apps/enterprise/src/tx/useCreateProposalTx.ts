@@ -1,13 +1,12 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
 import Big from 'big.js';
-import { ProposalVotingType } from 'dao/shared/proposal';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 
 export type CreateProposalMsgType = Extract<enterprise.ExecuteMsg, { create_proposal: {} }>;
 
-export const useCreateProposalTx = (dao: DAO, proposalVotingType: ProposalVotingType) => {
+export const useCreateProposalTx = (dao: DAO, proposalVotingType: enterprise.ProposalType) => {
   const {
     type,
     address: daoAddress,
@@ -33,11 +32,11 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: ProposalVoting
           daoAddress,
           proposalVotingType === 'general'
             ? {
-                create_proposal,
-              }
+              create_proposal,
+            }
             : {
-                create_council_proposal: create_proposal,
-              }
+              create_council_proposal: create_proposal,
+            }
         )
         .build();
     },

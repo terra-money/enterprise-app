@@ -3,9 +3,7 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
-export const proposalVotingTypes = ['general', 'council'] as const;
-
-export type ProposalVotingType = typeof proposalVotingTypes[number];
+export const proposalTypes = ['general', 'council'] as const;
 
 export interface Proposal {
   dao: DAO;
@@ -21,7 +19,8 @@ export interface Proposal {
   abstainVotes: Big;
   vetoVotes: Big;
   totalVotes: Big;
-  votingType: ProposalVotingType;
+  type: enterprise.ProposalType;
+  executionTxHash?: string;
 }
 
 export const sharedProposalTypes = [

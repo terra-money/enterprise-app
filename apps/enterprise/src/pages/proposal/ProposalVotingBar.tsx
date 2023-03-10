@@ -10,17 +10,17 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
 
 export const ProposalVotingBar = () => {
-  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, votingType } = useCurrentProposal();
+  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
 
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
-    if (votingType === 'council') return totalVotes;
+    if (type === 'council') return totalVotes;
 
     if (dao.type === 'multisig') return totalVotes;
 
     return status === 'in_progress' ? totalStaked : totalVotes;
-  }, [dao.type, status, totalStaked, totalVotes, votingType]);
+  }, [dao.type, status, totalStaked, totalVotes, type]);
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 

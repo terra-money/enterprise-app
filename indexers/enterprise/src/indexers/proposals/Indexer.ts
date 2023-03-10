@@ -131,6 +131,7 @@ export class Indexer extends EventIndexer<Entity> {
       abstainVotes,
       vetoVotes,
       totalVotes: response.total_votes_available,
+      type: response.proposal.proposal_type
     };
   };
 

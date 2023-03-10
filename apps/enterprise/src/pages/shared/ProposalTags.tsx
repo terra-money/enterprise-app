@@ -24,7 +24,7 @@ export const ProposalTags = (props: ProposalStatusProps) => {
     <Container className={classNames(className, styles.root)}>
       <Tag className={classNames(styles.status, styles[status.toLowerCase()])}>{status}</Tag>
       <Tag className={classNames(styles.type, styles[proposalTypeName.toLowerCase()])}>{proposalTypeName}</Tag>
-      {proposal.votingType === 'council' && <Tag className={styles.emergency}>Emergency</Tag>}
+      {proposal.type === 'council' && <Tag className={styles.emergency}>Emergency</Tag>}
     </Container>
   );
 };

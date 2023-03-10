@@ -39,22 +39,22 @@ export const useProposalsQuery = (
   const template: ApiEndpoints =
     daoAddress === undefined
       ? {
-          path: 'v1/proposals',
-          params: {
-            limit,
-            direction,
-          },
-        }
+        path: 'v1/proposals',
+        params: {
+          limit,
+          direction,
+        },
+      }
       : {
-          path: 'v1/daos/{address}/proposals',
-          route: {
-            address: daoAddress,
-          },
-          params: {
-            limit,
-            direction,
-          },
-        };
+        path: 'v1/daos/{address}/proposals',
+        route: {
+          address: daoAddress,
+        },
+        params: {
+          limit,
+          direction,
+        },
+      };
 
   const endpoint = useApiEndpoint(template);
 
@@ -88,7 +88,7 @@ export const useProposalsQuery = (
               abstainVotes: Big(entity.abstainVotes),
               vetoVotes: Big(entity.vetoVotes ?? '0'),
               totalVotes: Big(entity.totalVotes ?? '0'),
-              votingType: 'general',
+              type: 'general'
             });
           }
         });
