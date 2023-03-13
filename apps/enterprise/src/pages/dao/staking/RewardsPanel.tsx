@@ -57,28 +57,30 @@ export const RewardsPanel = () => {
     <Panel>
       <TitledContent title="Rewards">
         <VStack fullHeight gap={40} justifyContent="space-between">
-          {areNoRewards ? <Text>No rewards to claim</Text> : (
-            <VStack gap={20}>
-              {rewards?.map((reward, index) => <RewardItem key={index} {...reward} />)}
-            </VStack>
+          {areNoRewards ? <Text>Nothing to claim</Text> : (
+            <>
+              <VStack gap={12}>
+                {rewards?.map((reward, index) => <RewardItem key={index} {...reward} />)}
+              </VStack>
+              <PrimaryButton
+                kind="secondary"
+                isDisabled={!areRewardsAvailable}
+                isLoading={txResult.loading}
+                tooltipText={areNoRewards && 'No tokens to claim'}
+                onClick={() => {
+                  // try to claim everything just in case
+                  const { cw20, native } = assertDefined(tokensToCheck)
+                  claimRewards({
+                    fundsDistributorAddress: fundsDistributorContract,
+                    cw20Assets: Array.from(cw20),
+                    nativeDenoms: Array.from(native),
+                  });
+                }}
+              >
+                Claim all
+              </PrimaryButton>
+            </>
           )}
-          <PrimaryButton
-            kind="secondary"
-            isDisabled={!areRewardsAvailable}
-            isLoading={txResult.loading}
-            tooltipText={areNoRewards && 'No tokens to claim'}
-            onClick={() => {
-              // try to claim everything just in case
-              const { cw20, native } = assertDefined(tokensToCheck)
-              claimRewards({
-                fundsDistributorAddress: fundsDistributorContract,
-                cw20Assets: Array.from(cw20),
-                nativeDenoms: Array.from(native),
-              });
-            }}
-          >
-            Claim all
-          </PrimaryButton>
         </VStack>
       </TitledContent>
     </Panel>
