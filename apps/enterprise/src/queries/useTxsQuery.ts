@@ -1,36 +1,57 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { NetworkInfo, useWallet } from '@terra-money/wallet-provider';
-import { CW20Addr, TxResponse } from '@terra-money/apps/types';
+import { useWallet } from '@terra-money/wallet-provider';
+import { TxResponse } from '@terra-money/apps/types';
 
-export const fetchTxs = async (
-  network: NetworkInfo,
-  address: CW20Addr,
-  offset: number,
-  limit: number
-): Promise<any> => {
+const transactionsInOnePage = 100;
 
-  //todo: include sent transactions and completed messages
-  const url = `${network.lcd}/cosmos/tx/v1beta1/txs?events=transfer.recipient%3D%27${address}%27&pagination.reverse=true&pagination.limit=${limit}`
+interface LCDEventDescription {
+  name: string
+  property: string
+}
+
+const listenForEvents: LCDEventDescription[] = [
+  { name: 'message', property: 'sender' },
+  { name: 'transfer', property: 'recipient' },
+  { name: 'transfer', property: 'sender' },
+  { name: 'wasm', property: 'to' },
+]
+
+interface QueryTransactionsParams {
+  address: string
+  lcdBaseUrl: string
+  eventDescription: LCDEventDescription
+}
+
+const queryTransactions = async ({ address, lcdBaseUrl, eventDescription: { name, property } }: QueryTransactionsParams) => {
+  const url = `${lcdBaseUrl}/cosmos/tx/v1beta1/txs?events=${name}.${property}='${address}'&pagination.reverse=true&pagination.limit=${transactionsInOnePage}`
 
   const response = await fetch(url);
 
   const json = await response.json();
 
   return json.tx_responses as TxResponse[];
-};
+}
 
 export const useTxsQuery = (
-  address: CW20Addr,
-  offset: number = 0,
-  limit: number = 10
+  address: string,
 ): UseQueryResult<TxResponse[]> => {
   const { network } = useWallet();
 
+  const lcdBaseUrl = network.lcd;
+
   return useQuery(
-    [QUERY_KEY.TXS, network.lcd],
-    () => {
-      return fetchTxs(network, address, offset, limit);
+    [QUERY_KEY.TXS, address, lcdBaseUrl],
+    async () => {
+      const queries: QueryTransactionsParams[] = listenForEvents.map((eventDescription) => ({
+        address,
+        lcdBaseUrl,
+        eventDescription,
+      }))
+
+      const transactions = (await Promise.all(queries.map(queryTransactions))).flatMap((txs) => txs)
+
+      return transactions;
     },
     {
       refetchOnMount: true,

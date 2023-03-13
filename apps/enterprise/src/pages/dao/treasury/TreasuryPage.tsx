@@ -10,7 +10,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 export const TreasuryPage = () => {
   const dao = useCurrentDao();
 
-  const { data: txs } = useTxsQuery((dao?.address || '') as CW20Addr);
+  const { data: txs } = useTxsQuery(dao.address as CW20Addr);
 
   return (
     <Container direction="column" gap={32} className={styles.root}>
