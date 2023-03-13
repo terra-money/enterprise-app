@@ -1,7 +1,7 @@
 import { microfy } from '@terra-money/apps/libs/formatting';
+import { AssetType } from 'chain';
 import { base64Encode } from 'utils';
 
-export type AssetType = 'native' | 'cw20';
 
 interface ToSpendTreasuryMsgParams {
   destinationAddress: string;

@@ -1,4 +1,5 @@
 import { assertDefined } from "@terra-money/apps/utils";
+import { AssetType } from "chain";
 import { useAssertMyAddress } from "chain/hooks/useAssertMyAddress";
 import { useContract } from "chain/hooks/useContract";
 import { QUERY_KEY } from "queries";
@@ -28,6 +29,12 @@ interface RewardsResponse {
   native_rewards: NativeReward[]
 }
 
+export interface DaoReward {
+  id: string;
+  amount: string
+  type: AssetType
+}
+
 export const useMyDaoRewardsQuery = (params?: UseMyDaoRewardsQueryParams) => {
   const { query } = useContract();
   const walletAddress = useAssertMyAddress();
@@ -42,10 +49,12 @@ export const useMyDaoRewardsQuery = (params?: UseMyDaoRewardsQueryParams) => {
       }
     })
 
-    return {
-      cw20Rewards: cw20_rewards.filter(reward => reward.amount !== "0"),
-      nativeRewards: native_rewards.filter(reward => reward.amount !== "0")
-    }
+    const rewards: DaoReward[] = [
+      ...cw20_rewards.map(({ asset, amount }): DaoReward => ({ id: asset, amount, type: 'cw20' })),
+      ...native_rewards.map(({ denom, amount }): DaoReward => ({ id: denom, amount, type: 'native' })),
+    ].filter(reward => reward.amount !== "0")
+
+    return rewards
   }, {
     enabled: !!params,
   });

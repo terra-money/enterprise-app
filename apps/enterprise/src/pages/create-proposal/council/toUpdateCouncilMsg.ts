@@ -1,8 +1,6 @@
 import { getDaoRatio } from 'pages/create-dao/helpers/toCreateDaoMsg';
 import { enterprise } from 'types/contracts';
 
-export type AssetType = 'native' | 'cw20';
-
 interface ToUpdateCouncilMsgParams {
   members: string[];
   allowedProposalTypes: enterprise.ProposalActionType[];
