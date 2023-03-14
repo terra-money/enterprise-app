@@ -49,7 +49,7 @@ export const ExpandablePanel = ({
   return (
     <Panel withSections {...panelProps}>
       <Header onClick={toggle}>
-        <HStack fullWidth justifyContent="space-between" alignItems="center">
+        <HStack fullWidth justifyContent="space-between" alignItems="center" gap={20}>
           {header}
           <ExpandIconWrapper isExpanded={isExpanded}>
             <ChevronDownIcon />

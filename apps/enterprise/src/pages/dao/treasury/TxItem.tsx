@@ -1,10 +1,13 @@
-import { useCallback } from 'react';
 import { useWallet } from '@terra-money/wallet-provider';
-import { Button, Text } from 'components/primitives';
 import { getFinderUrl, truncateAddress } from '@terra-money/apps/utils';
 import { TxEvent, TxResponse } from '@terra-money/apps/types';
 import { Container } from '@terra-money/apps/components';
 import { ExpandablePanel } from 'lib/ui/Panel/ExpandablePanel';
+import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
+import { Text } from 'lib/ui/Text';
+import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
+import { HStack } from 'lib/ui/Stack';
+import { TimeAgo } from 'lib/ui/TimeAgo';
 
 interface TxItemProps {
   tx: TxResponse;
@@ -14,43 +17,29 @@ export const TxItem = (props: TxItemProps) => {
   const { tx } = props;
   const { txhash, timestamp, logs } = tx;
   const { network } = useWallet();
+  console.log(timestamp)
 
   const events: TxEvent[] = logs ? logs[0].events : [];
 
-
   const attributes = events?.flatMap(event => event.attributes);
 
-
-
-  const onDetailsClick = useCallback(() => {
-    window.open(getFinderUrl(network.name, txhash));
-  }, [network, txhash]);
-
   const header = (
-    <>
-      <Text variant="button" onClick={onDetailsClick}>
-        {truncateAddress(txhash, [10, 10])}
+    <HStack fullWidth gap={20} wrap="wrap" justifyContent="space-between">
+      <ExternalLink to={getFinderUrl(network.name, txhash)}>
+        <ShyTextButton as="div" text={truncateAddress(txhash)} />
+      </ExternalLink>
+      <Text color="supporting" size={14}>
+        <TimeAgo value={new Date(timestamp)} />
       </Text>
-      <Text variant="label">
-        {new Date(timestamp).toLocaleString('en-US', {
-          weekday: 'short',
-          day: 'numeric',
-          year: 'numeric',
-          month: 'long',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-        })}
-      </Text>
-      <Button onClick={onDetailsClick}>Details</Button></>
+    </HStack>
   )
 
   const transactionDetials = (
     <>
       {attributes.map((attribute, attributeIndex) => (
         <Container key={`${attribute.key}-${attributeIndex}`} direction="row" gap={16}>
-          <Text variant="label">Message: {attribute.key}</Text>
-          <Text variant="label">Value: {attribute.value}</Text>
+          <Text>Message: {attribute.key}</Text>
+          <Text>Value: {attribute.value}</Text>
         </Container>
       ))
       }
