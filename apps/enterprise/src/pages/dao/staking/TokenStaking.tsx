@@ -26,7 +26,6 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import { RewardsPanel } from './RewardsPanel';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);

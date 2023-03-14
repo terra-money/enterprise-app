@@ -3981,6 +3981,7 @@ __metadata:
     "@mui/icons-material": ^5.10.2
     "@mui/material": ^5.10.2
     "@popperjs/core": ^2.11.6
+    "@terra-money/log-finder-ruleset": ^3.0.2
     "@terra-money/terra.js": ^3.1.6
     "@terra-money/wallet-provider": ^3.11.1
     "@terra.kitchen/utils": ^1.0.7
@@ -5235,6 +5236,22 @@ __metadata:
     long: ^4.0.0
     protobufjs: ~6.11.2
   checksum: c6ad15f559008e5159137aea6fa0b3edd8699b2638cfbe7361c3b53a523bcf7b1f92e2977f4f022532f61a5f57a74bdd3e3db7d3eb5b97df743106aa40764bd0
+  languageName: node
+  linkType: hard
+
+"@terra-money/log-finder-ruleset@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@terra-money/log-finder-ruleset@npm:3.0.2"
+  dependencies:
+    "@terra-money/log-finder": ^1.1.6
+  checksum: 71ecf5645ab1baa94aa600d24f09cb3ef88666b83580c789e6059dc5ccecdec57cecf85c0d230f2f34f6ee714e49837e65ac72257c05e2508003c446369774d5
+  languageName: node
+  linkType: hard
+
+"@terra-money/log-finder@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "@terra-money/log-finder@npm:1.1.6"
+  checksum: 68519c37109f8d5788ca14028031b50e00059cf275d6d1c5127e311790fb2ffc3df1088ad001eee6c1f31c9f1be2bd29ba6320ef178330c3c3567a1624f9bca8
   languageName: node
   linkType: hard
 
