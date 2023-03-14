@@ -2,6 +2,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { useWallet } from '@terra-money/wallet-provider';
 import { TxResponse } from '@terra-money/apps/types';
+import { getRecord } from 'lib/shared/utils/getRecord';
 
 const transactionsInOnePage = 100;
 
@@ -51,7 +52,11 @@ export const useTxsQuery = (
 
       const transactions = (await Promise.all(queries.map(queryTransactions))).flatMap((txs) => txs)
 
-      return transactions;
+      const txRecords = getRecord(transactions, t => t.txhash)
+      const unqueTransactions = Object.values(txRecords)
+      const sortedTransactions = unqueTransactions.sort((a, b) => Number(b.height) - Number(a.height))
+
+      return sortedTransactions;
     },
     {
       refetchOnMount: true,
