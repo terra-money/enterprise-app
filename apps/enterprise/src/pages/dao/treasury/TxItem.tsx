@@ -3,7 +3,6 @@ import { useWallet } from '@terra-money/wallet-provider';
 import { Button, Text } from 'components/primitives';
 import { getFinderUrl, truncateAddress } from '@terra-money/apps/utils';
 import { TxEvent, TxResponse } from '@terra-money/apps/types';
-import { HStack } from 'lib/ui/Stack';
 import { Container } from '@terra-money/apps/components';
 import { ExpandablePanel } from 'lib/ui/Panel/ExpandablePanel';
 
