@@ -1,5 +1,4 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
-import { ProposalVotingType } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 
@@ -16,7 +15,7 @@ interface MultisigExecuteMsg {
   };
 }
 
-export const useCastVoteTx = (proposalVotingType: ProposalVotingType) => {
+export const useCastVoteTx = (proposalVotingType: enterprise.ProposalType) => {
   return useTx<VoteOnProposalTxOptions>(
     (options) => {
       const { id, outcome, contract, wallet } = options;

@@ -1,4 +1,4 @@
-interface TxEvent {
+export interface TxEvent {
   type: string;
   attributes: {
     key: string;

@@ -10,20 +10,23 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
 
 export const ProposalVotingBar = () => {
-  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, votingType } = useCurrentProposal();
+  const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
 
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
-    if (votingType === 'regular') return totalVotes;
-    return dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
-  }, [dao.type, status, totalStaked, totalVotes, votingType]);
+    if (type === 'council') return totalVotes;
+
+    if (dao.type === 'multisig') return totalVotes;
+
+    return status === 'in_progress' ? totalStaked : totalVotes;
+  }, [dao.type, status, totalStaked, totalVotes, type]);
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 
   const quorum = Number(dao.governanceConfig.quorum);
 
-  const yesRatio = enforceRange(getRatio(yesVotes, totalAvailableVotes).toNumber(), 0, 1);
+  const yesRatio = enforceRange(getRatio(yesVotes, total).toNumber(), 0, 1);
 
   const totalBarWidth = toPercents(enforceRange(getRatio(total, totalAvailableVotes).toNumber(), 0, 1));
 

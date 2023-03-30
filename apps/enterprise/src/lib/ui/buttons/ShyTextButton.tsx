@@ -24,7 +24,7 @@ const Container = styled(UnstyledButton)`
 
 export const ShyTextButton = ({ onClick, text, as }: Props) => {
   return (
-    <Container as={as} onClick={onClick}>
+    <Container forwardedAs={as} onClick={onClick}>
       <Text style={{ transition: 'none' }} weight="bold" size={14}>
         {text}
       </Text>

@@ -59,8 +59,8 @@ export const toUpdateMetadataMsg = (
   //   msg.description = { change: description };
   // }
 
-  if (logo && !dao.logo) {
-    msg.logo = { change: { url: 'logo' } };
+  if (logo && (!dao.logo || logo !== dao.logo)) {
+    msg.logo = { change: { url: logo } };
   }
 
   if (!logo && dao.logo) {

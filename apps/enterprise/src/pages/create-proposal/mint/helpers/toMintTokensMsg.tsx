@@ -1,8 +1,6 @@
 import { microfy } from '@terra-money/apps/libs/formatting';
 import { base64Encode } from 'utils';
 
-export type AssetType = 'native' | 'cw20';
-
 interface ToMintTokensMsgParams {
   tokenAddress: string;
   recepientAddress: string;

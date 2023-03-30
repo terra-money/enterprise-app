@@ -7,6 +7,8 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { Proposal } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
+import { useApiEndpoint } from 'hooks';
+import { apiResponseToProposal, ProposalApiResponse } from 'proposal/ProposalApiResponse';
 
 interface UseProposalQueryOptions {
   daoAddress: CW20Addr;
@@ -15,7 +17,6 @@ interface UseProposalQueryOptions {
 }
 
 type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
-// type CouncilProposalsQueryArguments = Extract<enterprise.QueryMsg, { council_proposal: {} }>;
 
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { query } = useContract();
@@ -24,21 +25,23 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
 
   const { data: dao } = useDAOQuery(daoAddress as CW20Addr);
 
+  const apiEndpoint = useApiEndpoint({
+    path: 'v1/daos/{address}/proposals/{id}',
+    route: { address: daoAddress, id }
+  })
+
   return useQuery(
     [QUERY_KEY.PROPOSAL, daoAddress, id],
     async () => {
       try {
+        const response = await fetch(apiEndpoint);
+        const json: ProposalApiResponse = await response.json();
+        return apiResponseToProposal(json, assertDefined(dao))
+      } catch {
         let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
           proposal: { proposal_id: id },
         });
-        return toProposal(resp, assertDefined(dao), 'regular');
-      } catch (err) {
-        // TODO: Add back when new version of contracts is added
-        // const councilProposal = await query<CouncilProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
-        //   council_proposal: { proposal_id: id },
-        // });
-        // return toProposal(councilProposal, assertDefined(dao), 'council');
-        reportError(err);
+        return toProposal(resp, assertDefined(dao));
       }
     },
     {

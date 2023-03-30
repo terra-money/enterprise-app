@@ -91,6 +91,9 @@ export module enterprise {
       }
     | {
         modify_multisig_membership: ModifyMultisigMembershipMsg;
+      }
+    | {
+        distribute_funds: DistributeFundsMsg;
       };
   export type ModifyValueFor_Nullable_String =
     | 'no_change'
@@ -111,6 +114,11 @@ export module enterprise {
     | 'no_change'
     | {
         change: string;
+      };
+  export type ModifyValueFor_Boolean =
+    | 'no_change'
+    | {
+        change: boolean;
       };
   export type ModifyValueFor_Nullable_Uint128 =
     | 'no_change'
@@ -140,6 +148,17 @@ export module enterprise {
     | {
         change: Uint64;
       };
+  export type ProposalActionType =
+    | 'update_metadata'
+    | 'update_gov_config'
+    | 'update_council'
+    | 'update_asset_whitelist'
+    | 'update_nft_whitelist'
+    | 'request_funding_from_dao'
+    | 'upgrade_dao'
+    | 'execute_msgs'
+    | 'modify_multisig_membership'
+    | 'distribute_funds';
   export type Binary = string;
   export interface CreateProposalMsg {
     /**
@@ -164,11 +183,33 @@ export module enterprise {
     twitter_username: ModifyValueFor_Nullable_String;
   }
   export interface UpdateGovConfigMsg {
+    allow_early_proposal_execution: ModifyValueFor_Boolean;
     minimum_deposit: ModifyValueFor_Nullable_Uint128;
     quorum: ModifyValueFor_Decimal;
     threshold: ModifyValueFor_Decimal;
     unlocking_period: ModifyValueFor_Duration;
     voting_duration: ModifyValueFor_Uint64;
+  }
+  export interface UpdateCouncilMsg {
+    dao_council?: DaoCouncilSpec | null;
+  }
+  export interface DaoCouncilSpec {
+    /**
+     * Proposal action types allowed in proposals that are voted on by the council. Effectively defines what types of actions council can propose and vote on. If None, will default to a predefined set of actions.
+     */
+    allowed_proposal_action_types?: ProposalActionType[] | null;
+    /**
+     * Addresses of council members. Each member has equal voting power.
+     */
+    members: string[];
+    /**
+     * Portion of total available votes cast in a proposal to consider it valid e.g. quorum of 30% means that 30% of all available votes have to be cast in the proposal, otherwise it fails automatically when it expires
+     */
+    quorum: Decimal;
+    /**
+     * Portion of votes assigned to a single option from all the votes cast in the given proposal required to determine the 'winning' option e.g. 51% threshold means that an option has to have at least 51% of the cast votes to win
+     */
+    threshold: Decimal;
   }
   export interface UpdateAssetWhitelistMsg {
     /**
@@ -211,6 +252,9 @@ export module enterprise {
     address: string;
     weight: Uint128;
   }
+  export interface DistributeFundsMsg {
+    funds: AssetBaseFor_Addr[];
+  }
   export type Cw721HookMsg = {
     stake: {};
   };
@@ -221,10 +265,21 @@ export module enterprise {
     dao_membership_contract: Addr;
     dao_type: DaoType;
     enterprise_factory_contract: Addr;
+    funds_distributor_contract: Addr;
     gov_config: DaoGovConfig;
     metadata: DaoMetadata;
   }
+  export interface DaoCouncil {
+    allowed_proposal_action_types: ProposalActionType[];
+    members: Addr[];
+    quorum: Decimal;
+    threshold: Decimal;
+  }
   export interface DaoGovConfig {
+    /**
+     * If set to true, this will allow DAOs to execute proposals that have reached quorum and threshold, even before their voting period ends.
+     */
+    allow_early_proposal_execution: boolean;
     /**
      * Optional minimum amount of DAO's governance unit to be required to create a deposit.
      */
@@ -277,7 +332,7 @@ export module enterprise {
         receive: Cw20ReceiveMsg;
       }
     | {
-        receive_nft: Cw721ReceiveMsg;
+        receive_nft: ReceiveNftMsg;
       };
   export type DefaultVoteOption = 'yes' | 'no' | 'abstain' | 'veto';
   export type UnstakeMsg =
@@ -305,7 +360,8 @@ export module enterprise {
     msg: Binary;
     sender: string;
   }
-  export interface Cw721ReceiveMsg {
+  export interface ReceiveNftMsg {
+    edition?: Uint64 | null;
     msg: Binary;
     sender: string;
     token_id: string;
@@ -332,6 +388,10 @@ export module enterprise {
      * Assets that are allowed to show in DAO's treasury
      */
     asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
+    /**
+     * Optional council structure that can manage certain aspects of the DAO
+     */
+    dao_council?: DaoCouncilSpec | null;
     dao_gov_config: DaoGovConfig;
     dao_membership_info: DaoMembershipInfo;
     dao_metadata: DaoMetadata;
@@ -339,6 +399,8 @@ export module enterprise {
      * Address of enterprise-factory contract that is creating this DAO
      */
     enterprise_factory_contract: string;
+    enterprise_governance_code_id: number;
+    funds_distributor_code_id: number;
     /**
      * NFTs (CW721) that are allowed to show in DAO's treasury
      */
@@ -562,6 +624,7 @@ export module enterprise {
     | {
         never: {};
       };
+  export type ProposalType = 'general' | 'council';
   export type ProposalStatus = 'in_progress' | 'passed' | 'rejected' | 'executed';
   export interface ProposalsResponse {
     proposals: ProposalResponse[];
@@ -579,6 +642,7 @@ export module enterprise {
     expires: Expiration;
     id: number;
     proposal_actions: ProposalAction[];
+    proposal_type: ProposalType;
     started_at: Timestamp;
     status: ProposalStatus;
     title: string;

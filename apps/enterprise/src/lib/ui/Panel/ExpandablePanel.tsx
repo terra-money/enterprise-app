@@ -12,6 +12,7 @@ import { Panel, PanelProps } from "./Panel";
 
 interface ExpandableProps extends PanelProps {
   header: ReactNode;
+  children: ReactNode;
   renderContent: () => ReactNode;
 }
 
@@ -39,6 +40,7 @@ const Header = styled(UnstyledButton)`
 
 export const ExpandablePanel = ({
   header,
+  children,
   renderContent,
   ...panelProps
 }: ExpandableProps) => {
@@ -47,7 +49,7 @@ export const ExpandablePanel = ({
   return (
     <Panel withSections {...panelProps}>
       <Header onClick={toggle}>
-        <HStack fullWidth justifyContent="space-between" alignItems="center">
+        <HStack fullWidth justifyContent="space-between" alignItems="center" gap={20}>
           {header}
           <ExpandIconWrapper isExpanded={isExpanded}>
             <ChevronDownIcon />

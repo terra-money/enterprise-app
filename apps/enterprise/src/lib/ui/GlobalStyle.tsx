@@ -52,7 +52,8 @@ export const GlobalStyle = createGlobalStyle`
     9. Create a root stacking context
   */
   #root {
-    isolation: isolate;
+    // TODO: resolve stacking contexts, snackbar conflicts with modal
+    /* isolation: isolate; */
   }
 
   * {

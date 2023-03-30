@@ -14,6 +14,7 @@ export type DAOGovernanceConfig = {
   unlockingPeriod: enterprise.Duration;
   voteDuration: number;
   minimumDeposit?: string;
+  allowEarlyProposalExecution?: boolean;
 };
 // TODO: Revert this when audit is done
 export class DAO {
@@ -24,7 +25,9 @@ export class DAO {
     public readonly logo: string | undefined = undefined,
     public readonly membershipContractAddress: string,
     public readonly enterpriseFactoryContract: string,
+    public readonly fundsDistributorContract: string,
     public readonly socials: DAOSocials,
     public readonly governanceConfig: DAOGovernanceConfig,
-  ) { }
+    public readonly council?: enterprise.DaoCouncil
+  ) {}
 }

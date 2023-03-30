@@ -17,16 +17,14 @@ export const ProposalActionDiff = ({ title, oldView, updatedFields, fieldNameRec
       const oldValue = oldView[name];
       if (oldValue === undefined || newValue === undefined) return;
 
-      result.push({ name: fieldNameRecord[name] || name, oldValue, newValue: newValue as string });
+      result.push({ name: fieldNameRecord[name] || name, oldValue, newValue });
     });
     return result;
   }, [fieldNameRecord, oldView, updatedFields]);
 
   return (
     <TitledCard title={title}>
-      <FieldsDiff
-        fields={fields}
-      />
+      <FieldsDiff fields={fields} />
     </TitledCard>
   );
 };

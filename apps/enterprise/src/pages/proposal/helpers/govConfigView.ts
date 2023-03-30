@@ -6,13 +6,14 @@ import { secondsInDay } from 'date-fns';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
-export interface GovConfigView extends Record<string, string> {
+export interface GovConfigView extends Record<string, string | undefined> {
   quorum: string;
   threshold: string;
   vetoThreshold: string;
   unlockingPeriod: string;
   votingDuration: string;
   minimumDeposit: string;
+  allowEarlyProposalExecution?: string;
 }
 
 export const govConfigViewFieldNameRecord: Record<keyof GovConfigView, string> = {
@@ -22,6 +23,7 @@ export const govConfigViewFieldNameRecord: Record<keyof GovConfigView, string> =
   unlockingPeriod: 'Unlocking period',
   votingDuration: 'Voting duration',
   minimumDeposit: 'Minimum deposit',
+  allowEarlyProposalExecution: 'Allow early proposal execution',
 };
 
 const noValue = 'null';
@@ -42,6 +44,8 @@ const formatDuration = (value: enterprise.Duration | null | undefined) => {
 
   return `${value.height} ${pluralize('block', value.height)}`;
 };
+
+const formatBoolean = (value: boolean | null | undefined) => (value ? 'Yes' : 'No');
 
 export const getUpdatedFields = (
   msg: enterprise.UpdateGovConfigMsg,
@@ -81,6 +85,10 @@ export const getUpdatedFields = (
     view.votingDuration = votingDuration ? toDays(Number(votingDuration)) : noValue;
   }
 
+  if (msg.allow_early_proposal_execution !== 'no_change') {
+    view.allowEarlyProposalExecution = formatBoolean(msg.allow_early_proposal_execution.change);
+  }
+
   return view;
 };
 
@@ -88,7 +96,7 @@ export const fromDao = (dao: DAO, tokenDecimals: number = 6): GovConfigView => {
   const { governanceConfig } = dao;
   const { minimumDeposit } = governanceConfig;
 
-  return {
+  const result: GovConfigView = {
     quorum: toPercents(governanceConfig.quorum),
     threshold: toPercents(governanceConfig.threshold),
     vetoThreshold: toPercents(governanceConfig.vetoThreshold),
@@ -96,4 +104,10 @@ export const fromDao = (dao: DAO, tokenDecimals: number = 6): GovConfigView => {
     votingDuration: toDays(Number(governanceConfig.voteDuration)),
     minimumDeposit: minimumDeposit ? formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, tokenDecimals)) : noValue,
   };
+
+  if (dao.type === 'multisig') {
+    result.allowEarlyProposalExecution = formatBoolean(governanceConfig.allowEarlyProposalExecution);
+  }
+
+  return result;
 };

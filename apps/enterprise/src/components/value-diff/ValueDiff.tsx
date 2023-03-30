@@ -1,21 +1,27 @@
-import { Text } from 'components/primitives';
-import styles from './ValueDiff.module.sass';
 import { ReactComponent as ArrowRightIcon } from 'components/assets/ArrowRight.svg';
 import { ReactNode } from 'react';
+import { Text } from 'lib/ui/Text';
+import styled from 'styled-components';
+import { HStack } from 'lib/ui/Stack';
 
 interface ValueDiffProps {
   oldValue: ReactNode;
   newValue: ReactNode;
 }
 
+const OldValue = styled(Text)`
+  color: ${({ theme }) => theme.colors.textSupporting3.toCssValue()};
+  text-decoration-line: line-through;
+`
+
 export const ValueDiff = ({ oldValue, newValue }: ValueDiffProps) => (
-  <div className={styles.root}>
-    <Text className={styles.oldValue} variant="text">
+  <HStack alignItems="center" gap={12}>
+    <OldValue size={14} weight="semibold" as="div">
       {oldValue}
-    </Text>
+    </OldValue>
     <ArrowRightIcon />
-    <Text className={styles.newValue} variant="text">
+    <Text size={14} weight="semibold" as="div">
       {newValue}
     </Text>
-  </div>
+  </HStack>
 );

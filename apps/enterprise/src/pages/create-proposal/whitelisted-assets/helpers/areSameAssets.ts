@@ -1,6 +1,5 @@
+import { AssetType } from 'chain';
 import { enterprise } from 'types/contracts';
-
-type AssetType = 'cw20' | 'native';
 
 export const getAssetType = (asset: enterprise.AssetInfoBaseFor_Addr) => Object.keys(asset)[0] as AssetType;
 

@@ -1,27 +1,14 @@
-.root
-  padding: 24px 0px 0px 0px
-  transition: transform .2s ease-in-out, background-color .2s ease-in-out
-  &.skeleton
-    .name
-      height: 48px
-      grid-row: 1 / span 2 !important
-    .favourite
-      width: 48px
-      height: 48px
-      border-radius: 50%
-  &:not(.skeleton)
-    cursor: pointer
-    &:hover
-      background-color: #252728      
-      transform: scale(1.03)      
-
 .card 
+  padding: 24px 0px 0px 0px
   display: flex
   flex-direction: column
   align-items: center
-  width: 302px
+  min-width: 302px
   border-radius: 16px 16px 0px 0px
   overflow: hidden
+  transition: transform .2s ease-in-out, background-color .2s ease-in-out
+  &:hover
+      transform: scale(1.03)      
 
 .nftPreview 
    width: 286px

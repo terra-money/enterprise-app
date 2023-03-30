@@ -3,9 +3,7 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
-export const proposalVotingTypes = ['regular'] as const;
-
-export type ProposalVotingType = typeof proposalVotingTypes[number];
+export const proposalTypes = ['general', 'council'] as const;
 
 
 // TODO: Remove this when contracts version is updated after audit 
@@ -34,7 +32,8 @@ export interface Proposal {
   abstainVotes: Big;
   vetoVotes: Big;
   totalVotes: Big;
-  votingType: ProposalVotingType;
+  type: enterprise.ProposalType;
+  executionTxHash?: string;
 }
 
 export const sharedProposalTypes = [
@@ -89,6 +88,7 @@ export const proposalActionShortName: Record<ProposalActionType, string> = {
   upgrade_dao: 'upgrade',
   execute_msgs: 'execute',
   modify_multisig_membership: 'members',
+  distribute_funds: 'distribute',
 };
 
 export const getProposalActionType = (action: enterprise.ProposalAction): ProposalActionType => {

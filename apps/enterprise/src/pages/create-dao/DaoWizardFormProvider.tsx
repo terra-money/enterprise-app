@@ -39,6 +39,12 @@ export interface DaoImportInput {
   daoAddress?: string;
 }
 
+export interface CouncilInput {
+  members: FormState<CouncilMember>[];
+  allowedProposalTypes: enterprise_factory.ProposalActionType[];
+  quorum: number;
+  threshold: number;
+}
 
 export interface DaoWizardInput {
   type: enterprise.DaoType;
@@ -124,6 +130,7 @@ export interface DaoWizardState extends DaoWizardInput {
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
 const sharedLastSteps: DaoWizardStep[] = [
   'govConfig',
+  'council',
   'socials',
   'confirm',
 ];
@@ -152,7 +159,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   type: defaultDaoType,
   info: {
     name: '',
-    // description: '',
+    description: '',
     logo: undefined,
   },
   isValid: true,
@@ -175,6 +182,13 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   daoImport: {
     shouldImport: false,
     daoAddress: undefined,
+  },
+
+  council: {
+    members: [],
+    allowedProposalTypes: ['upgrade_dao'],
+    quorum: 0.3,
+    threshold: 0.51,
   },
 
   members: walletAddr ? [{ ...EMPTY_MEMBER, addr: walletAddr }, EMPTY_MEMBER] : [EMPTY_MEMBER],
@@ -279,6 +293,17 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
       return {
         members,
         isValid: members.every(isFormStateValid) && members.length > 1,
+      };
+    },
+
+    council: () => {
+      if (!state.council) return {};
+
+      const council = validateCouncil(state.council);
+
+      return {
+        council,
+        isValid: council.members.every(isFormStateValid) && isFormStateValid(council),
       };
     },
 

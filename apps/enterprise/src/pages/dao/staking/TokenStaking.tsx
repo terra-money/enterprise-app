@@ -199,6 +199,7 @@ export const TokenStakingConnectedView = () => {
               </VStack>
             }
           />
+
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NumericPanel title="Your wallet" value={demicrofy(balance, tokenDecimals)} suffix={tokenSymbol} />
             <NumericPanel

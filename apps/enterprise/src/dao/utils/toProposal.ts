@@ -1,12 +1,11 @@
 import Big from 'big.js';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
-import { Proposal, ProposalVotingType } from 'dao/shared/proposal';
+import { Proposal } from 'dao/shared/proposal';
 
 export const toProposal = (
   { proposal, results, total_votes_available }: enterprise.ProposalResponse,
   dao: DAO,
-  votingType: ProposalVotingType
 ): Proposal => {
   const [yesVotes, noVotes, abstainVotes, vetoVotes] = results.reduce(
     (previous, [t, v]) => {
@@ -27,6 +26,6 @@ export const toProposal = (
     abstainVotes: Big(abstainVotes),
     vetoVotes: Big(vetoVotes),
     totalVotes: Big(total_votes_available),
-    votingType,
+    type: proposal.proposal_type,
   };
 };

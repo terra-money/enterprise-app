@@ -28,6 +28,8 @@ export module enterprise_factory {
     cw3_fixed_multisig_code_id: number;
     cw721_code_id: number;
     enterprise_code_id: number;
+    enterprise_governance_code_id: number;
+    funds_distributor_code_id: number;
   }
   export type Uint64 = string;
   export interface EnterpriseCodeIdsResponse {
@@ -36,8 +38,19 @@ export module enterprise_factory {
   export type ExecuteMsg = {
     create_dao: CreateDaoMsg;
   };
-  export type Uint128 = string;
+  export type ProposalActionType =
+    | 'update_metadata'
+    | 'update_gov_config'
+    | 'update_council'
+    | 'update_asset_whitelist'
+    | 'update_nft_whitelist'
+    | 'request_funding_from_dao'
+    | 'upgrade_dao'
+    | 'execute_msgs'
+    | 'modify_multisig_membership'
+    | 'distribute_funds';
   export type Decimal = string;
+  export type Uint128 = string;
   export type Duration =
     | {
         height: number;
@@ -73,6 +86,10 @@ export module enterprise_factory {
      * assets that are allowed to show in DAO's treasury
      */
     asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
+    /**
+     * Optional council structure that can manage certain aspects of the DAO
+     */
+    dao_council?: DaoCouncilSpec | null;
     dao_gov_config: DaoGovConfig;
     dao_membership: CreateDaoMembershipMsg;
     dao_metadata: DaoMetadata;
@@ -81,7 +98,29 @@ export module enterprise_factory {
      */
     nft_whitelist?: Addr[] | null;
   }
+  export interface DaoCouncilSpec {
+    /**
+     * Proposal action types allowed in proposals that are voted on by the council. Effectively defines what types of actions council can propose and vote on. If None, will default to a predefined set of actions.
+     */
+    allowed_proposal_action_types?: ProposalActionType[] | null;
+    /**
+     * Addresses of council members. Each member has equal voting power.
+     */
+    members: string[];
+    /**
+     * Portion of total available votes cast in a proposal to consider it valid e.g. quorum of 30% means that 30% of all available votes have to be cast in the proposal, otherwise it fails automatically when it expires
+     */
+    quorum: Decimal;
+    /**
+     * Portion of votes assigned to a single option from all the votes cast in the given proposal required to determine the 'winning' option e.g. 51% threshold means that an option has to have at least 51% of the cast votes to win
+     */
+    threshold: Decimal;
+  }
   export interface DaoGovConfig {
+    /**
+     * If set to true, this will allow DAOs to execute proposals that have reached quorum and threshold, even before their voting period ends.
+     */
+    allow_early_proposal_execution: boolean;
     /**
      * Optional minimum amount of DAO's governance unit to be required to create a deposit.
      */
@@ -164,7 +203,9 @@ export module enterprise_factory {
     is_enterprise_code_id: boolean;
   }
   export interface MigrateMsg {
-    new_enterprise_code_id?: number | null;
+    new_enterprise_code_id: number;
+    new_enterprise_governance_code_id: number;
+    new_funds_distributor_code_id: number;
   }
   export interface NftWhitelistResponse {
     nfts: Addr[];

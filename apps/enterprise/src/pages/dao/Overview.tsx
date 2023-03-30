@@ -17,12 +17,16 @@ export const Overview = () => {
   const dao = useCurrentDao();
 
   return (
-    <VStack gap={40}>
-      <SameWidthChildrenRow gap={40} maxColumns={2} minChildrenWidth={320}>
-        <VStack justifyContent="space-between" gap={20}>
+    <VStack gap={16}>
+      <SameWidthChildrenRow gap={16} maxColumns={2} minChildrenWidth={320}>
+        <VStack justifyContent="space-between" gap={16}>
           <ConditionalRender
             value={dao.type}
-            multisig={() => <MultisigDaoMembersPanel />}
+            multisig={() => (
+              <VStack gap={16}>
+                <MultisigDaoMembersPanel />
+              </VStack>
+            )}
             token={() => (
               <>
                 <TokenDaoTotalSupplyPanel />

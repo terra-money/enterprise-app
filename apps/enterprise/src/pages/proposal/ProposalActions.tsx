@@ -33,6 +33,8 @@ export const ProposalActions = () => {
               execute_msgs={() => <ExecuteMessagesProposalAction />}
               // update_council={() => <UpdateCouncilAction />}
               upgrade_dao={() => <UpgradeProposalAction />}
+              // TODO: display distribute_funds action
+              distribute_funds={() => null}
               modify_multisig_membership={() => (
                 <CurrentDAOMultisigMembersProvider>
                   <UpdateMultisigMembersAction />

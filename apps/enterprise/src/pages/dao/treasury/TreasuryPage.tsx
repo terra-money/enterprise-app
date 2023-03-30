@@ -10,7 +10,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 export const TreasuryPage = () => {
   const dao = useCurrentDao();
 
-  const { data: txs } = useTxsQuery((dao?.address || '') as CW20Addr);
+  const { data: txs } = useTxsQuery(dao.address as CW20Addr);
 
   return (
     <Container direction="column" gap={32} className={styles.root}>
@@ -21,7 +21,7 @@ export const TreasuryPage = () => {
           {txs ? (txs.map((tx) => <TxItem tx={tx} />)) : (
             <Container className={styles.noTransactionsToDisplay}>
               <Text className={styles.noTransactionsLabel} variant="label">
-                No NFTs were added to the treasury yet.
+                No transactions have been completed with the treasury.
               </Text>
             </Container>
           )}

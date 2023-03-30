@@ -3,6 +3,7 @@ import { enterprise } from 'types/contracts';
 export type Entity = {
   _type: string;
   daoAddress: string;
+  executionTxHash?: string;
   id: number;
   created: number;
   started_at: number;
@@ -16,6 +17,7 @@ export type Entity = {
   abstainVotes: string;
   vetoVotes: string;
   totalVotes: string;
+  type: enterprise.ProposalType;
 };
 
 export interface ProposalKey {

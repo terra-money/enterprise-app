@@ -35,7 +35,7 @@ export const CastVote = () => {
 
   const navigate = useNavigate();
 
-  const [txResult, tx] = useCastVoteTx(proposal.votingType);
+  const [txResult, tx] = useCastVoteTx(proposal.type);
 
 
   const [vote, setVote] = useState<enterprise.DefaultVoteOption | undefined>();
@@ -64,8 +64,11 @@ export const CastVote = () => {
     return <Text variant="text">Loading voting power ...</Text>;
   }
 
+  if (proposal.type === 'council' && !amICouncilMember) {
+    return <Text variant="text">Council members only</Text>;
+  }
 
-  if (proposal.votingType === 'regular' && votingPower && votingPower.eq(0)) {
+  if (proposal.type === 'general' && votingPower && votingPower.eq(0)) {
     if (proposal.dao.type === 'multisig') {
       return null;
     }

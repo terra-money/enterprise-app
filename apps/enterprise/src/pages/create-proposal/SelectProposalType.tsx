@@ -1,5 +1,5 @@
 import { AnimatedPage } from '@terra-money/apps/components';
-import { useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
 import { Button } from 'components/primitives';
@@ -17,6 +17,8 @@ import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/prop
 // import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import styles from './SelectProposalType.module.sass';
+import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
+import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 
 const title = 'Create a proposal';
 // const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
@@ -26,14 +28,15 @@ const title = 'Create a proposal';
 //   update_metadata: 'metadata',
 // };
 
-export const proposalDescription: Record<ProposalType, string> = {
+export const proposalDescription: Record<ProposalType, ReactNode> = {
   text: 'Create general-purpose petitions, such as asking the DAO to partner with another protocol or for the DAO to implement a new feature',
   config: 'Update DAO configurations such as governance parameters and DAO metadata',
   upgrade: 'Upgrade your DAO to the latest contracts to get upgraded features',
   assets: 'Update whitelisted assets',
   nfts: 'Add/remove assets thats displayed on the Treasury page',
-  execute:
-    'Execute custom messages that will allow you to interact with smart contracts, send assets and more. Refer to https://docs.enterprise.money/guides/messages for more information on message templates.',
+  execute: <>
+    Execute custom messages that will allow you to interact with smart contracts, send assets and more. <ExternalLink to="https://docs.enterprise.money/guides/messages"><ShyTextButton as="span" text="Click here" /></ExternalLink> for more information on message templates.
+  </>,
   members: 'Add/remove members from the Multisig',
   spend: 'Submit this proposal to send assets in your treasury to another address',
   mint: 'Mint DAO governance tokens to accounts. This only works if the minter of the CW20 token is the DAO treasury address.',
@@ -72,18 +75,35 @@ const ProposalDescriptionContainer = styled.div`
   margin: 45px 30px;
 `;
 
-const proposalVotingTypes = ['regular', 'council'] as const;
+const proposalVotingTypes = ['general', 'council'] as const;
 
 export type ProposalVotingType = typeof proposalVotingTypes[number];
 
 const proposalVotingTypeName: Record<ProposalVotingType, string> = {
-  regular: 'Regular',
+  general: 'General',
   council: 'Emergency',
 };
 
 const getProposalOptions = ({ type }: DAO, proposalVotingType: ProposalVotingType) => {
   const options = daoProposalsRecord[type];
-  return options;
+  if (council) {
+    if (proposalVotingType === 'general') {
+      return options;
+    }
+    const { allowed_proposal_action_types } = council;
+    if (allowed_proposal_action_types) {
+      return allowed_proposal_action_types.reduce((acc, type) => {
+        const proposalType = contractsProposalTypeRecord[type as CouncilProposalActionType];
+        if (proposalType) {
+          acc.push(proposalType);
+        }
+
+        return acc;
+      }, [] as ProposalType[]);
+    }
+  }
+
+  return without(options, 'council');
 };
 
 export const SelectProposalType = () => {
@@ -97,7 +117,7 @@ export const SelectProposalType = () => {
   const navigate = useNavigate();
 
   const [proposalVotingType, setProposalVotingType] = useState<ProposalVotingType>(() =>
-    'regular'
+    amICouncilMember ? 'council' : 'general'
   );
 
   const renderVotingTypePicker = () => {
@@ -123,7 +143,7 @@ export const SelectProposalType = () => {
       return <Text>Only council members can create emergency proposals.</Text>;
     }
 
-    if (proposalVotingType === 'regular' && myVotingPower.eq(0)) {
+    if (proposalVotingType === 'general' && myVotingPower.eq(0)) {
       return <Text>You don't have voting power to create a regular proposal.</Text>;
     }
 

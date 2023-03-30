@@ -17,32 +17,24 @@
     width: 120px
     height: 56px
     background: #212425
-    border-radius: 12px
+    border-radius: 12px !important
     color: white
     text-transform: capitalize
 
 .filterContainer
-    position: absolute
-    width: 188px
-    height: 220px
-    right: 230px
+    position: fixed
+    font-size: 16px
+    width: 276px
+    height: 324px
+    left: 485px
     top: 330px
     z-index: 99
     background: #2b2e30
-    box-shadow: 0px 44px 36px rgba(0, 0, 0, 0.1)
     border-radius: 12px
-    padding-left: 15px
     display: flex
     flex-direction: column
-    justify-content: center
-    transition: transform .2s ease-in-out, background-color .2s ease-in-out
-
-.filterIcon
-    width: 30px
-    min-width: 30px
-    height: 30px
-    font-size: 13px
-    border-radius: 16px
+    justify-content: space-around
+    color: rgba(255, 255, 255, 0.4)
 
 
 .filterOption 
@@ -52,7 +44,16 @@
     gap: 10px
     margin-bottom: 10px
     margin-right: 15px
+    padding-left: 27px
+
+.resetButton
+    width: 100%
+    text-align: right
+    cursor: pointer
+    padding: 21px 32px !important
 
 .filterLabel
+    padding: 24px 0 0 27px
     margin-bottom: 15px
+
 

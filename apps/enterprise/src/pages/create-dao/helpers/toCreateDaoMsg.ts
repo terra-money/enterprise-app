@@ -88,6 +88,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
       time: govConfig.unlockingPeriod * timeConversionFactor,
     },
     vote_duration: govConfig.voteDuration * timeConversionFactor,
+    allow_early_proposal_execution: !!govConfig.allowEarlyProposalExecution,
   };
 
   if (type === 'token') {
@@ -105,6 +106,15 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
 
   return {
     create_dao: {
+      dao_council:
+        council && council.members.length > 0
+          ? {
+            members: council.members.map((member) => member.address),
+            allowed_proposal_action_types: council.allowedProposalTypes,
+            quorum: getDaoRatio(council.quorum),
+            threshold: getDaoRatio(council.threshold),
+          }
+          : null,
       asset_whitelist: null,
       dao_membership: getDaoMembership(input),
       dao_metadata: {
