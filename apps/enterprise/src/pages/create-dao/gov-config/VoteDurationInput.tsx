@@ -13,7 +13,7 @@ export const VoteDurationInput = ({ value, onChange }: VoteDurationInputProps) =
         value={value}
         min={1}
         max={60}
-        formatValue={(v) => `${v} minutes`}
+        formatValue={(v) => `${v} days`}
         onChange={(_, value) => onChange(value as number)}
       />
     </FormControl>
