@@ -21,7 +21,7 @@
     "typescript": "^4.8.2"
   },
   "devDependencies": {
-    "husky": "^8.0.1",
+    "husky": "^8.0.3",
     "jest-watch-typeahead": "2.1.1",
     "json-schema-to-typescript": "^11.0.2",
     "lorem-ipsum": "^2.0.8"
