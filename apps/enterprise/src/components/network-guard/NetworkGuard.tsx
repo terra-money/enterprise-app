@@ -1,4 +1,3 @@
-import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
 import { UIElementProps } from '@terra-money/apps/components';
 import { useTerraNetwork } from 'chain/hooks/useTerraNetwork';
 import { useQueryClient } from 'react-query';
@@ -11,16 +10,9 @@ export const NetworkGuard = (props: UIElementProps) => {
   const queryClient = useQueryClient();
   const connectedWallet = useConnectedWallet();
 
-
   useEffect(() => {
     queryClient.invalidateQueries();
   }, [moniker, queryClient]);
-
-  const { network } = useWallet();
-
-  if (network.name === 'classic' || (connectedWallet && network.name === 'mainnet')) {
-    return <div>Enterprise Protocol Staging is currently available on the Pisco Testnet. Please switch networks and refresh.</div>;
-  }
 
   return <>{children}</>;
 };
