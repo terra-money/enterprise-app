@@ -8,7 +8,6 @@ export const NetworkGuard = (props: UIElementProps) => {
 
   const { moniker } = useTerraNetwork();
   const queryClient = useQueryClient();
-  const connectedWallet = useConnectedWallet();
 
   useEffect(() => {
     queryClient.invalidateQueries();
