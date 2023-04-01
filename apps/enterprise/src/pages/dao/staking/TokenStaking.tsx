@@ -109,11 +109,15 @@ export const TokenStakingConnectedView = () => {
                 <Text variant="label" className={styles.title}>
                   Voting power
                 </Text>
-                <Text variant="heading3">
-                  <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
-                    {walletVotingPower.mul(100)}
-                  </AnimateNumber>
-                </Text>
+                  <NumericPanel className={styles.stakedVotingPanel}
+                    value={demicrofy(walletStaked, tokenDecimals)}
+                    decimals={2}
+                    suffix={
+                      <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
+                        {walletVotingPower.mul(100)}
+                      </AnimateNumber>
+                    }
+                  />
               </Container>
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
@@ -204,13 +208,9 @@ export const TokenStakingConnectedView = () => {
             <NumericPanel title="Your wallet" value={demicrofy(balance, tokenDecimals)} suffix={tokenSymbol} />
             <NumericPanel
               title="Your total staked"
-              value={demicrofy(walletStaked, tokenDecimals)}
+              formatter={(v) => `${formatAmount(v, { decimals: 1 })}%`}
               decimals={2}
-              suffix={
-                <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>
-                  {walletStakedPercent}
-                </AnimateNumber>
-              }
+              value={walletStakedPercent}
             />
           </SameWidthChildrenRow>
         </VStack>
