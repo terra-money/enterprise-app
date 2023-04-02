@@ -48,7 +48,7 @@ export const ProposalVotes = () => {
                 <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
                 <Address truncation={isSmallScreen ? [7, 4] : undefined} address={voter} />
                 {totalAvailableVotes.gt(0) && (
-                  <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber())}</Text>
+                  <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined , 3)}</Text>
                 )}
                 {proposal.type !== 'council' && token && (
                   <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>

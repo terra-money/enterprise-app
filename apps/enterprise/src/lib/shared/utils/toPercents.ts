@@ -1,7 +1,15 @@
-type Format = 'round'
+type Format = 'round';
 
-export const toPercents = (value: number, format?: Format) => {
-  const number = value * 100
+export const toPercents = (value: number, format?: Format, decimalPlaces?: number) => {
+  const number = value * 100;
+  let roundedNumber: number;
 
-  return `${format === 'round' ? Math.round(number) : number}%`
-}
+  if (format === 'round') {
+    roundedNumber = Math.round(number);
+  } else {
+    roundedNumber = decimalPlaces !== undefined ? parseFloat(number.toFixed(decimalPlaces)) : number;
+  }
+
+  return `${roundedNumber}%`;
+};
+
