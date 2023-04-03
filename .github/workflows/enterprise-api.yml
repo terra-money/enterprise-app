@@ -17,6 +17,7 @@ on:
       - indexers/enterprise/Dockerfile
       - apps/enterprise-api/Dockerfile
       - .github/workflows/enterprise-api.yml
+      - refs.json
 
   pull_request:
     branches:
@@ -30,6 +31,7 @@ on:
       - indexers/enterprise/Dockerfile
       - apps/enterprise-api/Dockerfile
       - .github/workflows/enterprise-api.yml
+      - refs.json
 
 env:
   AWS_REGION: "ap-northeast-2"
