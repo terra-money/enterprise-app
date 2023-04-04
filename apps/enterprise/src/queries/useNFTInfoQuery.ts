@@ -76,9 +76,10 @@ async function fetchNFTDataForMultipleTokenIds(
 
 export const useNFTInfoQuery = (
   collectionAddr: string,
-  tokenIds: string[]
-): UseQueryResult<enterprise.NftCollection[]> => {
-  return useQuery([collectionAddr, tokenIds], () => {
-    return fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds);
+  tokenIds: TokenIds
+): UseQueryResult<{ [tokenId: string]: enterprise.NftCollection }> => {
+  return useQuery([collectionAddr, tokenIds], async () => {
+    const data = await fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds);
+    return data;
   });
 };
