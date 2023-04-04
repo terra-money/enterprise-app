@@ -5,7 +5,6 @@ import { Proposal } from 'dao/shared/proposal';
 
 import classNames from 'classnames';
 import { Skeleton } from 'components/skeleton';
-import { useNavigate } from 'react-router';
 import { ProposalTags } from './ProposalTags';
 import { getExpirationMessage } from 'utils';
 import formatDistance from 'date-fns/formatDistance';
@@ -96,8 +95,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { data: totalStaked = Big(0) } = useTokenStakingAmountQuery(proposal?.dao.address ?? '', undefined, {
     enabled: proposal !== undefined && proposal.status === 'in_progress',
   });
-
-  const navigate = useNavigate();
 
   if (proposal === undefined) {
     return (
