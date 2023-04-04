@@ -4,3 +4,5 @@ export enum Path {
   Daos = '/daos',
   CreateDao = '/dao/create',
 }
+
+export const getDaoPath = (address: string) => `/dao/${address}`;

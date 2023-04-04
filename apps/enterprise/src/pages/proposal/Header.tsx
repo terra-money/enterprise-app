@@ -1,12 +1,12 @@
 import { Container } from '@terra-money/apps/components';
 import classNames from 'classnames';
-import { DAOLogo } from 'components/dao-logo';
 import { Text } from 'components/primitives';
 import { ProposalTags } from 'pages/shared/ProposalTags';
 import { forwardRef, Ref } from 'react';
 import { useNavigate } from 'react-router';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './Header.module.sass';
+import { DaoLogoLink } from 'components/dao-logo/DaoLogoLink';
 
 interface HeaderProps {
   className?: string;
@@ -24,7 +24,9 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo} >
-          <DAOLogo size="s" logo={proposal.dao.logo} />
+          <DaoLogoLink address={
+            proposal.dao.address
+          } size="s" logo={proposal.dao.logo} />
         </div>
         <Text className={styles.name} variant="heading2">
           {proposal.title}
@@ -41,7 +43,9 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           Back
         </Text>
         <div className={styles.logo} >
-          <DAOLogo size="s" logo={proposal.dao.logo} />
+          <DaoLogoLink address={
+            proposal.dao.address
+          } size="s" logo={proposal.dao.logo} />
         </div>
         <Text className={styles.name} variant="heading2">
           {proposal.title}

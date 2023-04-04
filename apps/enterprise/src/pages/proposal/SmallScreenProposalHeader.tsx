@@ -1,17 +1,17 @@
-import { DAOLogo } from 'components/dao-logo';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCurrentProposal } from './CurrentProposalProvider';
+import { DaoLogoLink } from 'components/dao-logo/DaoLogoLink';
 
 export const SmallScreenProposalHeader = () => {
-  const dao = useCurrentDao();
   const proposal = useCurrentProposal();
 
   return (
     <VStack gap={24}>
       <HStack gap={8}>
-        <DAOLogo size="s" logo={dao.logo} />
+        <DaoLogoLink address={
+          proposal.dao.address
+        } size="s" logo={proposal.dao.logo} />
       </HStack>
       <Text size={24} weight="bold">
         {proposal.title}

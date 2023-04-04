@@ -17,7 +17,7 @@ const logoSizeRecord: Record<DaoLogoSize, number> = {
   l: 60
 }
 
-interface DAOLogoProps {
+export interface DAOLogoProps {
   logo?: string
   size?: DaoLogoSize
   className?: string
