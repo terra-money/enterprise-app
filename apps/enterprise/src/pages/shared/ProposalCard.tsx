@@ -1,5 +1,5 @@
 import { Container } from '@terra-money/apps/components';
-import { Text } from 'components/primitives';
+import { Text as DeprecatedText } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { Proposal } from 'dao/shared/proposal';
 
@@ -15,6 +15,10 @@ import { useTokenStakingAmountQuery } from 'queries';
 import Big, { BigSource } from 'big.js';
 import styles from './ProposalCard.module.sass';
 import { getProposalEstimatedExpiry } from 'dao/shared/proposal';
+import styled from 'styled-components';
+import { HStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
+import { InternalLink } from 'components/link';
 
 type Variant = 'compact' | 'extended';
 
@@ -22,6 +26,10 @@ interface ClockProps {
   expiry: Date;
   variant: Variant;
 }
+
+const Wrapper = styled.div`
+  position: relative;
+`
 
 const Clock = (props: ClockProps) => {
   const { expiry, variant } = props;
@@ -36,7 +44,7 @@ const Clock = (props: ClockProps) => {
     );
   }, 60000);
 
-  return <Text variant="text">{message}</Text>;
+  return <DeprecatedText variant="text">{message}</DeprecatedText>;
 };
 
 interface ProgressBarProps {
@@ -67,6 +75,20 @@ interface ProposalCardProps {
   proposal?: Proposal;
   variant?: Variant;
 }
+
+const DaoLinkWrapper = styled(HStack)`
+  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
+
+  :hover {
+    color: ${({ theme }) => theme.colors.text.toCssValue()};
+  }
+`
+
+const DaoLinkOverlay = styled.div`
+  position: absolute;
+  left: 24px;
+  bottom: 32px;
+`
 
 export const ProposalCard = (props: ProposalCardProps) => {
   const { proposal, variant = 'compact' } = props;
@@ -99,33 +121,49 @@ export const ProposalCard = (props: ProposalCardProps) => {
         ? totalStaked
         : proposal.totalVotes;
 
+  const daoLinkContent = (
+    <DaoLinkWrapper alignItems='center' gap={8}>
+      <DAOLogo size="s" logo={dao.logo} />
+      <Text cropped className={styles.name}>
+        {dao.name}
+      </Text>
+    </DaoLinkWrapper>
+  )
+
   return (
-    <Container
-      onClick={() => navigate(`/dao/${dao.address}/proposals/${proposal.id}`)}
-      className={classNames(styles.root, {
-        [styles.compact]: variant === 'compact',
-      })}
-      direction="column"
-    >
-      <Container className={styles.container} component="div" direction="column">
-        <Container className={styles.tags} component="div" direction="row">
-          <ProposalTags proposal={proposal} />
-          {expiry && <Clock variant={variant} expiry={expiry} />}
+    <Wrapper>
+      <InternalLink to={`/dao/${dao.address}/proposals/${proposal.id}`}>
+        <Container
+          className={classNames(styles.root, {
+            [styles.compact]: variant === 'compact',
+          })}
+          direction="column"
+        >
+          <Container className={styles.container} component="div" direction="column">
+            <Container className={styles.tags} component="div" direction="row">
+              <ProposalTags proposal={proposal} />
+              {expiry && <Clock variant={variant} expiry={expiry} />}
+            </Container>
+            <DeprecatedText className={styles.title} variant="heading4">
+              {title}
+            </DeprecatedText>
+            <DeprecatedText className={styles.description} variant="text">
+              {description}
+            </DeprecatedText>
+            <Container className={styles.footer}>
+              <div style={{ opacity: 0 }}>
+                {daoLinkContent}
+              </div>
+            </Container>
+          </Container>
+          <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
         </Container>
-        <Text className={styles.title} variant="heading4">
-          {title}
-        </Text>
-        <Text className={styles.description} variant="text">
-          {description}
-        </Text>
-        <Container className={styles.footer}>
-          <DAOLogo size="s" logo={dao.logo} />
-          <Text className={styles.name} variant="text">
-            {dao.name}
-          </Text>
-        </Container>
-      </Container>
-      <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
-    </Container>
+      </InternalLink>
+      <DaoLinkOverlay>
+        <InternalLink to={`/dao/${dao.address}`}>
+          {daoLinkContent}
+        </InternalLink>
+      </DaoLinkOverlay>
+    </Wrapper>
   );
 };
