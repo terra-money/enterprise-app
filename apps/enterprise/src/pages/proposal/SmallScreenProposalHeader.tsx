@@ -14,6 +14,9 @@ export const SmallScreenProposalHeader = () => {
         } size="s" logo={proposal.dao.logo} />
       </HStack>
       <Text size={24} weight="bold">
+        <Text style={{ marginRight: 8 }} as="span" color="supporting3">
+          #{proposal.id}
+        </Text>
         {proposal.title}
       </Text>
     </VStack>

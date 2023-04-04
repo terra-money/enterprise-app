@@ -107,7 +107,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
     );
   }
 
-  const { dao, title, description } = proposal;
+  const { dao, title, description, id } = proposal;
 
   const expiry = getProposalEstimatedExpiry(proposal);
 
@@ -141,9 +141,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
               <ProposalTags proposal={proposal} />
               {expiry && <Clock variant={variant} expiry={expiry} />}
             </Container>
-            <DeprecatedText className={styles.title} variant="heading4">
-              {title}
-            </DeprecatedText>
+            <HStack className={styles.title} alignItems='center' gap={8}>
+              <Text weight="semibold" color="supporting3">#{id}</Text>
+              <Text cropped weight="semibold">{title}</Text>
+            </HStack>
+
             <DeprecatedText className={styles.description} variant="text">
               {description}
             </DeprecatedText>
