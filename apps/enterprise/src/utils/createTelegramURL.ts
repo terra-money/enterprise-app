@@ -1,9 +1,11 @@
 export const createTelegramURL = (username: string) => {
   if (username.startsWith("t.me/")) {
-    return `t.me/${username}`;
+    return `https://${username}`;
   }
+  
   if (username.startsWith("@")) {
-    return `@${username}`;
+    username = username.slice(1);
   }
+  
   return `https://t.me/${username}`;
 };
