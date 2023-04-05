@@ -45,6 +45,7 @@ export const TokenMarketingStep = () => {
           value={marketingOwner}
           error={marketingOwner !== undefined && marketingOwner?.length > 0 ? marketingOwnerError : undefined}
           onChange={({ currentTarget }) => onChange({ marketingOwner: currentTarget.value })}
+          helpText='The address who can update description and project name'
         />
         <WizardInput
           label="Project"
