@@ -35,7 +35,7 @@ const toDays = (seconds: number) => {
 
 const formatDuration = (value: enterprise.Duration | null | undefined) => {
   if (!value) {
-    return noValue;
+    return 'Immediate';
   }
 
   if ('time' in value) {
