@@ -48,11 +48,12 @@ export const TokenMarketingStep = () => {
           helpText='The address who can update description and project name'
         />
         <WizardInput
-          label="Project"
+          label="Project URL"
           placeholder="Type project name"
           value={project}
           error={project !== undefined && project?.length > 0 ? projectError : undefined}
           onChange={({ currentTarget }) => onChange({ project: currentTarget.value })}
+          helpText='Should point to a project repository'
         />
       </Stack>
     </WizardStep>
