@@ -15,7 +15,7 @@ import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 
-const MAX_PREVIEW_SIZE = 30;
+const MAX_PREVIEW_SIZE = 100;
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
