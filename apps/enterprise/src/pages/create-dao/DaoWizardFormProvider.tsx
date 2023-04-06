@@ -185,6 +185,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
     vetoThreshold: 0.51,
     unlockingPeriod: 14,
     voteDuration: 7,
+    allowEarlyProposalExecution: true
   },
 
   daoImport: {

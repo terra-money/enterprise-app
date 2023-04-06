@@ -1,9 +1,8 @@
 import classNames from 'classnames';
 import { forwardRef, ReactNode } from 'react';
-import { ReactComponent as HelpIcon } from 'components/assets/Help.svg';
 import { UIElementProps } from '@terra-money/apps/components';
 import styles from './Text.module.sass';
-import { Tooltip } from '../tooltip/Tooltip';
+import { TextTooltip } from './TextTooltip';
 
 type ComponentName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'sub';
 
@@ -59,9 +58,7 @@ const Text = forwardRef<any, TextProps>((props, ref) => {
     >
       {children}
       {tooltip && (
-        <Tooltip variant="normal" title={tooltip} arrow={true} placement="top">
-          <HelpIcon className={styles.tooltipIcon} />
-        </Tooltip>
+        <TextTooltip content={tooltip} />
       )}
     </Component>
   );

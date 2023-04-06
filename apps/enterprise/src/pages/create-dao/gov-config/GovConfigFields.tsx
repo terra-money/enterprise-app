@@ -8,6 +8,9 @@ import { MinimumDepositInput } from 'pages/create-dao/gov-config/MinimumDepositI
 import { DaoGovConfigInput } from './DaoGovConfigInput';
 import { VetoThresholdInput } from './VetoThresholdInput';
 import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
+import { HStack } from 'lib/ui/Stack';
+import { Tooltip } from 'components/primitives/tooltip';
+import { TextTooltip } from 'components/primitives/text/TextTooltip';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;
@@ -37,11 +40,15 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
         />
       )}
       {daoType === 'multisig' && (
-        <Checkbox
-          label="Allow early proposal execution"
-          value={!!value.allowEarlyProposalExecution}
-          onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
-        />
+        <HStack alignItems="center">
+
+          <Checkbox
+            label="Allow early proposal execution"
+            value={!!value.allowEarlyProposalExecution}
+            onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
+          />
+          <TextTooltip content="Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait for them to expire." />
+        </HStack>
       )}
     </>
   );
