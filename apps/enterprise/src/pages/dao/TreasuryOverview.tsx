@@ -1,6 +1,6 @@
 import { Container, ScrollableContainer } from '@terra-money/apps/components';
 import { Panel } from 'components/panel';
-import { NFTPairs, useDAONFTTreasury, useNFTsOwnersQuery } from 'queries';
+import { NFTPairs, useNFTsOwnersQuery } from 'queries';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
