@@ -2,7 +2,7 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { useEnterpriseCodeIdsQuery } from 'queries/useEnterpriseCodeIdsQuery';
+import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
 import { Text, Throbber } from 'components/primitives';
 import { assertDefined } from '@terra-money/apps/utils';
 import { LoadingPage } from 'pages/shared/LoadingPage';
@@ -15,15 +15,14 @@ export const UpgradeProposalForm = () => {
   const dao = useCurrentDao();
 
   const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.address);
-  const { data: codeIds, isLoading: isLoadingCodes } = useEnterpriseCodeIdsQuery();
+  const { data: latestCodeId, isLoading: isLoadingLatestCodeId } = useEnterpriseLatestCodeIdQuery()
 
-  const latestCodeId = codeIds ? Math.max(...codeIds.map(Number)) : undefined;
   const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;
 
   const upgradeMessage = `Upgrade to Code ID ${latestCodeId}`;
 
   return (
-    <LoadingPage isLoading={isLoadingContract || isLoadingCodes}>
+    <LoadingPage isLoading={isLoadingContract || isLoadingLatestCodeId}>
       <ProposalForm
         disabled={isUpToDate}
         initialState={{

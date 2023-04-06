@@ -24,3 +24,12 @@ export const useEnterpriseCodeIdsQuery = () => {
     }
   );
 };
+
+export const useEnterpriseLatestCodeIdQuery = () => {
+  const { data, ...result } = useEnterpriseCodeIdsQuery()
+
+  return {
+    ...result,
+    data: data ? Math.max(...data.map(Number)) : undefined
+  }
+};
