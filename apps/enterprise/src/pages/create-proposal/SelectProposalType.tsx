@@ -42,7 +42,7 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   members: 'Add/remove members from the Multisig',
   spend: 'Submit this proposal to send assets in your treasury to another address',
   mint: 'Mint DAO governance tokens to accounts. This only works if the minter of the CW20 token is the DAO treasury address.',
-  burn: 'Undelegate LUNA from a validator that you have delegated to',
+  burn: 'Burn DAO governance tokens from accounts. This only works if the burner of the CW20 token is the DAO treasury address.',
   delegate: 'Delegate LUNA in your treasury with a validator of your choice to earn staking rewards',
   metadata: 'Update metadata of your DAO',
   undelegate: 'Undelegate LUNA from a validator that you have delegated to',
