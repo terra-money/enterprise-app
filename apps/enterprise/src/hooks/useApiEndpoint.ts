@@ -2,10 +2,12 @@ import { useWallet } from '@terra-money/wallet-provider';
 import { Frequency } from 'utils';
 
 const API_ENDPOINTS: Record<string, string> = {
-  mainnet: 'https://g4cfb9d6qf.execute-api.us-east-1.amazonaws.com/v1',
-  //overriding the api gw endpoint to point at the staging environment in staging branch
-  //testnet: 'https://jdrv0zpoc4.execute-api.us-east-1.amazonaws.com/v1',
-  testnet: 'https://4me4sow9wd.execute-api.us-east-1.amazonaws.com/v1',
+
+  //overriding the mainnet endpoint to use the beta environment
+  //mainnet: 'https://g4cfb9d6qf.execute-api.us-east-1.amazonaws.com/v1',
+  mainnet: 'https://7c831pncdl.execute-api.us-east-1.amazonaws.com/v1',
+  testnet: 'https://jdrv0zpoc4.execute-api.us-east-1.amazonaws.com/v1',
+  //testnet: 'https://4me4sow9wd.execute-api.us-east-1.amazonaws.com/v1',
   //testnet: 'http://localhost:3000',
   localterra: 'http://localhost:3000',
 };
