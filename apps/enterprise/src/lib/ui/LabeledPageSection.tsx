@@ -1,17 +1,25 @@
 import { ComponentWithChildrenProps } from 'lib/shared/props';
-import { VStack } from './Stack';
+import { NavLink } from 'react-router-dom';
+import { HStack, VStack } from './Stack';
 import { Text } from './Text';
 
 interface Props extends ComponentWithChildrenProps {
   name: string;
 }
 
+const navLinkStyle = {
+  textDecoration: 'none',
+  color: '#75808A'
+}
 export const LabeledPageSection = ({ children, name }: Props) => {
   return (
     <VStack gap={16}>
-      <Text size={18} weight="semibold">
-        {name}
-      </Text>
+      <HStack justifyContent={"space-between"}>
+        <Text size={18} weight="semibold">
+          {name}
+        </Text>
+        {name === 'Recent DAOs' && <NavLink style={navLinkStyle}  to={'/daos'}>All DAOs</NavLink>}
+      </HStack>
       {children}
     </VStack>
   );
