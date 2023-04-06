@@ -9,7 +9,6 @@ import { DaoGovConfigInput } from './DaoGovConfigInput';
 import { VetoThresholdInput } from './VetoThresholdInput';
 import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
 import { HStack } from 'lib/ui/Stack';
-import { Tooltip } from 'components/primitives/tooltip';
 import { TextTooltip } from 'components/primitives/text/TextTooltip';
 
 interface ConfigProposalFormProps {
