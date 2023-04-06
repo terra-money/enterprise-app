@@ -14,7 +14,6 @@ import { InfoStep } from './shared/InfoStep';
 import { SocialsStep } from './shared/SocialsStep';
 import { InitialBalancesStep } from './token/InitialBalancesStep';
 import { TokenInfoStep } from './token/TokenInfoStep';
-import { TokenMarketingStep } from './token/TokenMarketingStep';
 import { WizardLayout } from './WizardLayout';
 import { CouncilStep } from './shared/CouncilStep';
 import { useRefCallback } from '@terra-money/apps/hooks';
@@ -121,7 +120,6 @@ export const DaoWizard = () => {
         socials={() => <SocialsStep />}
         confirm={() => <ConfirmationStep pending={txResult.loading} />}
         membership={() => <NftMembershipStep />}
-        tokenMarketing={() => <TokenMarketingStep />}
         tokenInfo={() => <TokenInfoStep />}
         initialBalances={() => <InitialBalancesStep />}
       />

@@ -9,10 +9,9 @@ const getDaoMembership = (input: DaoWizardInput) => {
     type,
     members,
     nftMembership,
-    tokenInfo: { name, symbol, decimals },
+    tokenInfo: { name, symbol, decimals, description, marketingOwner, logo, project },
     initialBalances,
     initialDaoBalance,
-    tokenMarketing,
     daoImport,
   } = input;
 
@@ -61,10 +60,10 @@ const getDaoMembership = (input: DaoWizardInput) => {
           initial_dao_balance: initialDaoBalance ? microfy(initialDaoBalance, decimals).toString() : null,
           token_decimals: decimals,
           token_marketing: {
-            description: tokenMarketing.description,
-            logo_url: tokenMarketing.logo,
-            marketing_owner: tokenMarketing.marketingOwner,
-            project: tokenMarketing.project,
+            description,
+            logo_url: logo,
+            marketing_owner: marketingOwner,
+            project: project,
           },
           token_name: name,
           token_symbol: symbol,

@@ -17,7 +17,6 @@ import { validateDaoInfo } from './shared/helpers/validateDaoInfo';
 import { validateSocials } from './shared/helpers/validateSocials';
 import { validateInitialBalances } from './token/helpers/validateInitialBalances';
 import { validateTokenInfo } from './token/helpers/validateTokenInfo';
-import { validateTokenMarketing } from './token/helpers/validateTokenMarketing';
 import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
 import { validateCouncil } from './shared/helpers/validateCouncil';
@@ -66,7 +65,6 @@ export interface DaoWizardInput {
   tokenInfo: FormState<TokenInfo>;
   initialBalances: FormState<InitialBalance>[];
   initialDaoBalance: number | undefined;
-  tokenMarketing: FormState<TokenMarketing>;
 
   council?: FormState<CouncilInput>;
 
@@ -96,18 +94,17 @@ export interface TokenInfo {
   decimals: number;
   name: string;
   symbol: string;
+
+  // token marketing
+  description?: string;
+  logo?: string;
+  marketingOwner?: string;
+  project?: string;
 }
 
 export interface InitialBalance {
   address: string;
   amount: string;
-}
-
-export interface TokenMarketing {
-  description?: string;
-  logo?: string;
-  marketingOwner?: string;
-  project?: string;
 }
 
 export type DaoWizardStep =
@@ -121,8 +118,7 @@ export type DaoWizardStep =
   | 'members'
   | 'membership'
   | 'tokenInfo'
-  | 'initialBalances'
-  | 'tokenMarketing';
+  | 'initialBalances';
 
 export const EMPTY_MEMBER = { addr: '', weight: 100, error: undefined, valid: undefined };
 
@@ -146,7 +142,7 @@ const sharedLastSteps: DaoWizardStep[] = [
 const daoTypeSpecificSteps: Record<enterprise.DaoType, DaoWizardStep[]> = {
   multisig: ['members'],
   nft: ['membership'],
-  token: ['tokenInfo', 'initialBalances', 'tokenMarketing'],
+  token: ['tokenInfo', 'initialBalances'],
 };
 
 const getPredictedSteps = (type: enterprise.DaoType, shouldImport: boolean): DaoWizardStep[] => {
@@ -215,7 +211,6 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   },
   initialBalances: [EMPTY_INITIAL_BALANCE],
   initialDaoBalance: undefined,
-  tokenMarketing: {},
 
   existingTokenAddr: '',
   existingToken: undefined,
@@ -337,14 +332,6 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
       return {
         initialBalances,
         isValid: initialBalances.every(isFormStateValid) && initialBalances.length > 0,
-      };
-    },
-    tokenMarketing: () => {
-      const tokenMarketing = validateTokenMarketing(state.tokenMarketing);
-
-      return {
-        tokenMarketing,
-        isValid: isFormStateValid(tokenMarketing),
       };
     },
   };
