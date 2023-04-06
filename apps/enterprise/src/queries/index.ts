@@ -29,3 +29,4 @@ export * from './fetchCW3ListVoters';
 export * from './useProposalVoteQuery';
 export * from './useTreasuryTokensQuery';
 export * from './useNFTInfoQuery';
+export * from './useNFTsOwnersQuery';
