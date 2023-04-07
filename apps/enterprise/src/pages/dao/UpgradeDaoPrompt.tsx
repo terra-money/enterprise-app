@@ -8,6 +8,7 @@ import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton";
 import { useContractInfoQuery } from "queries/useContractInfoQuery";
 import { useEnterpriseLatestCodeIdQuery } from "queries/useEnterpriseCodeIdsQuery";
 import { UpgradeDAOPromptActions } from "./UpgradeDAOPromptActions";
+import { ArrowUpCircleIcon } from "lib/ui/icons/ArrowUpCircleIcon";
 
 export const UpgradeDaoPrompt = () => {
   const dao = useCurrentDao();
@@ -26,7 +27,10 @@ export const UpgradeDaoPrompt = () => {
   return (
     <Panel>
       <HStack justifyContent="space-between" fullWidth alignItems="center" gap={16} wrap="wrap">
-        <Text weight="semibold">Upgrade this DAO to the latest version of smart contracts.</Text>
+        <HStack alignItems="center" gap={8}>
+          <Text as="span" color="success"><ArrowUpCircleIcon /></Text>
+          <Text weight="semibold">New version of smart contracts available to this DAO</Text>
+        </HStack>
         <ConditionalWallet
           connected={() => <UpgradeDAOPromptActions />}
           notConnected={() => <ConnectWallet
