@@ -128,7 +128,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   )
 
   return (
-    <Wrapper>
+    <Wrapper className={styles.wrapper}>
       <InternalLink to={`/dao/${dao.address}/proposals/${proposal.id}`}>
         <Container
           className={classNames(styles.root, {
