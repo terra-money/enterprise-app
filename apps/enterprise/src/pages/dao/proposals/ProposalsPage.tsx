@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
 import { SearchInput } from 'components/primitives';
-import { useVotingPowerQuery } from 'queries';
 import { ProposalCard } from '../../shared/ProposalCard';
-import { useConnectedWallet } from '@terra-money/wallet-provider';
-import Big from 'big.js';
 import { useMemo, useState } from 'react';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
@@ -17,17 +14,14 @@ import { InternalLink } from 'components/link';
 import { enterprise } from 'types/contracts';
 import { proposalStatuses } from 'proposal';
 import { ProposalsFilter } from './ProposalsFilter';
+import { useDoIHaveVotingPowerQuery } from 'dao/hooks/useDoIHaveVotingPowerQuery';
 
 const LIMIT = 100;
 
 export const ProposalsPage = () => {
   const dao = useCurrentDao();
 
-  const connectedWallet = useConnectedWallet();
-
   const { data: proposalsQuery, isLoading } = useDaoProposalsQuery({ address: dao.address });
-
-  const { data: votingPower = Big(0) } = useVotingPowerQuery(dao?.address, connectedWallet?.walletAddress);
 
   const [search, setSearch] = useState({
     input: '',
@@ -44,8 +38,9 @@ export const ProposalsPage = () => {
   const navigate = useNavigate();
 
   const amICouncilMember = useAmICouncilMember();
+  const { data: doIHaveVotingPower } = useDoIHaveVotingPowerQuery()
 
-  const newProposalsDisabled = votingPower.lte(0) && !amICouncilMember;
+  const newProposalsDisabled = !doIHaveVotingPower && !amICouncilMember;
 
   return (
     <Container direction="column" gap={32}>
