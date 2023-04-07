@@ -27,17 +27,11 @@ export const useDaoProposalsQuery = ({
   return useQuery(
     [QUERY_KEY.PROPOSALS, address],
     async () => {
-      const result: Proposal[] = [];
-      try {
-        const { proposals } = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
-          proposals: {},
-        });
-        result.push(...proposals.map((resp) => toProposal(resp, assertDefined(dao))));
-      } catch (err) {
-        reportError(err);
-      }
+      const { proposals } = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
+        proposals: {},
+      });
 
-      return result.sort((a, b) => b.created - a.created);
+      return proposals.map((resp) => toProposal(resp, assertDefined(dao))).sort((a, b) => b.created - a.created);
     },
     {
       refetchOnMount: false,
