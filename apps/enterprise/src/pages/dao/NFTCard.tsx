@@ -1,5 +1,4 @@
 import { Container } from '@terra-money/apps/components';
-import { useTokens } from '@terra-money/apps/hooks';
 import { formatAmount, demicrofy } from '@terra-money/apps/libs/formatting';
 import { Text } from 'components/primitives';
 import { useNFTInfoQuery } from 'queries';
