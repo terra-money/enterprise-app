@@ -14,8 +14,7 @@ export const TreasuryOverview = () => {
   
   const dao = useCurrentDao();
   const {data: whitelist= []} = useDAONFTsWhitelist(dao.address) 
-  console.log(dao);
-
+  
   let nftCollection: NFTPairs[] | undefined = [];
   const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
   if (dao.type !== 'nft') {
@@ -43,7 +42,7 @@ export const TreasuryOverview = () => {
             
               {nftCollection?.length && nftCollection[0]?.tokenIds.length !== 0 ? (
                 nftCollection.filter(nftColitem => nftColitem.tokenIds.length !== 0).map((nft, index) => {
-                  return <NFTCard key={index} nftCollectionAdress={nft.collectionAddress} tokenIds={nft.tokenIds.tokens} />;
+                  return <NFTCard key={index} nftCollectionAdress={nft.collectionAddress} tokenIds={nft.tokenIds.tokens ? nft.tokenIds.tokens : nft.tokenIds.ids} />;
                 })
               ) : (
                 <Container className={styles.noNFTToDisplay}>
