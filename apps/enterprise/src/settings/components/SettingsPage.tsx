@@ -5,6 +5,7 @@ import { ResponsiveView } from "lib/ui/ResponsiveView"
 import { VStack } from "lib/ui/Stack"
 import { Text } from "lib/ui/Text"
 import { useRef } from "react"
+import { AreIndexersEnabledControl } from "./AreIndexersEnabledControl"
 
 const title = "Settings"
 
@@ -12,7 +13,7 @@ export const SettingsPage = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const content = (
-    <p>Coming soon!</p>
+    <AreIndexersEnabledControl />
   )
 
   return (
