@@ -81,7 +81,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
-            depositTx({ address: dao.enterprise_factory_contract, amount, decimals: token.decimals, denom: token.key });
+            depositTx({ address: dao.address, amount, decimals: token.decimals, denom: token.key });
           })}
         >
           Deposit

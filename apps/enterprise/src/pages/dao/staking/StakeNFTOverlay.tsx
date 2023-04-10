@@ -15,7 +15,7 @@ interface StakeNFTOverlayProps extends ClosableComponentProps {
 }
 
 export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
-  const { enterprise_factory_contract, dao_membership_contract } = useCurrentDao();
+  const { address, dao_membership_contract } = useCurrentDao();
 
   const [txResult, stakeNfts] = useStakeNftsTx();
 
@@ -40,7 +40,7 @@ export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
             isLoading={txResult.loading}
             onClick={async () => {
               await stakeNfts({
-                daoAddress: enterprise_factory_contract,
+                daoAddress: address,
                 collectionAddress: dao_membership_contract,
                 tokenIds,
               });

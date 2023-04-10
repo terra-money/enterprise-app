@@ -20,7 +20,7 @@ interface UndelegateProposalFormSchema {
 
 export const UndelegateProposalForm = () => {
   const dao = useCurrentDao();
-  const { data: delegations = [], isLoading: areDelegationsLoading } = useDelegationsQuery(dao.enterprise_factory_contract);
+  const { data: delegations = [], isLoading: areDelegationsLoading } = useDelegationsQuery(dao.address);
 
   const [validator, setValidator] = useState<string | null>(null);
 

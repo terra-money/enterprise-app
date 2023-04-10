@@ -50,11 +50,11 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 export const NftStakingConnectedView = () => {
   const walletAddress = useAssertMyAddress();
   const dao = useCurrentDao();
-  const { enterprise_factory_contract, dao_membership_contract } = dao;
-  const { isLoading, totalStaked, symbol } = useNftDaoStakingInfo(enterprise_factory_contract, dao_membership_contract);
+  const { address, dao_membership_contract } = dao;
+  const { isLoading, totalStaked, symbol } = useNftDaoStakingInfo(address, dao_membership_contract);
 
   const { walletStaked, walletStakedPercent, walletVotingPower, claimableTokens, pendingClaims } = useWalletData(
-    enterprise_factory_contract,
+    address,
     walletAddress,
     totalStaked
   );
@@ -143,7 +143,7 @@ export const NftStakingConnectedView = () => {
                     tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
                     onClick={() => {
-                      claimTx({ daoAddress: enterprise_factory_contract });
+                      claimTx({ daoAddress: address });
                     }}
                   >
                     Claim all

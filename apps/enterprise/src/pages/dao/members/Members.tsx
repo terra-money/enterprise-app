@@ -15,5 +15,5 @@ export const Members = () => {
     return <MultisigMembers dao={toDao(dao)} />;
   }
 
-  return <Navigate to={`/dao/${dao.enterprise_factory_contract}`} replace={true} />;
+  return <Navigate to={`/dao/${dao.address}`} replace={true} />;
 };

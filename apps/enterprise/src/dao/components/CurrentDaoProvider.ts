@@ -1,4 +1,4 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { enterprise } from 'types/contracts';
+import { DaoInfo } from 'dao';
 
-export const { useValue: useCurrentDao, provider: CurrentDaoProvider } = getValueProviderSetup<enterprise.DaoInfoResponse>('Dao');
+export const { useValue: useCurrentDao, provider: CurrentDaoProvider } = getValueProviderSetup<DaoInfo>('Dao');

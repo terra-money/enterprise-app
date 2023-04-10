@@ -22,7 +22,7 @@ export const Staking = () => {
           value={dao.dao_type}
           token={() => <TokenStakingConnectedView />}
           nft={() => <NftStakingConnectedView />}
-          multisig={() => <Navigate to={`/dao/${dao!.enterprise_factory_contract}`} replace={true} />}
+          multisig={() => <Navigate to={`/dao/${dao!.address}`} replace={true} />}
         />
       )}
       notConnected={() => (
@@ -42,7 +42,7 @@ export const Staking = () => {
                   <NftDaoTotalStakedPanel />
                 </>
               )}
-              multisig={() => <Navigate to={`/dao/${dao!.enterprise_factory_contract}`} replace={true} />}
+              multisig={() => <Navigate to={`/dao/${dao!.address}`} replace={true} />}
             />
           </VStack>
           <ConnectWalletPrompt />

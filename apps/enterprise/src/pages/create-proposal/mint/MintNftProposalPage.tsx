@@ -14,7 +14,7 @@ export const MintNftProposalPage = () => {
     return <Throbber />;
   }
 
-  if (minter !== dao.enterprise_factory_contract) {
+  if (minter !== dao.address) {
     return (
       <VStack gap={16}>
         <HStack gap={8} alignItems="center">

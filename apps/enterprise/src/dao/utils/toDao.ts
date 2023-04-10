@@ -1,9 +1,9 @@
 import Big from 'big.js';
+import { DaoInfo } from 'dao';
 import { DAO } from 'types';
-import { enterprise } from 'types/contracts';
 
-export const toDao = ({ gov_config, dao_council, enterprise_factory_contract, dao_type, metadata, dao_membership_contract, funds_distributor_contract }: enterprise.DaoInfoResponse): DAO => new DAO(
-  enterprise_factory_contract,
+export const toDao = ({ gov_config, dao_council, enterprise_factory_contract, address, dao_type, metadata, dao_membership_contract, funds_distributor_contract }: DaoInfo): DAO => new DAO(
+  address,
   dao_type,
   metadata.name,
   metadata.description || undefined,

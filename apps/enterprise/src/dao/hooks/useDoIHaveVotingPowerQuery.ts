@@ -4,11 +4,11 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useVotingPowerQuery } from 'queries';
 
 export const useDoIHaveVotingPowerQuery = () => {
-  const { enterprise_factory_contract } = useCurrentDao();
+  const { address } = useCurrentDao();
 
   const connectedWallet = useConnectedWallet();
 
-  const { data: votingPower = Big(0), ...rest } = useVotingPowerQuery(enterprise_factory_contract, connectedWallet?.walletAddress);
+  const { data: votingPower = Big(0), ...rest } = useVotingPowerQuery(address, connectedWallet?.walletAddress);
 
   return {
     ...rest,

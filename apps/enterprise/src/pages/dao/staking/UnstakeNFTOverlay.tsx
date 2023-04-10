@@ -15,7 +15,7 @@ interface UnstakeNFTOverlayProps extends ClosableComponentProps {
 }
 
 export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlayProps) => {
-  const { enterprise_factory_contract, dao_membership_contract } = useCurrentDao();
+  const { address, dao_membership_contract } = useCurrentDao();
 
   const [txResult, unstakeNft] = useUnstakeNftsTx();
 
@@ -40,7 +40,7 @@ export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlay
             isLoading={txResult.loading}
             onClick={async () => {
               await unstakeNft({
-                daoAddress: enterprise_factory_contract,
+                daoAddress: address,
                 tokenIds,
               });
               onClose();

@@ -78,15 +78,15 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 export const TokenStakingConnectedView = () => {
   const walletAddress = useAssertMyAddress();
   const dao = useCurrentDao();
-  const { dao_membership_contract, enterprise_factory_contract } = dao;
+  const { dao_membership_contract, address } = dao;
   const tokenAddress = dao_membership_contract;
 
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
 
-  const { isLoading, totalStaked, tokenSymbol, tokenDecimals } = useTokenData(enterprise_factory_contract, tokenAddress);
+  const { isLoading, totalStaked, tokenSymbol, tokenDecimals } = useTokenData(address, tokenAddress);
 
   const { walletStaked, walletStakedPercent, walletVotingPower, claimableAmount, pendingClaims } = useWalletData(
-    enterprise_factory_contract,
+    address,
     walletAddress,
     totalStaked
   );
@@ -135,7 +135,7 @@ export const TokenStakingConnectedView = () => {
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
                       balance={balance}
-                      daoAddress={dao.enterprise_factory_contract}
+                      daoAddress={dao.address}
                       staked={walletStaked}
                       symbol={tokenSymbol}
                       onClose={onClose}
@@ -159,7 +159,7 @@ export const TokenStakingConnectedView = () => {
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
-                      daoAddress={enterprise_factory_contract}
+                      daoAddress={address}
                       staked={walletStaked}
                       symbol={tokenSymbol}
                       onClose={onClose}
@@ -195,7 +195,7 @@ export const TokenStakingConnectedView = () => {
                     isLoading={claimTxResult.loading}
                     tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {
-                      claimTx({ daoAddress: enterprise_factory_contract });
+                      claimTx({ daoAddress: address });
                     }}
                   >
                     Claim all

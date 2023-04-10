@@ -16,7 +16,7 @@ export { useCurrentDaoWhitelistedAssets };
 export const CurrentDAOWhitelistedAssetsProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data: whitelistedAssets } = useDAOAssetsWhitelist(dao.enterprise_factory_contract);
+  const { data: whitelistedAssets } = useDAOAssetsWhitelist(dao.address);
 
   if (!whitelistedAssets) {
     return <Throbber />;

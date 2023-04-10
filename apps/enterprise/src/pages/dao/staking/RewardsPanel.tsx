@@ -12,9 +12,9 @@ import { useMemo } from "react";
 import { RewardItem } from "./RewardItem";
 
 export const RewardsPanel = () => {
-  const { funds_distributor_contract, enterprise_factory_contract, dao_type, dao_membership_contract } = useCurrentDao()
+  const { funds_distributor_contract, address, dao_type, dao_membership_contract } = useCurrentDao()
   const { data: globalWhitelist } = useGlobalAssetsWhitelist()
-  const { data: daoWhitelist } = useDAOAssetsWhitelist(enterprise_factory_contract)
+  const { data: daoWhitelist } = useDAOAssetsWhitelist(address)
 
   const tokensToCheck = useMemo(() => {
     if (!daoWhitelist || !globalWhitelist) return

@@ -165,20 +165,20 @@ export const SelectProposalType = () => {
   };
 
   const renderFooter = () => {
-    const { enterprise_factory_contract } = dao;
+    const { address } = dao;
     return (
       <FormFooter
         primary={
           <Button
             onClick={() =>
-              navigate(`/dao/${enterprise_factory_contract}/proposals/create/${proposalType}?votingType=${proposalVotingType}`)
+              navigate(`/dao/${address}/proposals/create/${proposalType}?votingType=${proposalVotingType}`)
             }
             variant="primary"
           >
             Next
           </Button>
         }
-        secondary={<Button onClick={() => navigate(`/dao/${enterprise_factory_contract}`)}>Cancel</Button>}
+        secondary={<Button onClick={() => navigate(`/dao/${address}`)}>Cancel</Button>}
       />
     );
   };

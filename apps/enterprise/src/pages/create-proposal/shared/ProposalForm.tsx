@@ -32,7 +32,7 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
     }
 
     await tx(toCreateProposalMsg(formState, getProposalActions()));
-    navigate(`/dao/${dao.enterprise_factory_contract}/proposals`);
+    navigate(`/dao/${dao.address}/proposals`);
   };
 
   return (

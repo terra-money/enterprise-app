@@ -123,7 +123,7 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
           </Button>
         }
         secondary={
-          <Button variant="secondary" onClick={() => navigate(`/dao/${dao.enterprise_factory_contract}/proposals`)}>
+          <Button variant="secondary" onClick={() => navigate(`/dao/${dao.address}/proposals`)}>
             Cancel
           </Button>
         }
