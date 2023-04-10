@@ -8,6 +8,7 @@ import { toCreateProposalMsg } from './helpers/toCreateProposalMsg';
 import { ProposalFormContainer } from './ProposalFormContainer';
 import { TitleInput } from './TitleInput';
 import { ProposalFormState, useProposalForm } from './useProposalForm';
+import { toDao } from 'dao/utils/toDao';
 
 interface ProposalFormProps {
   children?: React.ReactNode;
@@ -22,7 +23,7 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
 
   const dao = useCurrentDao();
   const { proposalVotingType } = useCreateProposal();
-  const [txResult, tx] = useCreateProposalTx(dao, proposalVotingType);
+  const [txResult, tx] = useCreateProposalTx(toDao(dao), proposalVotingType);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {

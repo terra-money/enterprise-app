@@ -21,6 +21,7 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import styles from './SelectProposalType.module.sass';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
+import { toDao } from 'dao/utils/toDao';
 
 const title = 'Create a proposal';
 const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
@@ -125,7 +126,7 @@ export const SelectProposalType = () => {
   );
 
   const renderVotingTypePicker = () => {
-    if (!dao?.council) return null;
+    if (!dao?.dao_council) return null;
 
     return (
       <PrimarySelect
@@ -141,7 +142,7 @@ export const SelectProposalType = () => {
   };
 
   const renderOptions = () => {
-    const options = getProposalOptions(dao, proposalVotingType);
+    const options = getProposalOptions(toDao(dao), proposalVotingType);
 
     if (proposalVotingType === 'council' && !amICouncilMember) {
       return <Text>Only council members can create emergency proposals.</Text>;

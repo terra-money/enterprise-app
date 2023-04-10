@@ -17,7 +17,7 @@ export { useCurrentDaoMultisigMembers };
 export const CurrentDAOMultisigMembersProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data: members } = useMultisigMembersQuery(dao.membershipContractAddress as CW20Addr);
+  const { data: members } = useMultisigMembersQuery(dao.dao_membership_contract as CW20Addr);
 
   if (!members) {
     return <Throbber />;

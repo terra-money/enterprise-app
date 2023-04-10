@@ -5,8 +5,8 @@ import { useNftDaoStakingInfo } from 'dao/hooks/useNftDaoStakingInfo';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const NftDaoTotalStakedPanel = () => {
-  const dao = useCurrentDao();
-  const { totalStaked, totalStakedPercent } = useNftDaoStakingInfo(dao.address, dao.membershipContractAddress);
+  const { address, dao_membership_contract } = useCurrentDao();
+  const { totalStaked, totalStakedPercent } = useNftDaoStakingInfo(address, dao_membership_contract);
 
   return (
     <NumericPanel

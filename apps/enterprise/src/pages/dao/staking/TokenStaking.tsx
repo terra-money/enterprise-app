@@ -26,6 +26,7 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -77,15 +78,15 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 export const TokenStakingConnectedView = () => {
   const walletAddress = useAssertMyAddress();
   const dao = useCurrentDao();
-
-  const tokenAddress = dao.membershipContractAddress;
+  const { dao_membership_contract, address } = dao;
+  const tokenAddress = dao_membership_contract;
 
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
 
-  const { isLoading, totalStaked, tokenSymbol, tokenDecimals } = useTokenData(dao.address, tokenAddress);
+  const { isLoading, totalStaked, tokenSymbol, tokenDecimals } = useTokenData(address, tokenAddress);
 
   const { walletStaked, walletStakedPercent, walletVotingPower, claimableAmount, pendingClaims } = useWalletData(
-    dao.address,
+    address,
     walletAddress,
     totalStaked
   );
@@ -105,19 +106,19 @@ export const TokenStakingConnectedView = () => {
           <Container className={styles.staking} component="section" direction="column">
             <VStack gap={40}>
               <Container className={styles.header}>
-                <DAOLogo logo={dao.logo} size="l" />
+                <DAOLogo logo={getDaoLogo(dao)} size="l" />
                 <Text variant="label" className={styles.title}>
                   Voting power
                 </Text>
-                  <NumericPanel className={styles.stakedVotingPanel}
-                    value={demicrofy(walletStaked, tokenDecimals)}
-                    decimals={2}
-                    suffix={
-                      <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
-                        {walletVotingPower.mul(100)}
-                      </AnimateNumber>
-                    }
-                  />
+                <NumericPanel className={styles.stakedVotingPanel}
+                  value={demicrofy(walletStaked, tokenDecimals)}
+                  decimals={2}
+                  suffix={
+                    <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
+                      {walletVotingPower.mul(100)}
+                    </AnimateNumber>
+                  }
+                />
               </Container>
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
@@ -158,7 +159,7 @@ export const TokenStakingConnectedView = () => {
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
-                      daoAddress={dao.address}
+                      daoAddress={address}
                       staked={walletStaked}
                       symbol={tokenSymbol}
                       onClose={onClose}
@@ -194,7 +195,7 @@ export const TokenStakingConnectedView = () => {
                     isLoading={claimTxResult.loading}
                     tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {
-                      claimTx({ daoAddress: dao.address });
+                      claimTx({ daoAddress: address });
                     }}
                   >
                     Claim all

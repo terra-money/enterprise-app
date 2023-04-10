@@ -18,7 +18,7 @@ import { useTheme } from 'styled-components';
 import { Tag } from 'lib/ui/Tag';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { TxMessage } from './TxMessage';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 interface TxItemProps {
   tx: TxResponse;
@@ -29,7 +29,7 @@ export const TxItem = (props: TxItemProps) => {
   const { txhash, timestamp, logs } = tx;
   const { network } = useWallet();
 
-  const { address } = useCurrentDao()
+  const address = useCurrentDaoAddress()
 
   const events: TxEvent[] = logs ? logs[0].events : [];
 

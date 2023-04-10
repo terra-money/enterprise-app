@@ -7,12 +7,12 @@ import { u } from '@terra-money/apps/types';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TokenDaoTotalStakedPanel = () => {
-  const dao = useCurrentDao();
+  const { address, dao_membership_contract } = useCurrentDao();
 
-  const { data: token } = useCW20TokenInfoQuery(dao.membershipContractAddress);
+  const { data: token } = useCW20TokenInfoQuery(dao_membership_contract);
 
   const { data: totalStaked = Big(0) as u<Big>, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(
-    dao.address
+    address
   );
 
   const totalStakedPercent =

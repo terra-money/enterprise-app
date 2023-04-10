@@ -8,7 +8,7 @@ import { MintNftProposalForm } from './MintNftProposalForm';
 
 export const MintNftProposalPage = () => {
   const dao = useCurrentDao();
-  const { data: minter } = useNftMinterQuery(dao.membershipContractAddress);
+  const { data: minter } = useNftMinterQuery(dao.dao_membership_contract);
 
   if (!minter) {
     return <Throbber />;

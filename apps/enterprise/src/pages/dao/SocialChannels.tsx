@@ -20,7 +20,7 @@ const Container = styled(HStack)`
 
 export const SocialChannels = () => {
   const dao = useCurrentDao();
-  const { github_username, discord_username, telegram_username, twitter_username } = dao.socials;
+  const { github_username, discord_username, telegram_username, twitter_username } = dao.metadata.socials;
 
   if (Boolean(github_username || discord_username || telegram_username || twitter_username) === false) {
     return null;

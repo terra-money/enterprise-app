@@ -83,11 +83,11 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
 
   const navigate = useNavigate();
 
-  const minimumDeposit = Big(dao.governanceConfig.minimumDeposit ?? '0');
+  const minimumDeposit = Big(dao.gov_config.minimum_deposit ?? '0');
 
   const isDepositRequired = minimumDeposit.gt(0);
 
-  const tokenAddress = dao.membershipContractAddress;
+  const tokenAddress = dao.dao_membership_contract;
 
   const myAddress = useAssertMyAddress();
 

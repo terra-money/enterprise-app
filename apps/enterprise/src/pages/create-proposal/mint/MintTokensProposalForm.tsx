@@ -37,7 +37,7 @@ const mintTokensProposalFormSchema: z.ZodType<MintTokensProposalFormSchema> = z.
 
 export const MintTokensProposalForm = () => {
   const dao = useCurrentDao();
-  const { data: tokenInfo } = useCW20TokenInfoQuery(dao.membershipContractAddress);
+  const { data: tokenInfo } = useCW20TokenInfoQuery(dao.dao_membership_contract);
 
   const {
     register,
@@ -72,7 +72,7 @@ export const MintTokensProposalForm = () => {
               action_type: 'mint',
               msgs: members.map(({ address, amount }) =>
                 toMintTokenMsg({
-                  tokenAddress: dao.membershipContractAddress,
+                  tokenAddress: dao.dao_membership_contract,
                   amount,
                   recepientAddress: address,
                   tokenDecimals: assertDefined(tokenInfo).decimals,

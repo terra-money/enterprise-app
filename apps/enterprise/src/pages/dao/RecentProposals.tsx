@@ -1,16 +1,16 @@
 import { Text } from 'components/primitives';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useProposalsQuery } from 'queries';
 import { ProposalCard } from '../shared/ProposalCard';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const RecentProposals = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress();
 
   const { data: proposals } = useProposalsQuery({
-    daoAddress: dao?.address,
-    enabled: Boolean(dao?.address),
+    daoAddress: address,
+    enabled: Boolean(address),
     direction: 'desc'
   });
 

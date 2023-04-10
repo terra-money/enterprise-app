@@ -1,12 +1,12 @@
 import { usePrice } from '@terra-money/apps/hooks';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { NumericPanel } from 'components/numeric-panel';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const TokenDaoPricePanel = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress()
 
-  const price = usePrice(dao.membershipContractAddress);
+  const price = usePrice(address);
   if (!price) return null;
 
   return (

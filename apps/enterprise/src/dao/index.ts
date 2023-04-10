@@ -9,3 +9,7 @@ export const daoTypeName: Record<enterprise.DaoType, string> = {
   nft: 'NFT',
   token: 'Token',
 }
+
+export interface DaoInfo extends enterprise.DaoInfoResponse {
+  address: string
+}

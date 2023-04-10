@@ -15,13 +15,13 @@ interface UnstakeNFTOverlayProps extends ClosableComponentProps {
 }
 
 export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlayProps) => {
-  const { address, membershipContractAddress } = useCurrentDao();
+  const { address, dao_membership_contract } = useCurrentDao();
 
   const [txResult, unstakeNft] = useUnstakeNftsTx();
 
   const [tokenIds, setTokenIds] = useState<string[]>([]);
 
-  const { data: nfts = [], isLoading } = useNftsQuery({ collectionAddress: membershipContractAddress, ids: staked });
+  const { data: nfts = [], isLoading } = useNftsQuery({ collectionAddress: dao_membership_contract, ids: staked });
 
   return (
     <Modal

@@ -22,6 +22,7 @@ import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -49,16 +50,16 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 export const NftStakingConnectedView = () => {
   const walletAddress = useAssertMyAddress();
   const dao = useCurrentDao();
-
-  const { isLoading, totalStaked, symbol } = useNftDaoStakingInfo(dao.address, dao.membershipContractAddress);
+  const { address, dao_membership_contract } = dao;
+  const { isLoading, totalStaked, symbol } = useNftDaoStakingInfo(address, dao_membership_contract);
 
   const { walletStaked, walletStakedPercent, walletVotingPower, claimableTokens, pendingClaims } = useWalletData(
-    dao.address,
+    address,
     walletAddress,
     totalStaked
   );
 
-  const { data: myNfts } = useMyNftsQuery(dao.membershipContractAddress);
+  const { data: myNfts } = useMyNftsQuery(dao_membership_contract);
 
   const [claimTxResult, claimTx] = useClaimTx();
 
@@ -75,7 +76,7 @@ export const NftStakingConnectedView = () => {
           <Container className={styles.staking} component="section" direction="column">
             <VStack gap={40}>
               <Container className={styles.header}>
-                <DAOLogo logo={dao.logo} size="l" />
+                <DAOLogo logo={getDaoLogo(dao)} size="l" />
                 <Text variant="label" className={styles.title}>
                   Voting power
                 </Text>
@@ -142,7 +143,7 @@ export const NftStakingConnectedView = () => {
                     tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
                     onClick={() => {
-                      claimTx({ daoAddress: dao.address });
+                      claimTx({ daoAddress: address });
                     }}
                   >
                     Claim all

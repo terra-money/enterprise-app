@@ -9,8 +9,8 @@ import { DepositIntoFundsDistributorOverlay } from './DepositIntoFundsDistributo
 
 // TODO: reuse the flow with the "Deposit into treasury"
 export const DepositIntoFundsDistributor = () => {
-  const { type } = useCurrentDao()
-  const isMultisig = type === 'multisig'
+  const { dao_type } = useCurrentDao()
+  const isMultisig = dao_type === 'multisig'
 
   const shareholders = isMultisig ? 'multisig members' : 'stakers'
 

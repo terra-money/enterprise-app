@@ -8,6 +8,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { Proposal } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
+import { toDao } from 'dao/utils/toDao';
 
 interface UseProposalsQueryOptions {
   address: string;
@@ -31,7 +32,7 @@ export const useDaoProposalsQuery = ({
         proposals: {},
       });
 
-      return proposals.map((resp) => toProposal(resp, assertDefined(dao))).sort((a, b) => b.created - a.created);
+      return proposals.map((resp) => toProposal(resp, toDao(assertDefined(dao)))).sort((a, b) => b.created - a.created);
     },
     {
       refetchOnMount: false,

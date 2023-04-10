@@ -6,9 +6,9 @@ import { Text } from 'lib/ui/Text';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const DaoCouncilOverview = () => {
-  const { council } = useCurrentDao();
+  const { dao_council } = useCurrentDao();
 
-  if (!council || council.members.length < 1) return null;
+  if (!dao_council || dao_council.members.length < 1) return null;
 
   return (
     <VStack gap={32}>
@@ -16,7 +16,7 @@ export const DaoCouncilOverview = () => {
         DAO Council
       </Text>
       <SameWidthChildrenRow gap={16} minChildrenWidth={320}>
-        {council.members.map((member) => (
+        {dao_council.members.map((member) => (
           <Panel key={member}>
             <Address address={member} />
           </Panel>

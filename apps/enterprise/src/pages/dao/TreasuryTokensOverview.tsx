@@ -1,4 +1,3 @@
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useTreasuryTokensQuery } from 'queries';
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
@@ -14,6 +13,7 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { DepositIntoTreasury } from './deposit';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -41,14 +41,14 @@ const SmallScreenWidthContainer = styled.div`
 `;
 
 export const TreasuryTokensOverview = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress()
 
-  const { data: tokenBalances } = useTreasuryTokensQuery(dao.address);
+  const { data: tokenBalances } = useTreasuryTokensQuery(address);
 
   const tokenBalancesWithPrice = tokenBalances
     ? tokenBalances
-        .filter((t) => t.usdAmount)
-        .sort((a, b) => assertDefined(b.usdAmount).cmp(assertDefined(a.usdAmount)))
+      .filter((t) => t.usdAmount)
+      .sort((a, b) => assertDefined(b.usdAmount).cmp(assertDefined(a.usdAmount)))
     : undefined;
 
   const treasuryTotalInUSD = tokenBalancesWithPrice
@@ -80,7 +80,7 @@ export const TreasuryTokensOverview = () => {
         ) : (
           <Throbber variant="secondary" size="small" />
         )}
-        <Address address={dao.address} />
+        <Address address={address} />
       </VStack>
     );
   };

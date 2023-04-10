@@ -19,7 +19,7 @@ export const Staking = () => {
     <ConditionalWallet
       connected={() => (
         <ConditionalRender
-          value={dao.type}
+          value={dao.dao_type}
           token={() => <TokenStakingConnectedView />}
           nft={() => <NftStakingConnectedView />}
           multisig={() => <Navigate to={`/dao/${dao!.address}`} replace={true} />}
@@ -29,7 +29,7 @@ export const Staking = () => {
         <SameWidthChildrenRow minChildrenWidth={320} fullWidth gap={16}>
           <VStack gap={16}>
             <ConditionalRender
-              value={dao.type}
+              value={dao.dao_type}
               token={() => (
                 <>
                   <TokenDaoTotalSupplyPanel />
