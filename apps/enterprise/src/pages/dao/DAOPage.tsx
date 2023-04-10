@@ -11,7 +11,6 @@ import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { MobileDaoHeader } from './MobileDaoHeader';
-import { DaoErrorBoundary } from './DaoErrorBoundary';
 import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const DAOPage = () => {
@@ -25,32 +24,30 @@ export const DAOPage = () => {
     <Navigation>
       <LoadingPage isLoading={isLoading}>
         {dao && (
-          <DaoErrorBoundary>
-            <CurrentDaoProvider value={dao}>
-              <ResponsiveView
-                small={() => (
-                  <VStack gap={24}>
-                    <MobileDaoHeader />
+          <CurrentDaoProvider value={dao}>
+            <ResponsiveView
+              small={() => (
+                <VStack gap={24}>
+                  <MobileDaoHeader />
+                  <Outlet />
+                </VStack>
+              )}
+              normal={() => (
+                <ScrollableContainer
+                  stickyRef={ref}
+                  header={(visible) => (
+                    <StickyHeader visible={visible}>
+                      <Header compact={true} />
+                    </StickyHeader>
+                  )}
+                >
+                  <PageLayout header={<Header ref={ref} />}>
                     <Outlet />
-                  </VStack>
-                )}
-                normal={() => (
-                  <ScrollableContainer
-                    stickyRef={ref}
-                    header={(visible) => (
-                      <StickyHeader visible={visible}>
-                        <Header compact={true} />
-                      </StickyHeader>
-                    )}
-                  >
-                    <PageLayout header={<Header ref={ref} />}>
-                      <Outlet />
-                    </PageLayout>
-                  </ScrollableContainer>
-                )}
-              />
-            </CurrentDaoProvider>
-          </DaoErrorBoundary>
+                  </PageLayout>
+                </ScrollableContainer>
+              )}
+            />
+          </CurrentDaoProvider>
         )}
       </LoadingPage>
     </Navigation>

@@ -32,6 +32,7 @@ import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
 import { DistributePage } from 'pages/dao/distribute/DistributePage';
+import { DaoErrorBoundary } from 'pages/dao/DaoErrorBoundary';
 
 const queryClient = new QueryClient();
 
@@ -56,7 +57,9 @@ const AppBetaRoutes = () => {
           path="/dao/:address"
           element={
             <InitizalizedWalletOnly>
-              <DAOPage />
+              <DaoErrorBoundary>
+                <DAOPage />
+              </DaoErrorBoundary>
             </InitizalizedWalletOnly>
           }
         >
@@ -64,7 +67,9 @@ const AppBetaRoutes = () => {
             index={true}
             element={
               <InitizalizedWalletOnly>
-                <DAOOverviewPage />
+                <DaoErrorBoundary>
+                  <DAOOverviewPage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -72,7 +77,9 @@ const AppBetaRoutes = () => {
             path="treasury"
             element={
               <InitizalizedWalletOnly>
-                <DAOTreasuryPage />
+                <DaoErrorBoundary>
+                  <DAOTreasuryPage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -80,7 +87,9 @@ const AppBetaRoutes = () => {
             path="proposals"
             element={
               <InitizalizedWalletOnly>
-                <DAOProposalsPage />
+                <DaoErrorBoundary>
+                  <DAOProposalsPage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -88,7 +97,9 @@ const AppBetaRoutes = () => {
             path="distribute"
             element={
               <InitizalizedWalletOnly>
-                <DistributePage />
+                <DaoErrorBoundary>
+                  <DistributePage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -96,7 +107,9 @@ const AppBetaRoutes = () => {
             path="staking"
             element={
               <InitizalizedWalletOnly>
-                <DAOStakingPage />
+                <DaoErrorBoundary>
+                  <DAOStakingPage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -104,7 +117,9 @@ const AppBetaRoutes = () => {
             path="members"
             element={
               <InitizalizedWalletOnly>
-                <DAOMembersPage />
+                <DaoErrorBoundary>
+                  <DAOMembersPage />
+                </DaoErrorBoundary>
               </InitizalizedWalletOnly>
             }
           />
@@ -113,7 +128,9 @@ const AppBetaRoutes = () => {
           path="/dao/:address/proposals/create"
           element={
             <InitizalizedWalletOnly>
-              <ConditionalWallet connected={() => <SelectProposalTypePage />} />
+              <DaoErrorBoundary>
+                <ConditionalWallet connected={() => <SelectProposalTypePage />} />
+              </DaoErrorBoundary>
             </InitizalizedWalletOnly>
           }
         />
@@ -121,7 +138,9 @@ const AppBetaRoutes = () => {
           path="/dao/:address/proposals/create/:type"
           element={
             <InitizalizedWalletOnly>
-              <CreateProposalPage />
+              <DaoErrorBoundary>
+                <CreateProposalPage />
+              </DaoErrorBoundary>
             </InitizalizedWalletOnly>
           }
         />
@@ -129,7 +148,9 @@ const AppBetaRoutes = () => {
           path="/dao/create"
           element={
             <InitizalizedWalletOnly>
-              <CreateDAOPage />
+              <DaoErrorBoundary>
+                <CreateDAOPage />
+              </DaoErrorBoundary>
             </InitizalizedWalletOnly>
           }
         />
@@ -137,7 +158,9 @@ const AppBetaRoutes = () => {
           path="/dao/:address/proposals/:id"
           element={
             <InitizalizedWalletOnly>
-              <ProposalPage />
+              <DaoErrorBoundary>
+                <ProposalPage />
+              </DaoErrorBoundary>
             </InitizalizedWalletOnly>
           }
         />

@@ -1,37 +1,13 @@
-import { reportError } from 'errors/errorMonitoring';
-import { ComponentWithChildrenProps } from 'lib/shared/props';
-import React, { Component, ReactNode } from 'react';
+import { ErrorBoundary } from "errors/components/ErrorBoundary";
+import { ComponentWithChildrenProps } from "lib/shared/props";
+import { DaoErrorFallback } from "./DaoErrorFallback";
 
-interface DaoErrorBoundaryProps extends ComponentWithChildrenProps {
-  fallback?: ReactNode;
+export const DaoErrorBoundary = ({ children }: ComponentWithChildrenProps) => {
+  return (
+    <ErrorBoundary
+      fallback={<DaoErrorFallback />}
+    >
+      {children}
+    </ErrorBoundary>
+  )
 }
-
-interface State {
-  hasError: boolean;
-}
-
-export class DaoErrorBoundary extends Component<DaoErrorBoundaryProps, State> {
-  constructor(props: DaoErrorBoundaryProps) {
-    super(props);
-    this.state = {
-      hasError: false,
-    };
-  }
-
-  static getDerivedStateFromError(_: Error): State {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error): void {
-    reportError(error)
-  }
-
-  render(): React.ReactNode {
-    if (this.state.hasError) {
-      return this.props.fallback || null
-    }
-
-    return this.props.children
-  }
-}
-

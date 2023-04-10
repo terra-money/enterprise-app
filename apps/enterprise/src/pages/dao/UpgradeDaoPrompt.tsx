@@ -1,28 +1,16 @@
-import { ConnectWallet } from "chain/components/ConnectWallet";
-import { ConditionalWallet } from "components/conditional-wallet";
 import { Panel } from "lib/ui/Panel/Panel";
 import { HStack } from "lib/ui/Stack";
 import { Text } from "lib/ui/Text";
-import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton";
-import { useContractInfoQuery } from "queries/useContractInfoQuery";
-import { useEnterpriseLatestCodeIdQuery } from "queries/useEnterpriseCodeIdsQuery";
-import { UpgradeDAOPromptActions } from "./UpgradeDAOPromptActions";
 import { ArrowUpCircleIcon } from "lib/ui/icons/ArrowUpCircleIcon";
 import { useCurrentDaoAddress } from "dao/navigation";
+import { useIsOldDaoVersionQuery } from "dao/hooks/useIsOldDaoVersionQuery";
+import { UpgradeDaoActions } from "./UpgradeDaoActions";
 
 export const UpgradeDaoPrompt = () => {
   const address = useCurrentDaoAddress()
-  const { data: contractInfo } = useContractInfoQuery(address);
+  const { data: isOldDaoVersion } = useIsOldDaoVersionQuery(address)
 
-  const { data: latestCodeId } = useEnterpriseLatestCodeIdQuery()
-
-  if (!contractInfo || !latestCodeId) {
-    return null;
-  }
-
-  if (latestCodeId === contractInfo.code_id) {
-    return null;
-  }
+  if (!isOldDaoVersion) return null
 
   return (
     <Panel>
@@ -31,16 +19,7 @@ export const UpgradeDaoPrompt = () => {
           <Text as="span" color="success"><ArrowUpCircleIcon /></Text>
           <Text weight="semibold">New version of smart contracts available to this DAO</Text>
         </HStack>
-        <ConditionalWallet
-          connected={() => <UpgradeDAOPromptActions />}
-          notConnected={() => <ConnectWallet
-            renderOpener={({ onClick }) => (
-              <PrimaryButton kind="primary" onClick={onClick}>
-                Connect wallet
-              </PrimaryButton>
-            )}
-          />}
-        />
+        <UpgradeDaoActions />
       </HStack>
     </Panel>
   )
