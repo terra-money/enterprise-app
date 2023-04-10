@@ -18,9 +18,6 @@ import { UpgradeDaoPrompt } from './UpgradeDaoPrompt';
 export const Overview = () => {
   const dao = useCurrentDao();
 
-  const a: any = {}
-  console.log(a.a.a)
-
   return (
     <VStack gap={16}>
       <UpgradeDaoPrompt />
