@@ -1,6 +1,5 @@
 import { ConnectWallet } from "chain/components/ConnectWallet";
 import { ConditionalWallet } from "components/conditional-wallet";
-import { useCurrentDao } from "dao/components/CurrentDaoProvider";
 import { Panel } from "lib/ui/Panel/Panel";
 import { HStack } from "lib/ui/Stack";
 import { Text } from "lib/ui/Text";
@@ -9,10 +8,11 @@ import { useContractInfoQuery } from "queries/useContractInfoQuery";
 import { useEnterpriseLatestCodeIdQuery } from "queries/useEnterpriseCodeIdsQuery";
 import { UpgradeDAOPromptActions } from "./UpgradeDAOPromptActions";
 import { ArrowUpCircleIcon } from "lib/ui/icons/ArrowUpCircleIcon";
+import { useCurrentDaoAddress } from "dao/navigation";
 
 export const UpgradeDaoPrompt = () => {
-  const dao = useCurrentDao();
-  const { data: contractInfo } = useContractInfoQuery(dao.address);
+  const address = useCurrentDaoAddress()
+  const { data: contractInfo } = useContractInfoQuery(address);
 
   const { data: latestCodeId } = useEnterpriseLatestCodeIdQuery()
 

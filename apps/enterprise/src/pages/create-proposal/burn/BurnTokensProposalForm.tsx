@@ -18,7 +18,7 @@ interface MintTokensProposalFormSchema {
 export const BurnTokensProposalForm = () => {
   const dao = useCurrentDao();
   const treasuryTokens = useCurrentDaoTreasuryTokens();
-  const token = treasuryTokens.find((token) => token.key === dao.membershipContractAddress);
+  const token = treasuryTokens.find((token) => token.key === dao.enterprise_factory_contract);
 
   const formSchema: z.ZodType<MintTokensProposalFormSchema> = z.object({
     amount: z

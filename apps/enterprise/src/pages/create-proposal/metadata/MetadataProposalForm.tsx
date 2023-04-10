@@ -6,6 +6,7 @@ import { useMetadataForm } from './useMetadataForm';
 import { toUpdateMetadataMsg } from './toUpdateMetadataMsg';
 import { MetadataFields } from '../config/MetadataFields';
 import { VStack } from 'lib/ui/Stack';
+import { toDao } from 'dao/utils/toDao';
 
 export const MetadataProposalForm = () => {
   const dao = useCurrentDao();
@@ -16,7 +17,7 @@ export const MetadataProposalForm = () => {
 
   return (
     <ProposalForm
-      getProposalActions={() => [{ update_metadata: toUpdateMetadataMsg(dao, formState) }]}
+      getProposalActions={() => [{ update_metadata: toUpdateMetadataMsg(toDao(dao), formState) }]}
       disabled={submitDisabled}
     >
       <VStack gap={32}>

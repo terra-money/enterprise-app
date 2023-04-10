@@ -15,7 +15,7 @@ export { useCurrentDaoWhitelistedNFTs };
 export const CurrentDAOWhitelistedNFTsProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data: whitelistedNFTs } = useDAONFTsWhitelist(dao.address);
+  const { data: whitelistedNFTs } = useDAONFTsWhitelist(dao.enterprise_factory_contract);
 
   if (!whitelistedNFTs) {
     return <Throbber />;

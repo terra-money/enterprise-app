@@ -5,6 +5,8 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { DaoNavigation } from './DaoNavigation';
+import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { toDao } from 'dao/utils/toDao';
 
 export const MobileDaoHeader = () => {
   const dao = useCurrentDao();
@@ -12,13 +14,13 @@ export const MobileDaoHeader = () => {
   return (
     <VStack gap={24}>
       <HStack gap={8}>
-        <FavouriteToggle size="small" dao={dao} />
-        <DAOLogo size="s" logo={dao.logo} />
+        <FavouriteToggle size="small" dao={toDao(dao)} />
+        <DAOLogo size="s" logo={getDaoLogo(dao)} />
       </HStack>
       <Text size={24} weight="bold">
-        {dao.name}
+        {dao.metadata.name}
       </Text>
-      {dao.description && <Text color="supporting">{dao.description}</Text>}
+      {dao.metadata.description && <Text color="supporting">{dao.metadata.description}</Text>}
       <Line />
       <DaoNavigation />
     </VStack>

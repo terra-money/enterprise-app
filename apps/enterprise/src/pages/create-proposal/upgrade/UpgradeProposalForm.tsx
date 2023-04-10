@@ -14,7 +14,7 @@ export const UpgradeProposalForm = () => {
 
   const dao = useCurrentDao();
 
-  const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.address);
+  const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.enterprise_factory_contract);
   const { data: latestCodeId, isLoading: isLoadingLatestCodeId } = useEnterpriseLatestCodeIdQuery()
 
   const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;

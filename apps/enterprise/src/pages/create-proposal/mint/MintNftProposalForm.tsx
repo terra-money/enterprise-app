@@ -53,7 +53,7 @@ export const MintNftProposalForm = () => {
           {
             execute_msgs: {
               action_type: 'mint',
-              msgs: [toMintNftMsg({ contract: dao.membershipContractAddress, ...params })],
+              msgs: [toMintNftMsg({ contract: dao.dao_membership_contract, ...params })],
             },
           },
         ];

@@ -11,6 +11,7 @@ import {
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCallback, useMemo } from 'react';
 import { hasChangedFields, toUpdateMetadataMsg } from './toUpdateMetadataMsg';
+import { toDao } from 'dao/utils/toDao';
 
 export type MetadataProposalFormInput = DaoSocialDataInput & DaoInfoInput;
 
@@ -60,12 +61,12 @@ export const useMetadataForm = () => {
 
   const getSubmitDisabled = useCallback(
     (inputState: MetadataProposalFormInput) =>
-      !isFormStateValid(inputState) || !hasChangedFields(toUpdateMetadataMsg(dao, inputState)),
+      !isFormStateValid(inputState) || !hasChangedFields(toUpdateMetadataMsg(toDao(dao), inputState)),
     [dao]
   );
 
   const initialState: MetadataProposalFormState = useMemo(() => {
-    const { name, logo, description, socials } = dao;
+    const { name, logo, description, socials } = toDao(dao);
 
     const initialInput: MetadataProposalFormInput = {
       discordUsername: socials.discord_username || undefined,

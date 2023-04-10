@@ -3,7 +3,6 @@ import { Container } from '@terra-money/apps/components';
 import { SearchInput } from 'components/primitives';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useMemo, useState } from 'react';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
@@ -15,13 +14,14 @@ import { enterprise } from 'types/contracts';
 import { proposalStatuses } from 'proposal';
 import { ProposalsFilter } from './ProposalsFilter';
 import { useDoIHaveVotingPowerQuery } from 'dao/hooks/useDoIHaveVotingPowerQuery';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 const LIMIT = 100;
 
 export const ProposalsPage = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress();
 
-  const { data: proposalsQuery, isLoading } = useDaoProposalsQuery({ address: dao.address });
+  const { data: proposalsQuery, isLoading } = useDaoProposalsQuery({ address });
 
   const [search, setSearch] = useState({
     input: '',
@@ -84,7 +84,7 @@ export const ProposalsPage = () => {
           }
           onClick={() => {
             if (newProposalsDisabled === false) {
-              navigate(`/dao/${dao?.address}/proposals/create`);
+              navigate(`/dao/${address}/proposals/create`);
             }
           }}
         >
@@ -101,7 +101,7 @@ export const ProposalsPage = () => {
                 }`}
               action={
                 newProposalsDisabled ? undefined : (
-                  <InternalLink to={`/dao/${dao?.address}/proposals/create`}>
+                  <InternalLink to={`/dao/${address}/proposals/create`}>
                     <PrimaryButton as="div" kind="secondary">
                       Create
                     </PrimaryButton>

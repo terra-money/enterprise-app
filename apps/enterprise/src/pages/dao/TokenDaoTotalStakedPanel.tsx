@@ -4,15 +4,15 @@ import { useCW20TokenInfoQuery, useTokenStakingAmountQuery } from 'queries';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import Big from 'big.js';
 import { u } from '@terra-money/apps/types';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const TokenDaoTotalStakedPanel = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress();
 
-  const { data: token } = useCW20TokenInfoQuery(dao.membershipContractAddress);
+  const { data: token } = useCW20TokenInfoQuery(address);
 
   const { data: totalStaked = Big(0) as u<Big>, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(
-    dao.address
+    address
   );
 
   const totalStakedPercent =

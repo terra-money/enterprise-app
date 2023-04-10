@@ -44,7 +44,7 @@ const councilFormSchema: z.ZodType<CouncilFormSchema> = z.object({
 
 export const CouncilForm = () => {
   const dao = useCurrentDao();
-  const council = assertDefined(dao.council);
+  const council = assertDefined(dao.dao_council);
 
   const {
     register,

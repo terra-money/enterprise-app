@@ -12,6 +12,7 @@ import { useCurrentToken } from 'pages/shared/CurrentTokenProvider';
 import { useCallback, useMemo } from 'react';
 import { hasChangedFields } from '../metadata/toUpdateMetadataMsg';
 import { toUpdateGovConfigMsg } from './helpers/toUpdateGovConfigMsg';
+import { toDao } from 'dao/utils/toDao';
 
 export interface ConfigProposalFormState extends FormState<DaoGovConfigInput> {
   timeConversionFactor: number;
@@ -45,12 +46,12 @@ export const useCreateConfigProposalForm = () => {
 
   const getSubmitDisabled = useCallback(
     (inputState: ConfigProposalFormState) =>
-      !isFormStateValid(inputState) || !hasChangedFields(toUpdateGovConfigMsg(dao, inputState)),
+      !isFormStateValid(inputState) || !hasChangedFields(toUpdateGovConfigMsg(toDao(dao), inputState)),
     [dao]
   );
 
   const initialState: ConfigProposalFormState = useMemo(() => {
-    const { governanceConfig } = dao;
+    const { governanceConfig } = toDao(dao);
 
     const unlockingPeriodInSeconds =
       'time' in governanceConfig.unlockingPeriod ? governanceConfig.unlockingPeriod.time : 0;

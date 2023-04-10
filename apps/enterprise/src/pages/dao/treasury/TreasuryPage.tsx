@@ -5,16 +5,16 @@ import { TxItem } from './TxItem';
 import { useTxsQuery } from 'queries/useTxsQuery';
 import { CW20Addr } from '@terra-money/apps/types';
 import styles from './TreasuryPage.module.sass';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const TreasuryPage = () => {
-  const dao = useCurrentDao();
+  const address = useCurrentDaoAddress();
 
-  const { data: txs } = useTxsQuery(dao.address as CW20Addr);
+  const { data: txs } = useTxsQuery(address as CW20Addr);
 
   return (
     <Container direction="column" gap={32} className={styles.root}>
-      {dao && <TreasuryOverview />}
+      <TreasuryOverview />
       <Container direction="column" gap={16}>
         <Text variant="heading4">Transactions</Text>
         <Container gap={16} direction="column">

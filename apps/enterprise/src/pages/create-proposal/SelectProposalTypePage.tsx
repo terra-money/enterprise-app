@@ -15,7 +15,7 @@ export const SelectProposalTypePage = () => {
   const { data: dao, isLoading: isDaoLoading } = useDAOQuery(address as CW20Addr);
 
   const myAddress = useAssertMyAddress();
-  const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(dao?.address, myAddress);
+  const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(dao?.enterprise_factory_contract, myAddress);
 
   return (
     <Navigation>

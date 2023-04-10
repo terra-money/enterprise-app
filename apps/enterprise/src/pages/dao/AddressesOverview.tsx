@@ -13,24 +13,24 @@ const membershipName: Record<enterprise.DaoType, string> = {
 };
 
 export const AddressesOverview = () => {
-  const { address, membershipContractAddress, fundsDistributorContract, type } = useCurrentDao();
+  const { enterprise_factory_contract, dao_membership_contract, funds_distributor_contract, dao_type } = useCurrentDao();
 
   return (
     <TitledSection title="Addresses">
       <SameWidthChildrenRow minChildrenWidth={320} gap={16}>
         <Panel>
           <TitledContent title="DAO address">
-            <Address address={address} />
+            <Address address={enterprise_factory_contract} />
           </TitledContent>
         </Panel>
         <Panel>
-          <TitledContent title={`${membershipName[type]} address`}>
-            <Address address={membershipContractAddress} />
+          <TitledContent title={`${membershipName[dao_type]} address`}>
+            <Address address={dao_membership_contract} />
           </TitledContent>
         </Panel>
         <Panel>
           <TitledContent title={"Funds distributor address"}>
-            <Address address={fundsDistributorContract} />
+            <Address address={funds_distributor_contract} />
           </TitledContent>
         </Panel>
       </SameWidthChildrenRow>

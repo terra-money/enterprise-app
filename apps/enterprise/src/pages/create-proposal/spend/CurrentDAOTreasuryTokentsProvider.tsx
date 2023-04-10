@@ -15,7 +15,7 @@ export { useCurrentDaoTreasuryTokens };
 export const CurrentDAOTreasuryTokensProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data: treasuryTokens } = useTreasuryTokensQuery(dao.address);
+  const { data: treasuryTokens } = useTreasuryTokensQuery(dao.enterprise_factory_contract);
 
   if (!treasuryTokens) {
     return <Throbber />;

@@ -24,7 +24,7 @@ export const Overview = () => {
       <SameWidthChildrenRow gap={16} maxColumns={2} minChildrenWidth={320}>
         <VStack justifyContent="space-between" gap={16}>
           <ConditionalRender
-            value={dao.type}
+            value={dao.dao_type}
             multisig={() => (
               <VStack gap={16}>
                 <MultisigDaoMembersPanel />

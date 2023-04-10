@@ -6,9 +6,9 @@ import { CurrentTokenProvider } from 'pages/shared/CurrentTokenProvider';
 export const CreateConfigProposalPage = () => {
   const dao = useCurrentDao();
 
-  const hasToken = dao && dao.type === 'token';
+  const hasToken = dao && dao.dao_type === 'token';
 
-  const { data: token } = useCW20TokenInfoQuery(dao?.membershipContractAddress || '', {
+  const { data: token } = useCW20TokenInfoQuery(dao?.dao_membership_contract || '', {
     enabled: hasToken,
   });
 

@@ -6,6 +6,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { forwardRef, Ref } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './Header.module.sass';
+import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
 interface HeaderProps {
   className?: string;
@@ -23,7 +24,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo}>
-          <DAOLogo size="s" logo={dao.logo} />
+          <DAOLogo size="s" logo={getDaoLogo(dao)} />
         </div>
         <Text className={styles.name} variant="heading2">
           {title}
@@ -39,7 +40,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           Back
         </Text>
         <div className={styles.logo}>
-          <DAOLogo size="s" logo={dao.logo} />
+          <DAOLogo size="s" logo={getDaoLogo(dao)} />
         </div>
         <Text className={styles.name} variant="heading2">
           {title}

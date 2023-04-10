@@ -9,6 +9,7 @@ import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 import { useApiEndpoint } from 'hooks';
 import { apiResponseToProposal, ProposalApiResponse } from 'proposal/ProposalApiResponse';
+import { toDao } from 'dao/utils/toDao';
 
 interface UseProposalQueryOptions {
   daoAddress: CW20Addr;
@@ -23,7 +24,7 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
 
   const { id, daoAddress, enabled = true } = options;
 
-  const { data: dao } = useDAOQuery(daoAddress as CW20Addr);
+  const { data: daoResponse } = useDAOQuery(daoAddress as CW20Addr);
 
   const apiEndpoint = useApiEndpoint({
     path: 'v1/daos/{address}/proposals/{id}',
@@ -33,20 +34,21 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
   return useQuery(
     [QUERY_KEY.PROPOSAL, daoAddress, id],
     async () => {
+      const dao = toDao(assertDefined(daoResponse))
       try {
         const response = await fetch(apiEndpoint);
         const json: ProposalApiResponse = await response.json();
-        return apiResponseToProposal(json, assertDefined(dao))
+        return apiResponseToProposal(json, dao)
       } catch {
         let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
           proposal: { proposal_id: id },
         });
-        return toProposal(resp, assertDefined(dao));
+        return toProposal(resp, dao);
       }
     },
     {
       refetchOnMount: false,
-      enabled: !!(enabled && dao),
+      enabled: !!(enabled && daoResponse),
     }
   );
 };

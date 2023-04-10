@@ -23,7 +23,7 @@ interface RedelegateProposalFormSchema {
 
 export const RedelegateProposalForm = () => {
   const dao = useCurrentDao();
-  const { data: delegations = [], isLoading: areDelegationsLoading } = useDelegationsQuery(dao.address);
+  const { data: delegations = [], isLoading: areDelegationsLoading } = useDelegationsQuery(dao.enterprise_factory_contract);
 
   const [validator, setValidator] = useState<string | null>(null);
 

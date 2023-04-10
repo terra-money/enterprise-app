@@ -1,9 +1,9 @@
-import { useCurrentDao } from "dao/components/CurrentDaoProvider"
+import { useCurrentDaoAddress } from "dao/navigation"
 import { useDaoProposalsQuery } from "queries/useDaoProposalsQuery"
 
 // TODO: either query for all proposals or wait for contract query to be implemented
 export const useActiveUpgradeProposalQuery = () => {
-  const { address } = useCurrentDao()
+  const address = useCurrentDaoAddress()
   const { data, ...rest } = useDaoProposalsQuery({ address })
 
   return {

@@ -11,6 +11,8 @@ import { DaoNavigation } from './DaoNavigation';
 import styles from './Header.module.sass';
 import { InternalLink } from 'lib/navigation/Link/InternalLink';
 import { Path } from 'navigation';
+import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { toDao } from 'dao/utils/toDao';
 
 interface HeaderProps {
   className?: string;
@@ -25,11 +27,11 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo}>
-          <DAOLogo size="m" logo={dao.logo} />
+          <DAOLogo size="m" logo={getDaoLogo(dao)} />
         </div>
-        <FavouriteToggle className={styles.favourite} dao={dao} />
+        <FavouriteToggle className={styles.favourite} dao={toDao(dao)} />
         <Text className={styles.name} variant="heading2">
-          {dao.name}
+          {dao.metadata.name}
         </Text>
         <Container className={styles.tabs}>
           <DaoNavigation />
@@ -48,14 +50,14 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
             </Text>
           </InternalLink>
           <div className={styles.logo}>
-            <DAOLogo size="m" logo={dao.logo} />
+            <DAOLogo size="m" logo={getDaoLogo(dao)} />
           </div>
-          <FavouriteToggle className={styles.favourite} dao={dao} />
+          <FavouriteToggle className={styles.favourite} dao={toDao(dao)} />
           <Text className={styles.name} variant="heading2">
-            {dao.name}
+            {dao.metadata.name}
           </Text>
         </Container>
-        {dao.description && <Text variant="text">{dao.description}</Text>}
+        {dao.metadata.description && <Text variant="text">{dao.metadata.description}</Text>}
         <Line />
       </VStack>
       <Container ref={ref} className={styles.tabs}>

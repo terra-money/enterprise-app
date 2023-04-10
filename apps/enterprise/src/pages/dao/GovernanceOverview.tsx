@@ -1,4 +1,5 @@
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { toDao } from 'dao/utils/toDao';
 import { TitledContent } from 'lib/ui/Layout/TitledContent';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { Text } from 'lib/ui/Text';
@@ -20,7 +21,7 @@ const Container = styled.div`
 `;
 export const GovernanceOverview = () => {
   const dao = useCurrentDao();
-  const configView = fromDao(dao);
+  const configView = fromDao(toDao(dao));
 
   return (
     <Panel>
