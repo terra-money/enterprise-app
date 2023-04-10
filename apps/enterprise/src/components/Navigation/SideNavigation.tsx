@@ -11,6 +11,7 @@ import { useConnectedWallet } from '@terra-money/use-wallet';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
+import { SettingsNavigationItem } from 'settings/components/SettingsNavigationItem';
 
 const Container = styled(VStack)`
   padding: 32px;
@@ -52,6 +53,7 @@ export const SideNavigation = () => {
             </ExternalLink>
           </div>
         </Tooltip>
+        <SettingsNavigationItem />
         {connectedWallet && (
           <Tooltip title="Create a DAO" placement="right" arrow={true}>
             <div>

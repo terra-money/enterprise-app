@@ -4,6 +4,7 @@ import { DashboardButton } from 'dao/components/DashboardButton';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { HStack } from 'lib/ui/Stack';
+import { SettingsNavigationItem } from 'settings/components/SettingsNavigationItem';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) 
         <HStack gap={16}>
           <DashboardButton />
           <ManageDaosButton />
+          <SettingsNavigationItem />
         </HStack>
         <CreateDaoButton />
       </Footer>
