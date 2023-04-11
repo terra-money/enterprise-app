@@ -102,6 +102,7 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
     info: { name, logo, description },
     socials,
     council,
+    whitelistedAssets,
   } = input;
 
   return {
@@ -115,7 +116,6 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
             threshold: getDaoRatio(council.threshold),
           }
           : null,
-      asset_whitelist: null,
       dao_membership: getDaoMembership(input),
       dao_metadata: {
         logo: logo ? { url: logo } : 'none',
@@ -129,6 +129,7 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
         },
       },
       dao_gov_config: getDaoGovConfig(input),
+      asset_whitelist: whitelistedAssets.length > 0 ? whitelistedAssets : null,
     },
   };
 };

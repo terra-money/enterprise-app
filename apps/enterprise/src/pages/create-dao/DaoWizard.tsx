@@ -22,6 +22,7 @@ import { reportError } from 'errors/errorMonitoring';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { useState } from 'react';
+import { WhitelistStep } from './WhitelistStep';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();
@@ -122,6 +123,7 @@ export const DaoWizard = () => {
         membership={() => <NftMembershipStep />}
         tokenInfo={() => <TokenInfoStep />}
         initialBalances={() => <InitialBalancesStep />}
+        whitelist={() => <WhitelistStep />}
       />
     </WizardLayout>
   );
