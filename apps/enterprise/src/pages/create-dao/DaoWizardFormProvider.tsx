@@ -82,6 +82,8 @@ export interface DaoWizardInput {
   existingMultisigVoters: MultisigVoter[] | undefined;
   existingMultisigVotersLoading: boolean;
   existingMultisigVotersError: string | undefined;
+
+  whitelistedAssets: enterprise.AssetInfoBaseFor_Addr[]
 }
 
 export interface NftMembershipInfo {
@@ -118,6 +120,7 @@ export type DaoWizardStep =
   | 'members'
   | 'membership'
   | 'tokenInfo'
+  | 'whitelist'
   | 'initialBalances';
 
 export const EMPTY_MEMBER = { addr: '', weight: 100, error: undefined, valid: undefined };
@@ -134,6 +137,7 @@ export interface DaoWizardState extends DaoWizardInput {
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
 const sharedLastSteps: DaoWizardStep[] = [
   'govConfig',
+  'whitelist',
   'council',
   'socials',
   'confirm',
@@ -226,6 +230,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
   existingMultisigVoters: undefined,
   existingMultisigVotersLoading: false,
   existingMultisigVotersError: undefined,
+  whitelistedAssets: [],
 });
 
 interface DaoWizardFormState {
@@ -309,6 +314,12 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
         council,
         isValid: council.members.every(isFormStateValid) && isFormStateValid(council),
       };
+    },
+
+    whitelist: () => {
+      return {
+        isValid: true
+      }
     },
 
     membership: () => {
