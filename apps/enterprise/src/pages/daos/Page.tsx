@@ -14,6 +14,7 @@ import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
+import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
 
 const MAX_PREVIEW_SIZE = 100;
 
@@ -96,27 +97,29 @@ export const Page = () => {
             <Text size={24} weight="bold">
               DAOs
             </Text>
-            {searchInput}
-            {data && data?.length ? (
-              <List items={items} isLoading={isLoading} />
-            ) : (
-              <Container className={styles.noResultsContainer}>
-                <IconButton
-                  className={styles.Icon}
-                  onClick={() =>
-                    setSearch({
-                      input: '',
-                      searchText: '',
-                    })
-                  }
-                >
-                  <ErrorIcon />
-                </IconButton>
-                <Text className={styles.noResultsLabel}>
-                  We couldn’t find DAOs matching your criteria. Please try again.
-                </Text>
-              </Container>
-            )}
+            <IndexersAreRequired>
+              {searchInput}
+              {data && data?.length ? (
+                <List items={items} isLoading={isLoading} />
+              ) : (
+                <Container className={styles.noResultsContainer}>
+                  <IconButton
+                    className={styles.Icon}
+                    onClick={() =>
+                      setSearch({
+                        input: '',
+                        searchText: '',
+                      })
+                    }
+                  >
+                    <ErrorIcon />
+                  </IconButton>
+                  <Text className={styles.noResultsLabel}>
+                    We couldn’t find DAOs matching your criteria. Please try again.
+                  </Text>
+                </Container>
+              )}
+            </IndexersAreRequired>
           </VStack>
         )}
         normal={() => (
@@ -145,26 +148,28 @@ export const Page = () => {
                 />
               }
             >
-              {data && data?.length ? (
-                <List items={items} isLoading={isLoading} />
-              ) : (
-                <Container className={styles.noResultsContainer}>
-                  <IconButton
-                    className={styles.Icon}
-                    onClick={() =>
-                      setSearch({
-                        input: '',
-                        searchText: '',
-                      })
-                    }
-                  >
-                    <ErrorIcon />
-                  </IconButton>
-                  <Text className={styles.noResultsLabel}>
-                    We couldn’t find DAOs matching your criteria. Please try again.
-                  </Text>
-                </Container>
-              )}
+              <IndexersAreRequired>
+                {data && data?.length ? (
+                  <List items={items} isLoading={isLoading} />
+                ) : (
+                  <Container className={styles.noResultsContainer}>
+                    <IconButton
+                      className={styles.Icon}
+                      onClick={() =>
+                        setSearch({
+                          input: '',
+                          searchText: '',
+                        })
+                      }
+                    >
+                      <ErrorIcon />
+                    </IconButton>
+                    <Text className={styles.noResultsLabel}>
+                      We couldn’t find DAOs matching your criteria. Please try again.
+                    </Text>
+                  </Container>
+                )}
+              </IndexersAreRequired>
             </PageLayout>
           </ScrollableContainer>
         )}
