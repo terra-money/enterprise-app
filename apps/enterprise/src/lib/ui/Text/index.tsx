@@ -2,19 +2,20 @@ import styled, { DefaultTheme, css } from 'styled-components';
 import { gradientColorCSS } from '../gradients';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
-  ({
-    regular: colors.text,
-    supporting: colors.textSupporting,
-    supporting2: colors.textSupporting2,
-    supporting3: colors.textSupporting3,
+({
+  regular: colors.text,
+  supporting: colors.textSupporting,
+  supporting2: colors.textSupporting2,
+  supporting3: colors.textSupporting3,
 
-    primary: colors.primary,
-    attention: colors.attention,
-    alert: colors.alert,
-    success: colors.success,
-    reversed: colors.background,
-    white: colors.white,
-  } as const);
+  primary: colors.primary,
+  attention: colors.attention,
+  alert: colors.alert,
+  idle: colors.idle,
+  success: colors.success,
+  reversed: colors.background,
+  white: colors.white,
+} as const);
 
 type TextWeight = 'regular' | 'semibold' | 'bold';
 const fontWeight: Record<TextWeight, number> = {

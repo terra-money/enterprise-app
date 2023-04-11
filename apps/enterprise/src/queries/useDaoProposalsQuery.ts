@@ -2,7 +2,6 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { assertDefined } from '@terra-money/apps/utils';
 import { useContract } from 'chain/hooks/useContract';
 import { toProposal } from 'dao/utils/toProposal';
-import { Direction } from 'hooks';
 import { useDAOQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
 import { Proposal } from 'dao/shared/proposal';
@@ -12,7 +11,6 @@ import { toDao } from 'dao/utils/toDao';
 
 interface UseProposalsQueryOptions {
   address: string;
-  direction?: Direction;
   enabled?: boolean;
 }
 

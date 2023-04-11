@@ -11,6 +11,7 @@ import { useRefCallback } from '@terra-money/apps/hooks';
 import { TransactionSnackbar } from 'components/snackbar';
 import { indexerCompletion } from 'utils/indexerCompletion';
 import { useWallet } from '@terra-money/wallet-provider';
+import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 
 type TxMessages = Record<TX_KEY, string>;
 
@@ -50,6 +51,7 @@ export const useTransactionSnackbars = () => {
   const refetch = useRefetchQueries();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [areIndexersEnabled] = useAreIndexersEnabled()
 
   const onPending = useRefCallback(
     (transaction: PendingTransaction) => {
@@ -73,6 +75,7 @@ export const useTransactionSnackbars = () => {
 
   const onCompleted = useRefCallback(
     (transaction: CompletedTransaction) => {
+      if (!areIndexersEnabled) return;
       const txKey = transaction.payload['txKey'] as TX_KEY;
       indexerCompletion({
         network,
@@ -97,7 +100,7 @@ export const useTransactionSnackbars = () => {
         },
       });
     },
-    [refetch, enqueueSnackbar, closeSnackbar]
+    [refetch, enqueueSnackbar, closeSnackbar, areIndexersEnabled]
   );
 
   const onFailed = useRefCallback(
