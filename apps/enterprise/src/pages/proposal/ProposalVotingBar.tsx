@@ -11,7 +11,8 @@ import styles from './ProposalVotingBar.module.sass';
 
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
-
+  
+  
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
@@ -28,9 +29,17 @@ export const ProposalVotingBar = () => {
 
   const yesRatio = enforceRange(getRatio(yesVotes, total).toNumber(), 0, 1);
 
+  const noRatio = enforceRange(getRatio(noVotes, total).toNumber(), 0 ,1);
+
+  const abstainRatio = enforceRange(getRatio(abstainVotes, total).toNumber(), 0, 1);
+  
   const totalBarWidth = toPercents(enforceRange(getRatio(total, totalAvailableVotes).toNumber(), 0, 1));
 
   const yesBarWidth = toPercents(yesRatio);
+
+  const noBarWidth = toPercents(noRatio);
+
+  const abstainBarWidth = toPercents(abstainRatio);
 
   return (
     <div className={styles.root}>
@@ -45,6 +54,24 @@ export const ProposalVotingBar = () => {
               </div>
             )}
           </div>
+         {yesRatio && <div style={{ width: noBarWidth }} className={styles.no}>
+            {noRatio > 0 && (
+              <div className={styles.center}>
+                <Text className={classNames(styles.value, styles.label)} variant="text">
+                  No {toPercents(noRatio, 'round')}
+                </Text>
+              </div>
+            )}
+          </div>} 
+         {abstainRatio && <div style={{ width: abstainBarWidth }} className={styles.abstain}>
+            {abstainRatio > 0 && (
+              <div className={styles.center}>
+                <Text className={classNames(styles.value, styles.label)} variant="text">
+                  Abstain {toPercents(abstainRatio, 'round')}
+                </Text>
+              </div>
+            )}
+          </div>} 
         </div>
         <div style={{ left: toPercents(quorum) }} className={styles.quorum}>
           <div className={styles.center}>
