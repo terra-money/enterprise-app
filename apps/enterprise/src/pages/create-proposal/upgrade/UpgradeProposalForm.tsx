@@ -19,8 +19,8 @@ export const UpgradeProposalForm = () => {
 
   const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;
 
-  const upgradeMessage = `Upgrade to Code ID ${latestCodeId}`;
-
+  const upgradeMessage = `Upgrade to Code ID ${latestCodeId} \n`;
+  const changeLogMessage = 'ChangeLog: Fixed a bug where it was impossible to vote on emergency proposals.'
   return (
     <LoadingPage isLoading={isLoadingContract || isLoadingLatestCodeId}>
       <ProposalForm
@@ -44,7 +44,7 @@ export const UpgradeProposalForm = () => {
         {isUpToDate === undefined ? (
           <Throbber />
         ) : (
-          <Text variant="heading4">{isUpToDate ? 'Your DAO is up-to-date!' : upgradeMessage}</Text>
+          <Text variant="heading4">{isUpToDate ? 'Your DAO is up-to-date!' : `${upgradeMessage}${changeLogMessage}`}</Text>
         )}
       </ProposalForm>
     </LoadingPage>
