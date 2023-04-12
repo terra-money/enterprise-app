@@ -54,7 +54,7 @@ export const ProposalVotingBar = () => {
               </div>
             )}
           </div>
-         {yesRatio && <div style={{ width: noBarWidth }} className={styles.no}>
+         {noRatio > 0 && <div style={{ width: noBarWidth }} className={styles.no}>
             {noRatio > 0 && (
               <div className={styles.center}>
                 <Text className={classNames(styles.value, styles.label)} variant="text">
@@ -63,7 +63,7 @@ export const ProposalVotingBar = () => {
               </div>
             )}
           </div>} 
-         {abstainRatio && <div style={{ width: abstainBarWidth }} className={styles.abstain}>
+         {abstainRatio > 0 && <div style={{ width: abstainBarWidth }} className={styles.abstain}>
             {abstainRatio > 0 && (
               <div className={styles.center}>
                 <Text className={classNames(styles.value, styles.label)} variant="text">
