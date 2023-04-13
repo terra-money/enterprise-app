@@ -5,7 +5,7 @@ import { IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useDAOsQuery } from 'queries';
+import { QUERY_KEY, useDAOsQuery } from 'queries';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { List } from './List';
@@ -39,46 +39,39 @@ export const Page = () => {
   }, [showDropdown]);
 
 
-  const [search, setSearch] = useState({
-    input: '',
-    searchText: '',
-  });
+  const [searchText, setSearchText] = useState('');
+  const [daosQueryKey, setDaosQueryKey] = useState<string>(QUERY_KEY.DAOS)
+
+  useEffect(() => {
+    if (searchText === '') {
+      setDaosQueryKey(QUERY_KEY.DAOS)
+      return
+    }
+
+    const handler = () => {
+      setDaosQueryKey(`${QUERY_KEY.DAOS}-${searchText}`)
+    }
+
+    const timeOut = setTimeout(handler, 300)
+
+    return () => clearTimeout(timeOut)
+  }, [searchText])
 
   const { data, isLoading } = useDAOsQuery({
-    query: search.searchText,
+    query: searchText,
     limit: MAX_PREVIEW_SIZE,
+    queryKey: daosQueryKey
   });
 
   const items = data?.filter(item => daoTypesToDisplay.includes(item.type));
 
   const searchInput = (
     <SearchInput
-      value={search.input}
-      onChange={(input) =>
-        setSearch((previous) => {
-          return {
-            ...previous,
-            input,
-          };
-        })
-      }
+      value={searchText}
+      onChange={setSearchText}
       onClear={() => {
-        setSearch((previous) => {
-          return {
-            ...previous,
-            input: '',
-            searchText: '',
-          };
-        });
+        setSearchText('')
       }}
-      onSearch={() =>
-        setSearch((previous) => {
-          return {
-            ...previous,
-            searchText: previous.input,
-          };
-        })
-      }
     />
   );
 
@@ -87,6 +80,22 @@ export const Page = () => {
       value={daoTypesToDisplay}
       onChange={setDaoTypesToDisplay}
     />
+  )
+
+  const noResults = (
+    <Container className={styles.noResultsContainer}>
+      <IconButton
+        className={styles.Icon}
+        onClick={() =>
+          setSearchText('')
+        }
+      >
+        <ErrorIcon />
+      </IconButton>
+      <Text className={styles.noResultsLabel}>
+        We couldn’t find DAOs matching your criteria. Please try again.
+      </Text>
+    </Container>
   )
 
   return (
@@ -102,22 +111,7 @@ export const Page = () => {
               {data && data?.length ? (
                 <List items={items} isLoading={isLoading} />
               ) : (
-                <Container className={styles.noResultsContainer}>
-                  <IconButton
-                    className={styles.Icon}
-                    onClick={() =>
-                      setSearch({
-                        input: '',
-                        searchText: '',
-                      })
-                    }
-                  >
-                    <ErrorIcon />
-                  </IconButton>
-                  <Text className={styles.noResultsLabel}>
-                    We couldn’t find DAOs matching your criteria. Please try again.
-                  </Text>
-                </Container>
+                noResults
               )}
             </IndexersAreRequired>
           </VStack>
@@ -152,22 +146,7 @@ export const Page = () => {
                 {data && data?.length ? (
                   <List items={items} isLoading={isLoading} />
                 ) : (
-                  <Container className={styles.noResultsContainer}>
-                    <IconButton
-                      className={styles.Icon}
-                      onClick={() =>
-                        setSearch({
-                          input: '',
-                          searchText: '',
-                        })
-                      }
-                    >
-                      <ErrorIcon />
-                    </IconButton>
-                    <Text className={styles.noResultsLabel}>
-                      We couldn’t find DAOs matching your criteria. Please try again.
-                    </Text>
-                  </Container>
+                  noResults
                 )}
               </IndexersAreRequired>
             </PageLayout>

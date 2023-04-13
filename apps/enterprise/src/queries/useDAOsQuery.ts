@@ -9,7 +9,7 @@ interface DAOsQueryOptions {
   query?: string;
   limit?: number;
   direction?: Direction;
-  queryKey?: QUERY_KEY;
+  queryKey?: string;
 }
 
 export type DAOsQueryResponse = Array<{
