@@ -21,6 +21,7 @@ export interface Proposal {
   totalVotes: Big;
   type: enterprise.ProposalType;
   executionTxHash?: string;
+  proposer?: string;
 }
 
 export const sharedProposalTypes = [

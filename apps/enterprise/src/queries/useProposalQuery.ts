@@ -48,6 +48,7 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
       let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {
         proposal: { proposal_id: id },
       });
+
       return toProposal(resp, dao);
     },
     {

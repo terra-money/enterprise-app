@@ -18,6 +18,7 @@ export type Entity = {
   vetoVotes: string;
   totalVotes: string;
   type: enterprise.ProposalType;
+  proposer?: string;
 };
 
 export interface ProposalKey {

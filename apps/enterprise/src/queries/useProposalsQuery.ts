@@ -1,12 +1,11 @@
 import { compareAddress } from '@terra-money/apps/utils';
-import Big from 'big.js';
 import { Proposal } from 'dao/shared/proposal';
 import { ApiEndpoints, Direction, useApiEndpoint } from 'hooks';
 import { useDAOsQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
-import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
+import { ProposalApiResponse, apiResponseToProposal } from 'proposal/ProposalApiResponse';
 
 interface UseProposalsQueryOptions {
   daoAddress?: string;
@@ -16,21 +15,7 @@ interface UseProposalsQueryOptions {
   queryKey?: QUERY_KEY;
 }
 
-export type ProposalsQueryResponse = Array<{
-  daoAddress: string;
-  id: number;
-  created: number;
-  title: string;
-  description: string;
-  expires: enterprise.Expiration;
-  status: enterprise.ProposalStatus;
-  proposalActions: enterprise.ProposalAction[];
-  yesVotes: string;
-  noVotes: string;
-  abstainVotes: string;
-  vetoVotes: string;
-  totalVotes: string;
-}>;
+export type ProposalsQueryResponse = Array<ProposalApiResponse>;
 
 export const useProposalsQuery = (
   options: UseProposalsQueryOptions = {}
@@ -85,17 +70,7 @@ export const useProposalsQuery = (
           if (dao === undefined) {
             reportError('Could not find the correct DAO for the proposal');
           } else {
-            proposals.push({
-              ...entity,
-              dao,
-              actions: entity.proposalActions,
-              yesVotes: Big(entity.yesVotes),
-              noVotes: Big(entity.noVotes),
-              abstainVotes: Big(entity.abstainVotes),
-              vetoVotes: Big(entity.vetoVotes ?? '0'),
-              totalVotes: Big(entity.totalVotes ?? '0'),
-              type: 'general'
-            });
+            proposals.push(apiResponseToProposal(entity, dao));
           }
         });
       }

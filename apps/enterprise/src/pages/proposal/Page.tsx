@@ -16,6 +16,7 @@ import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { SmallScreenProposalHeader } from './SmallScreenProposalHeader';
+import { ProposedBy } from './ProposedBy';
 
 export const Page = () => {
   const { id, address } = useParams();
@@ -29,6 +30,16 @@ export const Page = () => {
   });
 
   const ref = useRef<HTMLDivElement>(null);
+
+  const content = (
+    <>
+      <ProposedBy />
+      <ProposalSummaryText />
+      <ProposalActions />
+      <ProposalVoting />
+      <ProposalVotes />
+    </>
+  )
 
   return (
     <Navigation>
@@ -49,20 +60,14 @@ export const Page = () => {
                       )}
                     >
                       <PageLayout header={<Header ref={ref} />}>
-                        <ProposalSummaryText />
-                        <ProposalActions />
-                        <ProposalVoting />
-                        <ProposalVotes />
+                        {content}
                       </PageLayout>
                     </ScrollableContainer>
                   )}
                   small={() => (
                     <VStack gap={24}>
                       <SmallScreenProposalHeader />
-                      <ProposalSummaryText />
-                      <ProposalActions />
-                      <ProposalVoting />
-                      <ProposalVotes />
+                      {content}
                     </VStack>
                   )}
                 />
