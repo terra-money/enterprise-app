@@ -250,7 +250,8 @@ export module enterprise {
     new_dao_code_id: number;
   }
   export interface ExecuteMsgsMsg {
-    action_type: string;
+    // temporarily disable action_type until contract migrations
+    // action_type: string;
     msgs: string[];
   }
   export interface ModifyMultisigMembershipMsg {

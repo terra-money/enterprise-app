@@ -46,7 +46,8 @@ export const BurnTokensProposalForm = () => {
         return [
           {
             execute_msgs: {
-              action_type: 'burn',
+              // temporarily disable action_type until contract migrations
+              // action_type: 'burn',
               msgs: [
                 toBurnTokensMsg({
                   amount,
