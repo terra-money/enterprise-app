@@ -11,6 +11,7 @@ import { useWallet } from '@terra-money/wallet-provider';
 import { Text } from 'lib/ui/Text';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
+import { VStack } from 'lib/ui/Stack';
 
 interface FormatMigrationMsgParams {
   msg: string
@@ -74,7 +75,12 @@ export const UpgradeProposalForm = () => {
               value={message}
               onChange={value => setMessage(value || '')}
             />
-            <Text weight='bold'>{isUpToDate ? 'Your DAO is up-to-date!' : `${upgradeMessage}${changeLogMessage}`}</Text>
+            <VStack gap={4}>
+              <Text weight='bold'>{upgradeMessage}</Text>
+              <Text color="supporting">
+                {changeLogMessage}
+              </Text>
+            </VStack>
           </>
         )}
 
