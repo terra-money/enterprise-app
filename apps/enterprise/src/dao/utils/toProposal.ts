@@ -27,5 +27,6 @@ export const toProposal = (
     vetoVotes: Big(vetoVotes),
     totalVotes: Big(total_votes_available),
     type: proposal.proposal_type,
+    proposer: proposal.proposer,
   };
 };

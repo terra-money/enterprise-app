@@ -19,10 +19,6 @@ export module funds_distributor {
   export type Binary = string;
   export interface UpdateUserWeightsMsg {
     /**
-     * The new total weight, after accounting for the users' changes
-     */
-    new_total_weight: Uint128;
-    /**
      * New weights that the users have, after the change
      */
     new_user_weights: UserWeight[];
@@ -49,6 +45,7 @@ export module funds_distributor {
   }
   export interface InstantiateMsg {
     enterprise_contract: string;
+    initial_weights: UserWeight[];
   }
   export interface MigrateMsg {}
   export type QueryMsg = {

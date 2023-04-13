@@ -645,6 +645,7 @@ export module enterprise {
   export type ProposalStatus = 'in_progress' | 'passed' | 'rejected' | 'executed';
   export interface ProposalResponse {
     proposal: Proposal;
+    proposal_status: ProposalStatus;
     /**
      * Total vote-count (value) for each outcome (key).
      */
@@ -657,6 +658,7 @@ export module enterprise {
     id: number;
     proposal_actions: ProposalAction[];
     proposal_type: ProposalType;
+    proposer: Addr;
     started_at: Timestamp;
     status: ProposalStatus;
     title: string;

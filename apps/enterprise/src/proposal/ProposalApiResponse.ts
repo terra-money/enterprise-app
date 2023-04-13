@@ -20,6 +20,7 @@ export interface ProposalApiResponse {
   vetoVotes: string;
   totalVotes: string;
   type: enterprise.ProposalType;
+  proposer?: string
 };
 
 export const apiResponseToProposal = (proposal: ProposalApiResponse, dao: DAO): Proposal => {
@@ -33,6 +34,7 @@ export const apiResponseToProposal = (proposal: ProposalApiResponse, dao: DAO): 
     vetoVotes: Big(proposal.vetoVotes),
     totalVotes: Big(proposal.totalVotes),
     // TODO: remove after updating indexers
-    type: proposal.type || 'general'
+    type: proposal.type || 'general',
+    proposer: proposal.proposer
   };
 }
