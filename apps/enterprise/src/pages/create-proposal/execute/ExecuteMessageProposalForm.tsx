@@ -18,7 +18,12 @@ export const ExecuteMessageProposalForm = () => {
   return (
     <ProposalForm
       disabled={submitDisabled}
-      getProposalActions={() => [{ execute_msgs: { msgs: toExecuteMsg(messages), action_type: 'execute' } }]}
+      getProposalActions={() => [{ 
+        execute_msgs: { 
+          // temporarily disable action_type until contract migrations
+          // action_type: 'execute',
+          msgs: toExecuteMsg(messages)
+        } }]}
     >
       <div className={styles.root}>
       <div className={styles.section}>
