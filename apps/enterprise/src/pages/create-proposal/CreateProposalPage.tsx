@@ -32,7 +32,7 @@ import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
 import { MintNftProposalPage } from './mint/MintNftProposalPage';
 import { enterprise } from 'types/contracts';
-import { UpdateMinimumWeightForRewardsForm } from './UpdateMinimumWeightForRewardsForm';
+import { MinimumWeightForRewardsProposalPage } from './minWeight/MinimumWeightForRewardsProposalPage';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -92,7 +92,7 @@ export const CreateProposalPage = () => {
                         delegate={() => <DelegateProposalPage />}
                         undelegate={() => <UndelegateProposalForm />}
                         redelegate={() => <RedelegateProposalForm />}
-                        minWeightForRewards={() => <UpdateMinimumWeightForRewardsForm />}
+                        minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
                       />
                     </CurrentDaoProvider>
                   ) : null}

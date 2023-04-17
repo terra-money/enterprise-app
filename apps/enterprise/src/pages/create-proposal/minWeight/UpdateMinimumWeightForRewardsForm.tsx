@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ProposalForm } from "./shared/ProposalForm";
+import { ProposalForm } from "../shared/ProposalForm";
 import { MinimumWeightForRewardsInput } from "pages/create-dao/MinimumWeightForRewardsInput";
+import { useCurrentDaoMinimumWeightForRewards } from "./CurrentDAOMinimumWeightForRewardsProvider";
 
 export const UpdateMinimumWeightForRewardsForm = () => {
-  // TODO: get current minimum weight from the DAO
-  const currentValue = 0
+  const currentValue = useCurrentDaoMinimumWeightForRewards()
   const [value, setValue] = useState<number | undefined>(currentValue);
   const error = isNaN(Number(value)) ? 'Invalid number' : undefined
 
