@@ -18,5 +18,8 @@ export const CurrentDAOMinimumWeightForRewardsProvider = ({ children }: Props) =
     return <Throbber />;
   }
 
+  console.log('min weight: ', minWeight)
+
+
   return <MinimumWeightForRewardsProvider value={minWeight}>{children}</MinimumWeightForRewardsProvider>;
 };

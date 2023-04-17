@@ -9,7 +9,7 @@ export const UpdateMinimumWeightForRewardsAction = () => {
 
   return (
     <Text color="supporting">
-      Update minimum weight for rewards to <Text as="span" weight="bold">{newValue}</Text>
+      Update minimum weight for rewards to <Text as="span" color="regular" weight="bold">{newValue}</Text>
     </Text>
   )
 }

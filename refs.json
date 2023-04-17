@@ -25,7 +25,7 @@
     },
     "enterprise-factory": {
       "codeId": "8340",
-      "address": "terra18hxgttv4neqx6sn8e5phufwmqytf2e9p3k096cwdv43hh9nr3ves84v5yd"
+      "address": "terra1qkkgz6v9pngska4ymrts63h2z4srknltvn87x9mhxwx03n7c2xrs7ylc0u"
     },
     "cw20_base": {
       "codeId": "5350"
@@ -43,7 +43,7 @@
       "codeId": "8339"
     }
   },
-"mainnet": {
+  "mainnet": {
     "enterprise": {
       "codeId": "1327"
     },
