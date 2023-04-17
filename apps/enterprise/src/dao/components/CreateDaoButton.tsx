@@ -8,10 +8,14 @@ const Button = styled(IconButton)`
   font-size: 12px;
 `;
 
-export const CreateDaoButton = () => {
+interface CreateDaoButtonProps { 
+  disabled: any;
+}
+
+export const CreateDaoButton = ({disabled}: CreateDaoButtonProps) => {
   return (
     <InternalLink to={Path.CreateDao}>
-      <Button variant="primary">
+      <Button variant="primary" disabled={disabled}>
         <PlusIcon />
       </Button>
     </InternalLink>

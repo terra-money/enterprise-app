@@ -8,7 +8,7 @@ import { AnimateNumber } from '@terra-money/apps/components';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { Address } from 'components/address';
 import styled from 'styled-components';
-import { VStack } from 'lib/ui/Stack';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { DepositIntoTreasury } from './deposit';
@@ -129,7 +129,9 @@ export const TreasuryTokensOverview = () => {
           <VStack fullHeight fullWidth justifyContent="space-between" gap={8}>
             {renderBasicInfo()}
             {renderAssets()}
+            <HStack justifyContent="flex-end">
             <DepositIntoTreasury />
+            </HStack>
           </VStack>
         </NormalScreenWidthContainer>
       )}

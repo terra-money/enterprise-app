@@ -3,7 +3,7 @@ import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
-import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
+import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery, useSanctionCheck } from 'queries';
 import { useClaimTx } from 'tx';
 import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
@@ -23,6 +23,7 @@ import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { useConnectedWallet } from '@terra-money/wallet-provider';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -50,6 +51,8 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 export const NftStakingConnectedView = () => {
   const walletAddress = useAssertMyAddress();
   const dao = useCurrentDao();
+  const connectedWallet = useConnectedWallet();
+  const isSanctioned = useSanctionCheck(connectedWallet?.walletAddress)
   const { address, dao_membership_contract } = dao;
   const { isLoading, totalStaked, symbol } = useNftDaoStakingInfo(address, dao_membership_contract);
 
@@ -92,7 +95,7 @@ export const NftStakingConnectedView = () => {
                     <PrimaryButton
                       isLoading={isLoading}
                       tooltipText={isStakingDisabled ? `You don't have NFTs to stake` : undefined}
-                      isDisabled={isStakingDisabled}
+                      isDisabled={isStakingDisabled && isSanctioned as any}
                       onClick={onOpen}
                     >
                       Stake
@@ -107,7 +110,7 @@ export const NftStakingConnectedView = () => {
                   renderOpener={({ onOpen }) => (
                     <PrimaryButton
                       kind="secondary"
-                      isDisabled={isUnstakeDisabled}
+                      isDisabled={isUnstakeDisabled && isSanctioned as any}
                       isLoading={isLoading}
                       onClick={onOpen}
                       tooltipText={isUnstakeDisabled ? `Your wallet doesn't have NFTs to stake` : undefined}
@@ -139,7 +142,7 @@ export const NftStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={isClaimDisabled}
+                    isDisabled={isClaimDisabled && isSanctioned as any}
                     tooltipText={isClaimDisabled ? `You don't have NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
                     onClick={() => {

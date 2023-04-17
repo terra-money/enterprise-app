@@ -7,6 +7,7 @@ import {
   useCW20BalanceQuery,
   useCW20TokenInfoQuery,
   useReleasableClaimsQuery,
+  useSanctionCheck,
   useTokenStakingAmountQuery,
   useVotingPowerQuery,
 } from 'queries';
@@ -27,6 +28,7 @@ import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { useConnectedWallet } from '@terra-money/wallet-provider';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -80,7 +82,8 @@ export const TokenStakingConnectedView = () => {
   const dao = useCurrentDao();
   const { dao_membership_contract, address } = dao;
   const tokenAddress = dao_membership_contract;
-
+  const connectedWallet = useConnectedWallet();
+  const isSanctioned = useSanctionCheck(connectedWallet?.walletAddress)
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
 
   const { isLoading, totalStaked, tokenSymbol, tokenDecimals } = useTokenData(address, tokenAddress);
@@ -126,7 +129,7 @@ export const TokenStakingConnectedView = () => {
                     <PrimaryButton
                       isLoading={isLoading}
                       tooltipText={isStakeDisabled ? 'No tokens to stake' : undefined}
-                      isDisabled={isStakeDisabled}
+                      isDisabled={isStakeDisabled && isSanctioned as any}
                       onClick={onOpen}
                     >
                       Stake
@@ -150,7 +153,7 @@ export const TokenStakingConnectedView = () => {
                     <PrimaryButton
                       kind="secondary"
                       isLoading={isLoading}
-                      isDisabled={isUnstakeDisabled}
+                      isDisabled={isUnstakeDisabled && isSanctioned as any}
                       tooltipText={isUnstakeDisabled && `You don't have staked tokens`}
                       onClick={onOpen}
                     >
@@ -191,7 +194,7 @@ export const TokenStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={isClaimDisabled}
+                    isDisabled={isClaimDisabled && isSanctioned as any}
                     isLoading={claimTxResult.loading}
                     tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {

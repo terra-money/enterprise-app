@@ -30,3 +30,4 @@ export * from './useProposalVoteQuery';
 export * from './useTreasuryTokensQuery';
 export * from './useNFTInfoQuery';
 export * from './useNFTsOwnersQuery';
+export * from './useSanctionCheck';

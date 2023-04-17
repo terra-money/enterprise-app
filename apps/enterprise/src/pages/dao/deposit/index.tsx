@@ -9,7 +9,7 @@ export const DepositIntoTreasury = () => {
       connected={() => (
         <OverlayOpener
           renderOpener={({ onOpen }) => (
-            <PrimaryButton onClick={onOpen} kind="secondary">
+            <PrimaryButton onClick={onOpen} kind="secondary" style={{ width: '186px' }}>
               Deposit
             </PrimaryButton>
           )}
