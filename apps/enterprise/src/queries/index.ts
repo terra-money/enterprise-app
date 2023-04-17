@@ -17,7 +17,6 @@ export * from './useReleasableClaimsQuery';
 export * from './useBlockHeightQuery';
 export * from './useDAOAssetsWhitelist';
 export * from './useDAOAssetTreasury';
-export * from './useDAONFTTreasury';
 export * from './useGlobalAssetsWhitelist';
 export * from './useCW721NumTokensQuery';
 export * from './useCW721ContractInfoQuery';

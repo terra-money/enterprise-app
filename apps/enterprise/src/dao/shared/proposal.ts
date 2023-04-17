@@ -37,6 +37,7 @@ export const sharedProposalTypes = [
   'undelegate',
   'redelegate',
   'council',
+  'minWeightForRewards',
 ] as const;
 
 export const daoProposalsRecord = {
@@ -67,6 +68,7 @@ export const proposalTitle: Record<ProposalType, string> = {
   undelegate: 'Undelegate LUNA proposal',
   redelegate: 'Redelegate LUNA proposal',
   council: 'Update council',
+  minWeightForRewards: 'Update minimum weight for rewards',
 };
 
 export const proposalActionShortName: Record<enterprise.ProposalActionType, string> = {
@@ -80,6 +82,7 @@ export const proposalActionShortName: Record<enterprise.ProposalActionType, stri
   execute_msgs: 'execute',
   modify_multisig_membership: 'members',
   distribute_funds: 'distribute',
+  update_minimum_weight_for_rewards: 'min weight',
 };
 
 export const getProposalActionType = (action: enterprise.ProposalAction): enterprise.ProposalActionType => {

@@ -51,6 +51,7 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   council: '',
   mintNft:
     'Mint a new DAO governance NFT to an account. This only works if the minter of the NFT is the DAO treasury address.',
+  minWeightForRewards: 'Update the minimum weight for rewards',
 };
 
 // TODO: turn into a reusable component

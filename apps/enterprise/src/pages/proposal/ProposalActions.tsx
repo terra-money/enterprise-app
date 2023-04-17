@@ -12,6 +12,7 @@ import { UpdateCouncilAction } from './UpdateCouncilAction';
 import { UpdateMultisigMembersAction } from './UpdateMultisigMembersAction';
 import { UpdateNFTsWhitelistAction } from './UpdateNFTWhitelistAction';
 import { UpgradeProposalAction } from './UpgradeProposalAction';
+import { UpdateMinimumWeightForRewardsAction } from './UpdateMinimumWeightForRewardsAction';
 
 export const ProposalActions = () => {
   const proposal = useCurrentProposal();
@@ -33,8 +34,8 @@ export const ProposalActions = () => {
               execute_msgs={() => <ExecuteMessagesProposalAction />}
               update_council={() => <UpdateCouncilAction />}
               upgrade_dao={() => <UpgradeProposalAction />}
-              // TODO: display distribute_funds action
               distribute_funds={() => null}
+              update_minimum_weight_for_rewards={() => <UpdateMinimumWeightForRewardsAction />}
               modify_multisig_membership={() => (
                 <CurrentDAOMultisigMembersProvider>
                   <UpdateMultisigMembersAction />
