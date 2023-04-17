@@ -1,8 +1,16 @@
 import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
 import { FormInput } from '@terra-money/apps/hooks';
-// import { DescriptionInput } from '../shared/DescriptionInput';
+import { DescriptionInput } from '../shared/DescriptionInput';
 import { MetadataProposalFormInput, MetadataProposalFormState } from '../metadata/useMetadataForm';
+import { useState } from 'react';
+
+interface MetadataProposalFormProps {
+  formInput: FormInput<MetadataProposalFormInput>;
+  formState: MetadataProposalFormState;
+}
+
+
 
 interface MetadataProposalFormProps {
   formInput: FormInput<MetadataProposalFormInput>;
@@ -10,15 +18,28 @@ interface MetadataProposalFormProps {
 }
 
 export const MetadataFields = ({ formInput, formState }: MetadataProposalFormProps) => {
+  
   const {
-    name,
+    name: initialName,
     nameError,
-    logo,
+    logo: initialLogo,
     logoError,
-
-    // description,
-    // descriptionError
+    description,
+    descriptionError
   } = formState;
+
+  const [name, setName] = useState(initialName);
+  const [logo, setLogo] = useState(initialLogo);
+  
+  const handleNameChange = (event: any) => {
+    setName(event.currentTarget.value);
+    formInput({ name: event.currentTarget.value });
+  };
+
+  const handleLogoChange = (event: any) => {
+    setLogo(event.currentTarget.value);
+    formInput({ logo: event.currentTarget.value });
+  };
 
   return (
     <>
@@ -27,7 +48,7 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
           placeholder="Type a name for your DAO"
           value={name}
           error={nameError}
-          onChange={({ currentTarget }) => formInput({ name: currentTarget.value })}
+          onChange={handleNameChange}
         />
       </FormControl>
       <FormControl label="Logo">
@@ -35,15 +56,16 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
           placeholder="Enter Logo URL"
           value={logo}
           error={logoError}
-          onChange={({ currentTarget }) => formInput({ logo: currentTarget.value })}
+          onChange={handleLogoChange}
         />
       </FormControl>
-      {/* <DescriptionInput
+      <DescriptionInput
         label="Description"
         value={description}
         error={descriptionError}
         onChange={(description) => formInput({ description })}
-      /> */}
+      />
     </>
   );
 };
+
