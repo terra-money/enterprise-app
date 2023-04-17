@@ -5,11 +5,12 @@ import { useClaimRewardsTx } from "dao/tx/useClaimRewardsTx";
 import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton";
 import { TitledContent } from "lib/ui/Layout/TitledContent";
 import { Panel } from "lib/ui/Panel/Panel";
-import { VStack } from "lib/ui/Stack";
+import { HStack, VStack } from "lib/ui/Stack";
 import { Text } from "lib/ui/Text";
 import { useDAOAssetsWhitelist, useGlobalAssetsWhitelist } from "queries";
 import { useMemo } from "react";
 import { RewardItem } from "./RewardItem";
+import { InfoIcon } from "lib/ui/icons/InfoIcon";
 
 export const RewardsPanel = () => {
   const { funds_distributor_contract, address, dao_type, dao_membership_contract } = useCurrentDao()
@@ -56,6 +57,14 @@ export const RewardsPanel = () => {
   return (
     <Panel>
       <TitledContent title="Rewards">
+        <HStack alignItems="center" gap={8}>
+          <Text color="supporting">
+            <InfoIcon />
+          </Text>
+          <Text color="supporting">
+            Only whitelisted tokens are displayed.
+          </Text>
+        </HStack>
         <VStack fullHeight gap={40} justifyContent="space-between">
           {areNoRewards ? <Text>Nothing to claim</Text> : (
             <>
