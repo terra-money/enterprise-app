@@ -8,6 +8,7 @@ import { BurnTokenSummary } from "./BurnTokenSummary"
 import { DelegateSummary } from "./DelegateSummary"
 import { UndelegateSummary } from "./UndelegateSummary"
 import { RedelegateSummary } from "./RedelegateSummary"
+import { MintNftSummary } from "./MintNftSummary"
 
 interface WasmMsgSummaryProps {
   msg: ExecuteMsgInput
@@ -29,8 +30,7 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
           </CurrentDAOTokenProvider>
         )
       } else if (dao_type === 'nft') {
-        // TODO: provide NFT summary
-        return null
+        return <MintNftSummary owner={mint.owner} />
       }
     } else if ('transfer' in msg && contractAddr) {
       const { transfer } = msg
