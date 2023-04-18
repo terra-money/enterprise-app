@@ -8,17 +8,23 @@ interface ToMintTokensMsgParams {
   tokenDecimals: number;
 }
 
+export interface MintTokenMsg {
+  recipient: string;
+  amount: string;
+}
+
 export const toMintTokenMsg = ({ tokenAddress, recepientAddress, amount, tokenDecimals }: ToMintTokensMsgParams) => {
+  const mint: MintTokenMsg = {
+    recipient: recepientAddress,
+    amount: microfy(amount, tokenDecimals).toString(),
+  }
   return JSON.stringify({
     wasm: {
       execute: {
         contract_addr: tokenAddress,
         funds: [],
         msg: base64Encode({
-          mint: {
-            recipient: recepientAddress,
-            amount: microfy(amount, tokenDecimals).toString(),
-          },
+          mint,
         }),
       },
     },

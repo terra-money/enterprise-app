@@ -4,7 +4,7 @@ import { AssetType } from "chain"
 import { QUERY_KEY } from "queries"
 import { useQuery } from "react-query"
 
-interface AssetInfoQueryParams {
+export interface AssetInfoQueryParams {
   id: string
   type: AssetType
 }
@@ -17,7 +17,7 @@ interface CW20TokenInfoResponse {
 }
 
 
-interface AssetInfo {
+export interface AssetInfo {
   name: string
   symbol: string
   decimals: number

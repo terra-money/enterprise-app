@@ -1,5 +1,6 @@
 interface WasmMessage {
   execute?: {
+    contract_addr?: string;
     msg: any;
   };
   instantiate?: {
@@ -12,6 +13,7 @@ interface WasmMessage {
 
 export interface ExecuteMsgInput {
   wasm?: WasmMessage;
+  bank?: any
 }
 
 export const encodedWasmFields: Array<keyof WasmMessage> = ['execute', 'instantiate', 'migrate'];
