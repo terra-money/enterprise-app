@@ -12,13 +12,25 @@ import { UpdateCouncilAction } from './UpdateCouncilAction';
 import { UpdateMultisigMembersAction } from './UpdateMultisigMembersAction';
 import { UpdateNFTsWhitelistAction } from './UpdateNFTWhitelistAction';
 import { UpgradeProposalAction } from './UpgradeProposalAction';
+import { UpdateMinimumWeightForRewardsAction } from './UpdateMinimumWeightForRewardsAction';
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useContractInfoQuery } from 'queries/useContractInfoQuery';
+import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
 
 export const ProposalActions = () => {
   const proposal = useCurrentProposal();
+  const dao = useCurrentDao();
 
+  const { data: contractInfo } = useContractInfoQuery(dao.address);
+  const { data: latestCodeId } = useEnterpriseLatestCodeIdQuery()
+
+  const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;
   return (
     <VStack gap={40}>
-      {proposal.actions.map((action) => {
+      {proposal.actions.filter(
+        (action) =>
+          !(action.hasOwnProperty("update_minimum_weight_for_rewards") && !isUpToDate) 
+      ).map((action) => {
         const type = getProposalActionType(action);
         const msg = getProposalActionMsg(action);
         return (
@@ -33,8 +45,8 @@ export const ProposalActions = () => {
               execute_msgs={() => <ExecuteMessagesProposalAction />}
               update_council={() => <UpdateCouncilAction />}
               upgrade_dao={() => <UpgradeProposalAction />}
-              // TODO: display distribute_funds action
               distribute_funds={() => null}
+              update_minimum_weight_for_rewards={() => <UpdateMinimumWeightForRewardsAction />}
               modify_multisig_membership={() => (
                 <CurrentDAOMultisigMembersProvider>
                   <UpdateMultisigMembersAction />

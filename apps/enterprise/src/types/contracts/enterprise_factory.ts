@@ -48,7 +48,8 @@ export module enterprise_factory {
     | 'upgrade_dao'
     | 'execute_msgs'
     | 'modify_multisig_membership'
-    | 'distribute_funds';
+    | 'distribute_funds'
+    | 'update_minimum_weight_for_rewards';
   export type Decimal = string;
   export type Uint128 = string;
   export type Duration =
@@ -93,6 +94,10 @@ export module enterprise_factory {
     dao_gov_config: DaoGovConfig;
     dao_membership: CreateDaoMembershipMsg;
     dao_metadata: DaoMetadata;
+    /**
+     * Minimum weight that a user should have in order to qualify for rewards. E.g. a value of 3 here means that a user in token or NFT DAO needs at least 3 staked DAO assets, or a weight of 3 in multisig DAO, to be eligible for rewards.
+     */
+    minimum_weight_for_rewards?: Uint128 | null;
     /**
      * NFTs that are allowed to show in DAO's treasury
      */

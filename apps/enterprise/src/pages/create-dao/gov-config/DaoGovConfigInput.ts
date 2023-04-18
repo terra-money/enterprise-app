@@ -7,4 +7,5 @@ export interface DaoGovConfigInput {
   minimumDeposit?: number;
   hasInstantExecute?: boolean;
   allowEarlyProposalExecution?: boolean;
+  minimumWeightForRewards?: number;
 }

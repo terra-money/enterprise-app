@@ -128,6 +128,7 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
           telegram_username: socials.telegramUsername,
         },
       },
+      minimum_weight_for_rewards: input.govConfig.minimumWeightForRewards?.toString(),
       dao_gov_config: getDaoGovConfig(input),
       asset_whitelist: whitelistedAssets.length > 0 ? whitelistedAssets : null,
     },

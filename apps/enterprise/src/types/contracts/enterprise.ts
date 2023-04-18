@@ -97,6 +97,9 @@ export module enterprise {
       }
     | {
         distribute_funds: DistributeFundsMsg;
+      }
+    | {
+        update_minimum_weight_for_rewards: UpdateMinimumWeightForRewardsMsg;
       };
   export type ModifyValueFor_Nullable_String =
     | 'no_change'
@@ -166,7 +169,8 @@ export module enterprise {
     | 'upgrade_dao'
     | 'execute_msgs'
     | 'modify_multisig_membership'
-    | 'distribute_funds';
+    | 'distribute_funds'
+    | 'update_minimum_weight_for_rewards';
   export type Binary = string;
   export interface CreateProposalMsg {
     /**
@@ -265,6 +269,9 @@ export module enterprise {
   }
   export interface DistributeFundsMsg {
     funds: AssetBaseFor_Addr[];
+  }
+  export interface UpdateMinimumWeightForRewardsMsg {
+    minimum_weight_for_rewards: Uint128;
   }
   export type Cw721HookMsg = {
     stake: {};
@@ -425,6 +432,10 @@ export module enterprise {
     enterprise_governance_code_id: number;
     funds_distributor_code_id: number;
     /**
+     * Minimum weight that a user should have in order to qualify for rewards. E.g. a value of 3 here means that a user in token or NFT DAO needs at least 3 staked DAO assets, or a weight of 3 in multisig DAO, to be eligible for rewards.
+     */
+    minimum_weight_for_rewards?: Uint128 | null;
+    /**
      * NFTs (CW721) that are allowed to show in DAO's treasury
      */
     nft_whitelist?: Addr[] | null;
@@ -498,16 +509,12 @@ export module enterprise {
      */
     voter: Addr;
   }
-  export interface MigrateMsg {}
+  export interface MigrateMsg {
+    funds_distributor_code_id: number;
+    minimum_eligible_weight?: Uint128 | null;
+  }
   export interface MultisigMembersResponse {
     members: MultisigMember[];
-  }
-  export interface NftTreasuryResponse {
-    nfts: NftCollection[];
-  }
-  export interface NftCollection {
-    nft_address: Addr;
-    token_ids: string[];
   }
   export interface NftWhitelistResponse {
     nfts: Addr[];
@@ -722,9 +729,6 @@ export module enterprise {
       }
     | {
         cw20_treasury: {};
-      }
-    | {
-        nft_treasury: {};
       };
   export type ProposalStatusFilter = 'in_progress' | 'passed' | 'rejected';
   export interface QueryMemberInfoMsg {

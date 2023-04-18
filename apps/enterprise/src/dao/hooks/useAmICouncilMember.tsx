@@ -2,6 +2,7 @@ import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const useAmICouncilMember = () => {
+  // @ts-ignore
   const { dao_council } = useCurrentDao();
 
   const connectedWallet = useConnectedWallet();

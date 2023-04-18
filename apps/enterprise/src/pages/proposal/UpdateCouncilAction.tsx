@@ -8,6 +8,7 @@ import { enterprise } from 'types/contracts';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import * as councilConfigView from './helpers/councilConfigView';
 import { ProposalActionDiff } from './ProposalActionDiff';
+import { TitledCard } from 'components/titled-card';
 
 export const UpdateCouncilAction = () => {
   const { dao } = useCurrentProposal();
@@ -23,12 +24,13 @@ export const UpdateCouncilAction = () => {
 
   return (
     <VStack gap={40}>
-      <ProposalActionDiff
-        fieldNameRecord={councilConfigView.councilConfigViewFieldNameRecord}
-        title="Configuration"
-        oldView={councilConfigView.fromDao(dao)}
-        updatedFields={councilConfigView.getUpdatedFields(dao_council)}
-      />
+      <TitledCard title="Configuration">
+        <ProposalActionDiff
+          fieldNameRecord={councilConfigView.councilConfigViewFieldNameRecord}
+          oldView={councilConfigView.fromDao(dao)}
+          updatedFields={councilConfigView.getUpdatedFields(dao_council)}
+        />
+      </TitledCard>
       <VStack gap={24}>
         <Text weight="semibold">New council members</Text>
         <SameWidthChildrenRow gap={16} minChildrenWidth={320}>

@@ -3,6 +3,7 @@ import { enterprise } from 'types/contracts';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import { ProposalActionDiff } from './ProposalActionDiff';
 import * as metadataView from './helpers/metadataView';
+import { TitledCard } from 'components/titled-card';
 
 export const MetadataProposalAction = () => {
   const { dao } = useCurrentProposal();
@@ -10,11 +11,14 @@ export const MetadataProposalAction = () => {
   const { msg } = useCurrentProposalAction();
 
   return (
-    <ProposalActionDiff
-      fieldNameRecord={metadataView.metadataViewFieldNameRecord}
+    <TitledCard
       title="DAO Metadata"
-      oldView={metadataView.fromDao(dao)}
-      updatedFields={metadataView.getUpdatedFields(msg as enterprise.UpdateMetadataMsg)}
-    />
+    >
+      <ProposalActionDiff
+        fieldNameRecord={metadataView.metadataViewFieldNameRecord}
+        oldView={metadataView.fromDao(dao)}
+        updatedFields={metadataView.getUpdatedFields(msg as enterprise.UpdateMetadataMsg)}
+      />
+    </TitledCard>
   );
 };
