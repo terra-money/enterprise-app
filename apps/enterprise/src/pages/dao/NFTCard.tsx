@@ -35,7 +35,7 @@ export const NFTCard = (props: NFTCardProps) => {
                                         </Text>
                                     ) : (
                                         <Text className={styles.price} variant="label">
-                                            {formatAmount(demicrofy(nftCollectionInfo.floor_price, 6))}{' '}
+                                            {nftCollectionInfo.floor_price && formatAmount(demicrofy(nftCollectionInfo.floor_price, 6))}{' '}
                                         </Text>
                                     )}
                                 </Container>
