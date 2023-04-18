@@ -4,6 +4,7 @@ import { ExecuteMsgInput } from "pages/create-proposal/execute/helpers/toExecute
 import { MintTokenSummary } from "./MintTokenSummary"
 import { CurrentAssetInfoProvider } from "chain/components/AssetInfoProvider"
 import { SendAssetSummary } from "./SendAssetSummary"
+import { BurnTokenSummary } from "./BurnTokenSummary"
 
 interface WasmMsgSummaryProps {
   msg: ExecuteMsgInput
@@ -38,6 +39,13 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
             amount={transfer.amount}
           />
         </CurrentAssetInfoProvider>
+      )
+    } else if ('burn' in msg) {
+      const { burn } = msg
+      return (
+        <CurrentDAOTokenProvider>
+          <BurnTokenSummary {...burn} />
+        </CurrentDAOTokenProvider>
       )
     }
   } if ('bank' in fullMsg) {

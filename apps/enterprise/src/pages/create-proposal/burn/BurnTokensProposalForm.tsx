@@ -51,6 +51,7 @@ export const BurnTokensProposalForm = () => {
                 toBurnTokensMsg({
                   amount,
                   tokenDecimals: decimals,
+                  tokenAddress: dao.dao_membership_contract
                 }),
               ],
             },
