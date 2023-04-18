@@ -1,3 +1,5 @@
+import { DelegateMsg } from "pages/create-proposal/delegate/helpers/toDelegateMsg";
+
 interface WasmMessage {
   execute?: {
     contract_addr?: string;
@@ -14,6 +16,9 @@ interface WasmMessage {
 export interface ExecuteMsgInput {
   wasm?: WasmMessage;
   bank?: any
+  staking?: {
+    delegate?: DelegateMsg
+  }
 }
 
 export const encodedWasmFields: Array<keyof WasmMessage> = ['execute', 'instantiate', 'migrate'];

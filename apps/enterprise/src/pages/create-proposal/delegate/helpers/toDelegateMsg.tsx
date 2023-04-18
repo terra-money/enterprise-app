@@ -6,16 +6,27 @@ interface DelegateMsgParams {
   tokenDecimals: number;
 }
 
+export interface DelegateMsg {
+  validator: string
+  amount: [
+    {
+      denom: string
+      amount: string
+    }
+  ]
+}
+
 export const toDelegateMsg = ({ amount, address, tokenDecimals }: DelegateMsgParams) => {
+  const delegate: DelegateMsg = {
+    amount: [{
+      denom: 'uluna',
+      amount: microfy(amount, tokenDecimals).toString(),
+    }],
+    validator: address,
+  }
   return JSON.stringify({
     staking: {
-      delegate: {
-        amount: {
-          denom: 'uluna',
-          amount: microfy(amount, tokenDecimals).toString(),
-        },
-        validator: address,
-      },
+      delegate
     },
   });
 };

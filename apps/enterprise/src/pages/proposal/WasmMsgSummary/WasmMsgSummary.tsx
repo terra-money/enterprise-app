@@ -5,6 +5,7 @@ import { MintTokenSummary } from "./MintTokenSummary"
 import { CurrentAssetInfoProvider } from "chain/components/AssetInfoProvider"
 import { SendAssetSummary } from "./SendAssetSummary"
 import { BurnTokenSummary } from "./BurnTokenSummary"
+import { DelegateSummary } from "./DelegateSummary"
 
 interface WasmMsgSummaryProps {
   msg: ExecuteMsgInput
@@ -48,7 +49,7 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
         </CurrentDAOTokenProvider>
       )
     }
-  } if ('bank' in fullMsg) {
+  } else if ('bank' in fullMsg) {
     const { bank } = fullMsg
     if ('send' in bank) {
       const { send } = bank
@@ -58,6 +59,23 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
             send.to_address
           }
             amount={send.amount[0].amount}
+          />
+        </CurrentAssetInfoProvider>
+      )
+    }
+  } else if ('staking' in fullMsg) {
+    const { staking } = fullMsg
+    if (!staking) return null
+
+    if ('delegate' in staking) {
+      const { delegate } = staking
+      if (!delegate) return null
+
+      return (
+        <CurrentAssetInfoProvider id={delegate.amount[0].denom} type="native">
+          <DelegateSummary
+            validator={delegate.validator}
+            amount={delegate.amount[0].amount}
           />
         </CurrentAssetInfoProvider>
       )
