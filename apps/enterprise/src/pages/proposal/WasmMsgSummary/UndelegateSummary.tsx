@@ -8,10 +8,10 @@ interface Props {
   amount: string
 }
 
-export const DelegateSummary = ({ validator, amount }: Props) => {
+export const UndelegateSummary = ({ validator, amount }: Props) => {
   const token = useCurrentAssetInfo()
 
   return (
-    <Text size={14} color="supporting">Delegate <Text weight="bold" as="span">{formatAmount(demicrofy(amount, token.decimals))} {token.symbol}</Text> to <Address value={validator} /></Text>
+    <Text size={14} color="supporting">Undelegate <Text weight="bold" as="span">{formatAmount(demicrofy(amount, token.decimals))} {token.symbol}</Text> from <Address value={validator} /></Text>
   )
 }

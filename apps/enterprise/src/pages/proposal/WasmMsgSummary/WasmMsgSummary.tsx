@@ -6,6 +6,8 @@ import { CurrentAssetInfoProvider } from "chain/components/AssetInfoProvider"
 import { SendAssetSummary } from "./SendAssetSummary"
 import { BurnTokenSummary } from "./BurnTokenSummary"
 import { DelegateSummary } from "./DelegateSummary"
+import { UndelegateSummary } from "./UndelegateSummary"
+import { RedelegateSummary } from "./RedelegateSummary"
 
 interface WasmMsgSummaryProps {
   msg: ExecuteMsgInput
@@ -76,6 +78,31 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
           <DelegateSummary
             validator={delegate.validator}
             amount={delegate.amount[0].amount}
+          />
+        </CurrentAssetInfoProvider>
+      )
+    } else if ('undelegate' in staking) {
+      const { undelegate } = staking
+      if (!undelegate) return null
+
+      return (
+        <CurrentAssetInfoProvider id={undelegate.amount[0].denom} type="native">
+          <UndelegateSummary
+            validator={undelegate.validator}
+            amount={undelegate.amount[0].amount}
+          />
+        </CurrentAssetInfoProvider>
+      )
+    } else if ('redelegate' in staking) {
+      const { redelegate } = staking
+      if (!redelegate) return null
+
+      return (
+        <CurrentAssetInfoProvider id={redelegate.amount[0].denom} type="native">
+          <RedelegateSummary
+            srcValidator={redelegate.src_validator}
+            distValidator={redelegate.dst_validator}
+            amount={redelegate.amount[0].amount}
           />
         </CurrentAssetInfoProvider>
       )

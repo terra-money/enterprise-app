@@ -1,4 +1,6 @@
 import { DelegateMsg } from "pages/create-proposal/delegate/helpers/toDelegateMsg";
+import { RedelegateMsg } from "pages/create-proposal/redelegate/toRedelegateMsg";
+import { UndelegateMsg } from "pages/create-proposal/undelegate/toUndelegateMsg";
 
 interface WasmMessage {
   execute?: {
@@ -18,6 +20,8 @@ export interface ExecuteMsgInput {
   bank?: any
   staking?: {
     delegate?: DelegateMsg
+    undelegate?: UndelegateMsg
+    redelegate?: RedelegateMsg
   }
 }
 
