@@ -40,7 +40,7 @@ export const UpgradeProposalForm = () => {
   const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;
 
   const upgradeMessage = `Upgrade to Code ID ${latestCodeId} \n`;
-  const changeLogMessage = 'ChangeLog: Fixed a bug where it was impossible to vote on emergency proposals.'
+  const changeLogMessage = `Feature added: DAOs can now specify a minimum weight a user needs to have to be eligible for rewards`;
 
   const [message, setMessage] = useState(defaultMigrateMsg);
   const migrateMsg = useMemo(() => {
