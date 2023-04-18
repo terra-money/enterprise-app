@@ -56,13 +56,11 @@ export const GlobalStyle = createGlobalStyle`
     /* isolation: isolate; */
   }
 
-  * {
-    font-family: 'Poppins', sans-serif
-  }
 
   body {
     background: ${({ theme }) => theme.colors.background.toCssValue()};
     color: ${({ theme }) => theme.colors.text.toCssValue()};
+    font-family: 'Poppins', sans-serif
   }
 
   input::-webkit-outer-spin-button,
