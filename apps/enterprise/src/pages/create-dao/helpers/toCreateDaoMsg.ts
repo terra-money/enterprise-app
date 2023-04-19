@@ -97,6 +97,18 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
   return config;
 };
 
+const getMinimumWeightForRewards = ({ govConfig, type, tokenInfo }: DaoWizardState) => {
+  const { minimumWeightForRewards } = govConfig;
+
+  if (minimumWeightForRewards === undefined) return undefined;
+
+  if (type === 'token') {
+    return microfy(minimumWeightForRewards, tokenInfo.decimals).toString();
+  }
+
+  return minimumWeightForRewards.toString()
+}
+
 export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
     info: { name, logo, description },
@@ -128,7 +140,7 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
           telegram_username: socials.telegramUsername,
         },
       },
-      minimum_weight_for_rewards: input.govConfig.minimumWeightForRewards?.toString(),
+      minimum_weight_for_rewards: getMinimumWeightForRewards(input),
       dao_gov_config: getDaoGovConfig(input),
       asset_whitelist: whitelistedAssets.length > 0 ? whitelistedAssets : null,
     },
