@@ -3,6 +3,16 @@ import { DaoWizardStep, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardStep } from '../WizardStep';
 import { daoTypeName } from 'dao'
 import { ReviewSection } from '../review/ReviewSection';
+import { ConditionalRender } from 'components/primitives';
+import { InfoReview } from '../review/InfoReview';
+import { CouncilReview } from '../review/CouncilReview';
+import { SocialsReview } from '../review/SocialsReview';
+import { GovConfigReview } from '../review/GovConfigReview';
+import { MembersReview } from '../review/MembersReview';
+import { MembershipReview } from '../review/MembershipReview';
+import { TokenInfoReview } from '../review/TokenInfoReview';
+import { WhitelistReview } from '../review/WhitelistReview';
+import { InitialBalancesReview } from '../review/InitialBalancesReview';
 
 interface ConfirmationStepProps {
   isLoading: boolean;
@@ -35,7 +45,21 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
             <ReviewSection
               name={reviewSectionTitle[step] ?? step}
               onEdit={isLoading ? undefined : () => goToStep(step)}>
-              coming soon!
+              <ConditionalRender
+                value={step}
+                type={() => null}
+                daoImport={() => null}
+                confirm={() => null}
+                info={() => <InfoReview />}
+                council={() => <CouncilReview />}
+                socials={() => <SocialsReview />}
+                govConfig={() => <GovConfigReview />}
+                members={() => <MembersReview />}
+                membership={() => <MembershipReview />}
+                tokenInfo={() => <TokenInfoReview />}
+                whitelist={() => <WhitelistReview />}
+                initialBalances={() => <InitialBalancesReview />}
+              />
             </ReviewSection>
           )
         })
