@@ -70,8 +70,8 @@ export const useMetadataForm = () => {
 
     const initialInput: MetadataProposalFormInput = {
       discordUsername: socials.discord_username || undefined,
-      githubUsername: socials.github_username || undefined,
-      telegramUsername: socials.telegram_username || undefined,
+      githubUsername: socials.github_username || 'github.com/',
+      telegramUsername: socials.telegram_username || 't.me/',
       twitterUsername: socials.twitter_username || undefined,
 
       logo: logo || '',
