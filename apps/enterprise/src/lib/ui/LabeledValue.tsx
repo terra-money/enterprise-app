@@ -4,7 +4,7 @@ import { HStack } from "./Stack";
 import { Text } from "./Text";
 
 interface Props {
-  name: string;
+  name: ReactNode;
   children?: ReactNode;
 }
 

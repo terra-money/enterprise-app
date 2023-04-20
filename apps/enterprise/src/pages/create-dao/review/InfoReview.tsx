@@ -16,7 +16,7 @@ export const InfoReview = () => {
         {name}
       </LabeledValue>
       <LabeledValue name="Logo">
-        {logo}
+        {logo ?? '-'}
       </LabeledValue>
       <VStack>
         <LabeledValue name="Description" />
