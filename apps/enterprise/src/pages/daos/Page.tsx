@@ -15,6 +15,7 @@ import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
+import { useDebounceSearch } from 'hooks/useDebounce';
 
 const MAX_PREVIEW_SIZE = 100;
 
@@ -40,25 +41,15 @@ export const Page = () => {
 
 
   const [searchText, setSearchText] = useState('');
+  const debouncedSearchText = useDebounceSearch(searchText, 500);
   const [daosQueryKey, setDaosQueryKey] = useState<string>(QUERY_KEY.DAOS)
 
   useEffect(() => {
-    if (searchText === '') {
-      setDaosQueryKey(QUERY_KEY.DAOS)
-      return
-    }
-
-    const handler = () => {
-      setDaosQueryKey(`${QUERY_KEY.DAOS}-${searchText}`)
-    }
-
-    const timeOut = setTimeout(handler, 300)
-
-    return () => clearTimeout(timeOut)
-  }, [searchText])
+    setDaosQueryKey(debouncedSearchText === '' ? QUERY_KEY.DAOS : `${QUERY_KEY.DAOS}-${debouncedSearchText}`);
+  }, [debouncedSearchText]);
 
   const { data, isLoading } = useDAOsQuery({
-    query: searchText,
+    query: debouncedSearchText,
     limit: MAX_PREVIEW_SIZE,
     queryKey: daosQueryKey
   });
