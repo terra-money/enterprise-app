@@ -4,6 +4,7 @@ import { Text } from "lib/ui/Text";
 import { toPercents } from "@terra-money/apps/utils";
 import { Address } from "chain/components/Address";
 import { councilProposalActionTypeName, CouncilProposalActionType } from "../shared/ProposalTypesInput";
+import { LabeledValue } from "lib/ui/LabeledValue";
 
 export const CouncilReview = () => {
   const { formState: { council } } = useDaoWizardForm();
@@ -17,7 +18,7 @@ export const CouncilReview = () => {
   return (
     <VStack gap={8}>
       <VStack gap={2}>
-        <Text color="supporting" >Members:</Text>
+        <LabeledValue name="Members" />
         {members.map((member, index) => {
           return (
             <Text key={index}>
@@ -27,15 +28,19 @@ export const CouncilReview = () => {
         })}
       </VStack>
       <VStack gap={2}>
-        <Text color="supporting" >Allowed proposal types:</Text>
+        <LabeledValue name="Allowed proposal types" />
         {allowedProposalTypes.map((proposalType, index) => (
           <Text >
             {index + 1}. {councilProposalActionTypeName[proposalType as CouncilProposalActionType] ?? proposalType}
           </Text>
         ))}
       </VStack>
-      <Text color="supporting">Quorum: <Text as="span" color="regular">{toPercents(quorum, 'round')}</Text></Text>
-      <Text color="supporting">Threshold: <Text as="span" color="regular">{toPercents(threshold, 'round')}</Text></Text>
+      <LabeledValue name="Quorum">
+        {toPercents(quorum, 'round')}
+      </LabeledValue>
+      <LabeledValue name="Threshold">
+        {toPercents(threshold, 'round')}
+      </LabeledValue>
     </VStack >
   );
 }

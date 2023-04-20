@@ -13,6 +13,8 @@ import { MembershipReview } from '../review/MembershipReview';
 import { TokenInfoReview } from '../review/TokenInfoReview';
 import { WhitelistReview } from '../review/WhitelistReview';
 import { InitialBalancesReview } from '../review/InitialBalancesReview';
+import { Line } from 'lib/ui/Line';
+import { Fragment } from 'react';
 
 interface ConfirmationStepProps {
   isLoading: boolean;
@@ -42,25 +44,28 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
           if (immutableSteps.includes(step)) return null;
 
           return (
-            <ReviewSection
-              name={reviewSectionTitle[step] ?? step}
-              onEdit={isLoading ? undefined : () => goToStep(step)}>
-              <ConditionalRender
-                value={step}
-                type={() => null}
-                daoImport={() => null}
-                confirm={() => null}
-                info={() => <InfoReview />}
-                council={() => <CouncilReview />}
-                socials={() => <SocialsReview />}
-                govConfig={() => <GovConfigReview />}
-                members={() => <MembersReview />}
-                membership={() => <MembershipReview />}
-                tokenInfo={() => <TokenInfoReview />}
-                whitelist={() => <WhitelistReview />}
-                initialBalances={() => <InitialBalancesReview />}
-              />
-            </ReviewSection>
+            <Fragment>
+              <ReviewSection
+                name={reviewSectionTitle[step] ?? step}
+                onEdit={isLoading ? undefined : () => goToStep(step)}>
+                <ConditionalRender
+                  value={step}
+                  type={() => null}
+                  daoImport={() => null}
+                  confirm={() => null}
+                  info={() => <InfoReview />}
+                  council={() => <CouncilReview />}
+                  socials={() => <SocialsReview />}
+                  govConfig={() => <GovConfigReview />}
+                  members={() => <MembersReview />}
+                  membership={() => <MembershipReview />}
+                  tokenInfo={() => <TokenInfoReview />}
+                  whitelist={() => <WhitelistReview />}
+                  initialBalances={() => <InitialBalancesReview />}
+                />
+              </ReviewSection>
+              <Line />
+            </Fragment>
           )
         })
       }

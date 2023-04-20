@@ -5,7 +5,7 @@ import { Text } from "./Text";
 
 interface Props {
   name: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const LabeledValue = ({ name, children }: Props) => (
