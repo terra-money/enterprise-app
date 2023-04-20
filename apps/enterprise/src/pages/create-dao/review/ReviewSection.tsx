@@ -11,11 +11,11 @@ interface ReviewSectionProps extends ComponentWithChildrenProps {
 }
 
 const Header = styled(Text) <{ isEditable: boolean }>`
-  font-weight: 600;
-  font-size: 18;
-  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
+  font-size: 20px;
 
   ${defaultTransitionCSS};
+
+  color: ${({ theme }) => theme.colors.textSupporting3.toCssValue()};
 
   ${({ isEditable }) => isEditable && css`
     cursor: pointer;
@@ -29,11 +29,11 @@ const Header = styled(Text) <{ isEditable: boolean }>`
   svg {
     display:inline;
     margin-left: 8px;
-    color: ${({ theme }) => theme.colors.text.toCssValue()};
+    /* color: ${({ theme }) => theme.colors.text.toCssValue()}; */
   }
 `
 
-export const ReviewSection = ({ onEdit, name }: ReviewSectionProps) => {
+export const ReviewSection = ({ onEdit, name, children }: ReviewSectionProps) => {
   return (
     <VStack gap={4}>
       <Header onClick={onEdit} isEditable={!!onEdit}>
@@ -42,6 +42,7 @@ export const ReviewSection = ({ onEdit, name }: ReviewSectionProps) => {
           <EditIcon />
         )}
       </Header>
+      {children}
     </VStack>
   )
 }

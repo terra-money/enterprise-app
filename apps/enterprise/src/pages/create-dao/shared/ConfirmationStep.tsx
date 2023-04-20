@@ -36,7 +36,7 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
   const { formState: { type, steps }, goToStep } = useDaoWizardForm();
 
   return <WizardStep title={`Create ${daoTypeName[type]} DAO`} subTitle="Review configuration">
-    <VStack gap={16}>
+    <VStack gap={20}>
       {
         steps.map(step => {
           if (immutableSteps.includes(step)) return null;

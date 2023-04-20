@@ -11,7 +11,7 @@ interface AddressProps {
 
 const Container = styled(Text)`
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
+  /* color: ${({ theme }) => theme.colors.textSupporting.toCssValue()}; */
   ${defaultTransitionCSS}
 
   &:hover {
