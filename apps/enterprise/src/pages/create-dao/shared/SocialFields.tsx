@@ -33,29 +33,18 @@ interface SocialFieldsProps extends FormState<DaoSocialDataInput> {
 }
 
 export function SocialFields({ onChange, ...socials }: SocialFieldsProps) {
-  const [updatedSocials, setUpdatedSocials] = useState({
-    ...socials,
-    githubUsername: socials.githubUsername || 'github.com/',
-    telegramUsername: socials.telegramUsername || 't.me/',
-  });
-
-  useEffect(() => {
-    onChange(updatedSocials);
-  }, [updatedSocials, onChange]);
-
-  
   return (
     <>
       {socialDataKeys.map((key) => {
-        const value = updatedSocials[key];
+        const value = socials[key];
         return (
           <SocialInput
             icon={socialIcon[key]}
             key={key}
             value={value}
             placeholder={socialPlaceholder[key]}
-            onValueChange={(value) => setUpdatedSocials({ ...updatedSocials, [key]: value })}
-            error={value && value?.length > 0 ? updatedSocials[`${key}Error`] : undefined}
+            onValueChange={(value) => onChange({ [key]: value })}
+            error={value && value?.length > 0 ? socials[`${key}Error`] : undefined}
           />
         );
       })}
