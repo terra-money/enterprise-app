@@ -2,7 +2,7 @@ import { ReactComponent as TwitterIcon } from 'components/assets/TwitterSolidLog
 import { ReactComponent as DiscordIcon } from 'components/assets/DiscordSolidLogo.svg';
 import { ReactComponent as TelegramIcon } from 'components/assets/TelegramLogo.svg';
 import { ReactComponent as GithubIcon } from 'components/assets/GithubLogo.svg';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import { SocialInput } from 'components/social-input';
 import { DaoSocialDataInput } from '../DaoWizardFormProvider';
 import { FormState } from '@terra-money/apps/hooks';
