@@ -4042,6 +4042,7 @@ __metadata:
     react-virtualized: ^9.22.3
     react-window: ^1.8.8
     redux-thunk: ^2.4.1
+    rxjs: ^7.8.0
     sass: ^1.54.5
     stream-browserify: ^3.0.0
     stream-http: ^3.2.0
@@ -16811,6 +16812,15 @@ __metadata:
   dependencies:
     tslib: ^2.1.0
   checksum: fc05f01364a74dac57490fb3e07ea63b422af04017fae1db641a009073f902ef69f285c5daac31359620dc8d9aee7d81e42b370ca2a8573d1feae0b04329383b
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "rxjs@npm:7.8.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
   languageName: node
   linkType: hard
 
