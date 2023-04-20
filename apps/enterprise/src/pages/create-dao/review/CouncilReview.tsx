@@ -16,7 +16,7 @@ export const CouncilReview = () => {
   const { members, allowedProposalTypes, quorum, threshold } = council;
 
   return (
-    <VStack gap={8}>
+    <>
       <VStack gap={2}>
         <LabeledValue name="Members" />
         {members.map((member, index) => {
@@ -41,6 +41,6 @@ export const CouncilReview = () => {
       <LabeledValue name="Threshold">
         {toPercents(threshold, 'round')}
       </LabeledValue>
-    </VStack >
+    </ >
   );
 }

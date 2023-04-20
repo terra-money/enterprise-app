@@ -11,7 +11,7 @@ export const InfoReview = () => {
   } } } = useDaoWizardForm();
 
   return (
-    <VStack gap={8}>
+    <>
       <LabeledValue name="Name">
         {name}
       </LabeledValue>
@@ -22,6 +22,6 @@ export const InfoReview = () => {
         <LabeledValue name="Description" />
         <Text>{description}</Text>
       </VStack>
-    </VStack>
+    </>
   );
 }

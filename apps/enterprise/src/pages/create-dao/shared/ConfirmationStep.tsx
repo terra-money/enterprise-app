@@ -44,7 +44,7 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
           if (immutableSteps.includes(step)) return null;
 
           return (
-            <Fragment>
+            <Fragment key={step}>
               <ReviewSection
                 name={reviewSectionTitle[step] ?? step}
                 onEdit={isLoading ? undefined : () => goToStep(step)}>

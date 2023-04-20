@@ -42,7 +42,9 @@ export const ReviewSection = ({ onEdit, name, children }: ReviewSectionProps) =>
           <EditIcon />
         )}
       </Header>
-      {children}
+      <VStack gap={8}>
+        {children}
+      </VStack>
     </VStack>
   )
 }
