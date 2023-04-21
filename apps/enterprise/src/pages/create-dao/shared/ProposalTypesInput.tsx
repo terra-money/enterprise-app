@@ -13,7 +13,7 @@ export const councilProposalActionTypes = [
 
 export type CouncilProposalActionType = typeof councilProposalActionTypes[number];
 
-const councilProposalActionTypeName: Record<CouncilProposalActionType, string> = {
+export const councilProposalActionTypeName: Record<CouncilProposalActionType, string> = {
   update_metadata: 'Update metadata',
   update_asset_whitelist: 'Update asset whitelist',
   update_nft_whitelist: 'Update NFT whitelist',

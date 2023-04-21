@@ -119,7 +119,7 @@ export const DaoWizard = () => {
         govConfig={() => <GovConfigStep />}
         council={() => <CouncilStep />}
         socials={() => <SocialsStep />}
-        confirm={() => <ConfirmationStep pending={txResult.loading} />}
+        confirm={() => <ConfirmationStep isLoading={isFinishLoading} />}
         membership={() => <NftMembershipStep />}
         tokenInfo={() => <TokenInfoStep />}
         initialBalances={() => <InitialBalancesStep />}

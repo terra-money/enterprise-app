@@ -238,6 +238,7 @@ interface DaoWizardFormState {
   formState: DaoWizardState;
   back: () => void;
   forward: () => void;
+  goToStep: (step: DaoWizardStep) => void;
 }
 
 interface DaoWizardFormProviderProps {
@@ -417,12 +418,18 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
     updateFormState({ ...newState, ...validateCurrentStep(newState) });
   }, [formState, steps, updateFormState]);
 
+  const goToStep = useCallback((step: DaoWizardStep) => {
+    const newState = { ...formState, steps: steps.slice(0, steps.indexOf(step) + 1) };
+    updateFormState({ ...newState, ...validateCurrentStep(newState) });
+  }, [formState, steps, updateFormState]);
+
   return (
     <DaoWizardFormContext.Provider
       value={{
         formInput,
         formState,
         back,
+        goToStep,
         forward,
       }}
     >

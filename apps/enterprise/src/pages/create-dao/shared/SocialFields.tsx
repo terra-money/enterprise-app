@@ -14,6 +14,13 @@ const socialDataKeys: Array<keyof DaoSocialDataInput> = [
   'telegramUsername',
 ];
 
+export const socialName: Record<keyof DaoSocialDataInput, string> = {
+  githubUsername: 'GitHub',
+  twitterUsername: 'Twitter',
+  discordUsername: 'Discord',
+  telegramUsername: 'Telegram',
+}
+
 const socialIcon: Record<keyof DaoSocialDataInput, ReactNode> = {
   githubUsername: <GithubIcon />,
   twitterUsername: <TwitterIcon />,

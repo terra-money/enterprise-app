@@ -4,8 +4,8 @@ import { HStack } from "./Stack";
 import { Text } from "./Text";
 
 interface Props {
-  name: string;
-  children: ReactNode;
+  name: ReactNode;
+  children?: ReactNode;
 }
 
 export const LabeledValue = ({ name, children }: Props) => (
