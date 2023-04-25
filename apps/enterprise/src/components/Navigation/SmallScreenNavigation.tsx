@@ -1,5 +1,4 @@
 import { ManageWallet } from 'chain/components/ManageWallet';
-import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
@@ -46,7 +45,6 @@ export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) 
           <DashboardButton />
           <ManageDaosButton />
         </HStack>
-        <CreateDaoButton />
       </Footer>
     </Container>
   );

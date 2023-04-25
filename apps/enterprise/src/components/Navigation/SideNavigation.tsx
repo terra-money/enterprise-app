@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import { IconButton, Tooltip } from 'components/primitives';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { Favourites } from 'components/layout/Favourites';
-import { CreateDaoButton } from 'dao/components/CreateDaoButton';
-import { useConnectedWallet } from '@terra-money/use-wallet';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
@@ -20,7 +18,6 @@ const Container = styled(VStack)`
 `;
 
 export const SideNavigation = () => {
-  const connectedWallet = useConnectedWallet();
 
   return (
     <Container fullHeight justifyContent="space-between">
@@ -52,13 +49,6 @@ export const SideNavigation = () => {
             </ExternalLink>
           </div>
         </Tooltip>
-        {connectedWallet && (
-          <Tooltip title="Create a DAO" placement="right" arrow={true}>
-            <div>
-              <CreateDaoButton />
-            </div>
-          </Tooltip>
-        )}
       </VStack>
     </Container>
   );

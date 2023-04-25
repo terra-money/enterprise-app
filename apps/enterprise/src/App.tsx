@@ -16,7 +16,6 @@ import {
   Members as DAOMembersPage,
 } from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
-import { CreateDAOPage } from 'pages/create-dao';
 import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
 import { Page as ProposalPage } from 'pages/proposal';
 import { PersonalizationProvider } from 'libs/personalization';
@@ -122,14 +121,6 @@ const AppBetaRoutes = () => {
           element={
             <InitizalizedWalletOnly>
               <CreateProposalPage />
-            </InitizalizedWalletOnly>
-          }
-        />
-        <Route
-          path="/dao/create"
-          element={
-            <InitizalizedWalletOnly>
-              <CreateDAOPage />
             </InitizalizedWalletOnly>
           }
         />
