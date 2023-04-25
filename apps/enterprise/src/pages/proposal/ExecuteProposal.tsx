@@ -1,3 +1,4 @@
+import { minWidth } from '@mui/system';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { VStack } from 'lib/ui/Stack';
@@ -13,6 +14,7 @@ export const ExecuteProposal = () => {
   return (
     <VStack gap={4} alignItems="center">
       <PrimaryButton
+        style={{minWidth: 111}}
         isLoading={txResult.loading}
         onClick={() => {
           tx({
