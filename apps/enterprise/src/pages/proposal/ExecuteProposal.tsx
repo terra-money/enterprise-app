@@ -1,4 +1,3 @@
-import { minWidth } from '@mui/system';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { VStack } from 'lib/ui/Stack';
