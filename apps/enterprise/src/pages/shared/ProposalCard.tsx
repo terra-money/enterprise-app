@@ -9,7 +9,7 @@ import { ProposalTags } from './ProposalTags';
 import { getExpirationMessage } from 'utils';
 import formatDistance from 'date-fns/formatDistance';
 import { useInterval } from 'react-use';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTokenStakingAmountQuery } from 'queries';
 import Big, { BigSource } from 'big.js';
 import styles from './ProposalCard.module.sass';
@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { InternalLink } from 'components/link';
+import { useLocation } from 'react-router-dom';
 
 type Variant = 'compact' | 'extended';
 
@@ -92,6 +93,14 @@ const DaoLinkOverlay = styled.div`
 export const ProposalCard = (props: ProposalCardProps) => {
   const { proposal, variant = 'compact' } = props;
 
+
+  const location = useLocation();
+  const [isDashboard, setIsDashboard] = useState(false);
+
+  useEffect(() => {
+    setIsDashboard(location.pathname === '/dashboard');
+  }, [location.pathname]);
+  
   const { data: totalStaked = Big(0) } = useTokenStakingAmountQuery(proposal?.dao.address ?? '', undefined, {
     enabled: proposal !== undefined && proposal.status === 'in_progress',
   });
@@ -106,6 +115,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
       </Container>
     );
   }
+
+  
 
   const { dao, title, description, id } = proposal;
 
@@ -149,20 +160,22 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <DeprecatedText className={styles.description} variant="text">
               {description}
             </DeprecatedText>
-            <Container className={styles.footer}>
+            {isDashboard && (<Container className={styles.footer}>
               <div style={{ opacity: 0 }}>
                 {daoLinkContent}
               </div>
-            </Container>
+            </Container>)}
           </Container>
           <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
         </Container>
       </InternalLink>
-      <DaoLinkOverlay>
-        <InternalLink to={`/dao/${dao.address}`}>
-          {daoLinkContent}
-        </InternalLink>
-      </DaoLinkOverlay>
+      {isDashboard && (
+        <DaoLinkOverlay>
+          <InternalLink to={`/dao/${dao.address}`}>
+            {daoLinkContent}
+          </InternalLink>
+        </DaoLinkOverlay>
+      )}
     </Wrapper>
   );
 };
