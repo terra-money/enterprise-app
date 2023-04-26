@@ -23,6 +23,7 @@ export class BlockListener {
   private wait = async (height: number): Promise<[BlockInfo, TxInfo[]]> => {
     while (true) {
       try {
+        this.logger.info(`Get block for height ${height}`)
         const block = await this.lcd.tendermint.blockInfo(height);
 
         if (block === null || block === undefined) {
