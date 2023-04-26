@@ -30,7 +30,15 @@ export class BlockListener {
           continue;
         }
 
-        const txs = await this.lcd.tx.txInfosByHeight(height);
+        let txs: TxInfo[] = []
+        try {
+          txs = await this.lcd.tx.txInfosByHeight(height);
+        } catch (err) {
+          this.logger.error(`Error fetching transactions for block ${height} "${err.toString()}"`);
+          // TODO: handle error
+          // temporary disabled due to unsupported message type:
+          // Error: not supported msg /cosmwasm.tokenfactory.v1beta1.MsgCreateDenom\
+        }
 
         return [block, txs];
       } catch (err) {
