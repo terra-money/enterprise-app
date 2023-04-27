@@ -4085,7 +4085,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-dynamodb": ^3.159.0
     "@aws-sdk/util-dynamodb": ^3.159.0
-    "@terra-money/terra.js": ^3.1.6
+    "@terra-money/feather.js": ^1.0.2
     "@types/d3-array": ^3.0.3
     "@types/node": ^16.11.56
     big.js: ^6.2.1
@@ -5271,6 +5271,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@terra-money/feather.js@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@terra-money/feather.js@npm:1.0.2"
+  dependencies:
+    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
+    "@terra-money/terra.proto": 3.0.5
+    axios: ^0.27.2
+    bech32: ^2.0.0
+    bip32: ^2.0.6
+    bip39: ^3.0.3
+    bufferutil: ^4.0.3
+    decimal.js: ^10.2.1
+    jscrypto: ^1.0.1
+    readable-stream: ^3.6.0
+    secp256k1: ^4.0.2
+    tmp: ^0.2.1
+    utf-8-validate: ^5.0.5
+    ws: ^7.5.9
+  checksum: f16ae260839adc863f46d3bd79db290d6ecaafd38df65048c865f59efadd3d145d1d5cd9cd843896da7d3545dc28094d35132d8a9d08f2db005cd52d1280b01b
+  languageName: node
+  linkType: hard
+
 "@terra-money/legacy.proto@npm:@terra-money/terra.proto@^0.1.7":
   version: 0.1.7
   resolution: "@terra-money/terra.proto@npm:0.1.7"
@@ -5339,6 +5361,18 @@ __metadata:
     utf-8-validate: ^5.0.5
     ws: ^7.5.9
   checksum: 675ef98007c754651c2059a2d1ad5c0a776e0d50c6ae5204f59a4581f4954abc30e1fce96272b109838c65e2ad019077303ef89ff2a3b91fc1d1be2b05428648
+  languageName: node
+  linkType: hard
+
+"@terra-money/terra.proto@npm:3.0.5":
+  version: 3.0.5
+  resolution: "@terra-money/terra.proto@npm:3.0.5"
+  dependencies:
+    "@improbable-eng/grpc-web": ^0.14.1
+    google-protobuf: ^3.17.3
+    long: ^4.0.0
+    protobufjs: ~6.11.2
+  checksum: 8a133647118d7ea977f1333e1090cfa1a83905bff0b29b9cea4688e24aacf74b799aa62ce129f126adddf303ec06ff8f5fb89b2bf9c5d007756fda310b867fea
   languageName: node
   linkType: hard
 
