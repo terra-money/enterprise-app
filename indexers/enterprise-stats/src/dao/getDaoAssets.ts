@@ -2,7 +2,8 @@ import { Asset, AssetWithBalance } from "chain/Asset";
 import { getAssetBalance } from "chain/getAssetBalance";
 import { getAssetInfo } from "chain/getAssetInfo";
 import { getLCDClient } from "chain/lcd"
-import { enterprise } from "types/contracts";
+import { enterprise, enterprise_factory } from "types/contracts";
+import { Dao } from "./Dao";
 
 const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined => {
   if ('native' in response) {
@@ -18,12 +19,14 @@ const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined 
   }
 }
 
-export const getDaoAssets = async (address: string) => {
+export const getDaoAssets = async ({ address, enterpriseFactoryContract }: Pick<Dao, 'address' | 'enterpriseFactoryContract'>) => {
   const lcd = getLCDClient()
+  const { assets: globalWhitelist } = await lcd.wasm.contractQuery<enterprise_factory.AssetWhitelistResponse>(enterpriseFactoryContract, { global_asset_whitelist: {}, });
   const { assets: assetsWhitelist } = await lcd.wasm.contractQuery<enterprise.AssetWhitelistResponse>(address, { asset_whitelist: {}, });
+  const whitelist = [...new Set([...globalWhitelist, ...assetsWhitelist])]
 
   const assets: AssetWithBalance[] = []
-  await Promise.all(assetsWhitelist.map(async response => {
+  await Promise.all(whitelist.map(async response => {
     const asset = toAsset(response)
     if (!asset) return
 
@@ -37,7 +40,7 @@ export const getDaoAssets = async (address: string) => {
         decimals,
       })
     } catch (err) {
-      console.error(`Failed to get asset info for ${asset.type} with id=${asset.id}: ${err}`)
+      console.error(`Failed to get asset info for ${asset.type} asset with id=${asset.id}: ${err}`)
     }
   }))
 

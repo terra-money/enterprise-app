@@ -3,11 +3,11 @@ import { processDaos } from "dao/processDaos"
 
 const collectStats = async () => {
   await processDaos({
-    attributes: ['address'],
-    handle: async ({ address }) => {
-      console.log('Handle DAO: ', address)
+    attributes: ['address', 'enterpriseFactoryContract'],
+    handle: async (dao) => {
+      console.log('Handle DAO: ', dao.address)
 
-      const tvl = await getDaoTVL(address)
+      const tvl = await getDaoTVL(dao)
       console.log('TVL: ', tvl)
 
       // TODO: get permissions to update DAOs
