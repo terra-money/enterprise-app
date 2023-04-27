@@ -1,15 +1,17 @@
-import { BlockInfo, TxInfo } from '@terra-money/terra.js';
-import { LCDClient } from '@terra-money/terra.js/dist/client';
+import { BlockInfo, TxInfo, LCDClient, hashToHex } from '@terra-money/feather.js';
 import axios from 'axios';
 import { Timestamp } from 'types';
 import { Logger, sleep } from 'utils';
 import { Block } from './types';
+import { assertEnvVar } from 'utils/assertEnvVar';
 
 type AsyncCallback = (block: Block) => Promise<void>;
 
 type BlockListenerOptions = {
   lcd: LCDClient;
 };
+
+const maxWaitingAttempts = 10
 
 export class BlockListener {
   private readonly logger: Logger;
@@ -21,27 +23,32 @@ export class BlockListener {
   }
 
   private wait = async (height: number): Promise<[BlockInfo, TxInfo[]]> => {
+    this.logger.info(`Process block with height=${height}`)
+
+    const chainId = assertEnvVar('CHAIN_ID');
+
     while (true) {
       try {
-        this.logger.info(`Get block for height ${height}`)
-        const block = await this.lcd.tendermint.blockInfo(height);
+        const blockInfo = await this.lcd.tendermint.blockInfo(chainId, height);
 
-        if (block === null || block === undefined) {
+        if (blockInfo === null || blockInfo === undefined) {
           await sleep(1000);
           continue;
         }
 
-        let txs: TxInfo[] = []
-        try {
-          txs = await this.lcd.tx.txInfosByHeight(height);
-        } catch (err) {
-          this.logger.error(`Error fetching transactions for block ${height} "${err.toString()}"`);
-          // TODO: handle error
-          // temporary disabled due to unsupported message type:
-          // Error: not supported msg /cosmwasm.tokenfactory.v1beta1.MsgCreateDenom\
-        }
+        const txs: TxInfo[] = []
+        const rawTxs = blockInfo.block.data.txs || []
+        await Promise.all(rawTxs.map(async (tx) => {
+          const txHash = hashToHex(tx)
+          try {
+            const info = await this.lcd.tx.txInfo(txHash, chainId)
+            txs.push(info)
+          } catch (err) {
+            this.logger.error(`Error fetching infor for transaction with hash=${txHash}`, err)
+          }
+        }))
 
-        return [block, txs];
+        return [blockInfo, txs];
       } catch (err) {
         if (axios.isAxiosError(err) && err.response.status === 400) {
           // likely the block doesn't exist so we skip writing this as an error
