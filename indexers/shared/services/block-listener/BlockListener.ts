@@ -11,8 +11,6 @@ type BlockListenerOptions = {
   lcd: LCDClient;
 };
 
-const maxWaitingAttempts = 10
-
 export class BlockListener {
   private readonly logger: Logger;
   private readonly lcd: LCDClient;
