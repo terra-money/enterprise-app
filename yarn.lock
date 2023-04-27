@@ -71,7 +71,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-dynamodb": ^3.159.0
     "@aws-sdk/util-dynamodb": ^3.159.0
-    "@terra-money/terra.js": ^3.1.6
+    "@terra-money/feather.js": ^1.0.1
     "@types/d3-array": ^3.0.3
     "@types/node": ^16.11.56
     axios: ^0.27.2
@@ -4063,7 +4063,7 @@ __metadata:
     "@apps-shared/indexers": "workspace:^"
     "@aws-sdk/client-dynamodb": ^3.159.0
     "@aws-sdk/util-dynamodb": ^3.159.0
-    "@terra-money/terra.js": ^3.1.6
+    "@terra-money/feather.js": ^1.0.1
     "@types/d3-array": ^3.0.3
     "@types/node": ^16.11.56
     axios: ^0.27.2
@@ -5229,6 +5229,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@terra-money/feather.js@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@terra-money/feather.js@npm:1.0.1"
+  dependencies:
+    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
+    "@terra-money/terra.proto": ^2.2.0-beta.4
+    axios: ^0.27.2
+    bech32: ^2.0.0
+    bip32: ^2.0.6
+    bip39: ^3.0.3
+    bufferutil: ^4.0.3
+    decimal.js: ^10.2.1
+    jscrypto: ^1.0.1
+    readable-stream: ^3.6.0
+    secp256k1: ^4.0.2
+    tmp: ^0.2.1
+    utf-8-validate: ^5.0.5
+    ws: ^7.5.9
+  checksum: b4789111177d2edb9c3087b71a9dce8b62fb30f061b955ec6c2cfceecf12235a3f340bdbda668e2ab205715ffeb268bc30fd12506028769dc6e88394c6214fdd
+  languageName: node
+  linkType: hard
+
 "@terra-money/legacy.proto@npm:@terra-money/terra.proto@^0.1.7":
   version: 0.1.7
   resolution: "@terra-money/terra.proto@npm:0.1.7"
@@ -5309,6 +5331,18 @@ __metadata:
     long: ^4.0.0
     protobufjs: ~6.11.2
   checksum: 545ff0b6fd664f16a88bebae4ad5d999197531868c5e2fcc3d76f6f712031e82d8ab7014923edb5bca90657568b8f71325964d78c2e1accff192d6cb933b9a94
+  languageName: node
+  linkType: hard
+
+"@terra-money/terra.proto@npm:^2.2.0-beta.4":
+  version: 2.2.0-beta.4
+  resolution: "@terra-money/terra.proto@npm:2.2.0-beta.4"
+  dependencies:
+    "@improbable-eng/grpc-web": ^0.14.1
+    google-protobuf: ^3.17.3
+    long: ^4.0.0
+    protobufjs: ~6.11.2
+  checksum: 11a685b9555cd7f4acd41828339db5a16f45b7d1720e930639dd2c30de3533fd8109982184fff4b532006480c2836851fb0844c4643cc5789e57892e2b562b51
   languageName: node
   linkType: hard
 

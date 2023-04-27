@@ -15,7 +15,7 @@
     "@apps-shared/indexers": "workspace:^",
     "@aws-sdk/client-dynamodb": "^3.159.0",
     "@aws-sdk/util-dynamodb": "^3.159.0",
-    "@terra-money/terra.js": "^3.1.6",
+    "@terra-money/feather.js": "^1.0.1",
     "@types/node": "^16.11.56",
     "axios": "^0.27.2",
     "big.js": "^6.2.1",

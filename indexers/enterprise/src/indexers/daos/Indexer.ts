@@ -1,6 +1,6 @@
 import { EventIndexer, IndexFnOptions } from 'indexers/EventIndexer';
 import { Entity } from './types';
-import { LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/feather.js';
 import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
 import { batch, createLCDClient } from '@apps-shared/indexers/utils';
 import { KeySelector } from '@apps-shared/indexers/services/persistence';
