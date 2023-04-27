@@ -4,6 +4,7 @@ import { Timestamp } from 'types';
 import { Logger, sleep } from 'utils';
 import { Block } from './types';
 import { assertEnvVar } from 'utils/assertEnvVar';
+import { retry } from 'utils/retry';
 
 type AsyncCallback = (block: Block) => Promise<void>;
 
@@ -39,7 +40,11 @@ export class BlockListener {
         await Promise.all(rawTxs.map(async (tx) => {
           const txHash = hashToHex(tx)
           try {
-            const info = await this.lcd.tx.txInfo(txHash, chainId)
+            const info = await retry({
+              func: () => this.lcd.tx.txInfo(txHash, chainId),
+              maxRetries: 5,
+              retryInterval: 2000,
+            })
             txs.push(info)
           } catch (err) {
             this.logger.error(`Error fetching infor for transaction with hash=${txHash}`, err)
