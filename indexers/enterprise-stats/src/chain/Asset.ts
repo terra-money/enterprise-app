@@ -5,7 +5,8 @@ export interface Asset {
   id: string
 }
 
-export interface AssetWithBalance extends Asset {
+export interface AssetWithPrice extends Asset {
   balance: string
   decimals: number
+  usd: number
 }
