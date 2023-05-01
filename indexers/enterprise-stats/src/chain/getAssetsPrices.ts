@@ -1,4 +1,5 @@
 import axios from 'axios'
+import memoize from 'memoizee'
 
 const TFM_ASSETS_PRICES_URL = 'https://price.api.tfm.com/tokens/?limit=1500'
 
@@ -11,13 +12,8 @@ interface TFMTokenInfo {
 
 type TFMResponse = Record<string, TFMTokenInfo>
 
-let prices: TFMResponse | undefined
-export const getAssetsPrices = async () => {
-  if (!prices) {
-    const { data } = await axios.get<TFMResponse>(TFM_ASSETS_PRICES_URL)
+export const getAssetsPrices = memoize(async () => {
+  const { data } = await axios.get<TFMResponse>(TFM_ASSETS_PRICES_URL)
 
-    prices = data
-  }
-
-  return prices
-}
+  return data
+})

@@ -1,4 +1,5 @@
-import { Asset } from "./Asset";
+import { Asset, AssetInfo } from "./Asset";
+import { getAssetsInfo } from "./getAssetsInfo";
 import { getWhitelistedIBCTokens } from "./getWhitelistedIBCTokens";
 import { getLCDClient } from "./lcd";
 
@@ -9,7 +10,7 @@ interface CW20TokenInfoResponse {
   total_supply: string;
 }
 
-export const getAssetInfo = async ({ id, type }: Asset) => {
+export const getAssetInfo = async ({ id, type }: Asset): Promise<AssetInfo> => {
   const lcd = getLCDClient()
   if (type === 'cw20') {
     const {
@@ -32,7 +33,16 @@ export const getAssetInfo = async ({ id, type }: Asset) => {
       name: 'LUNA',
       symbol: 'LUNA',
       decimals: 6,
-      icon: "https://assets.terra.money/icon/svg/LUNA.png",
+    }
+  }
+
+  const tfmAssets = await getAssetsInfo()
+  const tfmAsset = tfmAssets.find(asset => asset.contract_addr === id)
+  if (tfmAsset) {
+    return {
+      name: tfmAsset.name,
+      symbol: tfmAsset.symbol,
+      decimals: tfmAsset.decimals,
     }
   }
 
@@ -46,6 +56,5 @@ export const getAssetInfo = async ({ id, type }: Asset) => {
     name: ibcToken.name,
     symbol: ibcToken.symbol,
     decimals: ibcToken.decimals,
-    icon: ibcToken.icon,
   }
 }

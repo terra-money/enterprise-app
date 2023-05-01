@@ -10,3 +10,9 @@ export interface AssetWithPrice extends Asset {
   decimals: number
   usd: number
 }
+
+export interface AssetInfo {
+  name: string
+  symbol: string
+  decimals: number
+}
