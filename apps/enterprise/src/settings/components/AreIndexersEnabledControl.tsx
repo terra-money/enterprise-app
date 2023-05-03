@@ -5,6 +5,6 @@ export const AreIndexersEnabledControl = () => {
   const [areIndexersEnabled, setAreIndexersEnabled] = useAreIndexersEnabled()
 
   return (
-    <Switch value={areIndexersEnabled} onChange={setAreIndexersEnabled} label="Are indexers enabled" />
+    <Switch value={areIndexersEnabled} onChange={setAreIndexersEnabled} label="Enable indexers" />
   )
 }
