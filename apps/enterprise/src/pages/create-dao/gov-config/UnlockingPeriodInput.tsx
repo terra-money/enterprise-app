@@ -11,7 +11,7 @@ export const UnlockingPeriodInput = ({ value, error, onChange }: UnlockingPeriod
   return (
     <FormControl
       label="Unlocking period"
-      helpText="The amount of time required after unstaking before tokens can be claimable."
+      helpText="The amount of time that must pass before unstaked tokens can be claimed." 
     >
       <SliderInput
         error={error}
