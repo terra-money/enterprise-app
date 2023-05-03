@@ -14,7 +14,7 @@ export const validateMembers = (members: MultisigMember[]): FormState<MultisigMe
       const previousAddresses = members.slice(0, index).map(({ addr }) => addr);
       const isDuplicate = previousAddresses.includes(addr);
       if (isDuplicate) {
-        formState.addrError = 'Given address is already added';
+        formState.addrError = 'This address has already been added';
       }
     }
 
