@@ -48,7 +48,7 @@ export const DaoWizard = () => {
         const address = transaction.logs[0].eventsByType.wasm.dao_address[0];
         navigate(`/dao/${address}`);
       } catch (error) {
-        reportError(error, { msg: 'Fail to extract dao_address from transaction logs' });
+        reportError(error, { msg: 'Failed to extract dao_address from transaction logs' });
       }
     },
     [txResult, setIsFinishLoading]
