@@ -26,7 +26,7 @@ export const TerraAddressInput = (props: TerraAddressInputProps) => {
     <div className={styles.root}>
       <WizardInput
         label={label}
-        placeholder="Enter Terra address"
+        placeholder="Enter a Terra address"
         value={value}
         error={terraAddressError || props.error}
         onValueChange={setValue}
