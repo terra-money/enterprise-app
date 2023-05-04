@@ -14,15 +14,17 @@ export const getNftIds = async ({ collection, owner }: GetNftIdsParams) => {
   const lcd = getLCDClient()
 
   const fetchNftIds = async (startAfter?: string): Promise<string[]> => {
-    const { ids, tokens } = await lcd.wasm.contractQuery<NftIdsResponse>(collection, {
+    const response = await lcd.wasm.contractQuery<NftIdsResponse>(collection, {
       tokens: { owner, start_after: startAfter },
     });
 
-    if (!tokens || tokens.length === 0) {
-      return ids || [];
+    const ids = response.ids ?? response.tokens ?? []
+
+    if (!ids.length) {
+      return [];
     }
 
-    const lastId = tokens[tokens.length - 1];
+    const lastId = ids[ids.length - 1];
     const nextIds = await fetchNftIds(lastId);
     return [...(ids || []), ...nextIds];
   };

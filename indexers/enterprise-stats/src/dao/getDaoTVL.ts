@@ -2,13 +2,23 @@ import { sum } from "shared/sum"
 import { Dao } from "./Dao"
 import { getDaoAssets } from "./getDaoAssets"
 import { fromChainAmount } from "chain/fromChainAmount"
+import { getDaoNFTs } from "./getDaoNFTs"
+import { AssetWithPrice } from "chain/Asset"
+import { getTokenDaoStakedAsset } from "./getTokenDaoStakedAsset"
 
-export const getDaoTVL = async (dao: Pick<Dao, 'address' | 'enterpriseFactoryContract'>) => {
-  const assets = await getDaoAssets(dao)
+export const getDaoTVL = async (dao: Pick<Dao, 'address' | 'membershipContractAddress' | 'enterpriseFactoryContract' | 'type'>) => {
+  const assets: AssetWithPrice[] = await getDaoAssets(dao)
+  const nfts = await getDaoNFTs(dao)
 
-  const assetsTVL = sum(
-    assets.map(asset => fromChainAmount(asset.balance, asset.decimals) * asset.usd)
-  )
+  if (dao.type === 'token') {
+    const asset = await getTokenDaoStakedAsset(dao)
+    assets.push(asset)
+  } else if (dao.type === 'nft') {
 
-  return assetsTVL
+  }
+
+  return sum([
+    ...assets.map(asset => fromChainAmount(asset.balance, asset.decimals) * asset.usd),
+    ...nfts.map(nft => nft.usd)
+  ])
 }
