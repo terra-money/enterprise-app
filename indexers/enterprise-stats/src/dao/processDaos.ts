@@ -19,12 +19,12 @@ export async function processDaos<T extends (keyof Dao)[]>({ handle, attributes 
         ...mergeParams(
           {
             ExpressionAttributeNames: {
-              "#type": '_type',
+              "#_type": '_type',
             },
             ExpressionAttributeValues: {
-              ":type": "dao",
+              ":_type": "dao",
             },
-            FilterExpression: "#type = :type",
+            FilterExpression: "#_type = :_type",
           },
           projectionExpression(attributes)
         )

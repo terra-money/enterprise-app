@@ -3,7 +3,7 @@ import { processDaos } from "dao/processDaos"
 
 const collectStats = async () => {
   await processDaos({
-    attributes: ['address', 'enterpriseFactoryContract', 'type', 'membershipContractAddress'],
+    attributes: ['address', 'enterpriseFactoryContract', 'membershipContractAddress', 'type'],
     handle: async (dao) => {
       const tvl = await getDaoTVL(dao)
       console.log(`${dao.address} TVL=${tvl}`)
