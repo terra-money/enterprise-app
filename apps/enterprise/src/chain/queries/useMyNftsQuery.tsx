@@ -28,7 +28,7 @@ export const useMyNftsQuery = (collectionAddr: string) => {
     let allIds: string[] = [];
 
     do {
-      const {ids, tokens} = await query<MyNftIdsParams, MyNftIdsResponse>(collectionAddr, {
+      const { tokens } = await query<MyNftIdsParams, MyNftIdsResponse>(collectionAddr, {
         tokens: {owner: address, start_after: startAfter, limit: 30}
       });
 
