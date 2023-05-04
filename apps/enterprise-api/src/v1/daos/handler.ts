@@ -25,6 +25,7 @@ const search = (params: ReturnType<typeof parseQueryParameters>): Promise<Entity
           ':a': { S: 'dao' },
           ':b': { S: params.query.toLowerCase() },
         },
+        ExclusiveStartKey: params.start_after
       },
       DAO_IGNORE_PROPERTIES
     );
@@ -44,6 +45,7 @@ const search = (params: ReturnType<typeof parseQueryParameters>): Promise<Entity
       ExpressionAttributeValues: {
         ':a': { S: 'dao' },
       },
+      ExclusiveStartKey: params.start_after
     },
     DAO_IGNORE_PROPERTIES
   );

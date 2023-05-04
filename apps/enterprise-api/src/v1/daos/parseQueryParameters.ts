@@ -6,11 +6,13 @@ import {
 } from "@apps-shared/api/utils";
 import { QueryParamConfigMap, StringParam } from "serialize-query-params";
 import { ParsedQs } from "qs";
+import { AttributeValue } from "@aws-sdk/client-dynamodb";
 
 interface QueryStringParameters {
   query?: string;
   limit: number;
   direction: Direction;
+  start_after?: Record<string, AttributeValue>;
 }
 
 export const parseQueryParameters = (
@@ -20,6 +22,7 @@ export const parseQueryParameters = (
     query: StringParam,
     limit: withLimitParam(),
     direction: withDirectionParam(),
+    start_after: StringParam
   };
 
   const validation = (params: QueryStringParameters): QueryStringParameters => {

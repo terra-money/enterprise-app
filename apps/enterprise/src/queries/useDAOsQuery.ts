@@ -10,6 +10,7 @@ interface DAOsQueryOptions {
   limit?: number;
   direction?: Direction;
   queryKey?: string;
+  start_after?: string;
 }
 
 export type DAOsQueryResponse = Array<{
@@ -49,9 +50,9 @@ export const fetchDAOsQuery = async (endpoint: string) => {
 };
 
 export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Array<DAO> | undefined> => {
-  const { query, limit = 100, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS } = options;
+  const { query, limit = 100, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS, start_after } = options;
 
-  const [areIndexersEnabled] = useAreIndexersEnabled()
+  const [areIndexersEnabled] = useAreIndexersEnabled();
 
   const endpoint = useApiEndpoint({
     path: 'v1/daos',
@@ -59,12 +60,13 @@ export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Arr
       query,
       limit,
       direction,
+      start_after,
     },
   });
 
   return useQuery([queryKey, endpoint], () => {
     if (!areIndexersEnabled) {
-      throw new Error('DAOs query is disabled. Enable indexers to use this query.')
+      throw new Error('DAOs query is disabled. Enable indexers to use this query.');
     }
 
     return fetchDAOsQuery(endpoint);

@@ -16,14 +16,21 @@ import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
 import { useDebounceSearch } from 'hooks/useDebounce';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 
-const MAX_PREVIEW_SIZE = 100;
+const MAX_PREVIEW_SIZE = 30;
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [daoTypesToDisplay, setDaoTypesToDisplay] = useState<enterprise.DaoType[]>(daoTypes);
+  const [searchText, setSearchText] = useState('');
+  const debouncedSearchText = useDebounceSearch(searchText, 500);
+  const [daosQueryKey, setDaosQueryKey] = useState<string>(QUERY_KEY.DAOS);
+  const [pageLastIndex, setPageLastIndex] = useState<string | null>(null);
+  const [allItems, setAllItems] = useState<any[]>([]);
+  const [loadMore, setLoadMore] = useState(true);
 
   useEffect(() => {
     if (showDropdown) {
@@ -40,9 +47,7 @@ export const Page = () => {
   }, [showDropdown]);
 
 
-  const [searchText, setSearchText] = useState('');
-  const debouncedSearchText = useDebounceSearch(searchText, 500);
-  const [daosQueryKey, setDaosQueryKey] = useState<string>(QUERY_KEY.DAOS)
+  
 
   useEffect(() => {
     setDaosQueryKey(debouncedSearchText === '' ? QUERY_KEY.DAOS : `${QUERY_KEY.DAOS}-${debouncedSearchText}`);
@@ -51,10 +56,35 @@ export const Page = () => {
   const { data, isLoading } = useDAOsQuery({
     query: debouncedSearchText,
     limit: MAX_PREVIEW_SIZE,
-    queryKey: daosQueryKey
+    start_after: pageLastIndex || '',
+    queryKey: daosQueryKey,
   });
 
-  const items = data?.filter(item => daoTypesToDisplay.includes(item.type));
+  useEffect(() => {
+    if (data && data.length && loadMore) {
+      const items = data.filter(item => daoTypesToDisplay.includes(item.type));
+      setPageLastIndex(data[data.length - 1].address);
+      setAllItems(prevItems => [...prevItems, ...items]);
+    }
+  
+    
+    if (!isLoading && loadMore) {
+      setLoadMore(false);
+    }
+  }, [data, daoTypesToDisplay, loadMore, isLoading]);
+
+  const viewMoreButton = (
+    <PrimaryButton
+      kind="secondary"
+      onClick={() => {
+        const newQueryKey = `${daosQueryKey}-${pageLastIndex}`;
+        setDaosQueryKey(newQueryKey);
+        setLoadMore(true)
+      }}
+    >
+      View More
+    </PrimaryButton>
+  );
 
   const searchInput = (
     <SearchInput
@@ -99,8 +129,11 @@ export const Page = () => {
             </Text>
             <IndexersAreRequired>
               {searchInput}
-              {data && data?.length ? (
-                <List items={items} isLoading={isLoading} />
+              {allItems && allItems.length ? (
+                <>
+                  <List items={allItems} isLoading={isLoading} />
+                  {viewMoreButton}
+                </>
               ) : (
                 noResults
               )}
@@ -115,7 +148,7 @@ export const Page = () => {
                 <Header
                   compact={true}
                   isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
+                  totalCount={allItems?.length ?? 0}
                   searchInput={searchInput}
                   filters={filters}
                 />
@@ -127,18 +160,21 @@ export const Page = () => {
                 <Header
                   ref={stickyRef}
                   isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
+                  totalCount={allItems?.length ?? 0}
                   searchInput={searchInput}
                   filters={filters}
                 />
               }
             >
               <IndexersAreRequired>
-                {data && data?.length ? (
-                  <List items={items} isLoading={isLoading} />
-                ) : (
-                  noResults
-                )}
+              {allItems && allItems.length ? (
+                <>
+                  <List items={allItems} isLoading={isLoading} />
+                  {viewMoreButton}
+                </>
+              ) : (
+                noResults
+              )}
               </IndexersAreRequired>
             </PageLayout>
           </ScrollableContainer>
