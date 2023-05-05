@@ -2,6 +2,7 @@ import { Asset, AssetInfo } from "./Asset";
 import { getAssetsInfo } from "./getAssetsInfo";
 import { getWhitelistedIBCTokens } from "./getWhitelistedIBCTokens";
 import { getLCDClient } from "./lcd";
+import memoize from 'memoizee'
 
 interface CW20TokenInfoResponse {
   name: string;
@@ -10,7 +11,7 @@ interface CW20TokenInfoResponse {
   total_supply: string;
 }
 
-export const getAssetInfo = async ({ id, type }: Asset): Promise<AssetInfo> => {
+export const getAssetInfo = memoize(async ({ id, type }: Asset): Promise<AssetInfo> => {
   const lcd = getLCDClient()
   if (type === 'cw20') {
     const {
@@ -57,4 +58,4 @@ export const getAssetInfo = async ({ id, type }: Asset): Promise<AssetInfo> => {
     symbol: ibcToken.symbol,
     decimals: ibcToken.decimals,
   }
-}
+})

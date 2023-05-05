@@ -1,5 +1,6 @@
 import { Asset } from "./Asset"
 import { getLCDClient } from "./lcd"
+import memoize from 'memoizee'
 
 interface GetAssetBalance {
   asset: Asset
@@ -10,7 +11,7 @@ interface CW20BalanceResponse {
   balance?: string
 }
 
-export const getAssetBalance = async ({ asset, address }: GetAssetBalance) => {
+export const getAssetBalance = memoize(async ({ asset, address }: GetAssetBalance) => {
   const { id, type } = asset
 
   const lcd = getLCDClient()
@@ -33,4 +34,4 @@ export const getAssetBalance = async ({ asset, address }: GetAssetBalance) => {
   );
 
   return balance ?? '0'
-}
+})

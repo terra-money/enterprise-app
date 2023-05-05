@@ -4,7 +4,7 @@ import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount"
 import { getAssetPrice } from "chain/getAssetPrice"
 import { Asset, AssetWithPrice } from "chain/Asset"
 
-export const getTokenDaoStakedAsset = async (dao: Pick<Dao, 'address' | 'membershipContractAddress' | 'enterpriseFactoryContract' | 'type'>) => {
+export const getTokenDaoStakedAsset = async (dao: Pick<Dao, 'address' | 'membershipContractAddress'>) => {
   const asset: Asset = { id: dao.membershipContractAddress, type: 'cw20' }
 
   const { decimals } = await getAssetInfo(asset)
