@@ -1,7 +1,7 @@
 import { Asset, AssetInfo } from "./Asset";
 import { getAssetsInfo } from "./getAssetsInfo";
 import { getWhitelistedIBCTokens } from "./getWhitelistedIBCTokens";
-import { getLCDClient } from "./lcd";
+import { contractQuery } from "./lcd";
 import memoize from 'memoizee'
 
 interface CW20TokenInfoResponse {
@@ -12,13 +12,12 @@ interface CW20TokenInfoResponse {
 }
 
 export const getAssetInfo = memoize(async ({ id, type }: Asset): Promise<AssetInfo> => {
-  const lcd = getLCDClient()
   if (type === 'cw20') {
     const {
       name,
       symbol,
       decimals,
-    } = await lcd.wasm.contractQuery<CW20TokenInfoResponse>(id, {
+    } = await contractQuery<CW20TokenInfoResponse>(id, {
       token_info: {},
     });
 

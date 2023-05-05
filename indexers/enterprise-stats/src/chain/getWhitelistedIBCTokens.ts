@@ -1,4 +1,6 @@
 import { assertEnvVar } from "shared/assertEnvVar";
+import memoize from 'memoizee'
+import axios from "axios";
 
 export type TokenBase = {
   key: string;
@@ -61,12 +63,10 @@ const fixTokenResponse = <
   }, {});
 };
 
-export const getWhitelistedIBCTokens = async () => {
-  const response = await fetch('https://assets.terra.money/ibc/tokens.json');
-
-  const tokens: IBCTokensNetworkResponse = await response.json();
+export const getWhitelistedIBCTokens = memoize(async () => {
+  const { data: tokens } = await axios.get<IBCTokensNetworkResponse>('https://assets.terra.money/ibc/tokens.json');
 
   const network = assertEnvVar('NETWORK')
 
   return tokens && tokens[network] ? fixTokenResponse('ibc', tokens[network], (key) => `ibc/${key}`) : {};
-}
+})

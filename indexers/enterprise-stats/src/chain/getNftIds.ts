@@ -1,4 +1,4 @@
-import { getLCDClient } from "./lcd";
+import { contractQuery } from "./lcd";
 
 interface GetNftIdsParams {
   collection: string
@@ -11,10 +11,8 @@ type NftIdsResponse = {
 };
 
 export const getNftIds = async ({ collection, owner }: GetNftIdsParams) => {
-  const lcd = getLCDClient()
-
   const fetchNftIds = async (startAfter?: string): Promise<string[]> => {
-    const response = await lcd.wasm.contractQuery<NftIdsResponse>(collection, {
+    const response = await contractQuery<NftIdsResponse>(collection, {
       tokens: { owner, start_after: startAfter },
     });
 

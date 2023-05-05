@@ -24,7 +24,7 @@ export const getNFTPrice = async (nft: NFT): Promise<number | null> => {
     const { decimals } = await getAssetInfo({ id: denom, type: 'native' })
     return fromChainAmount(price, decimals) * price
   } catch (err) {
-    console.error(`Error getting NFT price collection=${nft.address} id=${nft.id}`, err)
+    console.error(`Error getting NFT price collection=${nft.address} id=${nft.id}`, err.toString())
   }
 
   return getNFTCollectionFloorPrice(nft.address)

@@ -1,7 +1,7 @@
 import { Asset, AssetWithPrice } from "chain/Asset";
 import { getAssetBalance } from "chain/getAssetBalance";
 import { getAssetInfo } from "chain/getAssetInfo";
-import { getLCDClient } from "chain/lcd"
+import { contractQuery } from "chain/lcd"
 import { enterprise, enterprise_factory } from "types/contracts";
 import { Dao } from "./Dao";
 import { getAssetPrice } from "chain/getAssetPrice";
@@ -21,9 +21,8 @@ const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined 
 }
 
 export const getDaoAssets = async ({ address, enterpriseFactoryContract }: Pick<Dao, 'address' | 'enterpriseFactoryContract'>) => {
-  const lcd = getLCDClient()
-  const { assets: globalWhitelist } = await lcd.wasm.contractQuery<enterprise_factory.AssetWhitelistResponse>(enterpriseFactoryContract, { global_asset_whitelist: {}, });
-  const { assets: assetsWhitelist } = await lcd.wasm.contractQuery<enterprise.AssetWhitelistResponse>(address, { asset_whitelist: {}, });
+  const { assets: globalWhitelist } = await contractQuery<enterprise_factory.AssetWhitelistResponse>(enterpriseFactoryContract, { global_asset_whitelist: {}, });
+  const { assets: assetsWhitelist } = await contractQuery<enterprise.AssetWhitelistResponse>(address, { asset_whitelist: {}, });
   const whitelist = [...new Set([...globalWhitelist, ...assetsWhitelist])]
 
   const assets: AssetWithPrice[] = []
