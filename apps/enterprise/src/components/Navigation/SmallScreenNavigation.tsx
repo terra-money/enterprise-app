@@ -1,9 +1,11 @@
+import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { ManageWallet } from 'chain/components/ManageWallet';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { HStack } from 'lib/ui/Stack';
+import { useSanctionCheck } from 'queries';
 import { SettingsNavigationItem } from 'settings/components/SettingsNavigationItem';
 import styled from 'styled-components';
 
@@ -35,6 +37,8 @@ const Footer = styled(HStack)`
 `;
 
 export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) => {
+  const connectedWallet = useConnectedWallet();
+  const isSanctioned = useSanctionCheck(connectedWallet?.walletAddress);
   return (
     <Container>
       <Header alignItems="center" justifyContent="space-between">
@@ -48,7 +52,7 @@ export const SmallScreenNavigation = ({ children }: ComponentWithChildrenProps) 
           <ManageDaosButton />
           <SettingsNavigationItem />
         </HStack>
-        <CreateDaoButton />
+        <CreateDaoButton disabled={isSanctioned}/>
       </Footer>
     </Container>
   );

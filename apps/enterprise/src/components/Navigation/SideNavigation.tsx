@@ -12,6 +12,7 @@ import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { SettingsNavigationItem } from 'settings/components/SettingsNavigationItem';
+import { useSanctionCheck } from 'queries';
 
 const Container = styled(VStack)`
   padding: 32px;
@@ -22,6 +23,7 @@ const Container = styled(VStack)`
 
 export const SideNavigation = () => {
   const connectedWallet = useConnectedWallet();
+  const isSanctioned = useSanctionCheck(connectedWallet?.walletAddress);
 
   return (
     <Container fullHeight justifyContent="space-between">
@@ -57,7 +59,7 @@ export const SideNavigation = () => {
         {connectedWallet && (
           <Tooltip title="Create a DAO" placement="right" arrow={true}>
             <div>
-              <CreateDaoButton />
+              <CreateDaoButton disabled={isSanctioned}/>
             </div>
           </Tooltip>
         )}
