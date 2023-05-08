@@ -1,5 +1,5 @@
 import { NetworkInfo } from '@terra-money/wallet-provider';
-import { LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
 import { contractQuery } from '@terra-money/apps/queries';
 import { enterprise } from 'types/contracts';

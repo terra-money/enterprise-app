@@ -1,11 +1,11 @@
 import { useTx } from '@terra-money/apps/libs/transactions';
-import { MsgExecuteContract } from '@terra-money/terra.js';
+import { MsgExecuteContract } from '@terra-money/feather.js';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TX_KEY } from 'tx';
 import { isDenom, toAmount } from "@terra.kitchen/utils"
 import { funds_distributor } from 'types/contracts';
 import { hookMsg } from '@terra-money/apps/libs/transactions/utils/hookMsg';
-
+import { assertEnvVar } from '../../../../../indexers/shared/utils/assertEnvVar';
 interface DepositTxParams {
   address: string;
   amount: number;
@@ -21,6 +21,7 @@ interface SendCW20Msg {
     msg: string;
   }
 }
+const chainId = assertEnvVar('CHAIN_ID');
 
 const getMsg = ({ address, amount, decimals, denom, walletAddress }: DepositTxParams & { walletAddress: string }) => {
   if (isDenom(denom)) {
@@ -49,7 +50,7 @@ export const useDepositIntoFundsDistributorTx = () => {
   const walletAddress = useAssertMyAddress();
 
   return useTx<DepositTxParams>(
-    (params) => {
+    (params, chainId) => {
       return {
         msgs: [getMsg({ ...params, walletAddress })]
       };

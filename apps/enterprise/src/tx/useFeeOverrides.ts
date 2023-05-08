@@ -1,4 +1,4 @@
-import { CreateTxOptions, Fee } from '@terra-money/terra.js';
+import { CreateTxOptions, Fee } from '@terra-money/feather.js';
 import { useWallet } from '@terra-money/wallet-provider';
 
 export const useTxOverrides = (): Partial<CreateTxOptions> => {

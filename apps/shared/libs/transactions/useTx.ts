@@ -1,4 +1,4 @@
-import { CreateTxOptions } from '@terra-money/terra.js';
+import { CreateTxOptions } from '@terra-money/feather.js';
 import { useConnectedWallet, useLCDClient, ConnectedWallet, TxResult } from '@terra-money/wallet-provider';
 import { useAsyncFn } from 'react-use';
 import { useTransactionsContext } from '.';
