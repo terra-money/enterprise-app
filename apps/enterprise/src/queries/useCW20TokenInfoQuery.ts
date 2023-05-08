@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { NetworkInfo, useWallet } from '@terra-money/wallet-provider';
-import { LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/feather.js';
 
 export interface CW20TokenInfoResponse {
   name: string;

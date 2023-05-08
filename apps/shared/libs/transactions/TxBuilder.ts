@@ -5,7 +5,7 @@ import {
   MsgSend,
   MsgSubmitProposal,
   MsgVote,
-} from '@terra-money/terra.js';
+} from '@terra-money/feather.js';
 import { hookMsg } from './utils/hookMsg';
 
 type Msg = MsgExecuteContract | MsgSubmitProposal | MsgVote | MsgSend;

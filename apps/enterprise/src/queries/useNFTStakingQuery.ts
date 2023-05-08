@@ -4,7 +4,7 @@ import { NetworkInfo, useWallet } from '@terra-money/wallet-provider';
 import { CW20Addr } from '@terra-money/apps/types';
 import { enterprise } from 'types/contracts';
 import { contractQuery } from '@terra-money/apps/queries';
-import { LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/feather.js';
 
 export const fetchNFTStaking = async (
   networkOrLCD: NetworkInfo | LCDClient,
