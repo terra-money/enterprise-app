@@ -1,3 +1,4 @@
+import { getPricesOfLiquidAssets } from "chain/getPricesOfLiquidAssets"
 import { getDaoTVL } from "dao/getDaoTVL"
 import { processDaos } from "dao/processDaos"
 
