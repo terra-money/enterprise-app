@@ -1,7 +1,6 @@
 import { LCDClient } from "@terra-money/feather.js";
 import { assertEnvVar } from "shared/assertEnvVar";
 import memoize from 'memoizee'
-import { isAxiosError } from "axios";
 import { sleep } from "shared/sleep";
 
 export const getLCDClient = memoize((): LCDClient => {
@@ -21,22 +20,30 @@ export const getLCDClient = memoize((): LCDClient => {
 let hadTooManyRequestsErrorAt: undefined | number = undefined
 const tooManyRequestsErrorCooldown = 1000 * 60
 
-export async function contractQuery<T>(contractAddress: string, msg: object | string): Promise<T> {
+async function handleTooManyRequestsError<T>(promise: Promise<T>): Promise<T> {
   if (hadTooManyRequestsErrorAt && Date.now() - hadTooManyRequestsErrorAt < tooManyRequestsErrorCooldown) {
     await sleep(tooManyRequestsErrorCooldown)
   }
 
   try {
-    const result = await getLCDClient().wasm.contractQuery(contractAddress, msg)
-
-    return result
+    return await promise
   } catch (err) {
     if (err.response.status === 429) {
       hadTooManyRequestsErrorAt = Date.now()
 
-      return contractQuery(contractAddress, msg)
+      return handleTooManyRequestsError(promise)
     } else {
       throw err
     }
   }
 }
+
+export async function contractQuery<T>(contractAddress: string, msg: object | string): Promise<T> {
+  return handleTooManyRequestsError(getLCDClient().wasm.contractQuery(contractAddress, msg))
+}
+
+export const getBankBalance = memoize(async (address: string) => {
+  const promise = getLCDClient().bank.balance(address).then(([coins]) => coins)
+
+  return handleTooManyRequestsError(promise)
+})

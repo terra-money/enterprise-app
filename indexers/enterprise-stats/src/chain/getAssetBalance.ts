@@ -1,5 +1,5 @@
 import { Asset } from "./Asset"
-import { contractQuery, getLCDClient } from "./lcd"
+import { contractQuery, getBankBalance } from "./lcd"
 import memoize from 'memoizee'
 
 interface GetAssetBalance {
@@ -14,13 +14,13 @@ interface CW20BalanceResponse {
 export const getAssetBalance = memoize(async ({ asset, address }: GetAssetBalance) => {
   const { id, type } = asset
 
-  const lcd = getLCDClient()
   if (type === 'native') {
-    const [coins] = await lcd.bank.balance(address);
+    const coins = await getBankBalance(address)
+    if (!coins) return '0'
 
-    const coin = coins.get(id);
+    const coin = coins.get(asset.id);
 
-    return coin?.amount.toString() ?? '0'
+    return coin?.amount?.toString() ?? '0'
   }
 
   const { balance } = await contractQuery<CW20BalanceResponse>(

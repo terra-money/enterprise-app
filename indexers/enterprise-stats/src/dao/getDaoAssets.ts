@@ -30,20 +30,37 @@ export const getDaoAssets = async ({ address, enterpriseFactoryContract }: Pick<
     const asset = toAsset(response)
     if (!asset) return
 
+    let balance = '0'
     try {
-      const balance = await getAssetBalance({ asset, address })
-      const { decimals } = await getAssetInfo(asset)
-      const usd = await getAssetPrice(asset)
+      balance = await getAssetBalance({ asset, address })
+    } catch (err) {
+      console.error(`Failed to get balance of ${asset.type} asset with id=${asset.id}: ${err}`)
+      return
+    }
 
-      assets.push({
-        ...asset,
-        balance,
-        decimals,
-        usd
-      })
+    let decimals = 6
+    try {
+      const info = await getAssetInfo(asset)
+      decimals = info.decimals
     } catch (err) {
       console.error(`Failed to get asset info for ${asset.type} asset with id=${asset.id}: ${err}`)
+      return
     }
+
+    let usd = 0
+    try {
+      usd = await getAssetPrice(asset)
+    } catch (err) {
+      console.error(`Failed to get asset price for ${asset.type} asset with id=${asset.id}: ${err}`)
+      return
+    }
+
+    assets.push({
+      ...asset,
+      balance,
+      decimals,
+      usd
+    })
   }))
 
   return assets

@@ -21,6 +21,8 @@ export const getNFTPrice = async (nft: NFT): Promise<number | null> => {
     const { data } = await axios.get<TFMNFTResponse>(nftUrl)
     const price = data.content[0]?.price ?? null
     const denom = data.content[0]?.denom ?? null
+    if (!price || !denom) return null
+
     const { decimals } = await getAssetInfo({ id: denom, type: 'native' })
     return fromChainAmount(price, decimals) * price
   } catch (err) {
