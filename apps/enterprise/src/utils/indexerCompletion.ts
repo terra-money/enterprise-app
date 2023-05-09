@@ -1,11 +1,11 @@
 import { sleep } from '@terra-money/apps/utils';
-import { NetworkInfo } from '@terra-money/wallet-provider';
 import { TX_KEY } from 'tx';
 import { fetchIndexerState } from './fetchIndexerState';
 import { min } from 'd3-array';
+import { NetworkName } from '@terra-money/apps/hooks';
 
 interface IndexerCompletionOptions {
-  network: NetworkInfo;
+  networkName: NetworkName;
   height: number;
   timeout?: number;
   txKey: TX_KEY;
@@ -15,12 +15,12 @@ interface IndexerCompletionOptions {
 const INDEXER_KEYS = ['indexer:enterprise-daos', 'indexer:enterprise-proposals'];
 
 export const indexerCompletion = async (options: IndexerCompletionOptions): Promise<void> => {
-  const { network, height, timeout = 10000, callback } = options;
+  const { networkName, height, timeout = 10000, callback } = options;
 
   const now = Date.now();
 
   while (Date.now() < now + timeout) {
-    const state = await fetchIndexerState(network);
+    const state = await fetchIndexerState(networkName);
 
     // wait for all of the required indexers to process the block
     const minHeight = min(

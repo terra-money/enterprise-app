@@ -1,4 +1,3 @@
-import { useWallet } from '@terra-money/wallet-provider';
 import { assertDefined, getFinderUrl, getLast, truncateAddress } from '@terra-money/apps/utils';
 import { TxEvent, TxResponse } from '@terra-money/apps/types';
 import { Container } from '@terra-money/apps/components';
@@ -19,6 +18,7 @@ import { Tag } from 'lib/ui/Tag';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { TxMessage } from './TxMessage';
 import { useCurrentDaoAddress } from 'dao/navigation';
+import { useNetworkName } from '@terra-money/apps/hooks';
 
 interface TxItemProps {
   tx: TxResponse;
@@ -27,7 +27,7 @@ interface TxItemProps {
 export const TxItem = (props: TxItemProps) => {
   const { tx } = props;
   const { txhash, timestamp, logs } = tx;
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   const address = useCurrentDaoAddress()
 
@@ -35,7 +35,7 @@ export const TxItem = (props: TxItemProps) => {
 
   const attributes = events?.flatMap(event => event.attributes);
 
-  const ruleset = createActionRuleSet(network.name)
+  const ruleset = createActionRuleSet(networkName)
   const logMatcher = createLogMatcherForActions(ruleset)
   const getCanonicalMsgs = (txInfo: TxResponse) => {
     const matchedMsg = getTxCanonicalMsgs(txInfo, logMatcher)
@@ -53,7 +53,7 @@ export const TxItem = (props: TxItemProps) => {
   const header = (
     <HStack fullWidth gap={20} wrap="wrap" justifyContent="space-between">
       <HStack alignItems="center" gap={16}>
-        <ExternalLink to={getFinderUrl(network.name, txhash)}>
+        <ExternalLink to={getFinderUrl(networkName, txhash)}>
           <ShyTextButton as="div" text={truncateAddress(txhash)} />
         </ExternalLink>
         <ErrorBoundary>

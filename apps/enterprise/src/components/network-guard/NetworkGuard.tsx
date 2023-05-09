@@ -1,19 +1,34 @@
 import { UIElementProps } from '@terra-money/apps/components';
-import { useTerraNetwork } from 'chain/hooks/useTerraNetwork';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
+import { supportedChains, useChainID } from '@terra-money/apps/hooks';
+import { Center } from 'lib/ui/Center';
+import { Text } from 'lib/ui/Text';
 
 export const NetworkGuard = (props: UIElementProps) => {
   const { children } = props;
 
-  const { moniker } = useTerraNetwork();
   const queryClient = useQueryClient();
 
+  const chainID = useChainID();
 
   useEffect(() => {
     queryClient.invalidateQueries();
-  }, [moniker, queryClient]);
+  }, [chainID, queryClient]);
 
+  if (!supportedChains.includes(chainID)) {
+    return (
+      <Center>
+        <Text>
+          {chainID} is not supported.
+        </Text>
+      </Center>
+    )
+  }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+    </>
+  )
 };

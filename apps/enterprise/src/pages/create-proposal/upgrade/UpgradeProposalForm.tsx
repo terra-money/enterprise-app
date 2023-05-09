@@ -7,11 +7,11 @@ import { Throbber } from 'components/primitives';
 import { assertDefined } from '@terra-money/apps/utils';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { base64Encode } from 'utils';
-import { useWallet } from '@terra-money/wallet-provider';
 import { Text } from 'lib/ui/Text';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
+import { useNetworkName } from '@terra-money/apps/hooks';
 
 interface FormatMigrationMsgParams {
   msg: string
@@ -30,9 +30,9 @@ const formatMigrateMsg = ({ msg, networkName, currentCodeId }: FormatMigrationMs
 }
 
 export const UpgradeProposalForm = () => {
-  const { network } = useWallet();
-
   const dao = useCurrentDao();
+
+  const networkName = useNetworkName()
 
   const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.address);
   const { data: latestCodeId, isLoading: isLoadingLatestCodeId } = useEnterpriseLatestCodeIdQuery()
@@ -45,11 +45,11 @@ export const UpgradeProposalForm = () => {
   const [message, setMessage] = useState(defaultMigrateMsg);
   const migrateMsg = useMemo(() => {
     try {
-      return formatMigrateMsg({ msg: message, networkName: network.name, currentCodeId: contractInfo?.code_id ?? 0 });
+      return formatMigrateMsg({ msg: message, networkName, currentCodeId: contractInfo?.code_id ?? 0 });
     } catch {
       return undefined;
     }
-  }, [contractInfo?.code_id, message, network.name])
+  }, [contractInfo?.code_id, message, networkName])
 
   const isDisabled = migrateMsg === undefined || isUpToDate !== false
 

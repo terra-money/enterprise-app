@@ -6,14 +6,14 @@ import { ProposalVotingAction } from './ProposalVotingAction';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { getFinderUrl } from '@terra-money/apps/utils';
-import { useWallet } from '@terra-money/wallet-provider';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { Text } from 'lib/ui/Text';
+import { useNetworkName } from '@terra-money/apps/hooks';
 
 export const ProposalVoting = () => {
   const { executionTxHash } = useCurrentProposal();
 
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   return (
     <VStack gap={16}>
@@ -26,7 +26,7 @@ export const ProposalVoting = () => {
       {executionTxHash && (
         <HStack alignItems="center" gap={8}>
           <Text color="supporting3">Transaction:</Text>
-          <ExternalLink to={getFinderUrl(network.name, executionTxHash)}>
+          <ExternalLink to={getFinderUrl(networkName, executionTxHash)}>
             <ShyTextButton text={executionTxHash} />
           </ExternalLink>
         </HStack>

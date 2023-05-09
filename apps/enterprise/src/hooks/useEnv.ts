@@ -1,10 +1,10 @@
-import { useWallet } from '@terra-money/wallet-provider';
+import { useNetworkName } from '@terra-money/apps/hooks';
 import { secondsInDay, secondsInMinute } from 'date-fns';
 
 export const useEnv = () => {
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   return {
-    timeConversionFactor: network.name === 'testnet' || network.name === 'localterra' ? secondsInMinute : secondsInDay,
+    timeConversionFactor: networkName === 'testnet' ? secondsInMinute : secondsInDay,
   };
 };

@@ -1,4 +1,4 @@
-import { LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/feather.js";
 import { NetworkInfo } from "@terra-money/wallet-provider";
 
 export const getNetworkOrLCD = (
@@ -6,8 +6,5 @@ export const getNetworkOrLCD = (
 ): LCDClient => {
   return networkOrLCD instanceof LCDClient
     ? networkOrLCD
-    : new LCDClient({
-        URL: networkOrLCD.lcd,
-        chainID: networkOrLCD.chainID,
-      });
+    : new LCDClient(networkOrLCD);
 };

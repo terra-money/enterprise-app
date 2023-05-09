@@ -1,5 +1,5 @@
 import { capitalizeFirstLetter, truncateAddress } from "@terra-money/apps/utils"
-import { AccAddress, Coin, Coins, } from "@terra-money/terra.js"
+import { AccAddress, Coin, Coins, } from "@terra-money/feather.js"
 import { useWallet } from "@terra-money/wallet-provider"
 import { isDenom } from "@terra.kitchen/utils"
 import { ExternalLink } from "lib/navigation/Link/ExternalLink"

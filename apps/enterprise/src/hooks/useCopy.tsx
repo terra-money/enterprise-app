@@ -1,6 +1,6 @@
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { useCallback } from 'react';
 import { useClipboardCopy } from './useClipboardCopy';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 
 type CopyField = 'address';
 
@@ -9,16 +9,17 @@ const copyFieldToText: Record<CopyField, string> = {
 };
 
 export const useCopy = (field: CopyField) => {
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress();
 
   const clipboardCopy = useClipboardCopy();
 
+
   return useCallback(() => {
-    if (connectedWallet) {
+    if (myAddress) {
       clipboardCopy({
-        value: connectedWallet.walletAddress,
+        value: myAddress,
         message: copyFieldToText[field],
       });
     }
-  }, [clipboardCopy, connectedWallet, field]);
+  }, [clipboardCopy, myAddress, field]);
 };

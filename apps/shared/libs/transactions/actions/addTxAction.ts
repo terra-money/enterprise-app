@@ -1,4 +1,4 @@
-import { LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/feather.js";
 import { ActionType, TxAsyncThunkAction } from ".";
 import { TransactionPayload } from "../types";
 import { trackTx } from "./trackTx";

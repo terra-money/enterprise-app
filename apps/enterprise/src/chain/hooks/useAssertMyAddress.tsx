@@ -1,7 +1,7 @@
 import { useAssertConnectedWallet } from './useAssertConnectedWallet';
 
 export const useAssertMyAddress = () => {
-  const { terraAddress } = useAssertConnectedWallet();
+  const { addresses } = useAssertConnectedWallet();
 
-  return terraAddress;
+  return Object.values(addresses)[0];
 };

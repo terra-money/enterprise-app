@@ -1,7 +1,7 @@
 import { FormInput, FormState, useForm } from '@terra-money/apps/hooks';
 import { getLast, isFormStateValid } from '@terra-money/apps/utils';
 import { createContextHook } from '@terra-money/apps/utils/createContextHook';
-import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
+import { useWallet } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
 import { enterprise, enterprise_factory } from 'types/contracts';
@@ -20,6 +20,7 @@ import { validateTokenInfo } from './token/helpers/validateTokenInfo';
 import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
 import { validateCouncil } from './shared/helpers/validateCouncil';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 
 export interface DaoSocialDataInput {
   githubUsername?: string;
@@ -363,7 +364,7 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
 
   const { network } = useWallet();
 
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress();
 
   const [formInput, formState, updateFormState] = useForm<DaoWizardInput, DaoWizardState>(
     async (input, getState, dispatch) => {
@@ -401,7 +402,7 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
         ...validateCurrentStep(state),
       });
     },
-    getInitialState(timeConversionFactor, connectedWallet?.walletAddress)
+    getInitialState(timeConversionFactor, myAddress)
   );
 
   const { predictedSteps, steps } = formState;

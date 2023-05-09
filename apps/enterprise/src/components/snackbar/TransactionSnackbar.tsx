@@ -12,6 +12,7 @@ import { LinearProgress } from '@mui/material';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import styles from './TransactionSnackbar.module.sass';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
+import { useNetworkName } from '@terra-money/apps/hooks';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -41,6 +42,8 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
 
   const { showDetails: showTransactionErrorDetails } = useTransactionError();
 
+  const networkName = useNetworkName()
+
   const onDetailsClick = useCallback(() => {
     if (!connectedWallet) {
       return;
@@ -51,8 +54,8 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
       return;
     }
 
-    window.open(getFinderUrl(connectedWallet.network.name, transaction.txHash));
-  }, [connectedWallet, showTransactionErrorDetails, transaction]);
+    window.open(getFinderUrl(networkName, transaction.txHash));
+  }, [connectedWallet, networkName, showTransactionErrorDetails, transaction]);
 
   return (
     <div className={styles.root} data-variant={variant}>

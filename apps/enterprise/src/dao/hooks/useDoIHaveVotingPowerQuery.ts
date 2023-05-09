@@ -1,14 +1,14 @@
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import Big from 'big.js';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useVotingPowerQuery } from 'queries';
 
 export const useDoIHaveVotingPowerQuery = () => {
   const { address } = useCurrentDao();
 
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress();
 
-  const { data: votingPower = Big(0), ...rest } = useVotingPowerQuery(address, connectedWallet?.walletAddress);
+  const { data: votingPower = Big(0), ...rest } = useVotingPowerQuery(address, myAddress);
 
   return {
     ...rest,

@@ -4,6 +4,9 @@ import { BigSource } from 'big.js';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 import { useTxOverrides } from './useFeeOverrides';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { assertDefined } from '@terra-money/apps/utils';
+import { useChainID } from '@terra-money/apps/hooks';
 
 interface StakeTokenTxOptions {
   daoAddress: string;
@@ -14,17 +17,22 @@ interface StakeTokenTxOptions {
 export const useStakeTokenTx = () => {
   const txOverrides = useTxOverrides();
 
+  const myAddress = useMyAddress()
+
+  const chainID = useChainID()
+
   return useTx<StakeTokenTxOptions>(
     (options) => {
-      const { daoAddress, tokenAddress, amount, wallet } = options;
+      const { daoAddress, tokenAddress, amount } = options;
 
-      const tx = TxBuilder.new()
-        .hook<enterprise.Cw20HookMsg>(wallet.walletAddress, daoAddress, tokenAddress, amount.toString(), { stake: {} })
+      const payload = TxBuilder.new()
+        .hook<enterprise.Cw20HookMsg>(assertDefined(myAddress), daoAddress, tokenAddress, amount.toString(), { stake: {} })
         .build();
 
       return {
         ...txOverrides,
-        ...tx,
+        ...payload,
+        chainID
       };
     },
     {

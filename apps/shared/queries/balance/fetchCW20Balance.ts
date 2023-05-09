@@ -1,5 +1,5 @@
 import { NetworkInfo } from "@terra-money/wallet-provider";
-import { LCDClient } from "@terra-money/terra.js/dist/client";
+import { LCDClient } from "@terra-money/feather.js";
 import { Big } from "big.js";
 import { u } from "../../types";
 
@@ -16,9 +16,9 @@ export const fetchCW20Balance = async (
     networkOrLCD instanceof LCDClient
       ? networkOrLCD
       : new LCDClient({
-          URL: networkOrLCD.lcd,
-          chainID: networkOrLCD.chainID,
-        });
+        URL: networkOrLCD.lcd,
+        chainID: networkOrLCD.chainID,
+      });
 
   const response = await lcd.wasm.contractQuery<CW20BalanceResponse>(
     tokenAddr,

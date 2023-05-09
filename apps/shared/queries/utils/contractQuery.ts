@@ -1,5 +1,5 @@
 import { NetworkInfo } from "@terra-money/wallet-provider";
-import { LCDClient } from "@terra-money/terra.js/dist/client";
+import { LCDClient } from "@terra-money/feather.js";
 import { CW20Addr } from "../../types";
 import { getNetworkOrLCD } from "./getNetworkOrLCD";
 
