@@ -31,8 +31,8 @@ export function NftMembershipStep() {
           onChange={({ currentTarget }) => onChange({ nftSymbol: currentTarget.value })}
         />
         <WizardInput
-          label="NFT Minter"
-          placeholder="Minter Terra address"
+          label="NFT Mint Contract"
+          placeholder="Terra contract address"
           value={nftMembership.minter}
           error={nftMembership.minterError}
           onChange={({ currentTarget }) => onChange({ minter: currentTarget.value })}
