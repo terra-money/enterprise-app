@@ -19,7 +19,8 @@
     "dotenv": "^16.0.1",
     "memoizee": "^0.4.15",
     "pino": "^8.4.2",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.2",
+    "aws-lambda": "^1.0.7"
   },
   "devDependencies": {
     "@types/d3-array": "^3.0.3",
