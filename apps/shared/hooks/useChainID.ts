@@ -6,7 +6,7 @@ export type ChainID = typeof supportedChains[number]
 export const useChainID = (): ChainID => {
   const { network } = useWallet()
 
-  if (!network) return supportedChains[0]
+  const selectedChainID = Object.keys(network).find((chainID) => supportedChains.includes(chainID)) as ChainID
 
-  return Object.values(network)[0].chainID
+  return selectedChainID
 }

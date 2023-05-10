@@ -174,15 +174,12 @@ const AppBetaRoutes = () => {
 
 const AppProviders = () => {
   const chainOptions = useChainOptions();
-  console.log(chainOptions)
 
-  // TODO: check later if chainOptions would cause a flicker due to being null for first couple of calls
   return (
     chainOptions && (
       <WalletProvider
         {...chainOptions}
         connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}
-        defaultNetwork={chainOptions?.walletConnectChainIds[1]}
       >
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />
