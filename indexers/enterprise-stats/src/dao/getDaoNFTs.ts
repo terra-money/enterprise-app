@@ -4,11 +4,13 @@ import { Dao } from "./Dao";
 import { NFT, NFTWithPrice } from "chain/NFT";
 import { getNftIds } from "chain/getNftIds";
 import { getNFTPrice } from "chain/getNFTPrice";
+import { getSupportedNFTCollections } from "chain/getFloorPricesOfSupportedNFTCollections";
 
 export const getDaoNFTs = async ({ address, enterpriseFactoryContract }: Pick<Dao, 'address' | 'enterpriseFactoryContract'>) => {
   const { nfts: globalWhitelist } = await contractQuery<enterprise_factory.NftWhitelistResponse>(enterpriseFactoryContract, { global_nft_whitelist: {}, });
   const { nfts: localWhitelist } = await contractQuery<enterprise.NftWhitelistResponse>(address, { nft_whitelist: {}, });
-  const whitelist = [...new Set([...globalWhitelist, ...localWhitelist])]
+  const supportedCollections = await getSupportedNFTCollections()
+  const whitelist = [...new Set([...globalWhitelist, ...localWhitelist])].filter(collection => supportedCollections.has(collection))
 
   const nfts: NFT[] = []
   await Promise.all(whitelist.map(async address => {
