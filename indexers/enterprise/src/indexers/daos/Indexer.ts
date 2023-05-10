@@ -1,6 +1,6 @@
 import { EventIndexer, IndexFnOptions } from 'indexers/EventIndexer';
-import { Entity } from './types';
 import { LCDClient } from '@terra-money/feather.js';
+import { DaoEntity } from './types';
 import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
 import { batch, createLCDClient } from '@apps-shared/indexers/utils';
 import { KeySelector } from '@apps-shared/indexers/services/persistence';
@@ -9,11 +9,11 @@ import { EnterpriseEventPK, ExecuteProposalEvent, InstantiateDaoEvent } from 'ty
 import { enterprise } from 'types/contracts';
 import Big from 'big.js';
 
-export const PK: KeySelector<Entity> = (data) => data.address;
+export const PK: KeySelector<DaoEntity> = (data) => data.address;
 
 export const SK = 'dao';
 
-export class Indexer extends EventIndexer<Entity> {
+export class Indexer extends EventIndexer<DaoEntity> {
   constructor() {
     super({
       name: 'daos',
@@ -44,7 +44,7 @@ export class Indexer extends EventIndexer<Entity> {
     return Array.from(new Set<string>(promises.flatMap((s) => s))).filter(Boolean);
   };
 
-  private fetchDAO = async (lcd: LCDClient, address: string): Promise<Entity> => {
+  private fetchDAO = async (lcd: LCDClient, address: string): Promise<DaoEntity> => {
     const response = await lcd.wasm.contractQuery<enterprise.DaoInfoResponse>(address, { dao_info: {} });
 
     const created = 'creation_date' in response ? Math.trunc(Big(response.creation_date).div(1000000).toNumber()) : 0;

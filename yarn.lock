@@ -4079,6 +4079,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@enterprise/stats@workspace:indexers/enterprise-stats":
+  version: 0.0.0-use.local
+  resolution: "@enterprise/stats@workspace:indexers/enterprise-stats"
+  dependencies:
+    "@aws-sdk/client-dynamodb": ^3.159.0
+    "@aws-sdk/util-dynamodb": ^3.159.0
+    "@terra-money/feather.js": ^1.0.2
+    "@types/d3-array": ^3.0.3
+    "@types/node": ^16.11.56
+    axios: ^1.4.0
+    big.js: ^6.2.1
+    date-fns: ^2.29.2
+    dotenv: ^16.0.1
+    esbuild: ^0.14.54
+    memoizee: ^0.4.15
+    pino: ^8.4.2
+    ts-node: ^10.9.1
+    tsconfig-paths: ^4.1.0
+    typescript: ^4.8.2
+  languageName: unknown
+  linkType: soft
+
 "@esbuild/linux-loong64@npm:0.14.54":
   version: 0.14.54
   resolution: "@esbuild/linux-loong64@npm:0.14.54"
@@ -5251,6 +5273,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@terra-money/feather.js@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@terra-money/feather.js@npm:1.0.2"
+  dependencies:
+    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
+    "@terra-money/terra.proto": 3.0.5
+    axios: ^0.27.2
+    bech32: ^2.0.0
+    bip32: ^2.0.6
+    bip39: ^3.0.3
+    bufferutil: ^4.0.3
+    decimal.js: ^10.2.1
+    jscrypto: ^1.0.1
+    readable-stream: ^3.6.0
+    secp256k1: ^4.0.2
+    tmp: ^0.2.1
+    utf-8-validate: ^5.0.5
+    ws: ^7.5.9
+  checksum: f16ae260839adc863f46d3bd79db290d6ecaafd38df65048c865f59efadd3d145d1d5cd9cd843896da7d3545dc28094d35132d8a9d08f2db005cd52d1280b01b
+  languageName: node
+  linkType: hard
+
 "@terra-money/legacy.proto@npm:@terra-money/terra.proto@^0.1.7":
   version: 0.1.7
   resolution: "@terra-money/terra.proto@npm:0.1.7"
@@ -5319,6 +5363,18 @@ __metadata:
     utf-8-validate: ^5.0.5
     ws: ^7.5.9
   checksum: 675ef98007c754651c2059a2d1ad5c0a776e0d50c6ae5204f59a4581f4954abc30e1fce96272b109838c65e2ad019077303ef89ff2a3b91fc1d1be2b05428648
+  languageName: node
+  linkType: hard
+
+"@terra-money/terra.proto@npm:3.0.5":
+  version: 3.0.5
+  resolution: "@terra-money/terra.proto@npm:3.0.5"
+  dependencies:
+    "@improbable-eng/grpc-web": ^0.14.1
+    google-protobuf: ^3.17.3
+    long: ^4.0.0
+    protobufjs: ~6.11.2
+  checksum: 8a133647118d7ea977f1333e1090cfa1a83905bff0b29b9cea4688e24aacf74b799aa62ce129f126adddf303ec06ff8f5fb89b2bf9c5d007756fda310b867fea
   languageName: node
   linkType: hard
 
@@ -7264,6 +7320,17 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "axios@npm:1.4.0"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 7fb6a4313bae7f45e89d62c70a800913c303df653f19eafec88e56cea2e3821066b8409bc68be1930ecca80e861c52aa787659df0ffec6ad4d451c7816b9386b
   languageName: node
   linkType: hard
 
@@ -10874,6 +10941,16 @@ __metadata:
     debug:
       optional: true
   checksum: 6aa4e3e3cdfa3b9314801a1cd192ba756a53479d9d8cca65bf4db3a3e8834e62139245cd2f9566147c8dfe2efff1700d3e6aefd103de4004a7b99985e71dd533
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.0":
+  version: 1.15.2
+  resolution: "follow-redirects@npm:1.15.2"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: faa66059b66358ba65c234c2f2a37fcec029dc22775f35d9ad6abac56003268baf41e55f9ee645957b32c7d9f62baf1f0b906e68267276f54ec4b4c597c2b190
   languageName: node
   linkType: hard
 
@@ -15800,6 +15877,13 @@ __metadata:
     forwarded: 0.2.0
     ipaddr.js: 1.9.1
   checksum: 29c6990ce9364648255454842f06f8c46fcd124d3e6d7c5066df44662de63cdc0bad032e9bf5a3d653ff72141cc7b6019873d685708ac8210c30458ad99f2b74
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 

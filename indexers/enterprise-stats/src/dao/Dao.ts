@@ -1,6 +1,8 @@
-import { enterprise } from 'types/contracts';
+import { enterprise } from "types/contracts";
 
-export type DaoEntity = {
+// TODO: share this type with indexers/enterprise/src/indexers/daos/types.ts
+
+export type Dao = {
   _type: string;
   address: string;
   type: enterprise.DaoType;
@@ -13,6 +15,7 @@ export type DaoEntity = {
   created: number;
   codeVersionId: string;
   council: enterprise.DaoCouncil;
+  tvl: number;
   socials: {
     discord_username?: string;
     github_username?: string;
