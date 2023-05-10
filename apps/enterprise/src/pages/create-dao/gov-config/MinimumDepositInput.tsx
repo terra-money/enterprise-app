@@ -16,7 +16,7 @@ export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositIn
       <FormTextInput
         value={value === undefined ? '' : value}
         type="number"
-        placeholder="Enter minimum deposit"
+        placeholder="Enter a minimum deposit amount"
         error={error}
         onChange={({ currentTarget }) => {
           if (currentTarget.value === '') {
