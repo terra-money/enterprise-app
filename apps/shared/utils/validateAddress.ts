@@ -7,6 +7,6 @@ export const isValidAddress = (address: string) => {
 
 export const validateAddress = (input: string) => {
   if (!isValidAddress(input)) {
-    return 'Invalid Terra address';
+    return 'Enter a valid Terra Address';
   }
 };
