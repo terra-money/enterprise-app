@@ -16,8 +16,8 @@ import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 type TxMessages = Record<TX_KEY, string>;
 
 const CompletedSnackbarMessages: TxMessages = {
-  [TX_KEY.CREATE_DAO]: 'The DAO was created successfully.',
-  [TX_KEY.STAKE_TOKEN]: 'Your tokens were staked.',
+  [TX_KEY.CREATE_DAO]: 'Your DAO was created successfully.',
+  [TX_KEY.STAKE_TOKEN]: 'Your tokens are staked.',
   [TX_KEY.UNSTAKE_TOKEN]: 'Your tokens were unstaked.',
   [TX_KEY.STAKE_NFT]: 'Your NFTs were staked.',
   [TX_KEY.UNSTAKE_NFT]: 'Your NFTs were unstaked.',
