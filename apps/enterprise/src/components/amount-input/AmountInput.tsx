@@ -24,7 +24,7 @@ export const AmountInput = (props: AmountInputProps) => {
     maxLoading,
     onMaxClick,
     symbol = '',
-    placeholder = 'Type amount',
+    placeholder = 'Enter an amount',
     ...rest
   } = props;
 
