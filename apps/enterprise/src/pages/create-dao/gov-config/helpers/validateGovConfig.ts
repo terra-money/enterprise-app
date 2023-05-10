@@ -4,7 +4,7 @@ import { DaoGovConfigInput } from '../DaoGovConfigInput';
 
 export const validateUnlockingPeriod = (unlockingPeriod: number, voteDuration: number) => {
   if (unlockingPeriod < voteDuration) {
-    return 'Unstaking duration cannot be shorter than proposal voting duration';
+    return 'The vote duration must be longer than the unlocking period.';
   }
 };
 
