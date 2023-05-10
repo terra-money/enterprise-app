@@ -18,7 +18,7 @@ const features: Feature[] = [
   },
   {
     title: 'Add DAOs to your watchlist',
-    description: 'Follow your favorite DAOs and see what they are up to.',
+    description: 'Follow your favourite DAOs and see what they are up to.',
     imageUrl: 'images/landing-dashboard.png',
   },
   {
