@@ -4,7 +4,7 @@ export const useAssertConnectedWallet = () => {
   const connectedWallet = useConnectedWallet();
 
   if (!connectedWallet) {
-    throw new Error('No connected wallet');
+    throw new Error('Connect your wallet');
   }
 
   return connectedWallet;
