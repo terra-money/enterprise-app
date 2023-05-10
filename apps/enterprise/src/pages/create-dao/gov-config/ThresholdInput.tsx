@@ -11,7 +11,7 @@ export const ThresholdInput = ({ value, onChange, min = 0 }: ThresholdInputProps
   return (
     <FormControl
       label="Threshold"
-      helpText="The minimum proportion of Yes votes necessary for the proposal to pass. For example, a 51% threshold means that a proposal needs at least 51% Yes votes to pass."
+      helpText="The minimum proportion of Yes votes needed for the proposal to pass. For example, a 51% threshold means that a proposal needs at least 51% Yes votes to pass."
     >
       <SliderInput
         value={value}
