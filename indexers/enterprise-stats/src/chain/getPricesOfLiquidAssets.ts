@@ -74,11 +74,9 @@ export const getPricesOfLiquidAssets = memoize(async () => {
 
   data.statisticTableTokensList.content.forEach(asset => {
     if (Number(asset.liquidity) >= MIN_LIQUIDITY) {
-      console.log(asset)
       record[asset.token0Addr] = Number(asset.priceInvertedUsd)
     }
   })
-  console.log(record)
 
   return record
 })

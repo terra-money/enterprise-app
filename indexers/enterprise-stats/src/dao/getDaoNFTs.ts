@@ -1,4 +1,4 @@
-import { contractQuery, getLCDClient } from "chain/lcd"
+import { contractQuery } from "chain/lcd"
 import { enterprise, enterprise_factory } from "types/contracts";
 import { Dao } from "./Dao";
 import { NFT, NFTWithPrice } from "chain/NFT";
