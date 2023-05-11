@@ -56,7 +56,7 @@ const getDataFromTFMCollectionTable = memoize(async () => {
   return data.collectionTable.content
 })
 
-const convertCollectionPriceToUsd = async ({ denom, price }: TFMFloorPrice) => {
+export const convertCollectionPriceToUsd = async ({ denom, price }: TFMFloorPrice) => {
   if (!denom || !price) {
     return 0
   }
@@ -65,6 +65,8 @@ const convertCollectionPriceToUsd = async ({ denom, price }: TFMFloorPrice) => {
     const { decimals } = await getAssetInfo({ id: denom, type: 'native' })
 
     const denomPrice = await getAssetPrice({ id: denom, type: 'native' })
+
+    return fromChainAmount(denomPrice, decimals) * price
   } catch (err) {
     console.error(`Error getting price of a denom=${denom}`, err)
   }
