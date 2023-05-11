@@ -6,13 +6,14 @@ import { ReactComponent as CloseIcon } from 'components/assets/Close.svg';
 import { Text } from 'components/primitives/text';
 import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
-import { useConnectedWallet, UserDenied } from '@terra-money/wallet-provider';
+import { UserDenied } from '@terra-money/wallet-provider';
 import { useCallback } from 'react';
 import { LinearProgress } from '@mui/material';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import styles from './TransactionSnackbar.module.sass';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -38,14 +39,14 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
 
   const snackbarKey = useSnackbarKey();
 
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress();
 
   const { showDetails: showTransactionErrorDetails } = useTransactionError();
 
   const networkName = useNetworkName()
 
   const onDetailsClick = useCallback(() => {
-    if (!connectedWallet) {
+    if (!myAddress) {
       return;
     }
 
@@ -55,7 +56,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
     }
 
     window.open(getFinderUrl(networkName, transaction.txHash));
-  }, [connectedWallet, networkName, showTransactionErrorDetails, transaction]);
+  }, [myAddress, networkName, showTransactionErrorDetails, transaction]);
 
   return (
     <div className={styles.root} data-variant={variant}>

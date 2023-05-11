@@ -1,5 +1,4 @@
-import { NetworkInfo } from '@terra-money/wallet-provider';
-import { getNetworkOrLCD } from '@terra-money/apps/queries';
+import { LCDClient } from '@terra-money/feather.js';
 
 export interface MultisigVoter {
   addr: string;
@@ -10,9 +9,7 @@ export interface CW3ListVotersResponse {
   voters: Array<MultisigVoter>;
 }
 
-export const fetchCW3ListVoters = async (network: NetworkInfo, address: string): Promise<Array<MultisigVoter>> => {
-  const lcd = getNetworkOrLCD(network);
-
+export const fetchCW3ListVoters = async (lcd: LCDClient, address: string): Promise<Array<MultisigVoter>> => {
   const response = await lcd.wasm.contractQuery<CW3ListVotersResponse>(address, {
     list_voters: {},
   });

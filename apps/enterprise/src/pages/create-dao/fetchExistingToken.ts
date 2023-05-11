@@ -1,12 +1,12 @@
 import { FormModifier } from '@terra-money/apps/hooks';
 import { validateAddress } from '@terra-money/apps/utils';
-import { NetworkInfo } from '@terra-money/wallet-provider';
 import { fetchCW20TokenInfo } from 'queries';
 import { DaoWizardState } from './DaoWizardFormProvider';
+import { LCDClient } from '@terra-money/feather.js';
 
 export const fetchExistingToken = async (
   dispatch: FormModifier<DaoWizardState>,
-  network: NetworkInfo,
+  lcd: LCDClient,
   tokenAddr: string
 ) => {
   const existingTokenError = validateAddress(tokenAddr);
@@ -20,7 +20,7 @@ export const fetchExistingToken = async (
   if (existingTokenError === undefined) {
     try {
       dispatch({
-        existingToken: await fetchCW20TokenInfo(network, tokenAddr),
+        existingToken: await fetchCW20TokenInfo(lcd, tokenAddr),
         existingTokenLoading: false,
         existingTokenError: undefined,
       });

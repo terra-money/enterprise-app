@@ -1,5 +1,4 @@
-import { NetworkInfo } from '@terra-money/wallet-provider';
-import { getNetworkOrLCD } from '@terra-money/apps/queries';
+import { LCDClient } from '@terra-money/feather.js';
 
 export interface CW721ContractInfoResponse {
   name: string;
@@ -7,11 +6,9 @@ export interface CW721ContractInfoResponse {
 }
 
 export const fetchCW721ContractInfo = async (
-  network: NetworkInfo,
+  lcd: LCDClient,
   nftAddress: string
 ): Promise<CW721ContractInfoResponse> => {
-  const lcd = getNetworkOrLCD(network);
-
   const response = await lcd.wasm.contractQuery<CW721ContractInfoResponse>(nftAddress, {
     contract_info: {},
   });

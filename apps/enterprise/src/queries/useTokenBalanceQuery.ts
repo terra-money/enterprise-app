@@ -3,7 +3,7 @@ import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { QUERY_KEY } from 'queries';
 import { Token } from 'types';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import { fetchTokenBalance } from '@terra-money/apps/queries';
 
 export const useTokenBalanceQuery = (
@@ -11,12 +11,12 @@ export const useTokenBalanceQuery = (
   token: Token,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<u<Big>> => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   return useQuery(
-    [QUERY_KEY.TOKEN_BALANCE, network, token.key, walletAddr],
+    [QUERY_KEY.TOKEN_BALANCE, token.key, walletAddr],
     () => {
-      return fetchTokenBalance(network, token, walletAddr);
+      return fetchTokenBalance(lcd, token, walletAddr);
     },
     {
       refetchOnMount: false,
