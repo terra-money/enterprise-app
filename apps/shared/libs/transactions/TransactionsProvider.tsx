@@ -10,6 +10,7 @@ import { pendingSubject, completedSubject, cancelledSubject, failedSubject } fro
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { CompletedTransaction, FailedTransaction, PendingTransaction, TransactionStatus } from './types';
 import { UIElementProps } from '../../components';
+import { useChainID } from '../../hooks';
 
 const storage = new LocalStorageTxStore('__tx_store');
 
@@ -49,7 +50,7 @@ const useTransactionsContext = (): [TxState, TxDispatch, TxHelpers] => {
   return context;
 };
 
-interface TransactionsProviderProps extends UIElementProps {}
+interface TransactionsProviderProps extends UIElementProps { }
 
 const TransactionsProvider = (props: TransactionsProviderProps) => {
   const { children } = props;
@@ -57,6 +58,8 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
   const [{ onPending, onCancelled, onCompleted, onFailed }, setEventHandlers] = useState<TxEventHandlers>({});
 
   const lcd = useLCDClient();
+
+  const chainID = useChainID()
 
   const value = useThunkReducer(transactionsReducer, initialState, (state) => {
     return {
@@ -72,7 +75,7 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
     if (state.initialized) {
       state.transactions.forEach((transaction) => {
         if (transaction.status === TransactionStatus.Pending) {
-          dispatch(trackTxAction(transaction.txHash, lcd));
+          dispatch(trackTxAction(transaction.txHash, lcd, chainID));
         }
       });
     }
