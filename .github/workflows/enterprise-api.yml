@@ -26,8 +26,10 @@ on:
 
     paths:
       - indexers/enterprise/src/**
+      - indexers/enterprise-stats/src/**
       - apps/enterprise-api/src/**
       - indexers/enterprise/Dockerfile
+      - indexers/enterprise-stats/Dockerfile
       - apps/enterprise-api/Dockerfile
       - .github/workflows/enterprise-api.yml
 
@@ -42,6 +44,9 @@ env:
   API_DOCKERFILE: "apps/enterprise-api/Dockerfile"
   API_CONTEXT_PATH: "."
   API_ECR_REPO: "enterprise-api"
+  STATS_DOCKERFILE: "indexers/enterprise-stats/Dockerfile"
+  STATS_CONTEXT_PATH: "."
+  STATS_ECR_REPO: "enterprise-stats"
   TERRAFORM_REPO: "terra-money/tf-apps-enterprise"
 
 jobs:
@@ -72,6 +77,34 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           file: ${{ env.IDX_DOCKERFILE }}
           context: ${{ env.IDX_CONTEXT_PATH }}
+
+  stats-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Test Build
+        uses: docker/build-push-action@v3
+        with:
+          push: false
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          file: ${{ env.STATS_DOCKERFILE }}
+          context: ${{ env.STATS_CONTEXT_PATH }}
 
   api-integration:
     runs-on: ubuntu-latest
@@ -154,6 +187,59 @@ jobs:
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ env.IDX_ECR_REPO }}:${{ env.DOCKER_IMAGE_TAG }}
 
+  stats-delivery:
+    runs-on: ubuntu-latest
+    needs: [stats-integration]
+
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Set tags
+        run: |
+          if [ ${GITHUB_REF} == "refs/heads/main" ]; then
+            echo "DOCKER_IMAGE_TAG=phoenix-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/develop" ]; then
+            echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
+            echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
+          else 
+            echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
+          fi
+
+      - name: Build, tag, and push docker image to AWS ECR
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          file: ${{ env.STATS_DOCKERFILE }}
+          context: ${{ env.STATS_CONTEXT_PATH }}
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.STATS_ECR_REPO }}:${{ env.DOCKER_IMAGE_TAG }}
+
   api-delivery:
     runs-on: ubuntu-latest
     needs: [api-integration]
@@ -209,7 +295,7 @@ jobs:
 
   dispatch:
     runs-on: ubuntu-latest
-    needs: [idx-delivery, api-delivery]
+    needs: [idx-delivery, api-delivery, stats-delivery]
 
     steps:
       - name: Set Remote ref

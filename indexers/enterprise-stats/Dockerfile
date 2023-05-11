@@ -20,7 +20,6 @@ COPY --from=builder_stage_1 /build /build
 WORKDIR /build
 
 COPY refs.json .
-# COPY indexers/shared/package.json ./indexers/shared/package.json
 COPY indexers/enterprise-stats/package.json ./indexers/enterprise-stats/package.json
 
 RUN yarn install
@@ -33,10 +32,9 @@ COPY --from=builder_stage_2 /build /build
 
 WORKDIR /build
 
-# COPY indexers/shared ./indexers/shared
 COPY indexers/enterprise-stats ./indexers/enterprise-stats
 
-RUN yarn workspace @enterprise/indexers build
+RUN yarn workspace @enterprise/stats build
 
 ###########################################################
 FROM public.ecr.aws/lambda/nodejs:16
