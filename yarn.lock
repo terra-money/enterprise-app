@@ -4087,6 +4087,7 @@ __metadata:
     "@types/d3-array": ^3.0.3
     "@types/memoizee": ^0.4.8
     "@types/node": ^16.11.56
+    aws-lambda: ^1.0.7
     axios: ^1.4.0
     big.js: ^6.2.1
     date-fns: ^2.29.2
