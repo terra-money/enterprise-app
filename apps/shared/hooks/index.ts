@@ -8,5 +8,6 @@ export * from './useToken';
 export * from './useForm';
 export * from './useCarouselNavigation';
 export * from './useWasIt';
-export * from './useAssertConnectedWallet';
 export * from './useBoolean';
+export * from './useChainID';
+export * from './useNetworkName'

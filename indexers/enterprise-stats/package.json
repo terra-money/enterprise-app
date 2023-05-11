@@ -13,14 +13,14 @@
     "@aws-sdk/util-dynamodb": "^3.159.0",
     "@terra-money/feather.js": "^1.0.2",
     "@types/node": "^16.11.56",
+    "aws-lambda": "^1.0.7",
     "axios": "^1.4.0",
     "big.js": "^6.2.1",
     "date-fns": "^2.29.2",
     "dotenv": "^16.0.1",
     "memoizee": "^0.4.15",
     "pino": "^8.4.2",
-    "typescript": "^4.8.2",
-    "aws-lambda": "^1.0.7"
+    "typescript": "^4.8.2"
   },
   "devDependencies": {
     "@types/d3-array": "^3.0.3",

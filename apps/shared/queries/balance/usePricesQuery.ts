@@ -1,5 +1,4 @@
 import { useQuery, UseQueryResult } from "react-query";
-import { useWallet } from "@terra-money/wallet-provider";
 import Big from "big.js";
 import { useCW20TokensQuery, useIBCTokensQuery } from "../tokens";
 import {
@@ -58,8 +57,6 @@ export const usePricesQuery = (
   // TODO - Come up with a better way to pass the query key
   queryName: string = "QUERY:PRICES"
 ): UseQueryResult<Record<string, Big>> => {
-  const { network } = useWallet();
-
   // this should eventually come from personalization settings
   const currency: QuoteCurrency = "usd";
 
@@ -70,7 +67,7 @@ export const usePricesQuery = (
   const FiveMinutes = 5 * 60 * 1000;
 
   return useQuery(
-    [queryName, network],
+    queryName,
     () => {
       if (cw20Tokens === undefined || ibcTokens === undefined) {
         return Promise.resolve({});

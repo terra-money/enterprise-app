@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { CW20Addr, u } from '@terra-money/apps/types';
 import { fetchStakingAmount } from './fetchStakingAmount';
@@ -10,11 +10,11 @@ export const useTokenStakingAmountQuery = (
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<u<Big>> => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   return useQuery(
     [QUERY_KEY.TOKEN_STAKING_AMOUNT, daoAddress, walletAddress],
-    () => fetchStakingAmount(network, daoAddress as CW20Addr, walletAddress as CW20Addr),
+    () => fetchStakingAmount(lcd, daoAddress as CW20Addr, walletAddress as CW20Addr),
     {
       refetchOnMount: false,
       ...options,

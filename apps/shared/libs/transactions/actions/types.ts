@@ -2,7 +2,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TxState } from "../TxState";
 import { Transaction } from "../types";
 import { BehaviorSubject } from "rxjs";
-import { TxLog } from "@terra-money/terra.js";
+import { TxLog } from "@terra-money/feather.js";
 
 export enum ActionType {
   Add,

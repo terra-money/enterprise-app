@@ -1,11 +1,11 @@
 import { Stack } from '@mui/material';
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { Tooltip } from 'components/primitives';
 import { useProposalVoteQuery } from 'queries';
 import { VoteOptions } from './CastVote';
 import classNames from 'classnames';
 import styles from './MyVote.module.sass';
 import { Proposal } from 'dao/shared/proposal';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 
 interface MyVoteProps {
   proposal: Proposal;
@@ -14,14 +14,14 @@ interface MyVoteProps {
 export const MyVote = (props: MyVoteProps) => {
   const { proposal } = props;
 
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress()
 
   const { data: myVote } = useProposalVoteQuery(
     proposal.dao.address,
-    connectedWallet?.walletAddress ?? '',
+    myAddress ?? '',
     proposal.id,
     {
-      enabled: Boolean(connectedWallet?.walletAddress),
+      enabled: Boolean(myAddress),
     }
   );
 

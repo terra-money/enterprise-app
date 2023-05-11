@@ -1,7 +1,7 @@
 import { FormInput, FormState, useForm } from '@terra-money/apps/hooks';
 import { getLast, isFormStateValid } from '@terra-money/apps/utils';
 import { createContextHook } from '@terra-money/apps/utils/createContextHook';
-import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
 import { enterprise, enterprise_factory } from 'types/contracts';
@@ -20,6 +20,7 @@ import { validateTokenInfo } from './token/helpers/validateTokenInfo';
 import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
 import { validateCouncil } from './shared/helpers/validateCouncil';
+import { useMyAddress } from 'chain/hooks/useMyAddress';
 
 export interface DaoSocialDataInput {
   githubUsername?: string;
@@ -361,14 +362,14 @@ const objectContains = <TInput,>(input: Partial<TInput>, key: keyof TInput): boo
 export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) => {
   const { timeConversionFactor } = useEnv();
 
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
-  const connectedWallet = useConnectedWallet();
+  const myAddress = useMyAddress();
 
   const [formInput, formState, updateFormState] = useForm<DaoWizardInput, DaoWizardState>(
     async (input, getState, dispatch) => {
       if (objectContains(input, 'existingTokenAddr')) {
-        fetchExistingToken(dispatch, network, input.existingTokenAddr ?? '').then(() => {
+        fetchExistingToken(dispatch, lcd, input.existingTokenAddr ?? '').then(() => {
           dispatch({
             ...validateCurrentStep(getState()),
           });
@@ -376,7 +377,7 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
       }
 
       if (objectContains(input, 'existingNFTAddr')) {
-        fetchExistingNFT(dispatch, network, input.existingNFTAddr ?? '').then(() => {
+        fetchExistingNFT(dispatch, lcd, input.existingNFTAddr ?? '').then(() => {
           dispatch({
             ...validateCurrentStep(getState()),
           });
@@ -384,7 +385,7 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
       }
 
       if (objectContains(input, 'existingMultisigAddr')) {
-        fetchExistingMultisigVoters(dispatch, network, input.existingMultisigAddr ?? '').then(() => {
+        fetchExistingMultisigVoters(dispatch, lcd, input.existingMultisigAddr ?? '').then(() => {
           dispatch({
             ...validateCurrentStep(getState()),
           });
@@ -401,7 +402,7 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
         ...validateCurrentStep(state),
       });
     },
-    getInitialState(timeConversionFactor, connectedWallet?.walletAddress)
+    getInitialState(timeConversionFactor, myAddress)
   );
 
   const { predictedSteps, steps } = formState;

@@ -1,4 +1,4 @@
-import { LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/feather.js";
 import { TxState } from "../TxState";
 import { find } from "../utils/find";
 import { ActionType, TxDispatch, TxThunkArgument } from "./types";
@@ -12,7 +12,8 @@ const trackTx = async (
   lcd: LCDClient,
   dispatch: TxDispatch,
   getState: () => TxState,
-  args: TxThunkArgument
+  args: TxThunkArgument,
+  chainID: string
 ) => {
   const notify = (subject: BehaviorSubject<Transaction>) => {
     const transaction = find(getState(), txHash);
@@ -33,7 +34,7 @@ const trackTx = async (
     }
   });
 
-  const txInfoOrError = await pollTx(lcd, txHash, cancellationToken);
+  const txInfoOrError = await pollTx(lcd, txHash, cancellationToken, chainID);
 
   unsubscribe.unsubscribe();
 

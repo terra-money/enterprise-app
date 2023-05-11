@@ -1,25 +1,22 @@
-import { NetworkInfo } from '@terra-money/wallet-provider';
-import { LCDClient } from '@terra-money/terra.js';
+import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
-import { contractQuery } from '@terra-money/apps/queries';
 import { enterprise } from 'types/contracts';
 import { CW20Addr, u } from '@terra-money/apps/types';
 
 export const fetchStakingAmount = async (
-  networkOrLCD: NetworkInfo | LCDClient,
+  lcd: LCDClient,
   daoAddress: CW20Addr,
   walletAddress?: CW20Addr
 ): Promise<u<Big>> => {
   if (walletAddress === undefined) {
-    const response = await contractQuery<enterprise.QueryMsg, { total_staked_amount: string }>(
-      networkOrLCD,
+    const response = await lcd.wasm.contractQuery<{ total_staked_amount: string }>(
       daoAddress,
       { total_staked_amount: {} }
     );
     return Big(response.total_staked_amount) as u<Big>;
   }
 
-  const response = await contractQuery<enterprise.QueryMsg, enterprise.UserStakeResponse>(networkOrLCD, daoAddress, {
+  const response = await lcd.wasm.contractQuery<enterprise.UserStakeResponse>(daoAddress, {
     user_stake: { user: walletAddress },
   });
 

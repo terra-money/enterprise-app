@@ -42,7 +42,6 @@ __metadata:
     "@apps-shared/indexers": "workspace:^"
     "@aws-sdk/client-dynamodb": ^3.159.0
     "@aws-sdk/util-dynamodb": ^3.159.0
-    "@terra-money/terra.js": ^3.1.6
     "@types/aws-lambda": ^8.10.102
     "@types/express": ^4.17.13
     "@types/http-errors": ^1.8.2
@@ -3948,7 +3947,6 @@ __metadata:
     "@aws-sdk/client-dynamodb": ^3.159.0
     "@aws-sdk/util-dynamodb": ^3.159.0
     "@enterprise/indexers": "workspace:^"
-    "@terra-money/terra.js": ^3.1.6
     "@types/aws-lambda": ^8.10.102
     "@types/express": ^4.17.13
     "@types/http-errors": ^1.8.2
@@ -3981,9 +3979,9 @@ __metadata:
     "@mui/icons-material": ^5.10.2
     "@mui/material": ^5.10.2
     "@popperjs/core": ^2.11.6
+    "@terra-money/feather.js": ^1.0.4
     "@terra-money/log-finder-ruleset": ^3.0.2
-    "@terra-money/terra.js": ^3.1.6
-    "@terra-money/wallet-provider": ^3.11.1
+    "@terra-money/wallet-provider": ^4.0.0
     "@terra.kitchen/utils": ^1.0.7
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.3.0
@@ -4089,6 +4087,7 @@ __metadata:
     "@types/d3-array": ^3.0.3
     "@types/memoizee": ^0.4.8
     "@types/node": ^16.11.56
+    aws-lambda: ^1.0.7
     axios: ^1.4.0
     big.js: ^6.2.1
     date-fns: ^2.29.2
@@ -5209,8 +5208,8 @@ __metadata:
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@mui/material": ^5.10.2
-    "@terra-money/terra.js": ^3.1.6
-    "@terra-money/wallet-provider": ^3.11.1
+    "@terra-money/feather.js": ^1.0.4
+    "@terra-money/wallet-provider": ^4.0.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.3.0
     "@testing-library/user-event": ^13.5.0
@@ -5251,6 +5250,28 @@ __metadata:
     web-vitals: ^2.1.4
   languageName: unknown
   linkType: soft
+
+"@terra-money/feather.js@npm:^1.0.0-beta.4, @terra-money/feather.js@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@terra-money/feather.js@npm:1.0.4"
+  dependencies:
+    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
+    "@terra-money/terra.proto": 3.0.5
+    axios: ^0.27.2
+    bech32: ^2.0.0
+    bip32: ^2.0.6
+    bip39: ^3.0.3
+    bufferutil: ^4.0.3
+    decimal.js: ^10.2.1
+    jscrypto: ^1.0.1
+    readable-stream: ^3.6.0
+    secp256k1: ^4.0.2
+    tmp: ^0.2.1
+    utf-8-validate: ^5.0.5
+    ws: ^7.5.9
+  checksum: 0006a67d62e03d86a4e63531b891deb09ba4db76e9265d4c4685d174faf08b88045ced5d927f68522900e351420c00394bf7fbf43d4438829a3f99f8b1c91356
+  languageName: node
+  linkType: hard
 
 "@terra-money/feather.js@npm:^1.0.1":
   version: 1.0.1
@@ -5345,28 +5366,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/terra.js@npm:^3.1.6":
-  version: 3.1.6
-  resolution: "@terra-money/terra.js@npm:3.1.6"
-  dependencies:
-    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
-    "@terra-money/terra.proto": ^2.1.0
-    axios: ^0.27.2
-    bech32: ^2.0.0
-    bip32: ^2.0.6
-    bip39: ^3.0.3
-    bufferutil: ^4.0.3
-    decimal.js: ^10.2.1
-    jscrypto: ^1.0.1
-    readable-stream: ^3.6.0
-    secp256k1: ^4.0.2
-    tmp: ^0.2.1
-    utf-8-validate: ^5.0.5
-    ws: ^7.5.9
-  checksum: 675ef98007c754651c2059a2d1ad5c0a776e0d50c6ae5204f59a4581f4954abc30e1fce96272b109838c65e2ad019077303ef89ff2a3b91fc1d1be2b05428648
-  languageName: node
-  linkType: hard
-
 "@terra-money/terra.proto@npm:3.0.5":
   version: 3.0.5
   resolution: "@terra-money/terra.proto@npm:3.0.5"
@@ -5376,18 +5375,6 @@ __metadata:
     long: ^4.0.0
     protobufjs: ~6.11.2
   checksum: 8a133647118d7ea977f1333e1090cfa1a83905bff0b29b9cea4688e24aacf74b799aa62ce129f126adddf303ec06ff8f5fb89b2bf9c5d007756fda310b867fea
-  languageName: node
-  linkType: hard
-
-"@terra-money/terra.proto@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@terra-money/terra.proto@npm:2.1.0"
-  dependencies:
-    "@improbable-eng/grpc-web": ^0.14.1
-    google-protobuf: ^3.17.3
-    long: ^4.0.0
-    protobufjs: ~6.11.2
-  checksum: 545ff0b6fd664f16a88bebae4ad5d999197531868c5e2fcc3d76f6f712031e82d8ab7014923edb5bca90657568b8f71325964d78c2e1accff192d6cb933b9a94
   languageName: node
   linkType: hard
 
@@ -5415,24 +5402,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/use-wallet@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@terra-money/use-wallet@npm:3.11.1"
+"@terra-money/use-wallet@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@terra-money/use-wallet@npm:4.0.0"
   dependencies:
-    "@terra-money/wallet-types": ^3.11.1
+    "@terra-money/feather.js": ^1.0.0-beta.4
+    "@terra-money/wallet-types": ^4.0.0
   peerDependencies:
-    "@terra-money/terra.js": ^3.1.6
     react: ">=17.0.0"
-  checksum: 18df0da9a0785c7af8b103fb61c3703c0fa3ccdd6d2760623b5113e5fc7995f1c11b6fc95c4419a1bc595cd781bfe2d29d08e4716e24ffd334cc406dc403c7cd
+  checksum: 81a52e37cda0ea54f471df3788c30a6230e664df15fd71c94a172f7cb462fdf2d051b6815982016ebeca98847cda3fdd8a1041efcb3d2097f0258d0baea3f614
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-controller@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@terra-money/wallet-controller@npm:3.11.1"
+"@terra-money/wallet-controller@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@terra-money/wallet-controller@npm:4.0.0"
   dependencies:
-    "@terra-money/wallet-types": ^3.11.1
-    "@terra-money/web-extension-interface": ^3.11.1
+    "@terra-money/feather.js": ^1.0.0-beta.4
+    "@terra-money/wallet-types": ^4.0.0
+    "@terra-money/web-extension-interface": ^4.0.0
     "@walletconnect/core": ^1.6.6
     "@walletconnect/iso-crypto": ^1.6.6
     "@walletconnect/types": ^1.6.6
@@ -5445,42 +5433,39 @@ __metadata:
     rxjs: ^7.0.0
     secp256k1: ^4.0.0
     ws: ^7.5.5
-  peerDependencies:
-    "@terra-money/terra.js": ^3.1.6
-  checksum: 5f2a8b421578378ced094f2cb686739523f51349ada538cb2c31fd813342b8ae529c2abacd442fe811ebb9817592069b30ce5c6cc9e88b679ec3df7a1f5ce18b
+  checksum: d0eeeeca3672cbb47c7c515e55ad2358a0ce6a610e5ce13149d37cb97638cd13a44a4fcaf3780bc2c3eb39013a3a5d8a6e803d3f07a50b2052fd609f924473ae
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-provider@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@terra-money/wallet-provider@npm:3.11.1"
+"@terra-money/wallet-provider@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@terra-money/wallet-provider@npm:4.0.0"
   dependencies:
-    "@terra-money/use-wallet": ^3.11.1
-    "@terra-money/wallet-controller": ^3.11.1
-    "@terra-money/web-extension-interface": ^3.11.1
+    "@terra-money/use-wallet": ^4.0.0
+    "@terra-money/wallet-controller": ^4.0.0
+    "@terra-money/web-extension-interface": ^4.0.0
   peerDependencies:
     react: ">=17.0.0"
-  checksum: 6b6381f2a31aeda63ee2b311c3033089208b67331f884061fa5f911cd8659e4489789437acb2904a77b5c918d3cbd229d752a9ef3ddab5a77b1b6e87853f53ef
+  checksum: c3e5ced72669b352e341a69af1beb7106b78cd45734c338a268141fc0fc15d75b2ff4ce5bedd420efef74cd2ca7e8ca36c1bf2de898e41e7eae61436def8a13f
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-types@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@terra-money/wallet-types@npm:3.11.1"
-  peerDependencies:
-    "@terra-money/terra.js": ^3.1.6
-  checksum: 712e606d375d684773eaf97f2aa1315073ee1eb5be3c10bab816662a3cc7824c6545932be6d93604f17322c7bec0040a1543c602f87edaa29ddf2a96f0e4c7d8
-  languageName: node
-  linkType: hard
-
-"@terra-money/web-extension-interface@npm:^3.11.1":
-  version: 3.11.1
-  resolution: "@terra-money/web-extension-interface@npm:3.11.1"
+"@terra-money/wallet-types@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@terra-money/wallet-types@npm:4.0.0"
   dependencies:
+    "@terra-money/feather.js": ^1.0.0-beta.4
+  checksum: 1a77dc42dd82f0a44ce5dda713abeb391f3dbaf4f46232f1e84f0e72d4b6a88ee4d3ff676f937acc7489e7a6ce7922a082368e70af8e18bb91a4d47fff88e570
+  languageName: node
+  linkType: hard
+
+"@terra-money/web-extension-interface@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@terra-money/web-extension-interface@npm:4.0.0"
+  dependencies:
+    "@terra-money/feather.js": ^1.0.0-beta.4
     rxjs: ^7.0.0
-  peerDependencies:
-    "@terra-money/terra.js": ^3.1.6
-  checksum: 742014e82ba1b8ddb6ddc15849bb36a589e3b0e9d34ecbffb9be559e44bd7526d1a27c4a9e8406ecd76de9663b1f314122818f2e17aba15d0b5dec743a198aa3
+  checksum: 41c5378e7e48e71d9a5455fca9af21ed59a4e771febb8fd3a4d2c554bcad270f591e037fbe2f9ee89f67e9e010070578b5690827552d4b304df28f11843aa516
   languageName: node
   linkType: hard
 

@@ -1,5 +1,4 @@
 import { removeByIndex, updateAtIndex, validateAddress } from '@terra-money/apps/utils';
-import { useWallet } from '@terra-money/wallet-provider';
 import { AddButton } from 'components/add-button';
 import { FormSection } from 'components/form-section';
 import { fetchCW721ContractInfo } from 'queries';
@@ -9,6 +8,7 @@ import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvide
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
 import { WhitelistedNFTInput } from './WhitelistedNFTInput';
 import styles from './WhitelistedNFTsProposalForm.module.sass';
+import { useLCDClient } from '@terra-money/wallet-provider';
 
 interface NFTInputState {
   value: string;
@@ -26,7 +26,7 @@ export const WhitelistedNFTsProposalForm = () => {
     nfts.map((nft) => nft.value)
   );
 
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   const areNftsValid = nfts.every(({ error, loading }) => !error && !loading);
   const isFormValid = areNftsValid && (msg.add.length > 0 || msg.remove.length > 0);
@@ -43,7 +43,7 @@ export const WhitelistedNFTsProposalForm = () => {
     if (!inputState.error) {
       inputState.loading = true;
 
-      fetchCW721ContractInfo(network, value)
+      fetchCW721ContractInfo(lcd, value)
         .then(() => {
           setNfts((nfts) => {
             const nft = nfts[index];

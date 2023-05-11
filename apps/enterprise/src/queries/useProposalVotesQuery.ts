@@ -1,11 +1,10 @@
-import { contractQuery } from '@terra-money/apps/queries';
 import { CW20Addr } from '@terra-money/apps/types';
 import { getLast } from '@terra-money/apps/utils';
-import { useWallet } from '@terra-money/wallet-provider';
 import { useInfiniteQuery } from 'react-query';
 import { Vote } from 'types';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
+import { useContract } from 'chain/hooks/useContract';
 
 interface UseProposalVotesQueryOptions {
   contract: CW20Addr;
@@ -15,7 +14,7 @@ interface UseProposalVotesQueryOptions {
 
 export const useProposalVotesQuery = (options: UseProposalVotesQueryOptions) => {
   const { contract, proposalId, limit = 10 } = options;
-  const { network } = useWallet();
+  const { query } = useContract()
 
   return useInfiniteQuery(
     [QUERY_KEY.PROPOSAL_VOTES, contract, proposalId],
@@ -24,7 +23,7 @@ export const useProposalVotesQuery = (options: UseProposalVotesQueryOptions) => 
         return;
       }
 
-      const { votes } = await contractQuery<enterprise.QueryMsg, enterprise.PollVotersResponse>(network, contract, {
+      const { votes } = await query<enterprise.QueryMsg, enterprise.PollVotersResponse>(contract, {
         proposal_votes: {
           proposal_id: proposalId,
           start_after: pageParam,

@@ -1,9 +1,9 @@
-import { usePersonalization } from 'libs/personalization';
 import { DAOLogo } from 'components/dao-logo';
 import { NavLink } from 'react-router-dom';
 import { Tooltip } from 'components/primitives';
 import styles from './Favourites.module.sass';
 import { VStack } from 'lib/ui/Stack';
+import { usePersonalization } from 'libs/personalization/PersonalizationProvider';
 
 export const Favourites = () => {
   const [{ favourites }] = usePersonalization();

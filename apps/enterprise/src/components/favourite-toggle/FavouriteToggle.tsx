@@ -1,9 +1,9 @@
 import { IconButton } from 'components/primitives';
-import { usePersonalization } from 'libs/personalization';
 import { ReactComponent as StarIcon } from 'components/assets/Star.svg';
 import classNames from 'classnames';
 import { DAO } from 'types';
 import styles from './FavouriteToggle.module.sass';
+import { usePersonalization } from 'libs/personalization/PersonalizationProvider';
 
 type FavouriteToggleSize = 'small' | 'medium';
 
@@ -32,17 +32,17 @@ export const FavouriteToggle = (props: FavouriteToggleProps) => {
 
         isFavourite
           ? dispatch({
-              type: 'REMOVE_FAVOURITE',
-              payload: dao.address,
-            })
+            type: 'REMOVE_FAVOURITE',
+            payload: dao.address,
+          })
           : dispatch({
-              type: 'ADD_FAVOURITE',
-              payload: {
-                address: dao.address,
-                name: dao.name,
-                logo: dao.logo,
-              },
-            });
+            type: 'ADD_FAVOURITE',
+            payload: {
+              address: dao.address,
+              name: dao.name,
+              logo: dao.logo,
+            },
+          });
       }}
     >
       <StarIcon />

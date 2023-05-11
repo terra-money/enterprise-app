@@ -1,4 +1,4 @@
-import { LCDClient, TxInfo } from "@terra-money/terra.js";
+import { LCDClient, TxInfo } from "@terra-money/feather.js";
 import { sleep } from "../../../utils";
 import { CancellationToken, None } from "../../cancellation";
 
@@ -16,13 +16,14 @@ export class TxTimeoutError extends Error {
 export const pollTx = async function (
   lcd: LCDClient,
   txHash: string,
-  cancellationToken: CancellationToken = None
+  cancellationToken: CancellationToken = None,
+  chainID: string
 ): Promise<TxInfo | Error> {
   const timeout = Date.now() + 20 * 1000;
 
   while (Date.now() < timeout && cancellationToken.cancelled() === false) {
     try {
-      return await lcd.tx.txInfo(txHash);
+      return await lcd.tx.txInfo(txHash, chainID);
     } catch (error: any) {
       if ([400, 404].includes(error.response.status)) {
         // the tx was not yet found so try again after a delay

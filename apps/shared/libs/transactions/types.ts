@@ -1,4 +1,4 @@
-import { TxLog } from "@terra-money/terra.js";
+import { TxLog } from "@terra-money/feather.js";
 import {
   CreateTxFailed,
   SignBytesFailed,
@@ -39,13 +39,13 @@ export type FailedTransaction = {
   status: TransactionStatus.Failed;
   payload: TransactionPayload;
   error:
-    | Error
-    | UserDenied
-    | Timeout
-    | SignBytesFailed
-    | CreateTxFailed
-    | TxFailed
-    | TxUnspecifiedError;
+  | Error
+  | UserDenied
+  | Timeout
+  | SignBytesFailed
+  | CreateTxFailed
+  | TxFailed
+  | TxUnspecifiedError;
 };
 
 export type Transaction =

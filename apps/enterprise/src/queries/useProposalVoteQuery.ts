@@ -1,9 +1,8 @@
-import { contractQuery } from '@terra-money/apps/queries';
 import { CW20Addr } from '@terra-money/apps/types';
-import { useWallet } from '@terra-money/wallet-provider';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
+import { useLCDClient } from '@terra-money/wallet-provider';
 
 export const useProposalVoteQuery = (
   contract: string,
@@ -11,13 +10,12 @@ export const useProposalVoteQuery = (
   proposalId: number,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ) => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   return useQuery(
     [QUERY_KEY.PROPOSAL_VOTE, contract, proposalId, member],
     async () => {
-      const response = await contractQuery<enterprise.QueryMsg, enterprise.PollVoterResponse>(
-        network,
+      const response = await lcd.wasm.contractQuery<enterprise.PollVoterResponse>(
         contract as CW20Addr,
         {
           member_vote: {
