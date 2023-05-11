@@ -1,5 +1,4 @@
 import { UIElementProps } from '@terra-money/apps/components';
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { createContext, Dispatch, useContext, useEffect, useReducer } from 'react';
 import { Favourite } from './types';
 import { NetworkName, useNetworkName } from '@terra-money/apps/hooks';
@@ -77,8 +76,6 @@ export const PersonalizationProvider = (props: PersonalizationProviderProps) => 
 
   const networkName = useNetworkName()
   const myAddress = useMyAddress()
-
-  const connectedWallet = useConnectedWallet();
 
   const storageKey = createStorageKey(networkName, myAddress);
 

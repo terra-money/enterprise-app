@@ -1,12 +1,15 @@
-import { useWallet } from "@terra-money/wallet-provider"
+import { useConnectedWallet, useWallet } from "@terra-money/wallet-provider"
 
 export const supportedChains = ['phoenix-1', 'pisco-1']
 export type ChainID = typeof supportedChains[number]
 
 export const useChainID = (): ChainID => {
   const { network } = useWallet()
+  const connectedWallet = useConnectedWallet()
 
-  const selectedChainID = Object.keys(network).find((chainID) => supportedChains.includes(chainID)) as ChainID
+  const chains = Object.keys(connectedWallet ? connectedWallet.addresses : network)
+
+  const selectedChainID = chains.find((chainID) => supportedChains.includes(chainID)) as ChainID
 
   return selectedChainID
 }
