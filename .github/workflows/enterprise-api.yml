@@ -12,9 +12,11 @@ on:
     paths:
       - indexers/enterprise/src/**
       - indexers/shared/src/**
+      - indexers/enterprise-stats/src/**
       - apps/enterprise-api/src/**
       - apps/shared-api/src/**
       - indexers/enterprise/Dockerfile
+      - indexers/enterprise-stats/Dockerfile
       - apps/enterprise-api/Dockerfile
       - .github/workflows/enterprise-api.yml
 
