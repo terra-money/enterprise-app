@@ -8,10 +8,9 @@ const collectStats = async () => {
     handle: async (dao) => {
       try {
         const tvl = await getDaoTVL(dao)
-        console.log(`${dao.address} TVL=${tvl}`)
 
         try {
-          await updateDao(dao.address, { tvl: 0 })
+          await updateDao(dao.address, { tvl })
         } catch (err) {
           console.log(`Error updating DAO=${dao.address}`, err?.toString())
         }
