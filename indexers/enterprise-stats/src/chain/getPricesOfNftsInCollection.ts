@@ -39,7 +39,7 @@ query MyQuery {
 
 type NftPrice = Record<string, number>
 
-export const getNFTsPrices = memoize(async (collection: string) => {
+export const getPricesOfNftsInCollection = memoize(async (collection: string) => {
   const { data: { data, errors } } = await axios.post<TFMResponse>(TFM_NFT_API, {
     query: getQuery(collection),
     operationName: "MyQuery",

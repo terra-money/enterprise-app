@@ -1,10 +1,10 @@
 import { NFT } from "./NFT";
 import { getNFTCollectionFloorPrice } from "./getNftCollectionFloorPrice";
-import { getNFTsPrices } from "./getNFTsPrices";
+import { getPricesOfNftsInCollection } from "./getPricesOfNftsInCollection";
 
 export const getNFTPrice = async (nft: NFT): Promise<number | null> => {
   try {
-    const prices = await getNFTsPrices(nft.address)
+    const prices = await getPricesOfNftsInCollection(nft.address)
 
     return prices[nft.id] || 0
   } catch (err) {
