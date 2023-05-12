@@ -43,7 +43,6 @@ export class BlockListener {
             const info = await retry({
               func: () => this.lcd.tx.txInfo(txHash, chainId),
               retryInterval: 10000,
-              maxRetries: 6
             })
             txs.push(info)
           } catch (err) {
