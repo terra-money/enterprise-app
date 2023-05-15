@@ -41,7 +41,7 @@ export const Page = () => {
 
   const { data = [], isLoading } = useAllDaosQuery();
 
-  const items = data.filter(item => daoTypesToDisplay.includes(item.type)).filter(dao => dao.name.includes(searchText));
+  const items = data.filter(item => daoTypesToDisplay.includes(item.type)).filter(dao => dao.name.includes(searchText)).sort((a, b) => (b.tvl ?? 0) - (a.tvl ?? 0));
 
   const searchInput = (
     <SearchInput
