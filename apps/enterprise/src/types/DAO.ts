@@ -29,6 +29,7 @@ export class DAO {
     public readonly fundsDistributorContract: string,
     public readonly socials: DAOSocials,
     public readonly governanceConfig: DAOGovernanceConfig,
-    public readonly council?: enterprise.DaoCouncil
-  ) {}
+    public readonly council?: enterprise.DaoCouncil,
+    public readonly tvl?: number
+  ) { }
 }

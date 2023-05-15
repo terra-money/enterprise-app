@@ -24,6 +24,7 @@ export type DAOsQueryResponse = Array<{
   socials: DAOSocials;
   config: DAOGovernanceConfig;
   council: enterprise.DaoCouncil;
+  tvl?: number;
 }>;
 
 export const fetchDAOsQuery = async (endpoint: string) => {
@@ -43,7 +44,8 @@ export const fetchDAOsQuery = async (endpoint: string) => {
       entity.fundsDistributorContract,
       entity.socials,
       entity.config,
-      entity.council
+      entity.council,
+      entity.tvl
     );
   });
 };
