@@ -54,7 +54,7 @@ export const DAOCard = (props: DAOCardProps) => {
         <Text color="supporting" size={14}>
           {description}
         </Text>
-        {tvl && <Text size={14} weight="semibold" color="success">TVL: {formatAmount(tvl)}$</Text>}
+        {(tvl && tvl > 0) ? <Text size={14} weight="semibold" color="success">TVL: {formatAmount(tvl)}$</Text> : null}
       </HStack>
       <FavouriteToggle className={styles.favourite} dao={dao} />
     </Container>
