@@ -36,7 +36,7 @@ type HealthCheckEndpoint = {
 
 type DaosEndpoint = {
   path: 'v1/daos';
-  params: { query?: string; limit: number; direction?: Direction };
+  params: { query?: string; limit?: number; direction?: Direction };
 };
 
 type DaoEndpoint = {

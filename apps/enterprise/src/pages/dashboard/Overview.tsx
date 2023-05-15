@@ -4,12 +4,13 @@ import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { LUNA, u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
+import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
-import { useCommunityPoolQuery, useDAOsQuery, useProposalsQuery } from 'queries';
+import { useCommunityPoolQuery, useProposalsQuery } from 'queries';
 
 export const Overview = () => {
   // TODO: get this a better way
-  const { data: daos, isLoading: isLoadingDAOs } = useDAOsQuery({ limit: 1000000 });
+  const { data: daos, isLoading: isLoadingDAOs } = useAllDaosQuery();
 
   // TODO: need to fetch just the aggregated analytics value of this
   const { data: polls = [], isLoading: isLoadingPolls } = useProposalsQuery({ limit: 100000 });

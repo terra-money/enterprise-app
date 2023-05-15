@@ -5,7 +5,6 @@ import { IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { QUERY_KEY, useDAOsQuery } from 'queries';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { List } from './List';
@@ -15,9 +14,7 @@ import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
-import { useDebounceSearch } from 'hooks/useDebounce';
-
-const MAX_PREVIEW_SIZE = 100;
+import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -41,20 +38,10 @@ export const Page = () => {
 
 
   const [searchText, setSearchText] = useState('');
-  const debouncedSearchText = useDebounceSearch(searchText, 500);
-  const [daosQueryKey, setDaosQueryKey] = useState<string>(QUERY_KEY.DAOS)
 
-  useEffect(() => {
-    setDaosQueryKey(debouncedSearchText === '' ? QUERY_KEY.DAOS : `${QUERY_KEY.DAOS}-${debouncedSearchText}`);
-  }, [debouncedSearchText]);
+  const { data = [], isLoading } = useAllDaosQuery();
 
-  const { data, isLoading } = useDAOsQuery({
-    query: debouncedSearchText,
-    limit: MAX_PREVIEW_SIZE,
-    queryKey: daosQueryKey
-  });
-
-  const items = data?.filter(item => daoTypesToDisplay.includes(item.type));
+  const items = data.filter(item => daoTypesToDisplay.includes(item.type)).filter(dao => dao.name.includes(searchText));
 
   const searchInput = (
     <SearchInput
@@ -89,6 +76,14 @@ export const Page = () => {
     </Container>
   )
 
+  const content = (
+    isLoading || data.length > 0 ? (
+      <List items={items} isLoading={isLoading} />
+    ) : (
+      noResults
+    )
+  )
+
   return (
     <Navigation>
       <ResponsiveView
@@ -99,11 +94,7 @@ export const Page = () => {
             </Text>
             <IndexersAreRequired>
               {searchInput}
-              {data && data?.length ? (
-                <List items={items} isLoading={isLoading} />
-              ) : (
-                noResults
-              )}
+              {content}
             </IndexersAreRequired>
           </VStack>
         )}
@@ -134,11 +125,7 @@ export const Page = () => {
               }
             >
               <IndexersAreRequired>
-                {data && data?.length ? (
-                  <List items={items} isLoading={isLoading} />
-                ) : (
-                  noResults
-                )}
+                {content}
               </IndexersAreRequired>
             </PageLayout>
           </ScrollableContainer>

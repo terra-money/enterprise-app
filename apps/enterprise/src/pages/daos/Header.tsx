@@ -23,9 +23,6 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)} direction="row">
         {props.searchInput}
         {props.filters}
-        <Text className={styles.results} variant="label">
-          {searchResultsLabel}
-        </Text>
       </Container>
     );
   }
