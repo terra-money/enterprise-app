@@ -3,17 +3,14 @@ import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
 import Big, { BigSource } from 'big.js';
 import { assertDefined, sum } from '@terra-money/apps/utils';
-import { Throbber } from 'components/primitives';
-import { AnimateNumber } from '@terra-money/apps/components';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { Address } from 'components/address';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
-import { Text } from 'lib/ui/Text';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { DepositIntoTreasury } from './deposit';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { AssetCard } from './AssetCard';
+import { DaoTVL } from './DaoTVL';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -82,16 +79,7 @@ export const TreasuryTokensOverview = () => {
   const renderBasicInfo = () => {
     return (
       <BasicInfoContainer>
-        <Text color="supporting" size={14}>
-          Treasury Total Value:
-        </Text>
-        {treasuryTotalInUSD !== undefined ? (
-          <Text size={18} weight="semibold">
-            <AnimateNumber format={(v) => formatAmount(v)}>{treasuryTotalInUSD ?? 0}</AnimateNumber>
-          </Text>
-        ) : (
-          <Throbber variant="secondary" size="small" />
-        )}
+        <DaoTVL />
         <Address address={address} />
       </BasicInfoContainer>
 
