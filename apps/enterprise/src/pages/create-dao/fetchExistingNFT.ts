@@ -1,12 +1,12 @@
 import { FormModifier } from '@terra-money/apps/hooks';
 import { validateAddress } from '@terra-money/apps/utils';
-import { NetworkInfo } from '@terra-money/wallet-provider';
 import { fetchCW721ContractInfo } from 'queries';
 import { DaoWizardState } from './DaoWizardFormProvider';
+import { LCDClient } from '@terra-money/feather.js';
 
 export const fetchExistingNFT = async (
   dispatch: FormModifier<DaoWizardState>,
-  network: NetworkInfo,
+  lcd: LCDClient,
   tokenAddr: string
 ) => {
   const existingNFTError = validateAddress(tokenAddr);
@@ -20,7 +20,7 @@ export const fetchExistingNFT = async (
   if (existingNFTError === undefined) {
     try {
       dispatch({
-        existingNFT: await fetchCW721ContractInfo(network, tokenAddr),
+        existingNFT: await fetchCW721ContractInfo(lcd, tokenAddr),
         existingNFTLoading: false,
         existingNFTError: undefined,
       });

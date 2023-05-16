@@ -1,5 +1,6 @@
+import { useNetworkName } from "@terra-money/apps/hooks"
 import { fetchIBCTokens } from "@terra-money/apps/queries"
-import { useLCDClient, useWallet } from "@terra-money/wallet-provider"
+import { useLCDClient } from "@terra-money/wallet-provider"
 import { AssetType } from "chain"
 import { QUERY_KEY } from "queries"
 import { useQuery } from "react-query"
@@ -26,7 +27,7 @@ export interface AssetInfo {
 
 export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
   const lcdClient = useLCDClient()
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   return useQuery<AssetInfo>([QUERY_KEY.ASSET_INFO, id, type], async () => {
     if (type === 'cw20') {
@@ -54,7 +55,7 @@ export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
       }
     }
 
-    const ibcTokens = await fetchIBCTokens(network.name)
+    const ibcTokens = await fetchIBCTokens(networkName)
     const ibcToken = ibcTokens[id]
     if (!ibcToken) {
       throw new Error(`IBC asset ${id} not found`)

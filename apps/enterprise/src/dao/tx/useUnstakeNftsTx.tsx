@@ -1,3 +1,4 @@
+import { useChainID } from '@terra-money/apps/hooks';
 import { TxBuilder, useTx } from '@terra-money/apps/libs/transactions';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TX_KEY } from 'tx';
@@ -11,13 +12,20 @@ interface StakeNftTxParams {
 export const useUnstakeNftsTx = () => {
   const walletAddress = useAssertMyAddress();
 
+  const chainID = useChainID()
+
   return useTx<StakeNftTxParams>(
     ({ daoAddress, tokenIds }: StakeNftTxParams) => {
-      return TxBuilder.new()
+      const payload = TxBuilder.new()
         .execute<enterprise.ExecuteMsg>(walletAddress, daoAddress, {
           unstake: { cw721: { tokens: tokenIds } },
         })
         .build();
+
+      return {
+        ...payload,
+        chainID
+      }
     },
     {
       txKey: TX_KEY.UNSTAKE_NFT,

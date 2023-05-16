@@ -19,7 +19,6 @@ import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
 import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
 import { Page as ProposalPage } from 'pages/proposal';
-import { PersonalizationProvider } from 'libs/personalization';
 import { BetaGuard } from 'components/beta-guard';
 import { LandingPage } from 'pages/landing';
 import { Path } from 'navigation';
@@ -34,6 +33,7 @@ import { InitizalizedWalletOnly } from 'components/conditional-wallet/Initialize
 import { DistributePage } from 'pages/dao/distribute/DistributePage';
 import { DaoErrorBoundary } from 'pages/dao/DaoErrorBoundary';
 import { SettingsPage } from 'settings/components/SettingsPage';
+import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
 
 const queryClient = new QueryClient();
 
@@ -175,13 +175,11 @@ const AppBetaRoutes = () => {
 const AppProviders = () => {
   const chainOptions = useChainOptions();
 
-  // TODO: check later if chainOptions would cause a flicker due to being null for first couple of calls
   return (
     chainOptions && (
       <WalletProvider
         {...chainOptions}
         connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}
-        defaultNetwork={chainOptions?.walletConnectChainIds[1]}
       >
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />

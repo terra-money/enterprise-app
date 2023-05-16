@@ -1,6 +1,6 @@
 import { enterprise } from 'types/contracts';
 
-export type Entity = {
+export type DaoEntity = {
   _type: string;
   address: string;
   type: enterprise.DaoType;

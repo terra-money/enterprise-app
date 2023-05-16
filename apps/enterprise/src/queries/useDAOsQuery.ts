@@ -12,7 +12,7 @@ interface DAOsQueryOptions {
   queryKey?: string;
 }
 
-export type DAOsQueryResponse = Array<{
+export interface DaoResponse {
   address: string;
   type: enterprise.DaoType;
   name: string;
@@ -24,7 +24,10 @@ export type DAOsQueryResponse = Array<{
   socials: DAOSocials;
   config: DAOGovernanceConfig;
   council: enterprise.DaoCouncil;
-}>;
+  tvl?: number;
+}
+
+export type DAOsQueryResponse = Array<DaoResponse>;
 
 export const fetchDAOsQuery = async (endpoint: string) => {
   const response = await fetch(endpoint);
@@ -43,7 +46,8 @@ export const fetchDAOsQuery = async (endpoint: string) => {
       entity.fundsDistributorContract,
       entity.socials,
       entity.config,
-      entity.council
+      entity.council,
+      entity.tvl
     );
   });
 };

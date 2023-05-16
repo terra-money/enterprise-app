@@ -2,7 +2,7 @@ import { sleep } from "./sleep"
 
 interface RetryParams<T> {
   func: () => Promise<T>
-  maxRetries: number
+  maxRetries?: number
   retryInterval: number
 }
 
@@ -12,10 +12,13 @@ export async function retry<T>({ func, maxRetries, retryInterval }: RetryParams<
       const result = await func()
       return result
     } catch (err) {
-      if (maxRetries === 0) {
-        throw err
+      if (maxRetries !== undefined) {
+        maxRetries -= 1
+
+        if (maxRetries === 0) {
+          throw err
+        }
       }
-      maxRetries -= 1
       sleep(retryInterval)
     }
   }

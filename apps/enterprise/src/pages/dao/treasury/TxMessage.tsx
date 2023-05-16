@@ -1,6 +1,5 @@
 import { capitalizeFirstLetter, truncateAddress } from "@terra-money/apps/utils"
-import { AccAddress, Coin, Coins, } from "@terra-money/terra.js"
-import { useWallet } from "@terra-money/wallet-provider"
+import { AccAddress, Coin, Coins, } from "@terra-money/feather.js"
 import { isDenom } from "@terra.kitchen/utils"
 import { ExternalLink } from "lib/navigation/Link/ExternalLink"
 import { ShyTextButton } from "lib/ui/buttons/ShyTextButton"
@@ -8,6 +7,7 @@ import { HStack } from "lib/ui/Stack"
 import { Text } from "lib/ui/Text"
 import { ReactNode } from "react"
 import { TxAsset } from "./TxAsset"
+import { useNetworkName } from "@terra-money/apps/hooks"
 
 interface TxMessageProps {
   text: string
@@ -27,7 +27,7 @@ const validateTokens = (tokens: any) => {
 }
 
 export const TxMessage = ({ text, targetAddress }: TxMessageProps) => {
-  const { network } = useWallet()
+  const networkName = useNetworkName()
 
   const parse = (word: string, index: number): ReactNode => {
     if (!word) return null
@@ -53,7 +53,7 @@ export const TxMessage = ({ text, targetAddress }: TxMessageProps) => {
 
     if (AccAddress.validate(word)) {
       return (
-        <ExternalLink to={`https://terrasco.pe/${network.name}/address/${word}`}>
+        <ExternalLink to={`https://terrasco.pe/${networkName}/address/${word}`}>
           <ShyTextButton text={truncateAddress(word)} as="div" />
         </ExternalLink>
       )

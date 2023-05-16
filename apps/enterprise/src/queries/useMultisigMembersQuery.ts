@@ -1,19 +1,17 @@
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useWallet } from '@terra-money/wallet-provider';
 import { enterprise } from 'types/contracts';
-import { contractQuery } from '@terra-money/apps/queries';
 import { CW20Addr } from '@terra-money/apps/types';
 import { MultisigMember } from 'types/MultisigMember';
+import { useLCDClient } from '@terra-money/wallet-provider';
 
 export const useMultisigMembersQuery = (contractAddress: CW20Addr) => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   return useQuery(
     [QUERY_KEY.MULTISIG_MEMBERS, contractAddress],
     async (): Promise<MultisigMember[]> => {
-      const { members } = await contractQuery<enterprise.QueryMsg, enterprise.MultisigMembersResponse>(
-        network,
+      const { members } = await lcd.wasm.contractQuery<enterprise.MultisigMembersResponse>(
         contractAddress,
         { list_multisig_members: {} }
       );

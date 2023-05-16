@@ -1,6 +1,6 @@
 import { TableNames } from '@enterprise/indexers/src/initializers';
 import { fetchAll } from '@apps-shared/api/utils';
-import { Entity } from '@enterprise/indexers/src/indexers/daos/types';
+import { DaoEntity } from '@enterprise/indexers/src/indexers/daos/types';
 import { RequestHandler } from 'express';
 import { parseQueryParameters } from './parseQueryParameters';
 import { createDynamoDBClient } from '@apps-shared/indexers/utils';
@@ -11,7 +11,7 @@ export const get: RequestHandler = async (request, response): Promise<void> => {
 
   const dynamoDBClient = createDynamoDBClient();
 
-  const proposals = await fetchAll<Entity>(
+  const proposals = await fetchAll<DaoEntity>(
     dynamoDBClient,
     {
       TableName: TableNames.daos(),

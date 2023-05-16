@@ -1,11 +1,11 @@
-import { NetworkInfo } from "@terra-money/wallet-provider";
 import Big from "big.js";
 import { u, Token } from "../../types";
 import { fetchCW20Balance } from "./fetchCW20Balance";
 import { fetchNativeBalance } from "./fetchNativeBalance";
+import { LCDClient } from "@terra-money/feather.js";
 
 export const fetchTokenBalance = async (
-  network: NetworkInfo,
+  lcd: LCDClient,
   token: Token | undefined,
   walletAddr: string
 ): Promise<u<Big>> => {
@@ -15,10 +15,10 @@ export const fetchTokenBalance = async (
 
   switch (token.type) {
     case "native":
-      return fetchNativeBalance(network, walletAddr, token.denom);
+      return fetchNativeBalance(lcd, walletAddr, token.denom);
     case "ibc":
-      return fetchNativeBalance(network, walletAddr, token.denom);
+      return fetchNativeBalance(lcd, walletAddr, token.denom);
     case "cw20":
-      return fetchCW20Balance(network, walletAddr, token.token);
+      return fetchCW20Balance(lcd, walletAddr, token.token);
   }
 };

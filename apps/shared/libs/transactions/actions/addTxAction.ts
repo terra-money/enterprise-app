@@ -1,4 +1,4 @@
-import { LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/feather.js";
 import { ActionType, TxAsyncThunkAction } from ".";
 import { TransactionPayload } from "../types";
 import { trackTx } from "./trackTx";
@@ -6,7 +6,8 @@ import { trackTx } from "./trackTx";
 const addTxAction = (
   txHash: string,
   payload: TransactionPayload,
-  lcd: LCDClient
+  lcd: LCDClient,
+  chainID: string
 ): TxAsyncThunkAction => {
   return async (dispatch, getState, args) => {
     dispatch({
@@ -17,7 +18,7 @@ const addTxAction = (
       },
     });
 
-    await trackTx(txHash, lcd, dispatch, getState, args);
+    await trackTx(txHash, lcd, dispatch, getState, args, chainID);
   };
 };
 

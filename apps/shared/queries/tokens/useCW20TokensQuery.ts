@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from 'react-query';
-import { useWallet } from '@terra-money/wallet-provider';
 import { CW20TokensResponse } from '../../types';
 import { fixTokenResponse } from '../utils';
 import { QUERY_KEY } from '../queryKey';
+import { useNetworkName } from '../../hooks';
 
 interface CW20TokensNetworkResponse {
   [network: string]: CW20TokensResponse;
@@ -17,12 +17,12 @@ const fetchCW20Tokens = async (network: string): Promise<CW20TokensResponse> => 
 };
 
 export const useCW20TokensQuery = (): UseQueryResult<CW20TokensResponse> => {
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   return useQuery(
-    [QUERY_KEY.CW20_TOKENS, network],
+    QUERY_KEY.CW20_TOKENS,
     () => {
-      return fetchCW20Tokens(network.name);
+      return fetchCW20Tokens(networkName);
     },
     {
       refetchOnMount: false,

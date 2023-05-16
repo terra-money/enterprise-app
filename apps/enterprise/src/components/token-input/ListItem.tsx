@@ -1,10 +1,10 @@
 import { Text } from 'components/primitives';
 import { TokenIcon } from 'components/token-icon';
 import { useTokenBalanceQuery } from 'queries';
-import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { TokenBalance } from './TokenBalance';
 import styles from './ListItem.module.sass';
 import { Token } from 'types';
+import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 
 interface Props {
   token: Token;
@@ -12,9 +12,9 @@ interface Props {
 }
 
 export const ListItem = ({ token, onSelect }: Props) => {
-  const connectedWallet = useConnectedWallet();
+  const address = useAssertMyAddress();
 
-  const { data: balance } = useTokenBalanceQuery(connectedWallet?.walletAddress!, token);
+  const { data: balance } = useTokenBalanceQuery(address, token);
 
   return (
     <div key={token.symbol} className={styles.listItem} onClick={onSelect}>

@@ -1,8 +1,9 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import { TxResponse } from '@terra-money/apps/types';
 import { getRecord } from 'lib/shared/utils/getRecord';
+import { useChainID } from '@terra-money/apps/hooks';
 
 const transactionsInOnePage = 100;
 
@@ -37,12 +38,12 @@ const queryTransactions = async ({ address, lcdBaseUrl, eventDescription: { name
 export const useTxsQuery = (
   address: string,
 ): UseQueryResult<TxResponse[]> => {
-  const { network } = useWallet();
-
-  const lcdBaseUrl = network.lcd;
+  const lcd = useLCDClient()
+  const chainID = useChainID()
+  const lcdBaseUrl = lcd.config[chainID].lcd
 
   return useQuery(
-    [QUERY_KEY.TXS, address, lcdBaseUrl],
+    [QUERY_KEY.TXS, address],
     async () => {
       const queries: QueryTransactionsParams[] = listenForEvents.map((eventDescription) => ({
         address,

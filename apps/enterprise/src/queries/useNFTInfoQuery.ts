@@ -1,8 +1,7 @@
-import { contractQuery } from '@terra-money/apps/queries';
 import { CW20Addr } from '@terra-money/apps/types';
-import { NetworkInfo, useWallet } from '@terra-money/wallet-provider';
+import { LCDClient } from '@terra-money/feather.js';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import { useQuery, UseQueryResult } from 'react-query';
-
 
 type Variables = {
   collectionAddr: string;
@@ -44,15 +43,15 @@ const createCollectionQuery = (vars: Variables) => {
 };
 
 
-const nftQuery = async (collectionAddr: CW20Addr, tokenid: string, network: NetworkInfo) => {
-  const queryData: any = await contractQuery(network, collectionAddr, {
+const nftQuery = async (collectionAddr: CW20Addr, tokenid: string, lcd: LCDClient) => {
+  const queryData: any = await lcd.wasm.contractQuery(collectionAddr, {
     nft_info: { token_id: tokenid }
   })
   return queryData
 }
 
 
-const fetchNFTData = async (collectionAddr: string, tokenId: string, network: NetworkInfo) => {
+const fetchNFTData = async (collectionAddr: string, tokenId: string, lcd: LCDClient) => {
   const variables: Variables = {
     collectionAddr,
     tokenId,
@@ -70,7 +69,7 @@ const fetchNFTData = async (collectionAddr: string, tokenId: string, network: Ne
   const json = await response.json();
 
   if (!json.data) {
-    const queryData = await nftQuery(collectionAddr as CW20Addr, tokenId, network);
+    const queryData = await nftQuery(collectionAddr as CW20Addr, tokenId, lcd);
     return queryData.extension;
   }
 
@@ -80,17 +79,17 @@ const fetchNFTData = async (collectionAddr: string, tokenId: string, network: Ne
 async function fetchNFTDataForMultipleTokenIds(
   collectionAddr: string,
   tokenIds: TokenIds,
-  network: NetworkInfo
+  lcd: LCDClient
 ): Promise<{ [tokenId: string]: any }> {
   const result: { [tokenId: string]: any } = {};
-  
-  
+
+
   for (const tokenId of tokenIds) {
-    const data = await fetchNFTData(collectionAddr, tokenId, network);
+    const data = await fetchNFTData(collectionAddr, tokenId, lcd);
     result[tokenId] = data;
   }
-  
-  
+
+
   return result;
 }
 
@@ -98,9 +97,9 @@ export const useNFTInfoQuery = (
   collectionAddr: string,
   tokenIds: TokenIds
 ): UseQueryResult<{ [tokenId: string]: any }> => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
   return useQuery([collectionAddr, tokenIds], async () => {
-    const data = await fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds, network);
+    const data = await fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds, lcd);
     return data;
   });
 };

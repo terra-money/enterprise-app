@@ -9,8 +9,8 @@ import { useDAOAssetTreasury } from './useDAOAssetTreasury';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from './queryKey';
 import { fetchCW20TokenInfo } from './useCW20TokenInfoQuery';
-import { useWallet } from '@terra-money/wallet-provider';
 import { assertDefined } from '@terra-money/apps/utils';
+import { useLCDClient } from '@terra-money/wallet-provider';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: Big };
 
@@ -19,7 +19,7 @@ export const useTreasuryTokensQuery = (address: string) => {
   const { tokens } = useTokens();
   const { data: prices } = usePricesQuery();
 
-  const { network } = useWallet();
+  const lcd = useLCDClient()
 
   return useQuery(
     [QUERY_KEY.TREASURY_TOKENS, address],
@@ -31,7 +31,7 @@ export const useTreasuryTokensQuery = (address: string) => {
           let token = tokens[tokenKey];
           if (!token && getAssetType(asset.info) === 'cw20') {
             try {
-              const tokenInfo = await fetchCW20TokenInfo(network, tokenKey);
+              const tokenInfo = await fetchCW20TokenInfo(lcd, tokenKey);
 
               token = {
                 ...tokenInfo,

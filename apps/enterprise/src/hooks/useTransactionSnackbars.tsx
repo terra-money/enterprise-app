@@ -7,10 +7,9 @@ import {
 import { useSnackbar } from 'notistack';
 import { useRefetchQueries } from 'queries';
 import { TX_KEY } from 'tx';
-import { useRefCallback } from '@terra-money/apps/hooks';
+import { useNetworkName, useRefCallback } from '@terra-money/apps/hooks';
 import { TransactionSnackbar } from 'components/snackbar';
 import { indexerCompletion } from 'utils/indexerCompletion';
-import { useWallet } from '@terra-money/wallet-provider';
 import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 
 type TxMessages = Record<TX_KEY, string>;
@@ -46,7 +45,7 @@ const FailedSnackbarMessages: TxMessages = {
 };
 
 export const useTransactionSnackbars = () => {
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
   const refetch = useRefetchQueries();
 
@@ -78,7 +77,7 @@ export const useTransactionSnackbars = () => {
       if (!areIndexersEnabled) return;
       const txKey = transaction.payload['txKey'] as TX_KEY;
       indexerCompletion({
-        network,
+        networkName,
         height: transaction.height,
         txKey,
         callback: () => {

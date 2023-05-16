@@ -1,19 +1,19 @@
-import { getNetworkOrLCD } from '@terra-money/apps/queries';
 import { u } from '@terra-money/apps/types';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useLCDClient } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from './queryKey';
+import { useChainID, useNetworkName } from '@terra-money/apps/hooks';
 
 export const useCommunityPoolQuery = (): UseQueryResult<u<Big> | undefined> => {
-  const { network } = useWallet();
+  const lcd = useLCDClient()
+  const ntworkName = useNetworkName()
+  const chainID = useChainID()
 
   return useQuery(
-    [QUERY_KEY.COMMUNITY_POOL, network.name],
+    [QUERY_KEY.COMMUNITY_POOL, ntworkName],
     async () => {
-      const lcd = getNetworkOrLCD(network);
-
-      const coins = await lcd.distribution.communityPool();
+      const coins = await lcd.distribution.communityPool(chainID);
 
       const uLuna = coins.get('uluna');
 

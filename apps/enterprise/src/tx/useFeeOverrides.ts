@@ -1,10 +1,10 @@
-import { CreateTxOptions, Fee } from '@terra-money/terra.js';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useNetworkName } from '@terra-money/apps/hooks';
+import { CreateTxOptions, Fee } from '@terra-money/feather.js';
 
 export const useTxOverrides = (): Partial<CreateTxOptions> => {
-  const { network } = useWallet();
+  const networkName = useNetworkName()
 
-  if (network.name === 'localterra' || network.name === 'testnet') {
+  if (networkName === 'testnet') {
     return {
       fee: new Fee(1671053, '1671053uluna'),
       gasAdjustment: 1.6,

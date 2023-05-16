@@ -42,12 +42,11 @@ export class BlockListener {
           try {
             const info = await retry({
               func: () => this.lcd.tx.txInfo(txHash, chainId),
-              maxRetries: 5,
-              retryInterval: 2000,
+              retryInterval: 10000,
             })
             txs.push(info)
           } catch (err) {
-            this.logger.error(`Error fetching infor for transaction with hash=${txHash}`, err)
+            this.logger.error(`Error fetching info for transaction with hash=${txHash}`, err)
           }
         }))
 

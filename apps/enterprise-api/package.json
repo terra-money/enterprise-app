@@ -15,7 +15,6 @@
     "@aws-sdk/client-dynamodb": "^3.159.0",
     "@aws-sdk/util-dynamodb": "^3.159.0",
     "@enterprise/indexers": "workspace:^",
-    "@terra-money/terra.js": "^3.1.6",
     "@types/express": "^4.17.13",
     "@types/node": "^16.11.56",
     "@vendia/serverless-express": "^4.10.1",
