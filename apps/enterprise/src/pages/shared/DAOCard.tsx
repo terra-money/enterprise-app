@@ -8,12 +8,20 @@ import { FavouriteToggle } from 'components/favourite-toggle';
 import styles from './DAOCard.module.sass';
 import { DAOLogo } from 'components/dao-logo';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
-import { HStack } from 'lib/ui/Stack';
+import { enterprise } from 'types/contracts';
+import { SeparatedBy, dotSeparator } from 'lib/ui/SeparatedBy';
+import { SimpleTooltip } from 'lib/ui/popover/SimpleTooltip';
 
 interface DAOCardProps {
   className?: string;
   dao?: DAO;
   skeleton: boolean;
+}
+
+const daoTypeName: Record<enterprise.DaoType, string> = {
+  multisig: 'Multisig',
+  nft: 'NFT DAO',
+  token: 'Token DAO'
 }
 
 export const DAOCard = (props: DAOCardProps) => {
@@ -31,15 +39,6 @@ export const DAOCard = (props: DAOCardProps) => {
     );
   }
 
-  const description =
-    dao.type === undefined
-      ? undefined
-      : dao.type === 'multisig'
-        ? 'Multisig DAO'
-        : dao.type === 'nft'
-          ? 'NFT Community DAO'
-          : 'Community Token DAO';
-
   const { tvl } = dao
 
   return (
@@ -50,12 +49,14 @@ export const DAOCard = (props: DAOCardProps) => {
       <Text className={styles.name} weight="semibold" size={14}>
         {dao.name}
       </Text>
-      <HStack className={styles.type} alignItems='center' gap={4} wrap="wrap">
-        <Text color="supporting" size={14}>
-          {description}
-        </Text>
-        {(tvl && tvl > 0) ? <Text size={14} weight="semibold" color="success">TVL: {formatAmount(tvl)}$</Text> : null}
-      </HStack>
+      <SeparatedBy separator={dotSeparator}>
+        <Text size={14} weight='semibold' color="supporting">{daoTypeName[dao.type]}</Text>
+        {tvl && tvl > 0 && (
+          <SimpleTooltip text="Total value locked">
+            <Text size={14} weight='semibold' color="supporting">$ {formatAmount(tvl)}</Text>
+          </SimpleTooltip>
+        )}
+      </SeparatedBy>
       <FavouriteToggle className={styles.favourite} dao={dao} />
     </Container>
   );
