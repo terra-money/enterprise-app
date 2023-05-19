@@ -181,7 +181,7 @@ export const TokenStakingConnectedView = () => {
         <VStack gap={16}>
           <NumericPanel
             className={styles.claim}
-            title="Claimable tokens"
+            title="Claim Unstaked Tokens"
             value={demicrofy(claimableAmount, tokenDecimals)}
             decimals={2}
             suffix={tokenSymbol}

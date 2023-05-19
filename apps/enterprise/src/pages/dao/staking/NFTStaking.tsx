@@ -130,7 +130,7 @@ export const NftStakingConnectedView = () => {
         <VStack gap={16}>
           <NumericPanel
             className={styles.claim}
-            title="Claimable NFTs"
+            title="Claim Unstaked NFTs"
             value={claimableTokens.length}
             suffix={symbol}
             footnote={
