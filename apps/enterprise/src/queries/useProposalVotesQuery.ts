@@ -13,7 +13,7 @@ interface UseProposalVotesQueryOptions {
 }
 
 export const useProposalVotesQuery = (options: UseProposalVotesQueryOptions) => {
-  const { contract, proposalId, limit = 10 } = options;
+  const { contract, proposalId, limit = 50 } = options;
   const { query } = useContract()
 
   return useInfiniteQuery(
