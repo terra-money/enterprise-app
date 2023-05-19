@@ -23,7 +23,7 @@ const features: Feature[] = [
   },
   {
     title: 'Monitor DAO treasuries',
-    description: 'Keep an eye on a DAOs assets and propose how they should be spent.',
+    description: "Keep an eye on a DAO's assets and propose how they should be spent.",
     imageUrl: 'images/landing-dashboard.png',
   },
   {
