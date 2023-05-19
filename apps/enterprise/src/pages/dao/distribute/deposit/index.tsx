@@ -15,11 +15,11 @@ export const DepositIntoFundsDistributor = () => {
   const shareholders = isMultisig ? 'multisig members' : 'stakers'
 
   return (
-    <TitledSection title={`Distribute between ${shareholders}`}>
+    <TitledSection title={`Distribute rewards to your ${shareholders}`}>
       <VStack gap={8}>
 
         <Text color="supporting">
-          Deposit an asset to the fund's distributor contract to distribute it to DAO {shareholders} to claim.
+          Assets deposited will be distributed as rewards for DAO {shareholders} to claim.
         </Text>
         <OverlayOpener
           renderOpener={({ onOpen }) => (

@@ -96,7 +96,7 @@ const AppBetaRoutes = () => {
             }
           />
           <Route
-            path="distribute"
+            path="rewards"
             element={
               <InitizalizedWalletOnly>
                 <DaoErrorBoundary>
