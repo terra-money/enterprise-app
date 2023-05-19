@@ -14,11 +14,11 @@ export const DaoErrorFallback = () => {
 
   return (
     <Modal
-      title="Something went wrong"
+      title="Something went wrong."
       renderContent={() => (
         <VStack gap={16}>
           <Text>
-            Contact us on <ExternalLink to={discordUrl}><ShyTextButton as="div" text="Discord" /></ExternalLink>  or <ExternalLink to={telegramUrl}><ShyTextButton as="div" text="Telegram" /></ExternalLink>  if the problem persists.
+            Contact the team on <ExternalLink to={discordUrl}><ShyTextButton as="div" text="Discord" /></ExternalLink>  or <ExternalLink to={telegramUrl}><ShyTextButton as="div" text="Telegram" /></ExternalLink>  if the problem persists.
           </Text>
           <UpgradeDaoCanFixTheError />
         </VStack>
