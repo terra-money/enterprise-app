@@ -13,7 +13,7 @@ export const UpgradeDaoCanFixTheError = () => {
   return (
     <VStack gap={16}>
       <Text>
-        The UI is not compatible with the version of the DAO smart contracts. You can upgrade the DAO to the latest version to fix this error.
+        This UI is not compatible with the DAO smart contract version. Upgrade your DAO to the latest version to fix this error.
       </Text>
       <UpgradeDaoActions />
     </VStack>
