@@ -19,7 +19,7 @@ export const UpdateMinimumWeightForRewardsAction = () => {
 
   return (
     <Text color="supporting">
-      Update minimum weight for rewards to <Text as="span" color="regular" weight="bold">{isTokenDao ? fromChainAmount(newValue, assertDefined(token)?.decimals) : newValue}</Text>
+      Update the minimum weight for rewards to <Text as="span" color="regular" weight="bold">{isTokenDao ? fromChainAmount(newValue, assertDefined(token)?.decimals) : newValue}</Text>
     </Text>
   )
 }
