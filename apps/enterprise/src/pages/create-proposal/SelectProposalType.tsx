@@ -203,7 +203,7 @@ export const SelectProposalType = () => {
               <NormalScreenContent>{renderOptions()}</NormalScreenContent>
               <ProposalDescriptionContainer>
                 <Text className={styles.proposalDescriptionTitle}>
-                  What is a {capitalizeFirstLetter(proposalType)} proposal?
+                  What are {capitalizeFirstLetter(proposalType)} proposals?
                 </Text>
                 <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
               </ProposalDescriptionContainer>
