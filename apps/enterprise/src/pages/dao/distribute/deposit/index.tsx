@@ -12,16 +12,14 @@ export const DepositIntoFundsDistributor = () => {
   const { dao_type } = useCurrentDao()
   const isMultisig = dao_type === 'multisig'
 
-  const shareholders = isMultisig ? 'multisig members' : 'stakers'
-  const shares = isMultisig ? 'multisig weight' : 'stake'
-
+  const shareholders = isMultisig ? 'multisig members' : 'DAO stakers'
 
   return (
     <TitledSection title={`Distribute between ${shareholders}`}>
       <VStack gap={8}>
 
         <Text color="supporting">
-          Deposit an asset to the DAO's distribution contract. The asset will be distributed to DAO {shareholders} according to their {shares}. 
+          Deposit an asset to distribute it to all {shareholders} as claimable rewards. 
         </Text>
         <OverlayOpener
           renderOpener={({ onOpen }) => (
