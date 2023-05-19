@@ -42,7 +42,7 @@ export const StakeTokenOverlay = ({
           <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
           <AmountInput
             value={amount}
-            placeholder="Type amount to stake"
+            placeholder="Enter a staking amount"
             maxAmount={demicrofy(balance, decimals)}
             symbol={symbol}
             onChange={(event) => input({ amount: event.target.value })}
