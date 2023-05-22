@@ -45,7 +45,7 @@ __metadata:
     "@types/aws-lambda": ^8.10.102
     "@types/express": ^4.17.13
     "@types/http-errors": ^1.8.2
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     "@vendia/serverless-express": ^4.10.1
     aws-lambda: ^1.0.7
     cors: ^2.8.5
@@ -72,7 +72,7 @@ __metadata:
     "@aws-sdk/util-dynamodb": ^3.159.0
     "@terra-money/feather.js": ^1.0.1
     "@types/d3-array": ^3.0.3
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     axios: ^0.27.2
     big.js: ^6.2.1
     d3-array: ^3.2.0
@@ -3950,7 +3950,7 @@ __metadata:
     "@types/aws-lambda": ^8.10.102
     "@types/express": ^4.17.13
     "@types/http-errors": ^1.8.2
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     "@vendia/serverless-express": ^4.10.1
     aws-lambda: ^1.0.7
     cors: ^2.8.5
@@ -3993,7 +3993,7 @@ __metadata:
     "@types/d3-ease": ^3.0.0
     "@types/d3-timer": ^3.0.0
     "@types/jest": ^28.1.8
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
     "@types/react-router-dom": ^5.3.3
@@ -4065,7 +4065,7 @@ __metadata:
     "@aws-sdk/util-dynamodb": ^3.159.0
     "@terra-money/feather.js": ^1.0.1
     "@types/d3-array": ^3.0.3
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     axios: ^0.27.2
     big.js: ^6.2.1
     d3-array: ^3.2.0
@@ -4088,7 +4088,7 @@ __metadata:
     "@terra-money/feather.js": ^1.0.2
     "@types/d3-array": ^3.0.3
     "@types/memoizee": ^0.4.8
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     aws-lambda: ^1.0.7
     axios: ^1.4.0
     big.js: ^6.2.1
@@ -5309,7 +5309,7 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     "@types/big.js": ^6.1.5
     "@types/jest": ^28.1.8
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
     "@types/react-router-dom": ^5.3.3
@@ -6059,10 +6059,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.56":
-  version: 16.11.56
-  resolution: "@types/node@npm:16.11.56"
-  checksum: b4efade16eb08a39810921c54a1637e69c8f3184a20d87e8fe74d557d9bda73f0829ac318e2a30a32b1903e4b099812defd1dfe438be70b98dbfbea5b0d99a53
+"@types/node@npm:^20.2.3":
+  version: 20.2.3
+  resolution: "@types/node@npm:20.2.3"
+  checksum: 576065e8fc1fa45798c8f59a6bf809169582d04abc2e25fab1a048ffc734975b9992ae31be0d960cf705a21fb37112f7fcde11aa322beddf7491e73d5a5a988c
   languageName: node
   linkType: hard
 
@@ -9737,7 +9737,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "enterprise@workspace:."
   dependencies:
-    "@types/node": ^16.11.56
+    "@types/node": ^20.2.3
     husky: ^8.0.1
     jest-watch-typeahead: 2.1.1
     json-schema-to-typescript: ^11.0.2
