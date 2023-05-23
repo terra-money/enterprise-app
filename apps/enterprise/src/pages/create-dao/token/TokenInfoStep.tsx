@@ -64,11 +64,11 @@ export const TokenInfoStep = () => {
         />
         <WizardInput
           label="Project URL"
-          placeholder="Type a project name"
+          placeholder="Enter your project's URL"
           value={project}
           error={project !== undefined && project?.length > 0 ? projectError : undefined}
           onChange={({ currentTarget }) => onChange({ project: currentTarget.value })}
-          helpText='Should point to a project repository'
+          helpText='This URL should point to a project repository'
         />
       </Stack>
     </WizardStep>
