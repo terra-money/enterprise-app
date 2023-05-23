@@ -32,8 +32,8 @@ const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalTyp
 };
 
 export const proposalDescription: Record<ProposalType, ReactNode> = {
-  text: 'Create general-purpose text proposals, such as general direction statements, community engagement ideas, or partnerships.',
-  config: 'Update the DAO configuration such as governance parameters and DAO metadata.',
+  text: 'Create general-purpose text proposals, such as direction statements, community engagement ideas, or partnerships.',
+  config: 'Update the DAO configuration, such as governance parameters and DAO metadata.',
   upgrade: 'Upgrade your DAO to the latest contracts to get upgraded features.',
   assets: 'Update the token whitelist. The whitelist determines which tokens are displayed in the treasury or distributor.',
   nfts: 'Update the NFT whitelist. The whitelist determines which NFTs are displayed in the treasury.',
@@ -155,7 +155,7 @@ export const SelectProposalType = () => {
 
     return (
       <PrimarySelect
-        label="Choose type"
+        label="Choose a proposal type"
         options={options}
         getName={(type) => proposalTitle[type]}
         selectedOption={proposalType}
