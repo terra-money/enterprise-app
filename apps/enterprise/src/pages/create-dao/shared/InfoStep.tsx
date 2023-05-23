@@ -17,12 +17,12 @@ export function InfoStep() {
   return (
     <WizardStep
       title="What is the name of your DAO?"
-      subTitle="Choose a descriptive, memorable name for your DAO."
+      subTitle="Choose a descriptive name for your DAO."
     >
       <Stack direction="column" spacing={4}>
         <WizardInput
           label="Name"
-          placeholder="Type a name for your DAO"
+          placeholder="Enter a name for your DAO"
           value={info.name}
           error={info.name?.length > 0 ? info.nameError : undefined}
           onChange={({ currentTarget }) => onChange({ name: currentTarget.value })}
@@ -35,7 +35,7 @@ export function InfoStep() {
         />
         <WizardInput
           label="Logo URL"
-          placeholder="Type the URL of your DAO's logo"
+          placeholder="Enter the URL of your DAO's logo"
           value={info.logo}
           error={info.logoError}
           onChange={({ currentTarget }) => onChange({ logo: currentTarget.value })}
