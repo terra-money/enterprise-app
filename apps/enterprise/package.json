@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "REACT_APP_VERSION=$npm_package_version react-app-rewired build",
+    "build": "GENERATE_SOURCEMAP=true REACT_APP_VERSION=$npm_package_version react-app-rewired build",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "generate-types": "node --experimental-specifier-resolution=node --loader ts-node/esm ../../scripts/generate-types.ts enterprise",
     "lint": "eslint \"./src/{**/*,*}.{ts,tsx}\"",
