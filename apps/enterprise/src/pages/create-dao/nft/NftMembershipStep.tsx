@@ -18,14 +18,14 @@ export function NftMembershipStep() {
       <Stack direction="column" spacing={4}>
         <WizardInput
           label="NFT Name"
-          placeholder="Type the name of your NFT"
+          placeholder="Enter the name of your NFT"
           value={nftMembership.nftName}
           error={nftMembership.nftNameError}
           onChange={({ currentTarget }) => onChange({ nftName: currentTarget.value })}
         />
         <WizardInput
           label="NFT Symbol"
-          placeholder="Type the symbol of your NFT"
+          placeholder="Enter the symbol of your NFT"
           value={nftMembership.nftSymbol}
           error={nftMembership.nftSymbolError}
           onChange={({ currentTarget }) => onChange({ nftSymbol: currentTarget.value })}
