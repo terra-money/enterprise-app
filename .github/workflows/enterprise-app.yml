@@ -17,7 +17,7 @@ on:
       - .github/workflows/enterprise-app.yml
 
 env:
-  REACT_APP_SENTRY_KEY: "https://3b82f9677acf45da8f67050a59573cd3@o1302912.ingest.sentry.io/4505226244259840"
+  REACT_APP_SENTRY_KEY: "https://0bb9b523ea9c4d36b42af5d11f52dade@o4505212736372736.ingest.sentry.io/4505228892241920"
 
 jobs:
   build:
