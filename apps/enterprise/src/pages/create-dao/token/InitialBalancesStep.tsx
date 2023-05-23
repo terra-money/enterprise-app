@@ -80,7 +80,7 @@ export const InitialBalancesStep = () => {
   return (
     <WizardStep
       title="Initial token distribution"
-      subTitle="You need at least one initial balance"
+      subTitle="Enter at least one wallet address and an amount. The only way to mint more tokens after this step is through governance. Treasuries are controlled by voters."
       helpContent={
         <VStack gap={24}>
           <Text variant="label">Name</Text>
@@ -95,8 +95,8 @@ export const InitialBalancesStep = () => {
       <VStack gap={16}>
         <TextInput
           value={initialDaoBalance}
-          label="Initial DAO balance"
-          placeholder="Enter initial DAO balance"
+          label="Initial DAO treasury balance"
+          placeholder="Treasury amount"
           onValueChange={(value) => formInput({ initialDaoBalance: enforceTextInputIntoNumber(value) })}
         />
         {initialBalances.map((balance, index) => {
@@ -105,7 +105,7 @@ export const InitialBalancesStep = () => {
             <div key={index} className={styles.balanceInput}>
               <div className={styles.content}>
                 <FormTextInput
-                  placeholder="Enter wallet address"
+                  placeholder="Enter a wallet address"
                   value={address}
                   error={addressError}
                   onChange={({ currentTarget }) =>
