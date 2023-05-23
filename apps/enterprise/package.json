@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired build",
+    "build": "REACT_APP_VERSION=$npm_package_version react-app-rewired build",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "generate-types": "node --experimental-specifier-resolution=node --loader ts-node/esm ../../scripts/generate-types.ts enterprise",
     "lint": "eslint \"./src/{**/*,*}.{ts,tsx}\"",
-    "start": "PORT=4001 react-app-rewired start",
+    "start": "REACT_APP_VERSION=$npm_package_version PORT=4001 react-app-rewired start",
     "test": "react-app-rewired test --passWithNoTests"
   },
   "lint-staged": {
@@ -40,6 +40,8 @@
     "@mui/icons-material": "^5.10.2",
     "@mui/material": "^5.10.2",
     "@popperjs/core": "^2.11.6",
+    "@sentry/integrations": "^7.52.1",
+    "@sentry/react": "^7.52.1",
     "@terra-money/feather.js": "^1.0.4",
     "@terra-money/log-finder-ruleset": "^3.0.2",
     "@terra-money/wallet-provider": "^4.0.0",

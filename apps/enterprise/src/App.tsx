@@ -34,6 +34,7 @@ import { DistributePage } from 'pages/dao/distribute/DistributePage';
 import { DaoErrorBoundary } from 'pages/dao/DaoErrorBoundary';
 import { SettingsPage } from 'settings/components/SettingsPage';
 import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
+import { setupErrorMonitoring } from 'errors/errorMonitoring';
 
 const queryClient = new QueryClient();
 
@@ -96,7 +97,7 @@ const AppBetaRoutes = () => {
             }
           />
           <Route
-            path="distribute"
+            path="rewards"
             element={
               <InitizalizedWalletOnly>
                 <DaoErrorBoundary>
@@ -206,6 +207,8 @@ const AppProviders = () => {
     )
   );
 };
+
+setupErrorMonitoring()
 
 const App = () => {
   return <AppProviders />;

@@ -27,7 +27,7 @@ export const PopoverHolder = ({ renderContainer, tooltip }: Props) => {
         ref: setAnchor,
       })}
       {anchor && isTooltipOpen && tooltip && (
-        <Popover placement="bottom" anchor={anchor}>
+        <Popover placement="top" anchor={anchor}>
           {tooltip}
         </Popover>
       )}

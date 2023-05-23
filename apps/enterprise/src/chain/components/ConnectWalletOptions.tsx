@@ -15,7 +15,7 @@ const supportedConnectionIcons: Record<SupportedConnection, ReactNode> = {
 };
 
 const supportedConnectionNames: Record<SupportedConnection, string> = {
-  [ConnectType.EXTENSION]: 'Station Extension',
+  [ConnectType.EXTENSION]: 'Station Wallet',
   [ConnectType.WALLETCONNECT]: 'Wallet Connect',
 };
 
