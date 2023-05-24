@@ -151,7 +151,7 @@ export const TokenStakingConnectedView = () => {
                       kind="secondary"
                       isLoading={isLoading}
                       isDisabled={isUnstakeDisabled}
-                      tooltipText={isUnstakeDisabled && `You don't have staked tokens`}
+                      tooltipText={isUnstakeDisabled && `You don't have any staked tokens`}
                       onClick={onOpen}
                     >
                       Unstake
