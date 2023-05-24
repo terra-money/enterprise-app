@@ -13,7 +13,7 @@ export const UpgradeDaoCanFixTheError = () => {
   return (
     <VStack gap={16}>
       <Text>
-        This UI is not compatible with your DAO's contract version. Create an upgrade proposal to get the latest version.
+        This UI is not compatible with the DAO's contract version. Create an upgrade proposal to get the latest version.
       </Text>
       <UpgradeDaoActions />
     </VStack>
