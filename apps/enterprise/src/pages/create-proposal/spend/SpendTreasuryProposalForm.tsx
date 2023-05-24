@@ -28,7 +28,7 @@ export const SpendTreasuryProposalForm = () => {
       amount = amount.lte(demicrofy(token.amount, token.decimals).toNumber());
     }
     return z.object({
-      destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid' }),
+      destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid Terra address' }),
       amount,
     });
   });
