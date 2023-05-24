@@ -11,7 +11,7 @@ export const MinimumWeightForRewardsInput = ({ value, onChange, error }: Minimum
   return (
     <FormControl
       label="Minimum weight for rewards"
-      helpText="The minimum weight a DAO member needs in order to qualify for rewards. For example, in a token or NFT DAO, a value of 3 means that a user needs at least 3 staked assets to receive rewards. For multisigs, it is a minimum vote weight to receive rewards. "
+      helpText="The minimum weight a DAO member needs in order to qualify for rewards. For example, in a token or NFT DAO, a value of 3 means that a user needs at least 3 staked assets to receive rewards. For multisigs, it is a minimum vote weight. "
     >
       <FormTextInput
         value={value === undefined ? '' : value}
