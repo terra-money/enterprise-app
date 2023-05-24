@@ -41,8 +41,8 @@ export const ProposalVotingAction = () => {
   const { data: blockHeight = Number.MAX_SAFE_INTEGER } = useBlockHeightQuery();
   const now = useRhythmicRerender(2000);
   const hasExpired = hasProposalExpired(proposal, blockHeight, now);
-  
-  if (proposal.status === 'executed' && proposal.executionTxHash) {
+
+  if (proposal.status === 'executed') {
     return (
       <Text color="success" weight="semibold">
         Executed
