@@ -35,7 +35,7 @@ const useTx = <Options>(
   const txCallback = useRefCallback(
     async (options: Options) => {
       if (wallet === undefined || wallet.availablePost === false) {
-        throw new Error('The wallet is not connected or is unable to post a message.');
+        throw new Error('Your wallet is not connected or is unable to post a message.');
       }
 
       const tx = typeof txOrFactory === 'function' ? txOrFactory({ ...options, wallet }) : txOrFactory;
