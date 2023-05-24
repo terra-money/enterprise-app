@@ -27,8 +27,8 @@ const features: Feature[] = [
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Trade DAO tokens (coming soon!)',
-    description: 'Become a member of different DAOs by trading DAO tokens.',
+    title: 'Go interchain (coming soon!)',
+    description: 'Create Enterprise DAOs on your favorite chains.',
     imageUrl: 'images/landing-dashboard.png',
   },
 ];
