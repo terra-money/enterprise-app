@@ -78,7 +78,7 @@ export const RedelegateProposalForm = () => {
         isLoading={areDelegationsLoading}
         label="Validator"
         value={validator}
-        placeholder="Select validator"
+        placeholder="Select a validator"
         onChange={setValidator}
         optionToString={(validatorAddress) => validatorAddress}
         options={delegations.map((delegation) => delegation.validator_address)}

@@ -29,7 +29,7 @@ export const TitleInput = (props: TitleInputProps) => {
     <FormControl className={classNames(className, styles.root)} label={label}>
       <FormTextInput
         className={styles.input}
-        placeholder="Type something"
+        placeholder="Enter a title"
         margin="none"
         value={value}
         onChange={handleChange}

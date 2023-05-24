@@ -45,7 +45,7 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
     <>
       <FormControl label="Name">
         <FormTextInput
-          placeholder="Type a name for your DAO"
+          placeholder="Enter a name for your DAO"
           value={name}
           error={nameError}
           onChange={handleNameChange}
@@ -53,7 +53,7 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
       </FormControl>
       <FormControl label="Logo">
         <FormTextInput
-          placeholder="Enter Logo URL"
+          placeholder="Enter a Logo URL"
           value={logo}
           error={logoError}
           onChange={handleLogoChange}

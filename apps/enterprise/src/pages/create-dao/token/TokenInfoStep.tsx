@@ -68,7 +68,7 @@ export const TokenInfoStep = () => {
           value={project}
           error={project !== undefined && project?.length > 0 ? projectError : undefined}
           onChange={({ currentTarget }) => onChange({ project: currentTarget.value })}
-          helpText='This URL should point to a project repository'
+          helpText='This URL should point to a project website'
         />
       </Stack>
     </WizardStep>

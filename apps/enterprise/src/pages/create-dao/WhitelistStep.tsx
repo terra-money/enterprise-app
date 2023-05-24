@@ -14,7 +14,7 @@ export const WhitelistStep = () => {
   } = useDaoWizardForm();
 
   return (
-    <WizardStep title="Add whitelisted assets to your DAO" subTitle="(Optional)">
+    <WizardStep title="Add whitelisted assets to your DAO" subTitle="(Optional) Only assets in your whitelist will appear in your DAO's treasury. After this step, the only way to update a whitelist is through governance.">
       <VStack gap={24}>
         <HStack wrap="wrap" gap={20}>
           {whitelistedAssets.map((asset, index) => (

@@ -68,7 +68,7 @@ export const BurnTokensProposalForm = () => {
               type="number"
               error={errors.amount?.message}
               label="Amount"
-              placeholder="Enter amount"
+              placeholder="Enter an amount"
               onValueChange={onChange}
               value={value}
               onBlur={onBlur}
@@ -78,7 +78,7 @@ export const BurnTokensProposalForm = () => {
           )}
         />
       ) : (
-        <Text color="alert">Treasury doesn't have DAO's tokens</Text>
+        <Text color="alert">The Treasury doesn't have any DAO tokens to burn. </Text>
       )}
     </ProposalForm>
   );

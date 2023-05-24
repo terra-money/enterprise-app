@@ -89,13 +89,13 @@ export const MintTokensProposalForm = () => {
             <VStack fullWidth gap={16}>
               <TextInput
                 label={`Mint recepient #${index + 1}`}
-                placeholder="Enter wallet address"
+                placeholder="Enter a wallet address"
                 {...register(`members.${index}.address`)}
                 error={errors.members?.[index]?.address?.message}
               />
               <TextInput
                 type="number"
-                placeholder="Enter amount"
+                placeholder="Enter an amount"
                 {...register(`members.${index}.amount`, {
                   valueAsNumber: true,
                 })}

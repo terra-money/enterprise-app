@@ -32,9 +32,9 @@ const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalTyp
 };
 
 export const proposalDescription: Record<ProposalType, ReactNode> = {
-  text: 'Create general-purpose text proposals, such as direction statements, community engagement ideas, or partnerships.',
-  config: 'Update the DAO configuration, such as governance parameters and DAO metadata.',
-  upgrade: 'Upgrade your DAO to the latest contracts to get upgraded features.',
+  text: 'Create general-purpose text proposals such as directional statements, community engagement ideas, or partnerships.',
+  config: 'Update your DAO configuration, such as governance parameters and DAO metadata.',
+  upgrade: 'Upgrade your DAO to get the latest contract features.',
   assets: 'Update the token whitelist. The whitelist determines which tokens are displayed in the treasury or distributor.',
   nfts: 'Update the NFT whitelist. The whitelist determines which NFTs are displayed in the treasury.',
   execute: <>
@@ -42,15 +42,15 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   </>,
   members: 'Add or remove members from a Multisig.',
   spend: 'Submit this proposal to send assets in your treasury to another address',
-  mint: 'Mint DAO governance tokens to specified accounts. This proposal will only work if the minter of the CW20 token is the DAO treasury address.',
-  burn: 'Burn DAO governance tokens from the specified accounts. This proposal will only work if the burner of the CW20 token is the DAO treasury address.',
+  mint: 'Mint DAO tokens to the specified addresses. This proposal will only work if the minter of the CW20 token is the DAO treasury address.',
+  burn: 'Burn DAO tokens from the specified accounts. This proposal will only work if the burner of the CW20 token is the DAO treasury address.',
   delegate: 'Delegate the LUNA in your treasury to a validator of your choice to earn staking rewards.',
   metadata: 'Update the metadata of your DAO.',
   undelegate: 'Undelegate LUNA from a validator that you have delegated to.',
   redelegate: 'Redelegate LUNA from your current validator to a new validator.',
   council: '',
   mintNft:
-    'Mint a new DAO governance NFT to an account. This proposal will only work if the minter of the NFT is the DAO treasury address.',
+    'Mint a new DAO NFT to the specified addresses. This proposal will only work if the minter on the NFTcontract is the DAO treasury address.',
   minWeightForRewards: 'Update the minimum weight required to receive rewards.',
 };
 

@@ -28,7 +28,7 @@ export const ExecuteMessageProposalForm = () => {
               label="Custom message"
               error={messagesErrors[index]}
               valid
-              placeholder="Type your message here"
+              placeholder="Enter your message here"
               value={message}
               onChange={(value) => setMessages(updateAtIndex(messages, index, value || ''))}
             />

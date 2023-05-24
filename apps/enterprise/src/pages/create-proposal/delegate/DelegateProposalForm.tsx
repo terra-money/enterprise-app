@@ -74,7 +74,7 @@ export const DelegateProposalForm = () => {
                 type="number"
                 error={errors.amount?.message}
                 label="LUNA amount"
-                placeholder="Enter amount"
+                placeholder="Enter an amount"
                 onValueChange={onChange}
                 value={value}
                 onBlur={onBlur}
@@ -84,7 +84,7 @@ export const DelegateProposalForm = () => {
             )}
           />
         ) : (
-          <Text color="alert">Treasury doesn't have LUNA</Text>
+          <Text color="alert">Treasury doesn't have any LUNA</Text>
         )}
       </VStack>
     </ProposalForm>

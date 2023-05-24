@@ -28,7 +28,7 @@ export const SpendTreasuryProposalForm = () => {
       amount = amount.lte(demicrofy(token.amount, token.decimals).toNumber());
     }
     return z.object({
-      destinationAddress: z.string().regex(terraAddressRegex, { message: 'Invalid Terra address' }),
+      destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid' }),
       amount,
     });
   });
@@ -69,7 +69,7 @@ export const SpendTreasuryProposalForm = () => {
           <TextInput
             {...register('destinationAddress')}
             label="Destination address"
-            placeholder="Enter recepient address"
+            placeholder="Enter a recepient address"
           />
           <TreasuryTokenInput value={token} onChange={setToken} />
           {token && (
@@ -81,7 +81,7 @@ export const SpendTreasuryProposalForm = () => {
                   type="number"
                   error={formState.errors.amount?.message}
                   label="Amount"
-                  placeholder="Enter amount"
+                  placeholder="Enter an amount"
                   onValueChange={onChange}
                   value={value}
                   onBlur={onBlur}
@@ -93,7 +93,7 @@ export const SpendTreasuryProposalForm = () => {
           )}
         </VStack>
       ) : (
-        <Text color="alert">There are no tokens in the treasury</Text>
+        <Text color="alert">There are no tokens in the treasury.</Text>
       )}
     </ProposalForm>
   );
