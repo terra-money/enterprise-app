@@ -16,7 +16,7 @@ export const validateTokenInfo = ({ decimals, name, symbol, description,
   formState.nameError = validateLength(name, 3, 140, 'name');
   formState.symbolError =
     validateLength(symbol, 3, 12, 'symbol') ??
-    validatePattern(symbol, /[a-zA-Z]{3,12}$/, 'Symbols can only be made of letters');
+    validatePattern(symbol, /[a-zA-Z]{3,12}$/, 'Asset symbols can only be made of letters');
   formState.decimalsError = validateAmount(decimals, 4, 18, 'decimals');
 
   if (logo) {
