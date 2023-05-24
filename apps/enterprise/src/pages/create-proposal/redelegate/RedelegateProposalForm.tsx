@@ -95,7 +95,7 @@ export const RedelegateProposalForm = () => {
                 type="number"
                 error={errors.amount?.message}
                 label="LUNA amount"
-                placeholder="Enter amount"
+                placeholder="Enter an amount"
                 onValueChange={onChange}
                 value={value}
                 onBlur={onBlur}
@@ -104,7 +104,7 @@ export const RedelegateProposalForm = () => {
               />
             )}
           />
-          <TextInput {...register('newAddress')} label="New validator" placeholder="Enter address" />
+          <TextInput {...register('newAddress')} label="New validator" placeholder="Enter an address" />
         </>
       )}
     </ProposalForm>
