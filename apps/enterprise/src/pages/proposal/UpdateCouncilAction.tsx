@@ -43,7 +43,7 @@ export const UpdateCouncilAction = () => {
       </VStack>
       {allowed_proposal_action_types && (
         <VStack gap={24}>
-          <Text weight="semibold">New council allowed proposal types</Text>
+          <Text weight="semibold">New council proposal types allowed</Text>
           <SameWidthChildrenRow gap={16} minChildrenWidth={320}>
             {allowed_proposal_action_types.map((type) => (
               <Panel key={type}>
