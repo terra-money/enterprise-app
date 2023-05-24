@@ -15,11 +15,11 @@ export const DepositIntoFundsDistributor = () => {
   const shareholders = isMultisig ? 'multisig members' : 'DAO stakers'
 
   return (
-    <TitledSection title={`Distribute between ${shareholders}`}>
+    <TitledSection title={`Distribute rewards to ${shareholders}`}>
       <VStack gap={8}>
 
         <Text color="supporting">
-          Deposit an asset to distribute it to all {shareholders} as claimable rewards. 
+          Deposit a whitelisted asset to distribute it to all {shareholders} as claimable rewards. 
         </Text>
         <OverlayOpener
           renderOpener={({ onOpen }) => (
