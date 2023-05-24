@@ -7,6 +7,6 @@ interface Props {
 
 export const MintNftSummary = ({ owner }: Props) => {
   return (
-    <Text size={14} color="supporting">Mint NFT for <Address value={owner} /></Text>
+    <Text size={14} color="supporting">Mint an NFT for <Address value={owner} /></Text>
   )
 }
