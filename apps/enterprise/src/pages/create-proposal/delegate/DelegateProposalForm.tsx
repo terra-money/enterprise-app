@@ -64,7 +64,7 @@ export const DelegateProposalForm = () => {
       }}
     >
       <VStack alignItems="start" gap={8}>
-        <TextInput {...register('address')} label="Validator address" placeholder="Enter address" />
+        <TextInput {...register('address')} label="Validator address" placeholder="Enter an address" />
         {token && Big(token.amount).gt(0) ? (
           <Controller
             control={control}
