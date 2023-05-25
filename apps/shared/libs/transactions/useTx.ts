@@ -61,6 +61,7 @@ const useTx = <Options>(
       // however we are displaying a pending operation status so
       // we really want the response to complete when the tx has been
       // submitted to the mempool
+      console.log('useTx(): dispatching addTxAction:', txResult.result)
       const completion = dispatch(addTxAction(txResult.result.txhash, payload, lcd, chainID));
 
       if (useTxOptions.waitForCompletion) {

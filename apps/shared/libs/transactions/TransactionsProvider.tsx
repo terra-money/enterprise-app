@@ -89,7 +89,6 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
     });
 
     const completed = completedSubject.subscribe((transaction) => {
-      console.log('COMPLETED!', transaction);
       if (onCompleted && transaction.status === TransactionStatus.Completed) {
         onCompleted(transaction);
       }
