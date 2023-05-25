@@ -5,9 +5,9 @@ import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useStakeNftsTx } from 'dao/tx/useStakeNftsTx';
-import { useState } from 'react';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { NftIdsInput } from 'chain/components/NftIdInput';
+import { useSubSetValue } from 'lib/shared/hooks/useSubSetValue';
 
 interface StakeNFTOverlayProps extends ClosableComponentProps {
   staked: string[];
@@ -19,9 +19,8 @@ export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
 
   const [txResult, stakeNfts] = useStakeNftsTx();
 
-  const [tokenIds, setTokenIds] = useState<string[]>([]);
-
   const { data: nfts = [], isLoading } = useMyNftsQuery(dao_membership_contract);
+  const [tokenIds, setTokenIds] = useSubSetValue(nfts.map(nft => nft.tokenId))
 
   return (
     <Modal
