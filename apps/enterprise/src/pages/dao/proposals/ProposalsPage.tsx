@@ -80,7 +80,7 @@ export const ProposalsPage = () => {
         <PrimaryButton
           as="div"
           isDisabled={
-            newProposalsDisabled && 'You must have voting power for this DAO to be able to create a new proposal.'
+            newProposalsDisabled && 'Only members of this DAO can create proposals.'
           }
           onClick={() => {
             if (newProposalsDisabled === false) {
@@ -97,7 +97,7 @@ export const ProposalsPage = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : 'To create a new proposal click here'
+              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : ' Click here to create a new proposal.'
                 }`}
               action={
                 newProposalsDisabled ? undefined : (

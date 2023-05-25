@@ -11,7 +11,7 @@ export function GovConfigStep() {
   } = useDaoWizardForm();
 
   return (
-    <WizardStep title="Define governance parameters">
+    <WizardStep title="DAO governance parameters">
       <Container direction="column" gap={24}>
         <GovConfigFields
           daoType={type}

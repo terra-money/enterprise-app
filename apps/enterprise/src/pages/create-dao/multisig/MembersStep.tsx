@@ -34,7 +34,7 @@ export function MembersStep() {
   const areAllMembersValid = members.every(isFormStateValid);
 
   return (
-    <WizardStep title="Add members to the multisig" subTitle="You need at least two members for the multisig">
+    <WizardStep title="Add members to the multisig" subTitle="You need at least two members to create a multisig DAO. Weights are the number of votes given to an address.">
       <Container gap={24} className={styles.membersList} direction="column" component="section">
         {members.map((formState, index) => {
           return (

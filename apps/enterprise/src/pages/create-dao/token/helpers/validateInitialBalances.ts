@@ -9,13 +9,13 @@ export const validateInitialBalances = (initialBalances: InitialBalance[]): Form
     const formState: FormState<InitialBalance> = { address, amount };
 
     if (!address) {
-      formState.addressError = 'Address is required';
+      formState.addressError = 'Enter a Terra address';
     } else if (validateAddress(address)) {
       formState.addressError = 'Invalid Terra address';
     }
 
     formState.amountError =
-      amount?.length === 0 ? 'The amount is required' : validateAmount(Number(amount), 1, UINT_128_MAX, 'Amount');
+      amount?.length === 0 ? 'Enter an amount' : validateAmount(Number(amount), 1, UINT_128_MAX, 'Amount');
 
     return formState;
   });

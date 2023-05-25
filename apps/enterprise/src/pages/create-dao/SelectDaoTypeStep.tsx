@@ -15,10 +15,10 @@ const daoTypeNameRecord: Record<DaoType, string> = {
 };
 
 const daoTypeExplanationRecord: Record<DaoType, string> = {
-  multisig: 'A "multisig" is a shared wallet, typically with two or more members authorizing transactions.',
-  nft: 'NFT Community DAOs leverage NFTs as membership, giving NFT holders voting power to make decisions.',
+  multisig: 'A multisig is a shared wallet with two or more members authorizing transactions.',
+  nft: 'In NFT DAOs, users stake NFTs to participate in governance.',
   token:
-    'Community Token DAOs leverage community tokens as membership, giving token holders voting power to make decisions',
+    'In Token DAOs, users stake tokens to participate in governance.',
 };
 
 const Container = styled(VStack)`

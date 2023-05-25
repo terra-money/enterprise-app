@@ -10,7 +10,7 @@ export const VetoThresholdInput = ({ value, onChange }: VetoThresholdInputProps)
   return (
     <FormControl
       label="Veto threshold"
-      helpText="The minimum proportion of Veto votes for the proposal to be rejected. For example, 51% threshold would mean that there needs to be 51% of veto votes for the proposal to get rejected."
+      helpText="The minimum proportion of Veto votes required to reject a proposal. For example, a 30% veto threshold means that a proposal will fail if more than 30% of the votes are Veto."
     >
       <SliderInput
         value={value}

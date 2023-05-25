@@ -10,7 +10,7 @@ export function SocialsStep() {
   } = useDaoWizardForm();
 
   return (
-    <WizardStep title="Social media links" subTitle="Add social media links to your DAO">
+    <WizardStep title="Social media links" subTitle="Connect your DAO's social media">
       <Container gap={24} direction="column" component="section">
         <SocialFields {...socials} onChange={(params) => formInput({ socials: { ...socials, ...params } })} />
       </Container>

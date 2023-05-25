@@ -46,7 +46,7 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
             value={!!value.allowEarlyProposalExecution}
             onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
           />
-          <TextTooltip content="Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait for them to expire." />
+          <TextTooltip content="Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait until the end of the voting period." />
         </HStack>
       )}
     </>

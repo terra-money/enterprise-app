@@ -47,7 +47,7 @@ export const TreasuryOverview = () => {
               ) : (
                 <Container className={styles.noNFTToDisplay}>
                   <Text className={styles.noNFTLabel} variant="label">
-                    No NFTs were added to the treasury yet.
+                    No NFTs yet.
                   </Text>
                 </Container>
               )}

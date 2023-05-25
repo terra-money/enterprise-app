@@ -11,7 +11,7 @@ export const DepositIntoTreasuryOverlay = ({ onClose }: ClosableComponentProps) 
 
   return (
     <Modal
-      title="Deposit assets"
+      title="Deposit an asset"
       onClose={onClose}
       renderContent={() => {
         return (

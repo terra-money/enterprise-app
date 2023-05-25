@@ -28,7 +28,7 @@ export const fetchExistingNFT = async (
       dispatch({
         existingNFT: undefined,
         existingNFTLoading: false,
-        existingNFTError: 'Could not find the existing NFT.',
+        existingNFTError: 'The existing NFT could not be found.',
       });
     }
   }

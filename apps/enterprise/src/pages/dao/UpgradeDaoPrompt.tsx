@@ -17,7 +17,7 @@ export const UpgradeDaoPrompt = () => {
       <HStack justifyContent="space-between" fullWidth alignItems="center" gap={16} wrap="wrap">
         <HStack alignItems="center" gap={8}>
           <Text as="span" color="success"><ArrowUpCircleIcon /></Text>
-          <Text weight="semibold">New version of smart contracts available to this DAO</Text>
+          <Text weight="semibold">This DAO has a new smart contract version available.</Text>  
         </HStack>
         <UpgradeDaoActions />
       </HStack>

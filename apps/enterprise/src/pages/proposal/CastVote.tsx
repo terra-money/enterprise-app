@@ -58,7 +58,7 @@ export const CastVote = () => {
 
   if (!myAddress) {
     // TODO: show a button to connect a wallet
-    return <Text variant="text">Connect wallet to vote</Text>;
+    return <Text variant="text">Connect your wallet to vote</Text>;
   }
 
   if (isVotingPowerLoading) {
@@ -67,7 +67,7 @@ export const CastVote = () => {
   }
 
   if (proposal.type === 'council' && !amICouncilMember) {
-    return <Text variant="text">Council members only</Text>;
+    return <Text variant="text">Only council members can vote</Text>;
   }
 
   if (proposal.type === 'general' && votingPower && votingPower.eq(0)) {

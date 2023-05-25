@@ -63,13 +63,13 @@ export const MintNftProposalForm = () => {
         <TextInput
           error={errors.tokenId?.message}
           {...register('tokenId')}
-          placeholder="Enter unique ID"
+          placeholder="Enter a unique ID"
           label="Token ID"
         />
         <TextInput
           error={errors.owner?.message}
           {...register('owner')}
-          placeholder="Enter address"
+          placeholder="Enter an address"
           label="Owner address"
         />
 

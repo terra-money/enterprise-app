@@ -16,7 +16,7 @@ export const validateCouncil = ({
   }));
 
   if (allowedProposalTypes.length < 1) {
-    formState.allowedProposalTypesError = 'At least one proposal type must be selected';
+    formState.allowedProposalTypesError = 'Select at least one proposal type';
   }
 
   formState.thresholdError = validateAmount(Math.round(threshold * 100), 50, 100, 'Threshold');

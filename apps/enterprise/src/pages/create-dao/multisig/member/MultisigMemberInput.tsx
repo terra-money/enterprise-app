@@ -29,7 +29,7 @@ export const MultisigMemberInput = ({ addr, addrError, weight, onChange, onRemov
         <Container className={styles.row}>
           <input
             autoFocus
-            placeholder="Type a wallet address..."
+            placeholder="Enter a wallet address"
             className={styles.walletInput}
             value={addr}
             onChange={({ currentTarget }) => onChange({ addr: currentTarget.value })}

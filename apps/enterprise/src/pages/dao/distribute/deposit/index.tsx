@@ -12,14 +12,14 @@ export const DepositIntoFundsDistributor = () => {
   const { dao_type } = useCurrentDao()
   const isMultisig = dao_type === 'multisig'
 
-  const shareholders = isMultisig ? 'multisig members' : 'stakers'
+  const shareholders = isMultisig ? 'multisig members' : 'DAO stakers'
 
   return (
-    <TitledSection title={`Distribute rewards to your ${shareholders}`}>
+    <TitledSection title={`Distribute rewards to ${shareholders}`}>
       <VStack gap={8}>
 
         <Text color="supporting">
-          Assets deposited will be distributed as rewards for DAO {shareholders} to claim.
+          Deposit a whitelisted asset to distribute it to all {shareholders} as claimable rewards. 
         </Text>
         <OverlayOpener
           renderOpener={({ onOpen }) => (

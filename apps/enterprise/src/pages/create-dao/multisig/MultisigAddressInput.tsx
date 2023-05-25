@@ -15,7 +15,7 @@ export const MultisigAddressInput = () => {
   return (
     <WizardInput
       label="Multisig address"
-      placeholder="Type your existing CW3 Multisig address"
+      placeholder="Enter your existing CW3 Multisig contract address"
       value={existingMultisigAddr}
       error={existingMultisigVotersError}
       valid={existingMultisigVoters !== undefined}

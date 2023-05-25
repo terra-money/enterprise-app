@@ -71,7 +71,7 @@ export const Page = () => {
         <ErrorIcon />
       </IconButton>
       <Text className={styles.noResultsLabel}>
-        We couldn’t find DAOs matching your criteria. Please try again.
+        We couldn’t find any DAOs matching your criteria. Please try again.
       </Text>
     </Container>
   )

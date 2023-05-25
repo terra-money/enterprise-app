@@ -18,17 +18,17 @@ const features: Feature[] = [
   },
   {
     title: 'Add DAOs to your watchlist',
-    description: 'Follow your favorite DAOs and see what they are up to.',
+    description: 'Follow your favourite DAOs and see what they are up to.',
     imageUrl: 'images/landing-dashboard.png',
   },
   {
     title: 'Monitor DAO treasuries',
-    description: 'Keep an eye on a DAOs assets and propose how they should be spent.',
+    description: "Keep an eye on a DAO's assets and propose how they should be spent.",
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Trade DAO tokens (coming soon!)',
-    description: 'Become a member of different DAOs by trading DAO tokens.',
+    title: 'Go interchain (coming soon!)',
+    description: 'Create Enterprise DAOs on your favorite chains.',
     imageUrl: 'images/landing-dashboard.png',
   },
 ];

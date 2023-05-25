@@ -28,7 +28,7 @@ export const fetchExistingMultisigVoters = async (
       dispatch({
         existingMultisigVoters: undefined,
         existingMultisigVotersLoading: false,
-        existingMultisigVotersError: 'Could not find the existing multisig voters list.',
+        existingMultisigVotersError: 'The existing multisig could not be found.',
       });
     }
   }

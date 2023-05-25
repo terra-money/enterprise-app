@@ -28,7 +28,7 @@ export const fetchExistingToken = async (
       dispatch({
         existingToken: undefined,
         existingTokenLoading: false,
-        existingTokenError: 'Could not find the existing token information.',
+        existingTokenError: 'The existing token could not be found.',
       });
     }
   }

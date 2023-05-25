@@ -36,7 +36,7 @@ export const DescriptionInput = (props: DescriptionInputProps) => {
   return (
     <FormControl className={classNames(className, styles.root)} label={label}>
       <FormTextInput
-        placeholder="Type something"
+        placeholder="Enter a description"
         multiline={true}
         margin="none"
         value={value}

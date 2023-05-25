@@ -1,6 +1,6 @@
 export const validateWasmMsg = (msg: string) => {
   if (!msg) {
-    return 'Message is required';
+    return 'Enter a message';
   }
 
   try {

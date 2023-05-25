@@ -15,7 +15,7 @@ export const WhitelistedNFTInput = ({ value, onChange, onRemove, error, loading 
     <div className={styles.root}>
       <WizardInput
         label="NFT address"
-        placeholder="Type CW721 NFT address"
+        placeholder="Enter a CW721 NFT address"
         value={value}
         error={error}
         loading={loading}

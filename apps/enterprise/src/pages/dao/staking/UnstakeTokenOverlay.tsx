@@ -33,7 +33,7 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
           <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
           <AmountInput
             value={amount}
-            placeholder="Type amount to unstake"
+            placeholder="Enter an amount to unstake"
             maxAmount={demicrofy(staked, decimals)}
             symbol={symbol}
             onChange={(event) => input({ amount: event.target.value })}

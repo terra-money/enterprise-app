@@ -94,7 +94,7 @@ export function ImportStep() {
   );
 
   return (
-    <WizardStep title={`Do you have your own ${daoName}?`} helpContent={helpContent}>
+    <WizardStep title={`Do you have an existing ${daoName}?`} helpContent={helpContent}>
       <Container direction="column" gap={24}>
         <Container gap={24} direction="column">
           <OptionButton
@@ -103,7 +103,7 @@ export function ImportStep() {
             onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: false } })}
           />
           <OptionButton
-            title={`Yes, find my existing ${daoName}`}
+            title={`Yes, find my ${daoName}`}
             active={shouldImport}
             onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: true } })}
           />

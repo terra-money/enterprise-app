@@ -18,7 +18,7 @@ export const ProposalsFilter = ({ value, onChange }: ProposalsFilterProps) => {
 
   return (
     <OverlayMenu
-      title="Display proposals with status"
+      title="Display proposal types"
       content={(
         <VStack fullWidth alignItems="start" gap={12}>
           {proposalStatuses.map(daoType => (

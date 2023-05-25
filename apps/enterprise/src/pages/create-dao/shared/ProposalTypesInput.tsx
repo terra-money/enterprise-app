@@ -44,7 +44,7 @@ export const ProposalTypesInput = forwardRef(function InnerCollectionsInput(
     <VStack>
       <FixedOptionsInput
         label={label}
-        placeholder="Select proposal type"
+        placeholder="select a proposal type"
         value={null}
         ref={ref}
         onChange={(value) => {

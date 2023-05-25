@@ -11,12 +11,12 @@ export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositIn
   return (
     <FormControl
       label="Minimum deposit"
-      helpText="Minimum amount of DAO's governance unit to be required to create a deposit"
+      helpText="The minimum deposit amount required to create a proposal." 
     >
       <FormTextInput
         value={value === undefined ? '' : value}
         type="number"
-        placeholder="Enter minimum deposit"
+        placeholder="Enter a minimum deposit amount"
         error={error}
         onChange={({ currentTarget }) => {
           if (currentTarget.value === '') {

@@ -10,7 +10,7 @@ export const NftAddressInput = () => {
   return (
     <WizardInput
       label="NFT address"
-      placeholder="Type your existing CW721 NFT contract address"
+      placeholder="Enter your existing CW721 NFT contract address"
       value={existingNFTAddr}
       error={existingNFTError}
       valid={existingNFT !== undefined}

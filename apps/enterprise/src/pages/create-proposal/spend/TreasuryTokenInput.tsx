@@ -19,7 +19,7 @@ export const TreasuryTokenInput = ({ value, onChange, error }: TreasuryTokenInpu
   return (
     <FixedOptionsInput
       label="Treasury token"
-      placeholder="Select treasury token"
+      placeholder="Select a treasury token"
       options={treasuryTokens}
       error={error}
       onChange={onChange}

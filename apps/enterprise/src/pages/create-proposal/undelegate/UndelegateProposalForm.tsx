@@ -73,7 +73,7 @@ export const UndelegateProposalForm = () => {
         isLoading={areDelegationsLoading}
         label="Validator"
         value={validator}
-        placeholder="Select validator"
+        placeholder="Select a validator"
         onChange={setValidator}
         optionToString={(validatorAddress) => validatorAddress}
         options={delegations.map((delegation) => delegation.validator_address)}
@@ -89,7 +89,7 @@ export const UndelegateProposalForm = () => {
               type="number"
               error={errors.amount?.message}
               label="LUNA amount"
-              placeholder="Enter amount"
+              placeholder="Enter an amount"
               onValueChange={onChange}
               value={value}
               onBlur={onBlur}

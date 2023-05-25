@@ -10,7 +10,7 @@ export const TokenAddressInput = () => {
   return (
     <WizardInput
       label="Token address"
-      placeholder="Type your existing CW20 token address"
+      placeholder="Enter your existing CW20 token contract address"
       value={existingTokenAddr}
       error={existingTokenError}
       valid={existingToken !== undefined}

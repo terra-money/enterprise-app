@@ -7,9 +7,9 @@ export const validateAmount = (
   fieldName: string
 ): string | undefined => {
   if (max !== undefined && Big(value).gt(max)) {
-    return `The ${fieldName} can not exceed the maximum of ${max}`;
+    return `The ${fieldName} can not exceed the maximum of ${max}.`;
   }
   if (Big(value).lt(min)) {
-    return `The ${fieldName} can not be less then ${min}`;
+    return `The ${fieldName} can not be less than ${min}.`;
   }
 };

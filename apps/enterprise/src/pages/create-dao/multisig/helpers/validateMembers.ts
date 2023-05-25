@@ -7,14 +7,14 @@ export const validateMembers = (members: MultisigMember[]): FormState<MultisigMe
     const formState: FormState<MultisigMember> = { addr, weight };
 
     if (!addr) {
-      formState.addrError = 'Address is required';
+      formState.addrError = 'Enter a Terra address';
     } else if (validateAddress(addr)) {
       formState.addrError = 'Invalid Terra address';
     } else {
       const previousAddresses = members.slice(0, index).map(({ addr }) => addr);
       const isDuplicate = previousAddresses.includes(addr);
       if (isDuplicate) {
-        formState.addrError = 'Given address is already added';
+        formState.addrError = 'This address has already been added';
       }
     }
 
