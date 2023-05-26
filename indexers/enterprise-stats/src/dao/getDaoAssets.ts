@@ -5,6 +5,8 @@ import { contractQuery } from "chain/lcd"
 import { enterprise, enterprise_factory } from "types/contracts";
 import { Dao } from "./Dao";
 import { getAssetPrice } from "chain/getAssetPrice";
+import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount";
+import Big from "big.js";
 
 const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined => {
   if ('native' in response) {
@@ -20,9 +22,10 @@ const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined 
   }
 }
 
-export const getDaoAssets = async ({ address, enterpriseFactoryContract }: Pick<Dao, 'address' | 'enterpriseFactoryContract'>) => {
+export const getDaoAssets = async ({ address, enterpriseFactoryContract, membershipContractAddress }: Pick<Dao, 'address' | 'enterpriseFactoryContract' | 'type' | 'membershipContractAddress'>) => {
   const { assets: globalWhitelist } = await contractQuery<enterprise_factory.AssetWhitelistResponse>(enterpriseFactoryContract, { global_asset_whitelist: {}, });
   const { assets: assetsWhitelist } = await contractQuery<enterprise.AssetWhitelistResponse>(address, { asset_whitelist: {}, });
+
   const whitelist = [...new Set([...globalWhitelist, ...assetsWhitelist])]
 
   const assets: AssetWithPrice[] = []
@@ -33,6 +36,10 @@ export const getDaoAssets = async ({ address, enterpriseFactoryContract }: Pick<
     let balance = '0'
     try {
       balance = await getAssetBalance({ asset, address })
+      if (asset.id === membershipContractAddress) {
+        const totalStakedAmount = await getDaoTotalStakedAmount({ address })
+        balance = Big(balance).minus(totalStakedAmount).toString()
+      }
     } catch (err) {
       console.error(`Failed to get balance of ${asset.type} asset with id=${asset.id}: ${err}`)
       return
