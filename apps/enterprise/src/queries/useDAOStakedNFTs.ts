@@ -5,14 +5,15 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { QUERY_KEY } from './queryKey';
 import { LCDClient } from '@terra-money/feather.js';
 
-async function fetchDAONFTsWhitelist(lcd: LCDClient, address: CW20Addr): Promise<string[]> {
+
+async function fetchStakedNfts(lcd: LCDClient, address: CW20Addr): Promise<string[]> {
   let nfts: string[] = [];
   let lastNft: string | undefined;
-  let response;
+  let response: enterprise.StakedNftsResponse;
 
   do {
-    response = await lcd.wasm.contractQuery<enterprise.NftWhitelistResponse>(address, {
-      nft_whitelist: { start_after: lastNft },
+    response = await lcd.wasm.contractQuery<enterprise.StakedNftsResponse>(address, {
+      staked_nfts: { start_after: lastNft, limit: 100 },
     });
 
     if (response.nfts) {
@@ -24,14 +25,14 @@ async function fetchDAONFTsWhitelist(lcd: LCDClient, address: CW20Addr): Promise
   return nfts;
 }
 
-export const useDAONFTsWhitelist = (daoAddress: string) => {
+export const useStakedNfts = (daoAddress: string) => {
   const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.NFTS_WHITELIST, daoAddress],
     async () => {
-      const whitelist = await fetchDAONFTsWhitelist(lcd, daoAddress as CW20Addr);
-      return whitelist;
+      const stakedNfts = await fetchStakedNfts(lcd, daoAddress as CW20Addr);
+      return stakedNfts;
     },
     {
       refetchOnMount: false,
