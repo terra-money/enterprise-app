@@ -15,7 +15,10 @@ export interface AssetInfo {
   name: string
   symbol: string
   decimals: number
+  icon?: string
 }
+
+export type AssetInfoWithPrice = AssetInfo & AssetWithPrice
 
 export const areSameAsset = (a: Asset, b: Asset) => {
   return a.type === b.type && a.id === b.id

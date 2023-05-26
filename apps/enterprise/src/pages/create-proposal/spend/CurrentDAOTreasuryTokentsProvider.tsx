@@ -1,25 +1,23 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
+import { AssetInfoWithPrice } from 'chain/Asset';
 import { Throbber } from 'components/primitives';
-import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { TreasuryToken, useTreasuryTokensQuery } from 'queries';
+import { useDaoAssets } from 'queries/useDaoAssets';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const { provider: TreasuryTokensProvider, useValue: useCurrentDaoTreasuryTokens } =
-  getValueProviderSetup<TreasuryToken[]>('TreasuryTokens');
+  getValueProviderSetup<AssetInfoWithPrice[]>('TreasuryTokens');
 
 export { useCurrentDaoTreasuryTokens };
 
 export const CurrentDAOTreasuryTokensProvider = ({ children }: Props) => {
-  const dao = useCurrentDao();
+  const { data: assets } = useDaoAssets();
 
-  const { data: treasuryTokens } = useTreasuryTokensQuery(dao.address);
-
-  if (!treasuryTokens) {
+  if (!assets) {
     return <Throbber />;
   }
 
-  return <TreasuryTokensProvider value={treasuryTokens}>{children}</TreasuryTokensProvider>;
+  return <TreasuryTokensProvider value={assets}>{children}</TreasuryTokensProvider>;
 };

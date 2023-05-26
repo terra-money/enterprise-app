@@ -4,12 +4,12 @@ import { ImageHolder } from 'lib/ui/images/ImageHolder';
 import { FixedOptionsInput } from 'lib/ui/inputs/Combobox/FixedOptionsInput';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { TreasuryToken } from 'queries';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
+import { AssetInfoWithPrice } from 'chain/Asset';
 
 interface TreasuryTokenInputProps {
-  value: TreasuryToken | null;
-  onChange: (value: TreasuryToken | null) => void;
+  value: AssetInfoWithPrice | null;
+  onChange: (value: AssetInfoWithPrice | null) => void;
   error?: string;
 }
 
@@ -23,7 +23,7 @@ export const TreasuryTokenInput = ({ value, onChange, error }: TreasuryTokenInpu
       options={treasuryTokens}
       error={error}
       onChange={onChange}
-      optionToString={(token) => token.key}
+      optionToString={(token) => token.id}
       value={value}
       renderOption={(token) => (
         <HStack alignItems="center" gap={8}>
@@ -33,7 +33,7 @@ export const TreasuryTokenInput = ({ value, onChange, error }: TreasuryTokenInpu
           <VStack>
             <Text>{token.name || token.symbol}</Text>
             <Text size={14} cropped color="supporting">
-              {token.key}
+              {token.id}
             </Text>
           </VStack>
         </HStack>

@@ -10,9 +10,9 @@ import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
-import { TreasuryToken } from 'queries';
 import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
+import { AssetInfoWithPrice } from 'chain/Asset';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;
@@ -20,12 +20,12 @@ interface SpendTreasuryProposalFormSchema {
 }
 
 export const SpendTreasuryProposalForm = () => {
-  const [token, setToken] = useState<TreasuryToken | null>(null);
+  const [token, setToken] = useState<AssetInfoWithPrice | null>(null);
 
   const formSchema: z.ZodType<SpendTreasuryProposalFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (token) {
-      amount = amount.lte(demicrofy(token.amount, token.decimals).toNumber());
+      amount = amount.lte(demicrofy(token.balance, token.decimals).toNumber());
     }
     return z.object({
       destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid Terra address' }),
@@ -45,7 +45,7 @@ export const SpendTreasuryProposalForm = () => {
       disabled={!formState.isValid || !token}
       getProposalActions={() => {
         const { amount, destinationAddress } = getValues();
-        const { decimals, key, type } = assertDefined(token);
+        const { decimals, id, type } = assertDefined(token);
         return [
           {
             execute_msgs: {
@@ -54,7 +54,7 @@ export const SpendTreasuryProposalForm = () => {
                 toSpendTreasuryMsg({
                   amount,
                   destinationAddress,
-                  assetId: key,
+                  assetId: id,
                   assetDecimals: decimals,
                   assetType: type === 'cw20' ? 'cw20' : 'native',
                 }),
@@ -86,7 +86,7 @@ export const SpendTreasuryProposalForm = () => {
                   value={value}
                   onBlur={onBlur}
                   ref={ref}
-                  max={demicrofy(token.amount, token.decimals).toNumber()}
+                  max={demicrofy(token.balance, token.decimals).toNumber()}
                 />
               )}
             />
