@@ -37,7 +37,7 @@ export const ViewMoreAssetsOverlay = ({ onClose }: ClosableComponentProps) => {
   const assetCount = assets?.length;
   const renderAssets = () => {
     const treasuryTotalInUSD = sum(assets.map(getAssetBalanceInUsd));
-    const sortedAssets = assets.filter(asset => 
+    const sortedAssets = assets.filter(asset =>
       asset.name.toLowerCase().includes(search.searchText.toLowerCase())).sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a));
     return (
       <AssetsContainer>
