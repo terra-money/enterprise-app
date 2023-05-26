@@ -39,7 +39,7 @@ export const TreasuryOverview = () => {
   } else {
     nftCollection = [];
   }
-  
+
   const minimumNFTsAmmount = 3;
 
   const nftDisplayLimit = useMemo(() => {
@@ -101,7 +101,7 @@ export const TreasuryOverview = () => {
         </Container>
         {nftCollection?.length && <Container gap={16} className={styles.nftsActionContainer}>
           <ViewMoreNft />
-         <DepositNFTIntoTreasury />
+          <DepositNFTIntoTreasury />
         </Container>}
       </Container>
     </>

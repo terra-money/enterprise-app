@@ -31,7 +31,7 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
         return count;
     }
 
-    
+
     return (
         <Modal
             width={970}
@@ -42,29 +42,29 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
                 return (
                     <LoadingPage isLoading={isLoading}>
                         <VStack className={styles.modalContent} gap={32}>
-                        <Container className={styles.subheader} gap={32}>
-                        <Text variant='label'> Displaying {nftCount()} NFTs in treasury</Text>
-                        </Container>
-                        <Container className={styles.scrollableContainer}>
-                            {nftCollection?.length && nftCollection[0]?.tokenIds.length !== 0 ? (
-                                nftCollection.filter(nftColitem => nftColitem.tokenIds.length !== 0).map((nft, index) => {
-                                    return <NFTCard key={index} nftCollectionAdress={nft.collectionAddress} tokenIds={nft.tokenIds.tokens ? nft.tokenIds.tokens : nft.tokenIds.ids} />;
-                                })
-                            ) : (
-                                <Container className={styles.noNFTToDisplay}>
-                                    <Text className={styles.noNFTLabel} variant="label">
-                                        No NFTs were added to the treasury yet.
-                                    </Text>
-                                </Container>
-                            )}
+                            <Container className={styles.subheader} gap={32}>
+                                <Text variant='label'> Displaying {nftCount()} NFTs in treasury</Text>
+                            </Container>
+                            <Container className={styles.scrollableContainer}>
+                                {nftCollection?.length && nftCollection[0]?.tokenIds.length !== 0 ? (
+                                    nftCollection.filter(nftColitem => nftColitem.tokenIds.length !== 0).map((nft, index) => {
+                                        return <NFTCard key={index} nftCollectionAdress={nft.collectionAddress} tokenIds={nft.tokenIds.tokens ? nft.tokenIds.tokens : nft.tokenIds.ids} />;
+                                    })
+                                ) : (
+                                    <Container className={styles.noNFTToDisplay}>
+                                        <Text className={styles.noNFTLabel} variant="label">
+                                            No NFTs were added to the treasury yet.
+                                        </Text>
+                                    </Container>
+                                )}
 
-                        </Container>
-                        <PrimaryButton kind="secondary" onClick={onClose}>
-                            Close
-                        </PrimaryButton>
-                    </VStack>
+                            </Container>
+                            <PrimaryButton kind="secondary" onClick={onClose}>
+                                Close
+                            </PrimaryButton>
+                        </VStack>
                     </LoadingPage>
-                    
+
 
                 );
             }}
