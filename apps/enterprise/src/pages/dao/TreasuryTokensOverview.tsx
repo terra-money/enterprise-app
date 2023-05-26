@@ -50,6 +50,7 @@ const SmallScreenWidthContainer = styled.div`
   gap: 12px;
 `;
 
+
 export const TreasuryTokensOverview = () => {
   const address = useCurrentDaoAddress();
 
@@ -89,10 +90,14 @@ export const TreasuryTokensOverview = () => {
       )}
       normal={() => (
         <NormalScreenWidthContainer>
-          <VStack fullHeight fullWidth justifyContent="space-between" gap={8}>
+          <VStack fullHeight fullWidth justifyContent="space-between" gap={24}>
             {renderBasicInfo()}
             {renderAssets()}
-            <DepositIntoTreasury />
+            <Container className={styles.assetsActionsContainer} gap={16}>
+              <ViewMoreAssets />
+              <DepositIntoTreasury />
+            </Container>
+            
           </VStack>
         </NormalScreenWidthContainer>
       )}

@@ -1,6 +1,6 @@
-import { Container, ScrollableContainer } from '@terra-money/apps/components';
+import { Container } from '@terra-money/apps/components';
 import { Panel } from 'components/panel';
-import { NFTPairs, useNFTsOwnersQuery } from 'queries';
+import { NFTPairs, useNFTsOwnersQuery, useStakedNfts } from 'queries';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -9,13 +9,15 @@ import { Text } from 'components/primitives';
 import { useDAONFTsWhitelist } from 'queries/useDAONFTsWhitelist';
 import { CW20Addr } from '@terra-money/apps/types';
 import { useCurrentDaoAddress } from 'dao/navigation';
+import { ViewMoreNft } from './viewMoreNft';
+import { DepositIntoTreasury } from './deposit';
 
 export const TreasuryOverview = () => {
   const address = useCurrentDaoAddress();
   const dao = useCurrentDao();
 
   const { data: whitelist = [] } = useDAONFTsWhitelist(address);
-
+  const { data: stakedNfts = [] } =  useStakedNfts(address);
   let nftCollection: NFTPairs[] | undefined = [];
   const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
   if (dao.dao_type !== 'nft') {
@@ -24,6 +26,25 @@ export const TreasuryOverview = () => {
     nftCollection = [];
   }
 
+  let nftTokensToDisplay = [];
+
+  if (nftCollection) {
+    for (let i = 0; i < nftCollection.length; i++) {
+      const nft = nftCollection[i];
+      if (nft.tokenIds.tokens?.length) {
+        for (let j = 0; j < nft.tokenIds.tokens.length; j++) {
+          const token = nft.tokenIds.tokens[j];
+          nftTokensToDisplay.push({ token: [token], collectionAddress: nft.collectionAddress });
+          if (nftTokensToDisplay.length === 4) {
+            break;
+          }
+        }
+      }
+      if (nftTokensToDisplay.length === 4) {
+        break;
+      }
+    }
+  }
   return (
     <>
       <Panel className={styles.root}>
@@ -31,35 +52,33 @@ export const TreasuryOverview = () => {
           <TreasuryTokensOverview />
         </Container>
       </Panel>
-      <Container className={styles.nftAssets} direction="column" gap={8}>
+      <Container className={styles.nftAssets} direction="column" gap={24}>
         <Text className={styles.label} variant="heading4">
           NFT Treasury
         </Text>
-        <ScrollableContainer className={styles.scrollableContainer}>
-          <Container direction="row" gap={8} className={styles.nftContainer}>
-            <>
-              {nftCollection?.length && nftCollection[0]?.tokenIds.length !== 0 ? (
-                nftCollection
-                  .filter((nftColitem) => nftColitem.tokenIds.length !== 0)
-                  .map((nft, index) => {
-                    return (
-                      <NFTCard
-                        key={index}
-                        nftCollectionAdress={nft.collectionAddress}
-                        tokenIds={nft.tokenIds.tokens ? nft.tokenIds.tokens : nft.tokenIds.ids}
-                      />
-                    );
-                  })
-              ) : (
-                <Container className={styles.noNFTToDisplay}>
-                  <Text className={styles.noNFTLabel} variant="label">
-                    No NFTs yet.
-                  </Text>
-                </Container>
-              )}
-            </>
-          </Container>
-        </ScrollableContainer>
+        <Container direction="row" gap={8} className={styles.nftContainer}>
+          <>
+            {nftTokensToDisplay.length !== 0 ? (
+              nftTokensToDisplay.map((nft, index) => (
+                <NFTCard
+                  key={index}
+                  nftCollectionAdress={nft.collectionAddress}
+                  tokenIds={nft.token}
+                />
+              ))
+            ) : (
+              <Container className={styles.noNFTToDisplay}>
+                <Text className={styles.noNFTLabel} variant="label">
+                  No NFTs were added to the treasury yet.
+                </Text>
+              </Container>
+            )}
+          </>
+        </Container>
+        {nftCollection?.length && <Container gap={16} className={styles.nftsActionContainer}>
+           <ViewMoreNft/>
+           <DepositIntoTreasury />
+        </Container>}
       </Container>
     </>
   );
