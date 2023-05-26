@@ -1,8 +1,7 @@
-import { useTreasuryTokensQuery } from 'queries';
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
 import Big, { BigSource } from 'big.js';
-import { assertDefined, sum } from '@terra-money/apps/utils';
+import { sum } from '@terra-money/apps/utils';
 import { Address } from 'components/address';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
@@ -11,6 +10,7 @@ import { DepositIntoTreasury } from './deposit';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { AssetCard } from './AssetCard';
 import { DaoTVL } from './DaoTVL';
+import { useDaoAssets } from 'queries/useDaoAssets';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -52,20 +52,16 @@ const SmallScreenWidthContainer = styled.div`
 export const TreasuryTokensOverview = () => {
   const address = useCurrentDaoAddress()
 
-  const { data: tokenBalances } = useTreasuryTokensQuery(address);
+  const { data: tokenBalances } = useDaoAssets();
 
   const tokenBalancesWithPrice = tokenBalances
     ? tokenBalances
-      .filter((t) => t.usdAmount)
-      .sort((a, b) => assertDefined(b.usdAmount).cmp(assertDefined(a.usdAmount)))
+      .filter((t) => t.usd)
+      .sort((a, b) => Big(b.usd).cmp(Big(a.usd)))
     : undefined;
 
   const treasuryTotalInUSD = tokenBalancesWithPrice
-    ? sum(tokenBalancesWithPrice.map((token) => assertDefined(token.usdAmount)))
-    : undefined;
-
-  const tokenBalancesWithoutPrice = tokenBalances
-    ? tokenBalances.filter((token) => token.usdAmount === undefined).sort((a, b) => Big(a.amount).cmp(b.amount))
+    ? sum(tokenBalancesWithPrice.map((token) => Big(token.usd)))
     : undefined;
 
   // const renderPieChart = () => {
@@ -92,10 +88,6 @@ export const TreasuryTokensOverview = () => {
         {treasuryTotalInUSD !== undefined &&
           tokenBalancesWithPrice?.map((token, index) => (
             <AssetCard token={token} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
-          ))}
-        {tokenBalancesWithoutPrice !== undefined &&
-          tokenBalancesWithoutPrice?.map((token, index) => (
-            <AssetCard token={token}></AssetCard>
           ))}
       </AssetsContainer>
     );

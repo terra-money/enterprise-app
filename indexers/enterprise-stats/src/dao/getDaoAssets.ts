@@ -1,4 +1,4 @@
-import { Asset, AssetWithPrice } from "chain/Asset";
+import { Asset, AssetWithPrice, areSameAsset } from "chain/Asset";
 import { getAssetBalance } from "chain/getAssetBalance";
 import { getAssetInfo } from "chain/getAssetInfo";
 import { contractQuery } from "chain/lcd"
@@ -8,7 +8,7 @@ import { getAssetPrice } from "chain/getAssetPrice";
 import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount";
 import Big from "big.js";
 
-const toAsset = (response: enterprise.AssetInfoBaseFor_Addr): Asset | undefined => {
+const toAsset = (response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr): Asset | undefined => {
   if ('native' in response) {
     return {
       type: 'native',
@@ -26,13 +26,16 @@ export const getDaoAssets = async ({ address, enterpriseFactoryContract, members
   const { assets: globalWhitelist } = await contractQuery<enterprise_factory.AssetWhitelistResponse>(enterpriseFactoryContract, { global_asset_whitelist: {}, });
   const { assets: assetsWhitelist } = await contractQuery<enterprise.AssetWhitelistResponse>(address, { asset_whitelist: {}, });
 
-  const whitelist = [...new Set([...globalWhitelist, ...assetsWhitelist])]
+  const whitelist = [];
+  [...globalWhitelist, ...assetsWhitelist].forEach(item => {
+    const asset = toAsset(item)
+    if (asset && !whitelist.find(a => areSameAsset(a, asset))) {
+      whitelist.push(asset)
+    }
+  })
 
   const assets: AssetWithPrice[] = []
-  await Promise.all(whitelist.map(async response => {
-    const asset = toAsset(response)
-    if (!asset) return
-
+  await Promise.all(whitelist.map(async asset => {
     let balance = '0'
     try {
       balance = await getAssetBalance({ asset, address })
