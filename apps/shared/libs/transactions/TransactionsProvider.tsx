@@ -65,7 +65,8 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
     return {
       ...state,
       initialized: true,
-      transactions: storage.read(),
+      // TODO: temporary fix for the issue with undefined trasnsactions
+      transactions: storage.read().filter(tx => tx),
     };
   });
 
