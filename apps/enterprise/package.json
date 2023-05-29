@@ -16,6 +16,11 @@
       "eslint --max-warnings 0"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -113,9 +118,10 @@
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
+    "husky": "^8.0.3",
     "jest-watch-typeahead": "2.1.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
     "react-app-rewired": "^2.2.1",
     "ts-node": "^10.9.1"
   },
