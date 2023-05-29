@@ -36,6 +36,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@floating-ui/dom": "^1.2.9",
+    "@floating-ui/react": "^0.24.2",
     "@hookform/resolvers": "^2.9.7",
     "@mui/icons-material": "^5.10.2",
     "@mui/material": "^5.10.2",

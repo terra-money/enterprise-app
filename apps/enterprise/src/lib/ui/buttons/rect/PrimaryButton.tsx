@@ -12,7 +12,7 @@ export type Props = RectButtonProps & {
 const defaultKind = 'primary';
 
 const Container = styled(RectButton) <Props>`
-  color: ${({ theme }) => theme.colors.white.toCssValue()};
+  color: ${({ theme }) => theme.colors.contrast.toCssValue()};
 
   ${({ kind = defaultKind }) =>
   ({

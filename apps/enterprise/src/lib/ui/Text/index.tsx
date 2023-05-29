@@ -14,7 +14,7 @@ const getTextColorRecord = ({ colors }: DefaultTheme) =>
   idle: colors.idle,
   success: colors.success,
   reversed: colors.background,
-  white: colors.white,
+  white: colors.contrast,
 } as const);
 
 type TextWeight = 'regular' | 'semibold' | 'bold';

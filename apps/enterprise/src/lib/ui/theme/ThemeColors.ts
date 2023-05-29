@@ -34,7 +34,7 @@ export type ThemeColors = {
 
   outlinedHover: HSLA;
 
-  white: HSLA;
+  contrast: HSLA
 
   getPaletteColor: (index: number) => HSLA;
 };
