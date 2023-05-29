@@ -1,17 +1,16 @@
 import { Container } from '@terra-money/apps/components';
 import { TokenIcon } from 'components/token-icon';
-import { Text } from 'components/primitives';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from '@terra-money/apps/libs/formatting';
 import styles from './AssetCard.module.sass'
-import { HStack } from 'lib/ui/Stack';
 import { toPercents } from '@terra-money/apps/utils';
-import Big from 'big.js';
-import { AssetInfoWithPrice } from 'chain/Asset';
+import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
+import { SeparatedBy, dotSeparator } from 'lib/ui/SeparatedBy';
+import { Text } from 'lib/ui/Text';
 
 interface AssetCardProps {
     className?: string;
     token: AssetInfoWithPrice;
-    treasuryTotalInUSD?: Big | undefined;
+    treasuryTotalInUSD: number;
 }
 
 export const AssetCard = ({ token, treasuryTotalInUSD }: AssetCardProps) => {
@@ -22,18 +21,16 @@ export const AssetCard = ({ token, treasuryTotalInUSD }: AssetCardProps) => {
                     <TokenIcon className={styles.icon} symbol={token.symbol} path={token.icon} />
                 </Container>
                 <Container className={styles.assetContainer}>
-                    <Text variant='heading4'>
+                    <Text>
+
                         {token.symbol}
                     </Text>
-                    <HStack justifyContent="space-between" gap={8}>
-                        <Text variant='label'>
-                            {formatAmount(demicrofy(token.balance, token.decimals))}{' '}
-                        </Text>
-                        <Text variant='label'>
-                            {treasuryTotalInUSD && toPercents(Big(token.usd).div(treasuryTotalInUSD).toNumber(), 'round')}
-                        </Text>
-                    </HStack>
-
+                    <Text as="div" color='supporting'>
+                        <SeparatedBy separator={dotSeparator}>
+                            <div>{formatAmount(getAssetBalanceInUsd(token))} $</div>
+                            <div>{toPercents(getAssetBalanceInUsd(token) / treasuryTotalInUSD, 'round')}</div>
+                        </SeparatedBy>
+                    </Text>
                 </Container>
             </Container>
 

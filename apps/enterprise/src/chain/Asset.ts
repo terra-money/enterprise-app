@@ -1,3 +1,5 @@
+import { fromChainAmount } from "./utils/fromChainAmount"
+
 type AssetType = 'cw20' | 'native'
 
 export interface Asset {
@@ -23,3 +25,5 @@ export type AssetInfoWithPrice = AssetInfo & AssetWithPrice
 export const areSameAsset = (a: Asset, b: Asset) => {
   return a.type === b.type && a.id === b.id
 }
+
+export const getAssetBalanceInUsd = (asset: AssetWithPrice) => fromChainAmount(asset.balance, asset.decimals) * asset.usd

@@ -1,7 +1,6 @@
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
 import Big, { BigSource } from 'big.js';
-import { sum } from '@terra-money/apps/utils';
 import { Address } from 'components/address';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
@@ -11,6 +10,9 @@ import { useCurrentDaoAddress } from 'dao/navigation';
 import { AssetCard } from './AssetCard';
 import { DaoTVL } from './DaoTVL';
 import { useDaoAssets } from 'queries/useDaoAssets';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { sum } from 'lib/shared/utils/sum';
+import { getAssetBalanceInUsd } from 'chain/Asset';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -57,20 +59,10 @@ export const TreasuryTokensOverview = () => {
   const tokenBalancesWithPrice = tokenBalances
     ? tokenBalances
       .filter((t) => t.usd)
-      .sort((a, b) => Big(b.usd).cmp(Big(a.usd)))
+      .sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
     : undefined;
 
-  const treasuryTotalInUSD = tokenBalancesWithPrice
-    ? sum(tokenBalancesWithPrice.map((token) => Big(token.usd)))
-    : undefined;
-
-  // const renderPieChart = () => {
-  //   return (
-  //     <PieChartWr>
-  //       <TreasuryTokensPieChart tokens={tokenBalancesWithPrice || []} />
-  //     </PieChartWr>
-  //   );
-  // };
+  const treasuryTotalInUSD = tokenBalancesWithPrice ? sum(tokenBalancesWithPrice.map(getAssetBalanceInUsd)) : undefined;
 
   const renderBasicInfo = () => {
     return (
@@ -86,7 +78,7 @@ export const TreasuryTokensOverview = () => {
     return (
       <AssetsContainer>
         {treasuryTotalInUSD !== undefined &&
-          tokenBalancesWithPrice?.map((token, index) => (
+          tokenBalancesWithPrice?.map((token) => (
             <AssetCard token={token} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
           ))}
       </AssetsContainer>
