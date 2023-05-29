@@ -6,6 +6,33 @@
   align-items: center
   justify-content: center
 
+.votesContainer
+  margin-top: 16px
+
+  .yesBean
+    display: block
+    content: ''
+    background: #E9FF92
+    border-radius: 3px
+    width: 12px
+    height: 6px
+
+  .noBean
+    display: block
+    content: ''
+    background: #FB4E57
+    border-radius: 3px
+    width: 12px
+    height: 6px
+  
+  .abstainBean
+    display: block
+    content: ''
+    background: rgba(255, 255, 255, 0.4)
+    border-radius: 3px
+    width: 12px
+    height: 6px
+
 .root
   display: flex
   flex-direction: column
@@ -42,7 +69,8 @@
       .abstain
         height: 100%
         flex: 1
-        border-radius: 4px
+        border-top-right-radius: 4px
+        border-bottom-right-radius: 4px
         background: rgba(255, 255, 255, 0.4)
         
         .value
@@ -53,7 +81,6 @@
       .no
         height: 100%
         flex: 1
-        border-radius: 4px
         background: #FB4E57
 
         .value
@@ -63,8 +90,9 @@
 
       .yes
         height: 100%
-        border-radius: 4px
-        @include background-gradient
+        border-top-left-radius: 4px
+        border-bottom-left-radius: 4px
+        background: #E9FF92
 
         .value
           white-space: nowrap
