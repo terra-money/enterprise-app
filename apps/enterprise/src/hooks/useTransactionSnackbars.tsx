@@ -45,12 +45,12 @@ const FailedSnackbarMessages: TxMessages = {
 };
 
 export const useTransactionSnackbars = () => {
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   const refetch = useRefetchQueries();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [areIndexersEnabled] = useAreIndexersEnabled()
+  const [areIndexersEnabled] = useAreIndexersEnabled();
 
   const onPending = useRefCallback(
     (transaction: PendingTransaction) => {

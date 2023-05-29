@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { InfiniteData } from "react-query";
+import { useMemo } from 'react';
+import { InfiniteData } from 'react-query';
 
 export function usePaginatedResultItems<T, V>(
   data: InfiniteData<T | undefined> | undefined,

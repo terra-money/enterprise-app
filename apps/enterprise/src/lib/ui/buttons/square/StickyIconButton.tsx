@@ -1,30 +1,25 @@
-import styled from "styled-components";
-import { defaultTransitionCSS } from "lib/ui/animations/transitions";
-import { centerContentCSS } from "lib/ui/utils/centerContentCSS";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
-import { getSameDimensionsCSS } from "lib/ui/utils/getSameDimensionsCSS";
+import styled from 'styled-components';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 
-import { UnstyledButton } from "../UnstyledButton";
+import { UnstyledButton } from '../UnstyledButton';
 
-type StickyIconButtonKind = "regular" | "secondary";
+type StickyIconButtonKind = 'regular' | 'secondary';
 
-export const stickyIconButtonSizes = ["xs", "s", "m", "l"] as const;
+export const stickyIconButtonSizes = ['xs', 's', 'm', 'l'] as const;
 
-type StickyIconButtonSize = typeof stickyIconButtonSizes[number];
+type StickyIconButtonSize = (typeof stickyIconButtonSizes)[number];
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   kind?: StickyIconButtonKind;
   size?: StickyIconButtonSize;
-  as?: "button" | "div";
+  as?: 'button' | 'div';
 }
 
-export const StickyIconButton = ({
-  size = "m",
-  icon,
-  kind = "regular",
-  ...rest
-}: Props) => {
+export const StickyIconButton = ({ size = 'm', icon, kind = 'regular', ...rest }: Props) => {
   return (
     <Container size={size}>
       <InteractiveArea kind={kind} size={size} {...rest}>
@@ -56,7 +51,7 @@ const InteractiveArea = styled(UnstyledButton)<InteractiveAreaProps>`
   position: absolute;
   ${centerContentCSS};
   border-radius: 8px;
-  ${getSameDimensionsCSS("132%")};
+  ${getSameDimensionsCSS('132%')};
 
   color: ${({ kind, theme: { colors } }) =>
     ({

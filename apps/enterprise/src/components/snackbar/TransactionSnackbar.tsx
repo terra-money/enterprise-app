@@ -43,7 +43,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
 
   const { showDetails: showTransactionErrorDetails } = useTransactionError();
 
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   const onDetailsClick = useCallback(() => {
     if (!myAddress) {

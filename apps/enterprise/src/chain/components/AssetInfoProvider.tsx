@@ -6,13 +6,12 @@ interface Props extends AssetInfoQueryParams {
   children: React.ReactNode;
 }
 
-const { provider: AssetInfoProvider, useValue: useCurrentAssetInfo } =
-  getValueProviderSetup<AssetInfo>('AssetInfo');
+const { provider: AssetInfoProvider, useValue: useCurrentAssetInfo } = getValueProviderSetup<AssetInfo>('AssetInfo');
 
 export { useCurrentAssetInfo };
 
 export const CurrentAssetInfoProvider = ({ children, ...queryParams }: Props) => {
-  const { data } = useAssetInfoQuery(queryParams)
+  const { data } = useAssetInfoQuery(queryParams);
 
   if (!data) {
     return <Throbber />;

@@ -10,20 +10,17 @@ export const useProposalVoteQuery = (
   proposalId: number,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ) => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.PROPOSAL_VOTE, contract, proposalId, member],
     async () => {
-      const response = await lcd.wasm.contractQuery<enterprise.PollVoterResponse>(
-        contract as CW20Addr,
-        {
-          member_vote: {
-            member,
-            proposal_id: proposalId,
-          },
-        }
-      );
+      const response = await lcd.wasm.contractQuery<enterprise.PollVoterResponse>(contract as CW20Addr, {
+        member_vote: {
+          member,
+          proposal_id: proposalId,
+        },
+      });
       return response.vote;
     },
     {

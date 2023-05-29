@@ -14,7 +14,7 @@ import { MobileDaoHeader } from './MobileDaoHeader';
 import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const DAOPage = () => {
-  const address = useCurrentDaoAddress()
+  const address = useCurrentDaoAddress();
 
   const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
 

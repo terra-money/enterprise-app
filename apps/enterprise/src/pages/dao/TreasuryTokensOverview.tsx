@@ -29,12 +29,12 @@ const BasicInfoContainer = styled.div`
   justify-content: start;
   gap: 16px;
   border-radius: 12px;
-  background-color: #1D1F20;
+  background-color: #1d1f20;
   width: 100%;
   height: 64px;
   padding-left: 16px;
   margin-bottom: 10px;
-`
+`;
 
 const NormalScreenWidthContainer = styled.div`
   display: flex;
@@ -51,14 +51,12 @@ const SmallScreenWidthContainer = styled.div`
 `;
 
 export const TreasuryTokensOverview = () => {
-  const address = useCurrentDaoAddress()
+  const address = useCurrentDaoAddress();
 
   const { data: tokenBalances } = useDaoAssets();
 
   const tokenBalancesWithPrice = tokenBalances
-    ? tokenBalances
-      .filter((t) => t.usd)
-      .sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
+    ? tokenBalances.filter((t) => t.usd).sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
     : undefined;
 
   const treasuryTotalInUSD = tokenBalancesWithPrice ? sum(tokenBalancesWithPrice.map(getAssetBalanceInUsd)) : undefined;
@@ -69,7 +67,6 @@ export const TreasuryTokensOverview = () => {
         <DaoTVL />
         <Address address={address} />
       </BasicInfoContainer>
-
     );
   };
 
@@ -88,9 +85,7 @@ export const TreasuryTokensOverview = () => {
     <ResponsiveView
       small={() => (
         <VStack gap={12}>
-          <SmallScreenWidthContainer>
-            {renderBasicInfo()}
-          </SmallScreenWidthContainer>
+          <SmallScreenWidthContainer>{renderBasicInfo()}</SmallScreenWidthContainer>
           {renderAssets()}
           <DepositIntoTreasury />
         </VStack>

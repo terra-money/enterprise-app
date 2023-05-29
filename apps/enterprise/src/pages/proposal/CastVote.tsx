@@ -32,7 +32,7 @@ export const VoteOptions: Array<VoteOption> = [
 export const CastVote = () => {
   const proposal = useCurrentProposal();
 
-  const myAddress = useMyAddress()
+  const myAddress = useMyAddress();
 
   const navigate = useNavigate();
 
@@ -47,14 +47,9 @@ export const CastVote = () => {
     myAddress
   );
 
-  const { data: myVote } = useProposalVoteQuery(
-    proposal.dao.address,
-    myAddress ?? '',
-    proposal.id,
-    {
-      enabled: Boolean(myAddress),
-    }
-  );
+  const { data: myVote } = useProposalVoteQuery(proposal.dao.address, myAddress ?? '', proposal.id, {
+    enabled: Boolean(myAddress),
+  });
 
   if (!myAddress) {
     // TODO: show a button to connect a wallet

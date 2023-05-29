@@ -14,9 +14,7 @@ export const GovConfigProposalAction = () => {
   const { data: token } = useCW20TokenInfoQuery(dao.membershipContractAddress, { enabled: dao.type === 'token' });
 
   return (
-    <TitledCard
-      title="Gov Configuration"
-    >
+    <TitledCard title="Gov Configuration">
       <ProposalActionDiff
         fieldNameRecord={govConfigView.govConfigViewFieldNameRecord}
         oldView={govConfigView.fromDao(dao, token?.decimals)}

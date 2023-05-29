@@ -1,6 +1,6 @@
-import { FormEvent } from "react";
-import { handleWithPreventDefault } from "lib/shared/events";
-import { VStack } from "lib/ui/Stack";
+import { FormEvent } from 'react';
+import { handleWithPreventDefault } from 'lib/shared/events';
+import { VStack } from 'lib/ui/Stack';
 
 interface Props {
   onSubmit: () => void;
@@ -11,12 +11,7 @@ interface Props {
 
 export const Form = ({ content, actions, onSubmit, gap = 28 }: Props) => {
   return (
-    <VStack
-      gap={gap}
-      as="form"
-      fullWidth
-      onSubmit={handleWithPreventDefault<FormEvent<HTMLFormElement>>(onSubmit)}
-    >
+    <VStack gap={gap} as="form" fullWidth onSubmit={handleWithPreventDefault<FormEvent<HTMLFormElement>>(onSubmit)}>
       <VStack fullWidth gap={8}>
         {content}
       </VStack>

@@ -1,12 +1,16 @@
-import { HStack, VStack } from "lib/ui/Stack";
-import { useDaoWizardForm } from "../DaoWizardFormProvider";
-import { Text } from "lib/ui/Text";
-import { LabeledValue } from "lib/ui/LabeledValue";
-import { Address } from "chain/components/Address";
+import { HStack, VStack } from 'lib/ui/Stack';
+import { useDaoWizardForm } from '../DaoWizardFormProvider';
+import { Text } from 'lib/ui/Text';
+import { LabeledValue } from 'lib/ui/LabeledValue';
+import { Address } from 'chain/components/Address';
 
 export const InitialBalancesReview = () => {
   const {
-    formState: { initialBalances, initialDaoBalance, tokenInfo: { symbol } },
+    formState: {
+      initialBalances,
+      initialDaoBalance,
+      tokenInfo: { symbol },
+    },
   } = useDaoWizardForm();
 
   const items = [
@@ -18,7 +22,7 @@ export const InitialBalancesReview = () => {
       name: <Address value={address} />,
       amount,
     })),
-  ]
+  ];
 
   return (
     <VStack gap={2}>
@@ -30,8 +34,8 @@ export const InitialBalancesReview = () => {
               {amount} {symbol}
             </LabeledValue>
           </HStack>
-        )
+        );
       })}
     </VStack>
   );
-}
+};

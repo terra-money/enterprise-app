@@ -2,12 +2,20 @@ import { FormState } from '@terra-money/apps/hooks';
 import { validateAddress, validateAmount, validateLength, validatePattern, validateUrl } from '@terra-money/apps/utils';
 import { TokenInfo } from 'pages/create-dao/DaoWizardFormProvider';
 
-export const validateTokenInfo = ({ decimals, name, symbol, description,
+export const validateTokenInfo = ({
+  decimals,
+  name,
+  symbol,
+  description,
   logo,
   marketingOwner,
-  project, }: TokenInfo): FormState<TokenInfo> => {
+  project,
+}: TokenInfo): FormState<TokenInfo> => {
   const formState: FormState<TokenInfo> = {
-    decimals, name, symbol, description,
+    decimals,
+    name,
+    symbol,
+    description,
     logo,
     marketingOwner,
     project,

@@ -1,7 +1,7 @@
-import { millisecondsInMinute, secondsInMinute } from "date-fns";
-import { pluralize } from "./pluralize";
+import { millisecondsInMinute, secondsInMinute } from 'date-fns';
+import { pluralize } from './pluralize';
 
-type DurationUnit = "ms" | "min";
+type DurationUnit = 'ms' | 'min';
 
 const unitsInMinute: Record<DurationUnit, number> = {
   ms: millisecondsInMinute,
@@ -16,7 +16,7 @@ export const formatDuration = (duration: number, unit: DurationUnit) => {
   const hours = Math.floor(minutes / secondsInMinute);
   const minutesPart = Math.round(minutes % secondsInMinute);
   if (!minutesPart) {
-    return pluralize(hours, "hour");
+    return pluralize(hours, 'hour');
   }
   return `${hours} h ${minutesPart} m`;
 };

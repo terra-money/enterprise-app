@@ -1,5 +1,5 @@
 export function areEqualArrays<T>(a: T[], b: T[]) {
-  if (a.length !== b.length) return false
+  if (a.length !== b.length) return false;
 
-  return a.every((value, index) => value === b[index])
+  return a.every((value, index) => value === b[index]);
 }

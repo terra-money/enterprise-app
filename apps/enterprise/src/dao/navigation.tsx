@@ -1,8 +1,8 @@
 import { assertDefined } from '@terra-money/apps/utils';
-import { useParams } from 'react-router'
+import { useParams } from 'react-router';
 
 export const useCurrentDaoAddress = () => {
   const { address } = useParams<{ address: string }>();
 
-  return assertDefined(address)
-}
+  return assertDefined(address);
+};

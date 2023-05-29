@@ -1,13 +1,13 @@
-import { useNetworkName } from "@terra-money/apps/hooks"
-import { fetchIBCTokens } from "@terra-money/apps/queries"
-import { useLCDClient } from "@terra-money/wallet-provider"
-import { AssetType } from "chain"
-import { QUERY_KEY } from "queries"
-import { useQuery } from "react-query"
+import { useNetworkName } from '@terra-money/apps/hooks';
+import { fetchIBCTokens } from '@terra-money/apps/queries';
+import { useLCDClient } from '@terra-money/wallet-provider';
+import { AssetType } from 'chain';
+import { QUERY_KEY } from 'queries';
+import { useQuery } from 'react-query';
 
 export interface AssetInfoQueryParams {
-  id: string
-  type: AssetType
+  id: string;
+  type: AssetType;
 }
 
 interface CW20TokenInfoResponse {
@@ -17,25 +17,20 @@ interface CW20TokenInfoResponse {
   total_supply: string;
 }
 
-
 export interface AssetInfo {
-  name: string
-  symbol: string
-  decimals: number
-  icon?: string
+  name: string;
+  symbol: string;
+  decimals: number;
+  icon?: string;
 }
 
 export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
-  const lcdClient = useLCDClient()
-  const networkName = useNetworkName()
+  const lcdClient = useLCDClient();
+  const networkName = useNetworkName();
 
   return useQuery<AssetInfo>([QUERY_KEY.ASSET_INFO, id, type], async () => {
     if (type === 'cw20') {
-      const {
-        name,
-        symbol,
-        decimals,
-      } = await lcdClient.wasm.contractQuery<CW20TokenInfoResponse>(id, {
+      const { name, symbol, decimals } = await lcdClient.wasm.contractQuery<CW20TokenInfoResponse>(id, {
         token_info: {},
       });
 
@@ -43,7 +38,7 @@ export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
         name,
         symbol,
         decimals,
-      }
+      };
     }
 
     if (id === 'uluna') {
@@ -51,14 +46,14 @@ export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
         name: 'LUNA',
         symbol: 'LUNA',
         decimals: 6,
-        icon: "https://assets.terra.money/icon/svg/LUNA.png",
-      }
+        icon: 'https://assets.terra.money/icon/svg/LUNA.png',
+      };
     }
 
-    const ibcTokens = await fetchIBCTokens(networkName)
-    const ibcToken = ibcTokens[id]
+    const ibcTokens = await fetchIBCTokens(networkName);
+    const ibcToken = ibcTokens[id];
     if (!ibcToken) {
-      throw new Error(`IBC asset ${id} not found`)
+      throw new Error(`IBC asset ${id} not found`);
     }
 
     return {
@@ -66,6 +61,6 @@ export const useAssetInfoQuery = ({ id, type }: AssetInfoQueryParams) => {
       symbol: ibcToken.symbol,
       decimals: ibcToken.decimals,
       icon: ibcToken.icon,
-    }
-  })
-}
+    };
+  });
+};

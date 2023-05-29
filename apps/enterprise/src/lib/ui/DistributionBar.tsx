@@ -1,14 +1,14 @@
-import { sum } from "lib/shared/utils/sum";
-import { toPercents } from "lib/shared/utils/toPercents";
-import { useMemo } from "react";
-import styled from "styled-components";
+import { sum } from 'lib/shared/utils/sum';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 
-import { defaultTransitionCSS } from "./animations/transitions";
-import { HSLA } from "./colors/HSLA";
-import { ElementSizeAware } from "./ElementSizeAware";
-import { Panel } from "./Panel/Panel";
-import { VStack } from "./Stack";
-import { Text } from "./Text";
+import { defaultTransitionCSS } from './animations/transitions';
+import { HSLA } from './colors/HSLA';
+import { ElementSizeAware } from './ElementSizeAware';
+import { Panel } from './Panel/Panel';
+import { VStack } from './Stack';
+import { Text } from './Text';
 
 export interface DistributionBarItem {
   value: number;
@@ -17,7 +17,7 @@ export interface DistributionBarItem {
 
 interface DistributionBarProps {
   items: DistributionBarItem[];
-  height?: React.CSSProperties["height"];
+  height?: React.CSSProperties['height'];
 }
 
 const Container = styled(Panel)`
@@ -33,10 +33,7 @@ const Segment = styled.div`
   ${defaultTransitionCSS};
 `;
 
-export const DistributionBar = ({
-  items,
-  height = 40,
-}: DistributionBarProps) => {
+export const DistributionBar = ({ items, height = 40 }: DistributionBarProps) => {
   const total = useMemo(() => sum(items.map((item) => item.value)), [items]);
 
   return (
@@ -45,9 +42,7 @@ export const DistributionBar = ({
         <ElementSizeAware
           key={index}
           render={({ size, setElement }) => {
-            const background = color
-              .getVariant({ l: () => 48, s: () => 42 })
-              .toCssValue();
+            const background = color.getVariant({ l: () => 48, s: () => 42 }).toCssValue();
 
             return (
               <Segment
@@ -56,13 +51,7 @@ export const DistributionBar = ({
                   background,
                 }}
               >
-                <VStack
-                  fullHeight
-                  fullWidth
-                  alignItems="center"
-                  justifyContent="center"
-                  ref={setElement}
-                >
+                <VStack fullHeight fullWidth alignItems="center" justifyContent="center" ref={setElement}>
                   {!size ||
                     (size.width > 20 && (
                       <Text color="white" weight="bold" size={14}>

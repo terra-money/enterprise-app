@@ -1,1 +1,1 @@
-export { ErrorBoundary } from '@sentry/react'
+export { ErrorBoundary } from '@sentry/react';

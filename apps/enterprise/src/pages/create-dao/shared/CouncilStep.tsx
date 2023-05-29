@@ -23,7 +23,10 @@ export function CouncilStep() {
   const updateMembers = (members: CouncilMember[]) => formInput({ council: { ...council, members } });
 
   return (
-    <WizardStep title="Add council members to your DAO" subTitle="(Optional) DAO Council members can create and vote on certain emergency proposals without having to go through general governance procedures.">
+    <WizardStep
+      title="Add council members to your DAO"
+      subTitle="(Optional) DAO Council members can create and vote on certain emergency proposals without having to go through general governance procedures."
+    >
       <VStack gap={40}>
         <VStack gap={8}>
           <ProposalTypesInput

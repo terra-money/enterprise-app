@@ -39,7 +39,7 @@ export const Page = () => {
       <ProposalVoting />
       <ProposalVotes />
     </>
-  )
+  );
 
   return (
     <Navigation>
@@ -59,9 +59,7 @@ export const Page = () => {
                         </StickyHeader>
                       )}
                     >
-                      <PageLayout header={<Header ref={ref} />}>
-                        {content}
-                      </PageLayout>
+                      <PageLayout header={<Header ref={ref} />}>{content}</PageLayout>
                     </ScrollableContainer>
                   )}
                   small={() => (

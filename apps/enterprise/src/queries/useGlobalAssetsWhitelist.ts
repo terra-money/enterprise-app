@@ -12,16 +12,15 @@ export const fetchGlobalAssetsWhitelist = async (
   lcd: LCDClient,
   contractAddress: CW20Addr
 ): Promise<enterprise.AssetInfoBaseFor_Addr[]> => {
-  const response = await lcd.wasm.contractQuery<enterprise.AssetWhitelistResponse>(
-    contractAddress,
-    { global_asset_whitelist: {} }
-  );
+  const response = await lcd.wasm.contractQuery<enterprise.AssetWhitelistResponse>(contractAddress, {
+    global_asset_whitelist: {},
+  });
 
   return response.assets;
 };
 
 export const useGlobalAssetsWhitelist = (): UseQueryResult<enterprise.AssetInfoBaseFor_Addr[]> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   const contractAddress = useContractAddress('enterprise-factory');
 

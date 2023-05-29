@@ -32,17 +32,17 @@ export const FavouriteToggle = (props: FavouriteToggleProps) => {
 
         isFavourite
           ? dispatch({
-            type: 'REMOVE_FAVOURITE',
-            payload: dao.address,
-          })
+              type: 'REMOVE_FAVOURITE',
+              payload: dao.address,
+            })
           : dispatch({
-            type: 'ADD_FAVOURITE',
-            payload: {
-              address: dao.address,
-              name: dao.name,
-              logo: dao.logo,
-            },
-          });
+              type: 'ADD_FAVOURITE',
+              payload: {
+                address: dao.address,
+                name: dao.name,
+                logo: dao.logo,
+              },
+            });
       }}
     >
       <StarIcon />

@@ -6,7 +6,7 @@ import { VStack } from 'lib/ui/Stack';
 import styled from 'styled-components';
 
 const daoTypes = ['multisig', 'nft', 'token'] as const;
-type DaoType = typeof daoTypes[number];
+type DaoType = (typeof daoTypes)[number];
 
 const daoTypeNameRecord: Record<DaoType, string> = {
   multisig: 'Multisig Wallet',
@@ -17,8 +17,7 @@ const daoTypeNameRecord: Record<DaoType, string> = {
 const daoTypeExplanationRecord: Record<DaoType, string> = {
   multisig: 'A multisig is a shared wallet with two or more members authorizing transactions.',
   nft: 'In NFT DAOs, users stake NFTs to participate in governance.',
-  token:
-    'In Token DAOs, users stake tokens to participate in governance.',
+  token: 'In Token DAOs, users stake tokens to participate in governance.',
 };
 
 const Container = styled(VStack)`

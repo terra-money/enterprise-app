@@ -32,32 +32,16 @@ export const SocialChannels = () => {
       <Panel>
         <Container>
           {github_username && (
-            <SocialItem
-              icon={<GitHubIcon />}
-              username={github_username}
-              getUrl={createGithubProfileURL}
-            />
+            <SocialItem icon={<GitHubIcon />} username={github_username} getUrl={createGithubProfileURL} />
           )}
           {twitter_username && (
-            <SocialItem
-              icon={<TwitterIcon />}
-              username={twitter_username}
-              getUrl={createTwitterProfileURL}
-            />
+            <SocialItem icon={<TwitterIcon />} username={twitter_username} getUrl={createTwitterProfileURL} />
           )}
           {discord_username && (
-            <SocialItem
-              icon={<DiscordIcon />}
-              username={discord_username}
-              getUrl={createDiscordURL}
-            />
+            <SocialItem icon={<DiscordIcon />} username={discord_username} getUrl={createDiscordURL} />
           )}
           {telegram_username && (
-            <SocialItem
-              icon={<TelegramIcon />}
-              username={telegram_username}
-              getUrl={createTelegramURL}
-            />
+            <SocialItem icon={<TelegramIcon />} username={telegram_username} getUrl={createTelegramURL} />
           )}
         </Container>
       </Panel>

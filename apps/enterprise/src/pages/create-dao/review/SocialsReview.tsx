@@ -1,9 +1,11 @@
-import { DaoSocialDataInput, useDaoWizardForm } from "../DaoWizardFormProvider";
-import { LabeledValue } from "lib/ui/LabeledValue";
-import { socialName } from "../shared/SocialFields";
+import { DaoSocialDataInput, useDaoWizardForm } from '../DaoWizardFormProvider';
+import { LabeledValue } from 'lib/ui/LabeledValue';
+import { socialName } from '../shared/SocialFields';
 
 export const SocialsReview = () => {
-  const { formState: { socials } } = useDaoWizardForm();
+  const {
+    formState: { socials },
+  } = useDaoWizardForm();
 
   return (
     <>
@@ -12,14 +14,10 @@ export const SocialsReview = () => {
           const socialField = key as keyof DaoSocialDataInput;
           const value = socials[socialField];
 
-          return (
-            <LabeledValue name={socialName[socialField]}>
-              {value ?? '-'}
-            </LabeledValue>
-          )
+          return <LabeledValue name={socialName[socialField]}>{value ?? '-'}</LabeledValue>;
         }
-        return null
+        return null;
       })}
     </>
   );
-}
+};

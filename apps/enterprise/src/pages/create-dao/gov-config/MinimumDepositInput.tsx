@@ -9,10 +9,7 @@ export interface MinimumDepositInputProps {
 
 export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositInputProps) => {
   return (
-    <FormControl
-      label="Minimum deposit"
-      helpText="The minimum deposit amount required to create a proposal." 
-    >
+    <FormControl label="Minimum deposit" helpText="The minimum deposit amount required to create a proposal.">
       <FormTextInput
         value={value === undefined ? '' : value}
         type="number"

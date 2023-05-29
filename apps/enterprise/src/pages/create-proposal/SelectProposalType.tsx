@@ -35,11 +35,18 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   text: 'Create general-purpose text proposals such as directional statements, community engagement ideas, or partnerships.',
   config: 'Update your DAO configuration, such as governance parameters and DAO metadata.',
   upgrade: 'Upgrade your DAO to get the latest contract features.',
-  assets: 'Update the token whitelist. The whitelist determines which tokens are displayed in the treasury or distributor.',
+  assets:
+    'Update the token whitelist. The whitelist determines which tokens are displayed in the treasury or distributor.',
   nfts: 'Update the NFT whitelist. The whitelist determines which NFTs are displayed in the treasury.',
-  execute: <>
-    Execute custom messages that will allow you to interact with smart contracts, send assets and more. <ExternalLink to="https://docs.enterprise.money/guides/messages"><ShyTextButton as="span" text="Visit the docs" /></ExternalLink> for more information on message templates.
-  </>,
+  execute: (
+    <>
+      Execute custom messages that will allow you to interact with smart contracts, send assets and more.{' '}
+      <ExternalLink to="https://docs.enterprise.money/guides/messages">
+        <ShyTextButton as="span" text="Visit the docs" />
+      </ExternalLink>{' '}
+      for more information on message templates.
+    </>
+  ),
   members: 'Add or remove members from a Multisig.',
   spend: 'Submit this proposal to send assets in your treasury to another address',
   mint: 'Mint DAO tokens to the specified addresses. This proposal will only work if the minter of the CW20 token is the DAO treasury address.',
@@ -82,7 +89,7 @@ const ProposalDescriptionContainer = styled.div`
 
 const proposalVotingTypes = ['general', 'council'] as const;
 
-export type ProposalVotingType = typeof proposalVotingTypes[number];
+export type ProposalVotingType = (typeof proposalVotingTypes)[number];
 
 const proposalVotingTypeName: Record<ProposalVotingType, string> = {
   general: 'General',

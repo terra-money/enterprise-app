@@ -1,20 +1,20 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react';
 
-import { ElementSize, useElementSize } from './hooks/useElementSize'
+import { ElementSize, useElementSize } from './hooks/useElementSize';
 
 interface ElementSizeAwareRenderParams {
-  size: ElementSize | null
-  setElement: (element: HTMLElement | null) => void
+  size: ElementSize | null;
+  setElement: (element: HTMLElement | null) => void;
 }
 
 interface Props {
-  render: (params: ElementSizeAwareRenderParams) => ReactNode
+  render: (params: ElementSizeAwareRenderParams) => ReactNode;
 }
 
 export const ElementSizeAware = ({ render }: Props) => {
-  const [element, setElement] = useState<HTMLElement | null>(null)
+  const [element, setElement] = useState<HTMLElement | null>(null);
 
-  const size = useElementSize(element)
+  const size = useElementSize(element);
 
-  return <>{render({ setElement, size })}</>
-}
+  return <>{render({ setElement, size })}</>;
+};

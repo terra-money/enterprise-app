@@ -57,11 +57,8 @@ export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
               {showDecoded ? 'Show Base64' : 'Show Decoded'}
             </Button>
           </HStack>
-
         </Container>
-        <pre className={styles.message}>
-          {JSON.stringify(formatMsg(msg, showDecoded), null, 4)}
-        </pre>
+        <pre className={styles.message}>{JSON.stringify(formatMsg(msg, showDecoded), null, 4)}</pre>
       </Panel>
     </VStack>
   );

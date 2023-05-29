@@ -1,16 +1,16 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const TFM_ASSETS_INFO_URL = 'https://api-terra2.tfm.com/tokens'
+const TFM_ASSETS_INFO_URL = 'https://api-terra2.tfm.com/tokens';
 
 interface TFMAssetsInfo {
-  contract_addr: string,
-  decimals: number,
-  name: string,
-  symbol: string,
+  contract_addr: string;
+  decimals: number;
+  name: string;
+  symbol: string;
 }
 
 export const getAssetsInfo = async () => {
-  const { data } = await axios.get<TFMAssetsInfo[]>(TFM_ASSETS_INFO_URL)
+  const { data } = await axios.get<TFMAssetsInfo[]>(TFM_ASSETS_INFO_URL);
 
-  return data
-}
+  return data;
+};

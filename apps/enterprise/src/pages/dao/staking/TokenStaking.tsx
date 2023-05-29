@@ -110,7 +110,8 @@ export const TokenStakingConnectedView = () => {
                 <Text variant="label" className={styles.title}>
                   Voting power
                 </Text>
-                <NumericPanel className={styles.stakedVotingPanel}
+                <NumericPanel
+                  className={styles.stakedVotingPanel}
                   value={demicrofy(walletStaked, tokenDecimals)}
                   decimals={2}
                   suffix={

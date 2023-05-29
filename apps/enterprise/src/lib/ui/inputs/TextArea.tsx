@@ -1,16 +1,10 @@
-import {
-  ChangeEvent,
-  Ref,
-  TextareaHTMLAttributes,
-  forwardRef,
-  useState,
-} from "react";
-import styled from "styled-components";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
-import { Text } from "lib/ui/Text";
+import { ChangeEvent, Ref, TextareaHTMLAttributes, forwardRef, useState } from 'react';
+import styled from 'styled-components';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { Text } from 'lib/ui/Text';
 
-import { InputWrapperWithErrorMessage } from "./InputWrapper";
-import { SharedTextInputProps, commonInputCSS } from "./TextInput";
+import { InputWrapperWithErrorMessage } from './InputWrapper';
+import { SharedTextInputProps, commonInputCSS } from './TextInput';
 
 const TextareaContainer = styled.textarea`
   ${commonInputCSS};

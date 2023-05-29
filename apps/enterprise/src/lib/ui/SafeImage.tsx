@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { useBoolean } from "lib/shared/hooks/useBoolean";
+import { ReactNode } from 'react';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
 
 interface RenderParams {
   src: string;
@@ -15,11 +15,5 @@ interface Props {
 export const SafeImage = ({ fallback = null, src, render }: Props) => {
   const [isFailedToLoad, { set: failedToLoad }] = useBoolean(false);
 
-  return (
-    <>
-      {isFailedToLoad || !src
-        ? fallback
-        : render({ onError: failedToLoad, src })}
-    </>
-  );
+  return <>{isFailedToLoad || !src ? fallback : render({ onError: failedToLoad, src })}</>;
 };

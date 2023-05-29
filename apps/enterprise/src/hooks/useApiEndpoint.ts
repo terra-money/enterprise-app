@@ -86,7 +86,7 @@ export const createApiEndpoint = (network: string, endpoint: ApiEndpoints): stri
 };
 
 export const useApiEndpoint = (endpoint: ApiEndpoints): string => {
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   return createApiEndpoint(networkName, endpoint);
 };

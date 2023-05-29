@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
-import { defaultTransitionCSS } from "lib/ui/animations/transitions";
-import { HStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
+import styled, { css } from 'styled-components';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { HStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
 interface Props {
   icon?: React.ReactNode;
@@ -36,20 +36,10 @@ export const IconWrapper = styled.div`
   min-width: 28px;
 `;
 
-export const NavigationItem = ({
-  icon,
-  name,
-  isActive,
-  decoration = null,
-}: Props) => {
+export const NavigationItem = ({ icon, name, isActive, decoration = null }: Props) => {
   return (
     <Container isActive={isActive}>
-      <Text
-        size={18}
-        style={{ position: "relative" }}
-        as="div"
-        color={isActive ? "regular" : "supporting"}
-      >
+      <Text size={18} style={{ position: 'relative' }} as="div" color={isActive ? 'regular' : 'supporting'}>
         <HStack gap={8}>
           {icon && <IconWrapper>{icon}</IconWrapper>}
           <div>{name}</div>

@@ -1,5 +1,5 @@
-import { PersistentStorageKey, usePersistentStorageValue } from "state/persistentStorage"
+import { PersistentStorageKey, usePersistentStorageValue } from 'state/persistentStorage';
 
 export const useAreIndexersEnabled = () => {
-  return usePersistentStorageValue<boolean>(PersistentStorageKey.AreIndexersEnabled, true)
-}
+  return usePersistentStorageValue<boolean>(PersistentStorageKey.AreIndexersEnabled, true);
+};

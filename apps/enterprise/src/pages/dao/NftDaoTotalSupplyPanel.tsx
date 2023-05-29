@@ -7,9 +7,7 @@ import { NumericPanel } from 'components/numeric-panel';
 export const NftDaoTotalSupplyPanel = () => {
   const { dao_membership_contract } = useCurrentDao();
 
-  const { data: numTokens = Big(0), isLoading: isLoadingNumTokens } = useCW721NumTokensQuery(
-    dao_membership_contract
-  );
+  const { data: numTokens = Big(0), isLoading: isLoadingNumTokens } = useCW721NumTokensQuery(dao_membership_contract);
 
   return (
     <NumericPanel

@@ -14,23 +14,16 @@ export const RecentProposals = () => {
     return null;
   }
 
-
   const renderProposals = () => {
     if (proposals === undefined) {
-      return (
-        [...Array(6)].map((_, index) => {
-          return <ProposalCard key={index} />;
-        })
-      );
+      return [...Array(6)].map((_, index) => {
+        return <ProposalCard key={index} />;
+      });
     }
 
-    const proposalsToDisplay = [...proposals].sort((a, b) => b.id - a.id).slice(0, 6)
+    const proposalsToDisplay = [...proposals].sort((a, b) => b.id - a.id).slice(0, 6);
 
-    return (
-      proposalsToDisplay.map((proposal, index) => (
-        <ProposalCard key={index} proposal={proposal} />
-      ))
-    );
+    return proposalsToDisplay.map((proposal, index) => <ProposalCard key={index} proposal={proposal} />);
   };
 
   return (

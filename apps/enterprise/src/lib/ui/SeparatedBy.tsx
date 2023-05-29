@@ -1,11 +1,11 @@
-import { ComponentWithChildrenProps } from "lib/shared/props";
-import React, { Fragment } from "react";
+import { ComponentWithChildrenProps } from 'lib/shared/props';
+import React, { Fragment } from 'react';
 
-import { HStack } from "./Stack";
-import { Text } from "./Text";
+import { HStack } from './Stack';
+import { Text } from './Text';
 
-export const dotSeparator = "•";
-export const slashSeparator = "/";
+export const dotSeparator = '•';
+export const slashSeparator = '/';
 
 interface Props extends ComponentWithChildrenProps {
   separator?: string;
@@ -13,9 +13,7 @@ interface Props extends ComponentWithChildrenProps {
 }
 
 export const SeparatedBy = ({ children, separator, gap = 8 }: Props) => {
-  const definedChildren = React.Children.toArray(children).filter(
-    (child) => child
-  );
+  const definedChildren = React.Children.toArray(children).filter((child) => child);
   return (
     <HStack alignItems="center" gap={gap}>
       {definedChildren.map((child, index) => {

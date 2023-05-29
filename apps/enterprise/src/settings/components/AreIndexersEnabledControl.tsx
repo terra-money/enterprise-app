@@ -2,9 +2,7 @@ import { Switch } from 'lib/ui/Switch/Switch';
 import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 
 export const AreIndexersEnabledControl = () => {
-  const [areIndexersEnabled, setAreIndexersEnabled] = useAreIndexersEnabled()
+  const [areIndexersEnabled, setAreIndexersEnabled] = useAreIndexersEnabled();
 
-  return (
-    <Switch value={areIndexersEnabled} onChange={setAreIndexersEnabled} label="Enable indexers" />
-  )
-}
+  return <Switch value={areIndexersEnabled} onChange={setAreIndexersEnabled} label="Enable indexers" />;
+};

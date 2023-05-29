@@ -1,7 +1,7 @@
-import Big from "big.js";
-import { Proposal } from "dao/shared/proposal";
-import { DAO } from "types";
-import { enterprise } from "types/contracts";
+import Big from 'big.js';
+import { Proposal } from 'dao/shared/proposal';
+import { DAO } from 'types';
+import { enterprise } from 'types/contracts';
 
 export interface ProposalApiResponse {
   daoAddress: string;
@@ -20,8 +20,8 @@ export interface ProposalApiResponse {
   vetoVotes: string;
   totalVotes: string;
   type: enterprise.ProposalType;
-  proposer?: string
-};
+  proposer?: string;
+}
 
 export const apiResponseToProposal = (proposal: ProposalApiResponse, dao: DAO): Proposal => {
   return {
@@ -35,6 +35,6 @@ export const apiResponseToProposal = (proposal: ProposalApiResponse, dao: DAO): 
     totalVotes: Big(proposal.totalVotes),
     // TODO: remove after updating indexers
     type: proposal.type || 'general',
-    proposer: proposal.proposer
+    proposer: proposal.proposer,
   };
-}
+};

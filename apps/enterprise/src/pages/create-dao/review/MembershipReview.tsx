@@ -1,5 +1,5 @@
-import { LabeledValue } from "lib/ui/LabeledValue";
-import { useDaoWizardForm } from "../DaoWizardFormProvider";
+import { LabeledValue } from 'lib/ui/LabeledValue';
+import { useDaoWizardForm } from '../DaoWizardFormProvider';
 
 export const MembershipReview = () => {
   const {
@@ -8,15 +8,9 @@ export const MembershipReview = () => {
 
   return (
     <>
-      <LabeledValue name="Minter">
-        {nftMembership.minter || '-'}
-      </LabeledValue>
-      <LabeledValue name="NFT Name">
-        {nftMembership.nftName || '-'}
-      </LabeledValue>
-      <LabeledValue name="NFT Symbol">
-        {nftMembership.nftSymbol || '-'}
-      </LabeledValue>
+      <LabeledValue name="Minter">{nftMembership.minter || '-'}</LabeledValue>
+      <LabeledValue name="NFT Name">{nftMembership.nftName || '-'}</LabeledValue>
+      <LabeledValue name="NFT Symbol">{nftMembership.nftSymbol || '-'}</LabeledValue>
     </>
   );
-}
+};

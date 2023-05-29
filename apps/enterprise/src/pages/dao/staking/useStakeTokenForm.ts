@@ -24,7 +24,6 @@ interface UseStakeTokenFormOptions {
 export const useStakeTokenForm = (options: UseStakeTokenFormOptions) => {
   const { balance, decimals } = options;
 
-
   return useForm<StakeTokenFormInput, StakeTokenFormState>(async (input, getState, dispatch) => {
     const state = {
       ...getState(),

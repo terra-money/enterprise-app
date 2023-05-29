@@ -11,7 +11,7 @@ export const useTokenBalanceQuery = (
   token: Token,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<u<Big>> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.TOKEN_BALANCE, token.key, walletAddr],

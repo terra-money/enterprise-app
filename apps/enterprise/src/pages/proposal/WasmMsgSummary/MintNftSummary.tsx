@@ -1,12 +1,14 @@
-import { Address } from "chain/components/Address"
-import { Text } from "lib/ui/Text"
+import { Address } from 'chain/components/Address';
+import { Text } from 'lib/ui/Text';
 
 interface Props {
-  owner: string
+  owner: string;
 }
 
 export const MintNftSummary = ({ owner }: Props) => {
   return (
-    <Text size={14} color="supporting">Mint an NFT for <Address value={owner} /></Text>
-  )
-}
+    <Text size={14} color="supporting">
+      Mint an NFT for <Address value={owner} />
+    </Text>
+  );
+};

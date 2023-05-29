@@ -2,7 +2,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { useMyAddress } from './useMyAddress';
 
 export const useAssertMyAddress = () => {
-  const myAddress = useMyAddress()
+  const myAddress = useMyAddress();
 
-  return assertDefined(myAddress, 'myAddress')
+  return assertDefined(myAddress, 'myAddress');
 };

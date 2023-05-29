@@ -6,15 +6,14 @@ import { MultisigMember } from 'types/MultisigMember';
 import { useLCDClient } from '@terra-money/wallet-provider';
 
 export const useMultisigMembersQuery = (contractAddress: CW20Addr) => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.MULTISIG_MEMBERS, contractAddress],
     async (): Promise<MultisigMember[]> => {
-      const { members } = await lcd.wasm.contractQuery<enterprise.MultisigMembersResponse>(
-        contractAddress,
-        { list_multisig_members: {} }
-      );
+      const { members } = await lcd.wasm.contractQuery<enterprise.MultisigMembersResponse>(contractAddress, {
+        list_multisig_members: {},
+      });
 
       return members.map((member) => ({ addr: member.address, weight: Number(member.weight) }));
     },

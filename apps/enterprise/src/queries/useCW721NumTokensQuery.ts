@@ -9,7 +9,7 @@ export const useCW721NumTokensQuery = (
   nftAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<u<Big>> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery([QUERY_KEY.CW721_NUM_TOKENS, nftAddress], () => fetchCW721NumTokens(lcd, nftAddress), {
     refetchOnMount: false,

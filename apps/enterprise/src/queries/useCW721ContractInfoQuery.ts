@@ -7,7 +7,7 @@ export const useCW721ContractInfoQuery = (
   nftAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Awaited<ReturnType<typeof fetchCW721ContractInfo>>> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery([QUERY_KEY.CW721_CONTRACT_INFO, nftAddress], () => fetchCW721ContractInfo(lcd, nftAddress), {
     refetchOnMount: false,

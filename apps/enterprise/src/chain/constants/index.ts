@@ -1,1 +1,1 @@
-export const lunaDecimals = 6
+export const lunaDecimals = 6;

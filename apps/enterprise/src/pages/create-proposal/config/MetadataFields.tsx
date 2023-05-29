@@ -10,27 +10,17 @@ interface MetadataProposalFormProps {
   formState: MetadataProposalFormState;
 }
 
-
-
 interface MetadataProposalFormProps {
   formInput: FormInput<MetadataProposalFormInput>;
   formState: MetadataProposalFormState;
 }
 
 export const MetadataFields = ({ formInput, formState }: MetadataProposalFormProps) => {
-  
-  const {
-    name: initialName,
-    nameError,
-    logo: initialLogo,
-    logoError,
-    description,
-    descriptionError
-  } = formState;
+  const { name: initialName, nameError, logo: initialLogo, logoError, description, descriptionError } = formState;
 
   const [name, setName] = useState(initialName);
   const [logo, setLogo] = useState(initialLogo);
-  
+
   const handleNameChange = (event: any) => {
     setName(event.currentTarget.value);
     formInput({ name: event.currentTarget.value });
@@ -52,12 +42,7 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
         />
       </FormControl>
       <FormControl label="Logo">
-        <FormTextInput
-          placeholder="Enter a Logo URL"
-          value={logo}
-          error={logoError}
-          onChange={handleLogoChange}
-        />
+        <FormTextInput placeholder="Enter a Logo URL" value={logo} error={logoError} onChange={handleLogoChange} />
       </FormControl>
       <DescriptionInput
         label="Description"
@@ -68,4 +53,3 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
     </>
   );
 };
-

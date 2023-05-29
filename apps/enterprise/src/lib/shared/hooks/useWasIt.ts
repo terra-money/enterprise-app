@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useWasIt<T>(value: T, targetValue: T) {
-  const [itWas, setItWas] = useState<boolean>(value === targetValue)
+  const [itWas, setItWas] = useState<boolean>(value === targetValue);
 
   useEffect(() => {
     if (!itWas && value === targetValue) {
-      setItWas(true)
+      setItWas(true);
     }
-  }, [itWas, targetValue, value])
+  }, [itWas, targetValue, value]);
 
-  return itWas
+  return itWas;
 }

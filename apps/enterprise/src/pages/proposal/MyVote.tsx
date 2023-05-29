@@ -14,16 +14,11 @@ interface MyVoteProps {
 export const MyVote = (props: MyVoteProps) => {
   const { proposal } = props;
 
-  const myAddress = useMyAddress()
+  const myAddress = useMyAddress();
 
-  const { data: myVote } = useProposalVoteQuery(
-    proposal.dao.address,
-    myAddress ?? '',
-    proposal.id,
-    {
-      enabled: Boolean(myAddress),
-    }
-  );
+  const { data: myVote } = useProposalVoteQuery(proposal.dao.address, myAddress ?? '', proposal.id, {
+    enabled: Boolean(myAddress),
+  });
 
   return (
     <Stack spacing={2} direction="row">

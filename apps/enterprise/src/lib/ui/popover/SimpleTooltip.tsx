@@ -15,7 +15,7 @@ const Container = styled.div`
   color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
   font-weight: 500;
   border-radius: 12px;
-`
+`;
 
 export const SimpleTooltip = ({ children, text }: Props) => {
   if (!text) return <>{children}</>;

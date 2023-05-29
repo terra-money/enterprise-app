@@ -9,9 +9,7 @@ export const SmallScreenProposalHeader = () => {
   return (
     <VStack gap={24}>
       <HStack gap={8}>
-        <DaoLogoLink address={
-          proposal.dao.address
-        } size="s" logo={proposal.dao.logo} />
+        <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
       </HStack>
       <Text size={24} weight="bold">
         <Text style={{ marginRight: 8 }} as="span" color="supporting3">

@@ -1,26 +1,26 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const TFM_PRICE_API = 'https://prod-juno.analytics.tfm.com/graphql'
+const TFM_PRICE_API = 'https://prod-juno.analytics.tfm.com/graphql';
 
 interface TFMError {
-  message: string
+  message: string;
 }
 
 interface TFMStatisticContent {
-  liquidity: string,
-  priceInvertedUsd: string
-  contractAddr: string
-  token0Addr: string
-  token1Addr: string
+  liquidity: string;
+  priceInvertedUsd: string;
+  contractAddr: string;
+  token0Addr: string;
+  token1Addr: string;
 }
 
 interface TFMResponse {
   data: {
     statisticTableTokensList: {
-      content: TFMStatisticContent[]
-    }
-  },
-  errors?: TFMError[]
+      content: TFMStatisticContent[];
+    };
+  };
+  errors?: TFMError[];
 }
 
 // docs: https://prod-juno.analytics.tfm.com/graphql#
@@ -51,30 +51,40 @@ query tokens_table($limit: Int, $skip: Int, $verifiedOnly: Boolean, $field: Stri
     }
   }
 }
-`
+`;
 
-const MIN_LIQUIDITY = 5000
+const MIN_LIQUIDITY = 5000;
 
-type AssetPrices = Record<string, number>
+type AssetPrices = Record<string, number>;
 
 export const getPricesOfLiquidAssets = async () => {
-  const { data: { data, errors } } = await axios.post<TFMResponse>(TFM_PRICE_API, {
+  const {
+    data: { data, errors },
+  } = await axios.post<TFMResponse>(TFM_PRICE_API, {
     query,
-    operationName: "tokens_table",
-    variables: { limit: 500, skip: 0, verifiedOnly: false, field: "volume", asc: false, interval: "1d", chain: "terra2" }
-  })
+    operationName: 'tokens_table',
+    variables: {
+      limit: 500,
+      skip: 0,
+      verifiedOnly: false,
+      field: 'volume',
+      asc: false,
+      interval: '1d',
+      chain: 'terra2',
+    },
+  });
 
   if (errors) {
-    throw new Error(`Failed to get liquid asset prices from ${TFM_PRICE_API}: ${errors[0]?.message}`)
+    throw new Error(`Failed to get liquid asset prices from ${TFM_PRICE_API}: ${errors[0]?.message}`);
   }
 
-  const record: AssetPrices = {}
+  const record: AssetPrices = {};
 
-  data.statisticTableTokensList.content.forEach(asset => {
+  data.statisticTableTokensList.content.forEach((asset) => {
     if (Number(asset.liquidity) >= MIN_LIQUIDITY) {
-      record[asset.token0Addr] = Number(asset.priceInvertedUsd)
+      record[asset.token0Addr] = Number(asset.priceInvertedUsd);
     }
-  })
+  });
 
-  return record
-}
+  return record;
+};

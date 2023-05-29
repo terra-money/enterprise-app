@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
-import { Spacer } from "lib/ui/Spacer";
-import { VStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
+import { ReactNode } from 'react';
+import styled from 'styled-components';
+import { Spacer } from 'lib/ui/Spacer';
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 
-type PageWidth = "m" | "s";
+type PageWidth = 'm' | 's';
 
 interface Props {
   children: ReactNode;
@@ -27,7 +27,7 @@ const Container = styled(VStack)<{ maxWidth: number }>`
   }
 `;
 
-export const RegularPage = ({ children, title, width = "m" }: Props) => {
+export const RegularPage = ({ children, title, width = 'm' }: Props) => {
   return (
     <VStack fullWidth alignItems="center">
       <Container maxWidth={maxWidth[width]} alignItems="start">

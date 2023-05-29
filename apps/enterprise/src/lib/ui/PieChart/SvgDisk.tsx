@@ -1,4 +1,4 @@
-import { HSLA } from "lib/ui/colors/HSLA";
+import { HSLA } from 'lib/ui/colors/HSLA';
 
 interface Props {
   color: HSLA;

@@ -1,11 +1,5 @@
 export const GitHubIcon = () => (
-  <svg
-    width="1em"
-    height="1em"
-    viewBox="0 0 1024 1024"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="1em" height="1em" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

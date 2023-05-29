@@ -19,8 +19,8 @@ interface MultisigExecuteMsg {
 }
 
 export const useCastVoteTx = (proposalVotingType: enterprise.ProposalType) => {
-  const myAddress = useMyAddress()
-  const chainID = useChainID()
+  const myAddress = useMyAddress();
+  const chainID = useChainID();
 
   return useTx<VoteOnProposalTxOptions>(
     (options) => {
@@ -41,8 +41,8 @@ export const useCastVoteTx = (proposalVotingType: enterprise.ProposalType) => {
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.CAST_VOTE,

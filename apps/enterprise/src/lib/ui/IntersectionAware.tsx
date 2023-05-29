@@ -1,6 +1,6 @@
-import { useWasIt } from "lib/shared/hooks/useWasIt";
-import { RefObject, useRef } from "react";
-import { useIntersection } from "react-use";
+import { useWasIt } from 'lib/shared/hooks/useWasIt';
+import { RefObject, useRef } from 'react';
+import { useIntersection } from 'react-use';
 
 interface RenderParams<T extends HTMLElement> {
   wasIntersected: boolean;
@@ -13,10 +13,7 @@ interface Props<T extends HTMLElement> {
   render: (params: RenderParams<T>) => void;
 }
 
-export function IntersectionAware<T extends HTMLElement>({
-  render,
-  rootMargin = "1000px",
-}: Props<T>) {
+export function IntersectionAware<T extends HTMLElement>({ render, rootMargin = '1000px' }: Props<T>) {
   const ref = useRef<T>(null);
   const intersection = useIntersection(ref, {
     root: null,

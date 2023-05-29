@@ -1,11 +1,11 @@
-import { useCurrentDao } from "dao/components/CurrentDaoProvider"
-import { QUERY_KEY } from "queries";
-import { useQuery } from "react-query";
-import { funds_distributor } from "types/contracts";
-import { useContract } from "chain/hooks/useContract";
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { QUERY_KEY } from 'queries';
+import { useQuery } from 'react-query';
+import { funds_distributor } from 'types/contracts';
+import { useContract } from 'chain/hooks/useContract';
 
 export const useMinimumEligibleWeightQuery = () => {
-  const { funds_distributor_contract } = useCurrentDao()
+  const { funds_distributor_contract } = useCurrentDao();
   const { query } = useContract();
 
   return useQuery(
@@ -16,10 +16,10 @@ export const useMinimumEligibleWeightQuery = () => {
         funds_distributor.MinimumEligibleWeightResponse
       >(funds_distributor_contract, { minimum_eligible_weight: {} });
 
-      return Number(minimum_eligible_weight)
+      return Number(minimum_eligible_weight);
     },
     {
       refetchOnMount: false,
     }
   );
-}
+};

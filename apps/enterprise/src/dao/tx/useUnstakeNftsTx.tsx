@@ -12,7 +12,7 @@ interface StakeNftTxParams {
 export const useUnstakeNftsTx = () => {
   const walletAddress = useAssertMyAddress();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   return useTx<StakeNftTxParams>(
     ({ daoAddress, tokenIds }: StakeNftTxParams) => {
@@ -24,8 +24,8 @@ export const useUnstakeNftsTx = () => {
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.UNSTAKE_NFT,

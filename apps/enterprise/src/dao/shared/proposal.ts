@@ -47,9 +47,9 @@ export const daoProposalsRecord = {
 } as const;
 
 export type ProposalType =
-  | typeof daoProposalsRecord.multisig[number]
-  | typeof daoProposalsRecord.token[number]
-  | typeof daoProposalsRecord.nft[number];
+  | (typeof daoProposalsRecord.multisig)[number]
+  | (typeof daoProposalsRecord.token)[number]
+  | (typeof daoProposalsRecord.nft)[number];
 
 export const proposalTitle: Record<ProposalType, string> = {
   text: 'Text proposal',
@@ -152,8 +152,8 @@ export const getProposalStatusName = (proposal: Proposal, blockHeight: number): 
   return proposal.status === 'in_progress'
     ? 'Active'
     : proposal.status === 'passed'
-      ? 'Passed'
-      : proposal.status === 'rejected'
-        ? 'Rejected'
-        : 'Executed';
+    ? 'Passed'
+    : proposal.status === 'rejected'
+    ? 'Rejected'
+    : 'Executed';
 };

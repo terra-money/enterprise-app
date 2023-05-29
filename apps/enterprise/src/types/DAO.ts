@@ -31,5 +31,5 @@ export class DAO {
     public readonly governanceConfig: DAOGovernanceConfig,
     public readonly council?: enterprise.DaoCouncil,
     public readonly tvl?: number
-  ) { }
+  ) {}
 }

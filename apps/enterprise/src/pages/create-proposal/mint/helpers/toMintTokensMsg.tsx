@@ -17,7 +17,7 @@ export const toMintTokenMsg = ({ tokenAddress, recepientAddress, amount, tokenDe
   const mint: MintTokenMsg = {
     recipient: recepientAddress,
     amount: microfy(amount, tokenDecimals).toString(),
-  }
+  };
   return JSON.stringify({
     wasm: {
       execute: {

@@ -9,18 +9,18 @@ import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 
 export const daoLogoSizes = ['s', 'm', 'l'] as const;
 
-type DaoLogoSize = typeof daoLogoSizes[number];
+type DaoLogoSize = (typeof daoLogoSizes)[number];
 
 const logoSizeRecord: Record<DaoLogoSize, number> = {
   s: 40,
   m: 48,
-  l: 60
-}
+  l: 60,
+};
 
 export interface DAOLogoProps {
-  logo?: string
-  size?: DaoLogoSize
-  className?: string
+  logo?: string;
+  size?: DaoLogoSize;
+  className?: string;
 }
 
 const Container = styled.div<{ size: DaoLogoSize }>`
@@ -34,27 +34,22 @@ const Container = styled.div<{ size: DaoLogoSize }>`
     object-fit: cover;
     ${roundedCSS};
     width: 64%;
-  
+
     ${getSameDimensionsCSS('64%')};
   }
-`
-
+`;
 
 export const DAOLogo = forwardRef<any, DAOLogoProps>((props, ref) => {
   const { logo, size = 'm', className } = props;
 
   return (
-    <Container
-      ref={ref}
-      size={size}
-      className={className}
-    >
+    <Container ref={ref} size={size} className={className}>
       <SafeImage
-        fallback={(
+        fallback={
           <Text size={20} color="supporting">
             <LogoIcon />
           </Text>
-        )}
+        }
         src={logo}
         render={(params) => <img ref={ref} {...params} alt="" />}
       />

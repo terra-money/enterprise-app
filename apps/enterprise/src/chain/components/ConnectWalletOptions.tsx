@@ -7,7 +7,7 @@ import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 
 const supportedConnections = [ConnectType.EXTENSION, ConnectType.WALLETCONNECT] as const;
-type SupportedConnection = typeof supportedConnections[number];
+type SupportedConnection = (typeof supportedConnections)[number];
 
 const supportedConnectionIcons: Record<SupportedConnection, ReactNode> = {
   [ConnectType.EXTENSION]: <TerraStationIcon />,

@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { OutlinedButton } from "lib/ui/buttons/rect/OutlinedButton";
-import { inputBackgroundCSS, inputBorderRadiusCSS } from "lib/ui/inputs/config";
-import { HStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
+import styled from 'styled-components';
+import { OutlinedButton } from 'lib/ui/buttons/rect/OutlinedButton';
+import { inputBackgroundCSS, inputBorderRadiusCSS } from 'lib/ui/inputs/config';
+import { HStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
 interface Props {
   name: string;

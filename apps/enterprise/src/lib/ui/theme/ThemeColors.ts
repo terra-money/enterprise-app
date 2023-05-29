@@ -10,7 +10,7 @@ export type ThemeColors = {
   attentionHover: HSLA;
 
   alert: HSLA;
-  idle: HSLA
+  idle: HSLA;
   success: HSLA;
 
   foreground: HSLA;
@@ -34,7 +34,7 @@ export type ThemeColors = {
 
   outlinedHover: HSLA;
 
-  contrast: HSLA
+  contrast: HSLA;
 
   getPaletteColor: (index: number) => HSLA;
 };

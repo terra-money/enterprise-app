@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const LandingSlice = styled.div`
   display: grid;
@@ -8,4 +8,4 @@ export const LandingSlice = styled.div`
   > * {
     grid-column: 2;
   }
-`
+`;

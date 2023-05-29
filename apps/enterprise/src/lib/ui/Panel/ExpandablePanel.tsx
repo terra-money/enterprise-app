@@ -1,14 +1,14 @@
-import { useBoolean } from "lib/shared/hooks/useBoolean";
-import { ReactNode } from "react";
-import styled from "styled-components";
-import { defaultTransitionCSS } from "../animations/transitions";
-import { UnstyledButton } from "../buttons/UnstyledButton";
-import { ChevronDownIcon } from "../icons/ChevronDownIcon";
-import { HStack } from "../Stack";
-import { centerContentCSS } from "../utils/centerContentCSS";
-import { getSameDimensionsCSS } from "../utils/getSameDimensionsCSS";
-import { roundedCSS } from "../utils/roundedCSS";
-import { Panel, PanelProps } from "./Panel";
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
+import { defaultTransitionCSS } from '../animations/transitions';
+import { UnstyledButton } from '../buttons/UnstyledButton';
+import { ChevronDownIcon } from '../icons/ChevronDownIcon';
+import { HStack } from '../Stack';
+import { centerContentCSS } from '../utils/centerContentCSS';
+import { getSameDimensionsCSS } from '../utils/getSameDimensionsCSS';
+import { roundedCSS } from '../utils/roundedCSS';
+import { Panel, PanelProps } from './Panel';
 
 interface ExpandableProps extends PanelProps {
   header: ReactNode;
@@ -27,7 +27,7 @@ const ExpandIconWrapper = styled.div<{ isExpanded: boolean }>`
 
   font-size: 20px;
 
-  transform: rotateZ(${({ isExpanded }) => (isExpanded ? "-180deg" : "0deg")});
+  transform: rotateZ(${({ isExpanded }) => (isExpanded ? '-180deg' : '0deg')});
 `;
 
 const Header = styled(UnstyledButton)`
@@ -38,12 +38,7 @@ const Header = styled(UnstyledButton)`
   }
 `;
 
-export const ExpandablePanel = ({
-  header,
-  children,
-  renderContent,
-  ...panelProps
-}: ExpandableProps) => {
+export const ExpandablePanel = ({ header, children, renderContent, ...panelProps }: ExpandableProps) => {
   const [isExpanded, { toggle }] = useBoolean(false);
 
   return (

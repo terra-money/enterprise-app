@@ -15,10 +15,7 @@ export function InfoStep() {
   };
 
   return (
-    <WizardStep
-      title="What is the name of your DAO?"
-      subTitle="Choose a memorable and descriptive name"
-    >
+    <WizardStep title="What is the name of your DAO?" subTitle="Choose a memorable and descriptive name">
       <Stack direction="column" spacing={4}>
         <WizardInput
           label="Name"

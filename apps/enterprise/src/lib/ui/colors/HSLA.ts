@@ -1,11 +1,9 @@
-import { degreesInCircle } from "lib/shared/utils/degreesToRadians";
-import { enforceRange } from "lib/shared/utils/enforceRange";
+import { degreesInCircle } from 'lib/shared/utils/degreesToRadians';
+import { enforceRange } from 'lib/shared/utils/enforceRange';
 
-export const hslaKeys = ["h", "s", "l", "a"] as const;
+export const hslaKeys = ['h', 's', 'l', 'a'] as const;
 
-export type ColorModifiers = Partial<
-  Record<typeof hslaKeys[number], (parameter: number) => number>
->;
+export type ColorModifiers = Partial<Record<(typeof hslaKeys)[number], (parameter: number) => number>>;
 
 export class HSLA {
   private _h = 0;

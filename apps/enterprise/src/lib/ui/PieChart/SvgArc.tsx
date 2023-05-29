@@ -1,5 +1,5 @@
-import { getPointOnCircle } from "lib/shared/utils/getPointOnCircle";
-import { HSLA } from "lib/ui/colors/HSLA";
+import { getPointOnCircle } from 'lib/shared/utils/getPointOnCircle';
+import { HSLA } from 'lib/ui/colors/HSLA';
 
 interface Props {
   color: HSLA;
@@ -9,12 +9,7 @@ interface Props {
   cutoutRadius: number;
 }
 
-const getArcPath = (
-  radius: number,
-  cutoutRadius: number,
-  startAngle: number,
-  endAngle: number
-) => {
+const getArcPath = (radius: number, cutoutRadius: number, startAngle: number, endAngle: number) => {
   const start = getPointOnCircle(radius, radius, endAngle);
   const end = getPointOnCircle(radius, radius, startAngle);
   const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
@@ -23,10 +18,10 @@ const getArcPath = (
   const end2 = getPointOnCircle(radius, cutoutRadius, startAngle);
 
   return [
-    "M",
+    'M',
     start.x,
     start.y,
-    "A",
+    'A',
     radius,
     radius,
     0,
@@ -34,15 +29,15 @@ const getArcPath = (
     0,
     end.x,
     end.y,
-    "L",
+    'L',
     radius,
     radius,
-    "Z",
+    'Z',
 
-    "M",
+    'M',
     start2.x,
     start2.y,
-    "A",
+    'A',
     cutoutRadius,
     cutoutRadius,
     0,
@@ -50,20 +45,14 @@ const getArcPath = (
     0,
     end2.x,
     end2.y,
-    "L",
+    'L',
     radius,
     radius,
-    "Z",
-  ].join(" ");
+    'Z',
+  ].join(' ');
 };
 
-export const SvgArc = ({
-  color,
-  startAngle,
-  endAngle,
-  radius,
-  cutoutRadius,
-}: Props) => {
+export const SvgArc = ({ color, startAngle, endAngle, radius, cutoutRadius }: Props) => {
   const path = getArcPath(radius, cutoutRadius, startAngle, endAngle);
 
   return <path fillRule="evenodd" fill={color.toCssValue()} d={path} />;

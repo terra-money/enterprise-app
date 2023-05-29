@@ -14,9 +14,9 @@ import { VStack } from 'lib/ui/Stack';
 import { useNetworkName } from '@terra-money/apps/hooks';
 
 interface FormatMigrationMsgParams {
-  msg: string
-  networkName: string
-  currentCodeId: number
+  msg: string;
+  networkName: string;
+  currentCodeId: number;
 }
 
 const defaultMigrateMsg = '{}';
@@ -27,15 +27,15 @@ const formatMigrateMsg = ({ msg, networkName, currentCodeId }: FormatMigrationMs
   const migrationChangeCodeId = networkName === 'mainnet' ? 788 : 5877;
 
   return currentCodeId < migrationChangeCodeId ? JSON.stringify(json) : base64Encode(json);
-}
+};
 
 export const UpgradeProposalForm = () => {
   const dao = useCurrentDao();
 
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   const { data: contractInfo, isLoading: isLoadingContract } = useContractInfoQuery(dao.address);
-  const { data: latestCodeId, isLoading: isLoadingLatestCodeId } = useEnterpriseLatestCodeIdQuery()
+  const { data: latestCodeId, isLoading: isLoadingLatestCodeId } = useEnterpriseLatestCodeIdQuery();
 
   const isUpToDate = latestCodeId && contractInfo ? latestCodeId === contractInfo.code_id : undefined;
 
@@ -49,9 +49,9 @@ export const UpgradeProposalForm = () => {
     } catch {
       return undefined;
     }
-  }, [contractInfo?.code_id, message, networkName])
+  }, [contractInfo?.code_id, message, networkName]);
 
-  const isDisabled = migrateMsg === undefined || isUpToDate !== false
+  const isDisabled = migrateMsg === undefined || isUpToDate !== false;
 
   return (
     <LoadingPage isLoading={isLoadingContract || isLoadingLatestCodeId}>
@@ -73,24 +73,18 @@ export const UpgradeProposalForm = () => {
               valid
               placeholder="Type your migration message here"
               value={message}
-              onChange={value => setMessage(value || '')}
+              onChange={(value) => setMessage(value || '')}
             />
             <VStack gap={4}>
-              <Text weight='bold'>{upgradeMessage}</Text>
-              <Text color="supporting">
-                {changeLogMessage}
-              </Text>
+              <Text weight="bold">{upgradeMessage}</Text>
+              <Text color="supporting">{changeLogMessage}</Text>
             </VStack>
           </>
         )}
 
-        {isUpToDate === true && (
-          <Text weight="bold">Your DAO is up-to-date!</Text>
-        )}
+        {isUpToDate === true && <Text weight="bold">Your DAO is up-to-date!</Text>}
 
-        {isUpToDate === undefined && (
-          <Throbber />
-        )}
+        {isUpToDate === undefined && <Throbber />}
       </ProposalForm>
     </LoadingPage>
   );

@@ -1,5 +1,5 @@
-import { VStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
 interface Props {
   name: string;

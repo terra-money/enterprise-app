@@ -6,9 +6,9 @@ import { QUERY_KEY } from './queryKey';
 import { useChainID, useNetworkName } from '@terra-money/apps/hooks';
 
 export const useCommunityPoolQuery = (): UseQueryResult<u<Big> | undefined> => {
-  const lcd = useLCDClient()
-  const ntworkName = useNetworkName()
-  const chainID = useChainID()
+  const lcd = useLCDClient();
+  const ntworkName = useNetworkName();
+  const chainID = useChainID();
 
   return useQuery(
     [QUERY_KEY.COMMUNITY_POOL, ntworkName],

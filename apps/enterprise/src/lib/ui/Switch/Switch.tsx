@@ -1,13 +1,13 @@
-import styled, { useTheme } from "styled-components";
-import { defaultTransitionCSS } from "../animations/transitions";
-import { CheckIcon } from "../icons/CheckIcon";
-import { CloseIcon } from "../icons/CloseIcon";
-import { HStack } from "../Stack";
-import { Text } from "../Text";
-import { centerContentCSS } from "../utils/centerContentCSS";
-import { getCSSUnit } from "../utils/getCSSUnit";
-import { getSameDimensionsCSS } from "../utils/getSameDimensionsCSS";
-import { roundedCSS } from "../utils/roundedCSS";
+import styled, { useTheme } from 'styled-components';
+import { defaultTransitionCSS } from '../animations/transitions';
+import { CheckIcon } from '../icons/CheckIcon';
+import { CloseIcon } from '../icons/CloseIcon';
+import { HStack } from '../Stack';
+import { Text } from '../Text';
+import { centerContentCSS } from '../utils/centerContentCSS';
+import { getCSSUnit } from '../utils/getCSSUnit';
+import { getSameDimensionsCSS } from '../utils/getSameDimensionsCSS';
+import { roundedCSS } from '../utils/roundedCSS';
 
 interface SwitchProps {
   value: boolean;
@@ -59,19 +59,10 @@ const Container = styled.div`
 export const Switch = ({ value, onChange, label }: SwitchProps) => {
   const { colors } = useTheme();
   return (
-    <Wrapper
-      onClick={() => onChange(!value)}
-      as="label"
-      alignItems="center"
-      gap={8}
-      id={label}
-    >
+    <Wrapper onClick={() => onChange(!value)} as="label" alignItems="center" gap={8} id={label}>
       <Container
         style={{
-          background: (value
-            ? colors.textSupporting3
-            : colors.backgroundGlass2
-          ).toCssValue(),
+          background: (value ? colors.textSupporting3 : colors.backgroundGlass2).toCssValue(),
         }}
       >
         <Control

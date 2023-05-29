@@ -1,4 +1,4 @@
-import { OnValueChangeListener, PersistentStorage } from "./PersistentStorage";
+import { OnValueChangeListener, PersistentStorage } from './PersistentStorage';
 
 export class LocalStorage<T extends string> implements PersistentStorage<T> {
   listeners: Record<string, OnValueChangeListener<any>[]> = {};
@@ -8,8 +8,8 @@ export class LocalStorage<T extends string> implements PersistentStorage<T> {
 
     if (item === null) return undefined;
 
-    if (item === "null") return null as never as V;
-    if (item === "undefined") return undefined;
+    if (item === 'null') return null as never as V;
+    if (item === 'undefined') return undefined;
 
     try {
       return JSON.parse(item) as V;
@@ -34,22 +34,14 @@ export class LocalStorage<T extends string> implements PersistentStorage<T> {
       listener(value, oldValue);
     });
   }
-  addValueChangeListener<V>(
-    key: string,
-    listener: OnValueChangeListener<V>
-  ): void {
+  addValueChangeListener<V>(key: string, listener: OnValueChangeListener<V>): void {
     if (!this.listeners[key]) {
       this.listeners[key] = [];
     }
 
     this.listeners[key].push(listener);
   }
-  removeValueChangeListener<T>(
-    key: string,
-    listener: OnValueChangeListener<T>
-  ): void {
-    this.listeners[key] = (this.listeners[key] || []).filter(
-      (l) => l !== listener
-    );
+  removeValueChangeListener<T>(key: string, listener: OnValueChangeListener<T>): void {
+    this.listeners[key] = (this.listeners[key] || []).filter((l) => l !== listener);
   }
 }

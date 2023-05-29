@@ -9,7 +9,7 @@ import { useChainID } from '@terra-money/apps/hooks';
 
 export const useEstimatedFeeQuery = (msgs: Msg[]) => {
   const address = useAssertMyAddress();
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   const client = useLCDClient();
 

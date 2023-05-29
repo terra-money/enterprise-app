@@ -1,10 +1,13 @@
-import { useCurrentDao } from "dao/components/CurrentDaoProvider"
-import { CurrentDAOMinimumWeightForRewardsProvider } from "./CurrentDAOMinimumWeightForRewardsProvider"
-import { UpdateMinimumWeightForRewardsFormMultisigOrNftDao, UpdateMinimumWeightForRewardsFormTokenDao } from "./UpdateMinimumWeightForRewardsForm"
-import { CurrentDAOTokenProvider } from "dao/components/CurrentDaoTokenProvider"
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { CurrentDAOMinimumWeightForRewardsProvider } from './CurrentDAOMinimumWeightForRewardsProvider';
+import {
+  UpdateMinimumWeightForRewardsFormMultisigOrNftDao,
+  UpdateMinimumWeightForRewardsFormTokenDao,
+} from './UpdateMinimumWeightForRewardsForm';
+import { CurrentDAOTokenProvider } from 'dao/components/CurrentDaoTokenProvider';
 
 export const MinimumWeightForRewardsProposalPage = () => {
-  const { dao_type, } = useCurrentDao()
+  const { dao_type } = useCurrentDao();
 
   return (
     <CurrentDAOMinimumWeightForRewardsProvider>
@@ -15,7 +18,6 @@ export const MinimumWeightForRewardsProposalPage = () => {
       ) : (
         <UpdateMinimumWeightForRewardsFormMultisigOrNftDao />
       )}
-
     </CurrentDAOMinimumWeightForRewardsProvider>
-  )
-}
+  );
+};

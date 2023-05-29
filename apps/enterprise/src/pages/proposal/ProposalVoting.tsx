@@ -13,7 +13,7 @@ import { useNetworkName } from '@terra-money/apps/hooks';
 export const ProposalVoting = () => {
   const { executionTxHash } = useCurrentProposal();
 
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   return (
     <VStack gap={16}>

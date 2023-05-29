@@ -10,11 +10,7 @@ export interface CW20TokenInfoResponse {
   total_supply: string;
 }
 
-export const fetchCW20TokenInfo = async (
-  lcd: LCDClient,
-  tokenAddr: string
-): Promise<CW20TokenInfoResponse> => {
-
+export const fetchCW20TokenInfo = async (lcd: LCDClient, tokenAddr: string): Promise<CW20TokenInfoResponse> => {
   const response = await lcd.wasm.contractQuery<CW20TokenInfoResponse>(tokenAddr, {
     token_info: {},
   });
@@ -26,7 +22,7 @@ export const useCW20TokenInfoQuery = (
   tokenAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<CW20TokenInfoResponse> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.CW20_TOKEN_QUERY, tokenAddress],

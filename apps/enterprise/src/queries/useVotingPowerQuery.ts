@@ -6,11 +6,7 @@ import { enterprise } from 'types/contracts';
 import { CW20Addr } from '@terra-money/apps/types';
 import { useLCDClient } from '@terra-money/wallet-provider';
 
-export const fetchVotingPower = async (
-  lcd: LCDClient,
-  daoAddress: CW20Addr,
-  walletAddress: CW20Addr
-): Promise<Big> => {
+export const fetchVotingPower = async (lcd: LCDClient, daoAddress: CW20Addr, walletAddress: CW20Addr): Promise<Big> => {
   const response = await lcd.wasm.contractQuery<enterprise.MemberInfoResponse>(daoAddress, {
     member_info: { member_address: walletAddress },
   });
@@ -22,7 +18,7 @@ export const useVotingPowerQuery = (
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Big | undefined> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.VOTING_POWER, daoAddress, walletAddress],

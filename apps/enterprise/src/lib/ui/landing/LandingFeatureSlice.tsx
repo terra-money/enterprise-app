@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import { reverseIf } from "lib/shared/utils/reverseIf";
-import styled from "styled-components";
-import { IntersectionAware } from "lib/ui/IntersectionAware";
-import { VStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
+import { ReactNode } from 'react';
+import { reverseIf } from 'lib/shared/utils/reverseIf';
+import styled from 'styled-components';
+import { IntersectionAware } from 'lib/ui/IntersectionAware';
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
-import { LandingSlice } from "./LandingSlice";
+import { LandingSlice } from './LandingSlice';
 
-type StartsWith = "preview" | "info";
+type StartsWith = 'preview' | 'info';
 
 interface Props {
   title: ReactNode;
@@ -26,8 +26,7 @@ const Container = styled.div<{ isInfoFirst: boolean }>`
   display: grid;
   grid-gap: 40px;
   align-items: center;
-  grid-template-columns: ${({ isInfoFirst }) =>
-    reverseIf(["3fr", "2fr"], isInfoFirst).join(" ")};
+  grid-template-columns: ${({ isInfoFirst }) => reverseIf(['3fr', '2fr'], isInfoFirst).join(' ')};
 
   > * {
     :last-child {
@@ -41,13 +40,7 @@ const Container = styled.div<{ isInfoFirst: boolean }>`
   }
 `;
 
-export const LandingFeatureSlice = ({
-  title,
-  description,
-  renderPreview,
-  startsWith,
-  cta,
-}: Props) => {
+export const LandingFeatureSlice = ({ title, description, renderPreview, startsWith, cta }: Props) => {
   const info = (
     <VStack key="info" alignItems="start" gap={40}>
       <Text height="large" weight="bold" size={32} as="h2">
@@ -58,15 +51,12 @@ export const LandingFeatureSlice = ({
     </VStack>
   );
 
-  const isInfoFirst = startsWith === "info";
+  const isInfoFirst = startsWith === 'info';
 
   return (
     <IntersectionAware<HTMLDivElement>
       render={({ ref, wasIntersected }) => {
-        const content = reverseIf(
-          [wasIntersected ? renderPreview() : null, info],
-          isInfoFirst
-        );
+        const content = reverseIf([wasIntersected ? renderPreview() : null, info], isInfoFirst);
 
         return (
           <Wrapper ref={ref}>

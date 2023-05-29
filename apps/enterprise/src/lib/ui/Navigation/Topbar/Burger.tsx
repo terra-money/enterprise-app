@@ -1,12 +1,12 @@
-import { range } from "lib/shared/utils/range";
-import styled from "styled-components";
-import { VStack } from "lib/ui/Stack";
+import { range } from 'lib/shared/utils/range';
+import styled from 'styled-components';
+import { VStack } from 'lib/ui/Stack';
 
 const Line = styled.div`
   width: 100%;
   border-radius: 2px;
   height: 4px;
-  background: ${({ theme }) => theme.colors["text"].toCssValue()};
+  background: ${({ theme }) => theme.colors['text'].toCssValue()};
 
   &:nth-child(1) {
     width: 80%;
@@ -32,11 +32,7 @@ interface Props {
 export const Burger = ({ onClick }: Props) => {
   return (
     <Container onClick={onClick}>
-      <VStack
-        style={{ height: "100%" }}
-        alignItems="start"
-        justifyContent="space-between"
-      >
+      <VStack style={{ height: '100%' }} alignItems="start" justifyContent="space-between">
         {range(3).map((key) => (
           <Line key={key} />
         ))}

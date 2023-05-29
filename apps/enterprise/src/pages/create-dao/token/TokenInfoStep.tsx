@@ -6,7 +6,22 @@ import { WizardStep } from '../WizardStep';
 export const TokenInfoStep = () => {
   const { formState, formInput } = useDaoWizardForm();
   const {
-    tokenInfo: { decimals, decimalsError, name, nameError, symbol, symbolError, description, descriptionError, logo, logoError, marketingOwner, marketingOwnerError, project, projectError },
+    tokenInfo: {
+      decimals,
+      decimalsError,
+      name,
+      nameError,
+      symbol,
+      symbolError,
+      description,
+      descriptionError,
+      logo,
+      logoError,
+      marketingOwner,
+      marketingOwnerError,
+      project,
+      projectError,
+    },
   } = formState;
 
   const onChange = (params: Partial<TokenInfo>) => {
@@ -60,7 +75,7 @@ export const TokenInfoStep = () => {
           value={marketingOwner}
           error={marketingOwner !== undefined && marketingOwner?.length > 0 ? marketingOwnerError : undefined}
           onChange={({ currentTarget }) => onChange({ marketingOwner: currentTarget.value })}
-          helpText='A Marketing owner can update the description and project name'
+          helpText="A Marketing owner can update the description and project name"
         />
         <WizardInput
           label="Project URL"
@@ -68,7 +83,7 @@ export const TokenInfoStep = () => {
           value={project}
           error={project !== undefined && project?.length > 0 ? projectError : undefined}
           onChange={({ currentTarget }) => onChange({ project: currentTarget.value })}
-          helpText='This URL should point to a project website'
+          helpText="This URL should point to a project website"
         />
       </Stack>
     </WizardStep>

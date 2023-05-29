@@ -7,7 +7,7 @@ export const useCW3ListVotersQuery = (
   address: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Awaited<ReturnType<typeof fetchCW3ListVoters>>> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery([QUERY_KEY.CW3_LIST_VOTERS, address], () => fetchCW3ListVoters(lcd, address), {
     refetchOnMount: false,

@@ -10,19 +10,21 @@ interface ClaimTxOptions {
 }
 
 export const useClaimTx = () => {
-  const myAddress = useMyAddress()
-  const chainID = useChainID()
+  const myAddress = useMyAddress();
+  const chainID = useChainID();
 
   return useTx<ClaimTxOptions>(
     (options) => {
       const { daoAddress } = options;
 
-      const payload = TxBuilder.new().execute<enterprise.ExecuteMsg>(assertDefined(myAddress), daoAddress, { claim: {} }).build();
+      const payload = TxBuilder.new()
+        .execute<enterprise.ExecuteMsg>(assertDefined(myAddress), daoAddress, { claim: {} })
+        .build();
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.CLAIM,

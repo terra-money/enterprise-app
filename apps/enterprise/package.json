@@ -12,7 +12,7 @@
   },
   "lint-staged": {
     "./src/{**/*,*}.{ts,tsx}": [
-      "prettier --write",
+      "prettier --write --single-quote --no-semi",
       "eslint --max-warnings 0"
     ]
   },

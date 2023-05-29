@@ -1,16 +1,12 @@
-import { useRhythmicRerender } from "lib/ui/hooks/useRhythmicRerender";
-import {
-  millisecondsInHour,
-  millisecondsInMinute,
-  millisecondsInSecond,
-} from "date-fns";
-import { HStack, VStack } from "lib/ui/Stack";
-import { CountdownPart } from "./CountdownPart";
-import { Text } from "lib/ui/Text";
-import { capitalizeFirstLetter } from "lib/shared/utils/capitalizeFirstLetter";
+import { useRhythmicRerender } from 'lib/ui/hooks/useRhythmicRerender';
+import { millisecondsInHour, millisecondsInMinute, millisecondsInSecond } from 'date-fns';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { CountdownPart } from './CountdownPart';
+import { Text } from 'lib/ui/Text';
+import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 
-const countdownUnits = ["days", "hours", "minutes", "seconds"] as const;
-type CountdownUnit = typeof countdownUnits[number];
+const countdownUnits = ['days', 'hours', 'minutes', 'seconds'] as const;
+type CountdownUnit = (typeof countdownUnits)[number];
 const msInUnit: Record<CountdownUnit, number> = {
   days: millisecondsInHour * 24,
   hours: millisecondsInHour,
@@ -39,15 +35,12 @@ const formatDuration = (durationInMs: number, units: CountdownUnit[]) => {
   return duration;
 };
 
-export const Countdown = ({ endsAt, precision = "seconds" }: Props) => {
+export const Countdown = ({ endsAt, precision = 'seconds' }: Props) => {
   useRhythmicRerender();
 
   const now = Date.now();
 
-  const unitsToShow = countdownUnits.slice(
-    0,
-    countdownUnits.indexOf(precision) + 1
-  );
+  const unitsToShow = countdownUnits.slice(0, countdownUnits.indexOf(precision) + 1);
 
   const duration = formatDuration(Math.max(endsAt - now, 0), unitsToShow);
 

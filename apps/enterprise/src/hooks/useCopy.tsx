@@ -13,7 +13,6 @@ export const useCopy = (field: CopyField) => {
 
   const clipboardCopy = useClipboardCopy();
 
-
   return useCallback(() => {
     if (myAddress) {
       clipboardCopy({

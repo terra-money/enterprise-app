@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { centerContentCSS } from "../utils/centerContentCSS";
+import styled from 'styled-components';
+import { centerContentCSS } from '../utils/centerContentCSS';
 
 export const InteractiveBoundaryArea = styled.div<{ y: number }>`
   position: absolute;

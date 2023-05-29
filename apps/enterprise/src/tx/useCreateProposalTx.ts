@@ -17,8 +17,8 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: enterprise.Pro
     governanceConfig: { minimumDeposit },
   } = dao;
 
-  const chainID = useChainID()
-  const myAddress = useMyAddress()
+  const chainID = useChainID();
+  const myAddress = useMyAddress();
 
   return useTx<CreateProposalMsgType>(
     (options) => {
@@ -26,15 +26,21 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: enterprise.Pro
 
       if (type === 'token' && Big(minimumDeposit ?? 0).gt(0)) {
         const payload = TxBuilder.new()
-          .hook<enterprise.Cw20HookMsg>(assertDefined(myAddress), daoAddress, tokenAddress, minimumDeposit!.toString(), {
-            create_proposal,
-          })
+          .hook<enterprise.Cw20HookMsg>(
+            assertDefined(myAddress),
+            daoAddress,
+            tokenAddress,
+            minimumDeposit!.toString(),
+            {
+              create_proposal,
+            }
+          )
           .build();
 
         return {
           ...payload,
-          chainID
-        }
+          chainID,
+        };
       }
 
       const payload = TxBuilder.new()
@@ -43,18 +49,18 @@ export const useCreateProposalTx = (dao: DAO, proposalVotingType: enterprise.Pro
           daoAddress,
           proposalVotingType === 'general'
             ? {
-              create_proposal,
-            }
+                create_proposal,
+              }
             : {
-              create_council_proposal: create_proposal,
-            }
+                create_council_proposal: create_proposal,
+              }
         )
         .build();
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.CREATE_PROPOSAL,

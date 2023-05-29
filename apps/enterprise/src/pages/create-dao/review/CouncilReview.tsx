@@ -1,16 +1,18 @@
-import { VStack } from "lib/ui/Stack";
-import { useDaoWizardForm } from "../DaoWizardFormProvider";
-import { Text } from "lib/ui/Text";
-import { toPercents } from "@terra-money/apps/utils";
-import { Address } from "chain/components/Address";
-import { councilProposalActionTypeName, CouncilProposalActionType } from "../shared/ProposalTypesInput";
-import { LabeledValue } from "lib/ui/LabeledValue";
+import { VStack } from 'lib/ui/Stack';
+import { useDaoWizardForm } from '../DaoWizardFormProvider';
+import { Text } from 'lib/ui/Text';
+import { toPercents } from '@terra-money/apps/utils';
+import { Address } from 'chain/components/Address';
+import { councilProposalActionTypeName, CouncilProposalActionType } from '../shared/ProposalTypesInput';
+import { LabeledValue } from 'lib/ui/LabeledValue';
 
 export const CouncilReview = () => {
-  const { formState: { council } } = useDaoWizardForm();
+  const {
+    formState: { council },
+  } = useDaoWizardForm();
 
   if (!council?.members.length) {
-    return <Text>No council</Text>
+    return <Text>No council</Text>;
   }
 
   const { members, allowedProposalTypes, quorum, threshold } = council;
@@ -24,23 +26,19 @@ export const CouncilReview = () => {
             <Text key={index}>
               {index + 1}. <Address value={member.address} />
             </Text>
-          )
+          );
         })}
       </VStack>
       <VStack gap={2}>
         <LabeledValue name="Allowed proposal types" />
         {allowedProposalTypes.map((proposalType, index) => (
-          <Text >
+          <Text>
             {index + 1}. {councilProposalActionTypeName[proposalType as CouncilProposalActionType] ?? proposalType}
           </Text>
         ))}
       </VStack>
-      <LabeledValue name="Quorum">
-        {toPercents(quorum, 'round')}
-      </LabeledValue>
-      <LabeledValue name="Threshold">
-        {toPercents(threshold, 'round')}
-      </LabeledValue>
-    </ >
+      <LabeledValue name="Quorum">{toPercents(quorum, 'round')}</LabeledValue>
+      <LabeledValue name="Threshold">{toPercents(threshold, 'round')}</LabeledValue>
+    </>
   );
-}
+};

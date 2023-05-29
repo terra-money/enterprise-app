@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const NotificationSign = styled.div`
   position: absolute;
@@ -8,4 +8,4 @@ export const NotificationSign = styled.div`
   height: 8px;
   border-radius: 100000px;
   background: ${({ theme }) => theme.colors.alert.toCssValue()};
-`
+`;

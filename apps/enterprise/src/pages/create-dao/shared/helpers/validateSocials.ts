@@ -3,11 +3,11 @@ import { DaoSocialDataInput } from 'pages/create-dao/DaoWizardFormProvider';
 
 // accepts anything
 const validateSocial = (value: string | undefined) => {
-  return undefined
-}
+  return undefined;
+};
 
 export const validateGithubUsername = (value: string | undefined) => {
-  return validateSocial(value)
+  return validateSocial(value);
 
   // GitHub username validadion
   // if (value && /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(value) === false) {
@@ -16,7 +16,7 @@ export const validateGithubUsername = (value: string | undefined) => {
 };
 
 export const validateTwitterUsername = (value: string | undefined) => {
-  return validateSocial(value)
+  return validateSocial(value);
 
   // Twitter username validadion
   // if (value && /^@?(\w){1,15}$/.test(value) === false) {
@@ -25,7 +25,7 @@ export const validateTwitterUsername = (value: string | undefined) => {
 };
 
 export const validateDiscordUsername = (value: string | undefined) => {
-  return validateSocial(value)
+  return validateSocial(value);
 
   // Discord username validadion
   // if (value && /^.{3,32}#[0-9]{4}$/.test(value) === false) {
@@ -34,7 +34,7 @@ export const validateDiscordUsername = (value: string | undefined) => {
 };
 
 export const validateTelegramUsername = (value: string | undefined) => {
-  return validateSocial(value)
+  return validateSocial(value);
 
   // Telegram username validadion
   // if (value && /^(https:\/\/t\.me\/|t\.me\/|@|)(\w+)$/.test(value) === false) {

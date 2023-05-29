@@ -13,7 +13,7 @@ export const ExecuteProposal = () => {
   return (
     <VStack gap={4} alignItems="center">
       <PrimaryButton
-        style={{minWidth: 111}}
+        style={{ minWidth: 111 }}
         isLoading={txResult.loading}
         onClick={() => {
           tx({

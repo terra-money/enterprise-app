@@ -57,9 +57,7 @@ const Text = forwardRef<any, TextProps>((props, ref) => {
       data-variant={variant}
     >
       {children}
-      {tooltip && (
-        <TextTooltip content={tooltip} />
-      )}
+      {tooltip && <TextTooltip content={tooltip} />}
     </Component>
   );
 });

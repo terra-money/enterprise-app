@@ -11,7 +11,7 @@ export interface NFTPairs {
 const fetchDAONFTsWhitelist = async (
   lcd: LCDClient,
   whitelistAddrCollection: CW20Addr[],
-  daoAddress: string,
+  daoAddress: string
 ): Promise<NFTPairs[]> => {
   const nftpairs = await Promise.all(
     whitelistAddrCollection.map(async (addr: CW20Addr) => {
@@ -19,23 +19,19 @@ const fetchDAONFTsWhitelist = async (
         tokens: { owner: daoAddress },
       });
       return { collectionAddress: addr, tokenIds };
-    }),
+    })
   );
   return nftpairs;
 };
 
 export const useNFTsOwnersQuery = (
   whitelistAddrCollection: CW20Addr[],
-  daoAddress: string,
+  daoAddress: string
 ): UseQueryResult<NFTPairs[]> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery([whitelistAddrCollection, daoAddress], async () => {
-    const nftpairs = await fetchDAONFTsWhitelist(
-      lcd,
-      whitelistAddrCollection,
-      daoAddress,
-    );
+    const nftpairs = await fetchDAONFTsWhitelist(lcd, whitelistAddrCollection, daoAddress);
     return nftpairs;
   });
 };

@@ -15,28 +15,24 @@ export const getExecuteProposalMsg = ({ id }: Pick<Proposal, 'id'>) => ({
   execute_proposal: {
     proposal_id: id,
   },
-})
+});
 
 export const useExecuteProposalTx = () => {
-  const myAddress = useMyAddress()
-  const chainID = useChainID()
+  const myAddress = useMyAddress();
+  const chainID = useChainID();
 
   return useTx<ExecuteProposalTxOptions>(
     (options) => {
       const { daoAddress, proposalId } = options;
 
       const payload = TxBuilder.new()
-        .execute<enterprise.ExecuteMsg>(
-          assertDefined(myAddress),
-          daoAddress,
-          getExecuteProposalMsg({ id: proposalId })
-        )
+        .execute<enterprise.ExecuteMsg>(assertDefined(myAddress), daoAddress, getExecuteProposalMsg({ id: proposalId }))
         .build();
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.EXECUTE_PROPOSAL,

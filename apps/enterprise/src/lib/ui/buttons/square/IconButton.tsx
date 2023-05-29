@@ -1,31 +1,26 @@
-import styled from "styled-components";
-import { defaultTransitionCSS } from "lib/ui/animations/transitions";
-import { centerContentCSS } from "lib/ui/utils/centerContentCSS";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
-import { getSameDimensionsCSS } from "lib/ui/utils/getSameDimensionsCSS";
-import { roundedCSS } from "lib/ui/utils/roundedCSS";
+import styled from 'styled-components';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 
-import { UnstyledButton } from "../UnstyledButton";
+import { UnstyledButton } from '../UnstyledButton';
 
-type IconButtonKind = "regular" | "alert";
+type IconButtonKind = 'regular' | 'alert';
 
-export const stickyIconButtonSizes = ["xs", "s", "m", "l"] as const;
+export const stickyIconButtonSizes = ['xs', 's', 'm', 'l'] as const;
 
-type IconButtonSize = typeof stickyIconButtonSizes[number];
+type IconButtonSize = (typeof stickyIconButtonSizes)[number];
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   kind?: IconButtonKind;
   size?: IconButtonSize;
-  as?: "button" | "div";
+  as?: 'button' | 'div';
 }
 
-export const IconButton = ({
-  size = "m",
-  icon,
-  kind = "regular",
-  ...rest
-}: Props) => {
+export const IconButton = ({ size = 'm', icon, kind = 'regular', ...rest }: Props) => {
   return (
     <Container {...rest} kind={kind} size={size}>
       {icon}

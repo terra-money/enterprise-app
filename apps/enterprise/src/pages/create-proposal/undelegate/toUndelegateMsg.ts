@@ -21,7 +21,7 @@ export const toUndelegateMsg = ({ amount, address }: DelegateMsgParams) => {
       amount: microfy(amount, lunaDecimals).toString(),
     },
     validator: address,
-  }
+  };
   return JSON.stringify({
     staking: {
       undelegate,

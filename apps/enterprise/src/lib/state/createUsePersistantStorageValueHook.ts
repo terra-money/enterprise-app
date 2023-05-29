@@ -1,10 +1,8 @@
-import { OnValueChangeListener } from "lib/state/PersistentStorage";
-import { useCallback, useEffect, useState } from "react";
-import { PersistentStorage } from "./PersistentStorage";
+import { OnValueChangeListener } from 'lib/state/PersistentStorage';
+import { useCallback, useEffect, useState } from 'react';
+import { PersistentStorage } from './PersistentStorage';
 
-export function createUsePersistantStorageValueHook<T extends string>(
-  storage: PersistentStorage<T>
-) {
+export function createUsePersistantStorageValueHook<T extends string>(storage: PersistentStorage<T>) {
   function usePersistentStorageValue<V>(key: T, initialValue: V) {
     const [value, setValue] = useState<V>(() => {
       const valueFromStorage = storage.getItem<V>(key);

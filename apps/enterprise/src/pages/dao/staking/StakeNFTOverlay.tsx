@@ -20,7 +20,7 @@ export const StakeNFTOverlay = ({ staked, onClose }: StakeNFTOverlayProps) => {
   const [txResult, stakeNfts] = useStakeNftsTx();
 
   const { data: nfts = [], isLoading } = useMyNftsQuery(dao_membership_contract);
-  const [tokenIds, setTokenIds] = useSubSetValue(nfts.map(nft => nft.tokenId))
+  const [tokenIds, setTokenIds] = useSubSetValue(nfts.map((nft) => nft.tokenId));
 
   return (
     <Modal

@@ -11,9 +11,7 @@ export const MetadataProposalAction = () => {
   const { msg } = useCurrentProposalAction();
 
   return (
-    <TitledCard
-      title="DAO Metadata"
-    >
+    <TitledCard title="DAO Metadata">
       <ProposalActionDiff
         fieldNameRecord={metadataView.metadataViewFieldNameRecord}
         oldView={metadataView.fromDao(dao)}

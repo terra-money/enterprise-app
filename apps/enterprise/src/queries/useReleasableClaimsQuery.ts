@@ -21,7 +21,7 @@ export const useReleasableClaimsQuery = (
   walletAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<enterprise.Claim[]> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.RELEASABLE_CLAIMS, daoAddress, walletAddress],

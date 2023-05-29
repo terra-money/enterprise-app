@@ -2,7 +2,7 @@ import { useNetworkName } from '@terra-money/apps/hooks';
 import { CreateTxOptions, Fee } from '@terra-money/feather.js';
 
 export const useTxOverrides = (): Partial<CreateTxOptions> => {
-  const networkName = useNetworkName()
+  const networkName = useNetworkName();
 
   if (networkName === 'testnet') {
     return {

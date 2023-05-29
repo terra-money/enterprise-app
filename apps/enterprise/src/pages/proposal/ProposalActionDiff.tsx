@@ -20,7 +20,5 @@ export const ProposalActionDiff = ({ oldView, updatedFields, fieldNameRecord }: 
     return result;
   }, [fieldNameRecord, oldView, updatedFields]);
 
-  return (
-    <FieldsDiff fields={fields} />
-  );
+  return <FieldsDiff fields={fields} />;
 };

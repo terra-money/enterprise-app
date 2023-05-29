@@ -28,15 +28,13 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
       </Text>
       {proposal.title}
     </DeprecatedText>
-  )
+  );
 
   if (compact) {
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
-        <div className={styles.logo} >
-          <DaoLogoLink address={
-            proposal.dao.address
-          } size="s" logo={proposal.dao.logo} />
+        <div className={styles.logo}>
+          <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
         </div>
         {title}
         <ProposalTags className={styles.tags} proposal={proposal} />
@@ -50,10 +48,8 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <DeprecatedText className={styles.back} variant="link" onClick={() => navigate(-1)}>
           Back
         </DeprecatedText>
-        <div className={styles.logo} >
-          <DaoLogoLink address={
-            proposal.dao.address
-          } size="s" logo={proposal.dao.logo} />
+        <div className={styles.logo}>
+          <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
         </div>
         {title}
         <ProposalTags className={styles.tags} proposal={proposal} />

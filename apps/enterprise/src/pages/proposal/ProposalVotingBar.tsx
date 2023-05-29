@@ -14,7 +14,6 @@ import styles from './ProposalVotingBar.module.sass';
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
 
-
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
@@ -47,12 +46,9 @@ export const ProposalVotingBar = () => {
     <div className={styles.root}>
       <div className={styles.bar}>
         <div style={{ width: totalBarWidth }} className={styles.total}>
-          <div style={{ width: yesBarWidth }} className={styles.yes}>
-          </div>
-          {noRatio > 0 && <div style={{ width: noBarWidth }} className={styles.no}>
-          </div>}
-          {abstainRatio > 0 && <div style={{ width: abstainBarWidth }} className={styles.abstain}>
-          </div>}
+          <div style={{ width: yesBarWidth }} className={styles.yes}></div>
+          {noRatio > 0 && <div style={{ width: noBarWidth }} className={styles.no}></div>}
+          {abstainRatio > 0 && <div style={{ width: abstainBarWidth }} className={styles.abstain}></div>}
         </div>
         <div style={{ left: toPercents(quorum) }} className={styles.quorum}>
           <div className={styles.center}>
@@ -62,32 +58,36 @@ export const ProposalVotingBar = () => {
           </div>
         </div>
         <Container gap={16} direction="row" className={styles.votesContainer}>
-          {yesRatio > 0 && <Container gap={16} direction="row">
-            <HStack gap={8} alignItems="center">
-              <div className={styles.yesBean}></div>
-              <Text className={classNames(styles.value, styles.label)} variant="text">
-                Yes {toPercents(yesRatio, 'round')}
-              </Text>
-            </HStack>
-          </Container>}
-          {noRatio > 0 && <Container gap={16} direction="row">
-            <HStack gap={8} alignItems="center">
-              <div className={styles.noBean}></div>
-              <Text className={classNames(styles.value, styles.label)} variant="text">
-                No {toPercents(noRatio, 'round')}
-              </Text>
-            </HStack>
-
-          </Container>}
-          {abstainRatio > 0 && <Container gap={16} direction="row">
-            <HStack gap={8} alignItems="center">
-              <div className={styles.abstainBean}></div>
-              <Text className={classNames(styles.value, styles.label)} variant="text">
-                Abstain {toPercents(abstainRatio, 'round')}
-              </Text>
-            </HStack>
-          </Container>}
-
+          {yesRatio > 0 && (
+            <Container gap={16} direction="row">
+              <HStack gap={8} alignItems="center">
+                <div className={styles.yesBean}></div>
+                <Text className={classNames(styles.value, styles.label)} variant="text">
+                  Yes {toPercents(yesRatio, 'round')}
+                </Text>
+              </HStack>
+            </Container>
+          )}
+          {noRatio > 0 && (
+            <Container gap={16} direction="row">
+              <HStack gap={8} alignItems="center">
+                <div className={styles.noBean}></div>
+                <Text className={classNames(styles.value, styles.label)} variant="text">
+                  No {toPercents(noRatio, 'round')}
+                </Text>
+              </HStack>
+            </Container>
+          )}
+          {abstainRatio > 0 && (
+            <Container gap={16} direction="row">
+              <HStack gap={8} alignItems="center">
+                <div className={styles.abstainBean}></div>
+                <Text className={classNames(styles.value, styles.label)} variant="text">
+                  Abstain {toPercents(abstainRatio, 'round')}
+                </Text>
+              </HStack>
+            </Container>
+          )}
         </Container>
       </div>
     </div>

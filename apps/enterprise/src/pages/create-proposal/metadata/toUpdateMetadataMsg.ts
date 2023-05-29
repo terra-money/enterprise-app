@@ -21,9 +21,8 @@ export const toUpdateMetadataMsg = (
     twitterUsername,
     logo,
     name,
-    description
-  }:
-  MetadataProposalFormInput
+    description,
+  }: MetadataProposalFormInput
 ): enterprise.UpdateMetadataMsg => {
   const msg: enterprise.UpdateMetadataMsg = {
     discord_username: 'no_change',
@@ -55,7 +54,6 @@ export const toUpdateMetadataMsg = (
     msg.name = { change: name };
   }
 
-  
   if (description && dao.description !== description) {
     msg.description = { change: description };
   }

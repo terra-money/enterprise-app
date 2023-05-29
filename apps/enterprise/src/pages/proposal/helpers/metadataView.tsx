@@ -47,7 +47,7 @@ export const getUpdatedFields = (msg: enterprise.UpdateMetadataMsg): Partial<Met
   }
 
   if (msg.logo !== 'no_change') {
-    view.logo = <LogoValueView value={formatLogo(msg.logo.change)} />
+    view.logo = <LogoValueView value={formatLogo(msg.logo.change)} />;
   }
 
   if (msg.name !== 'no_change') {

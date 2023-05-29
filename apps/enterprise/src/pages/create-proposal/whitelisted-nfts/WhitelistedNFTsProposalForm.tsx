@@ -26,7 +26,7 @@ export const WhitelistedNFTsProposalForm = () => {
     nfts.map((nft) => nft.value)
   );
 
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   const areNftsValid = nfts.every(({ error, loading }) => !error && !loading);
   const isFormValid = areNftsValid && (msg.add.length > 0 || msg.remove.length > 0);

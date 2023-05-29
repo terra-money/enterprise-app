@@ -15,7 +15,7 @@ export { useCurrentDaoToken };
 export const CurrentDAOTokenProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data } = useCW20TokenInfoQuery(dao.dao_membership_contract)
+  const { data } = useCW20TokenInfoQuery(dao.dao_membership_contract);
 
   if (!data) {
     return <Throbber />;

@@ -4,11 +4,7 @@ import { fetchCW721ContractInfo } from 'queries';
 import { DaoWizardState } from './DaoWizardFormProvider';
 import { LCDClient } from '@terra-money/feather.js';
 
-export const fetchExistingNFT = async (
-  dispatch: FormModifier<DaoWizardState>,
-  lcd: LCDClient,
-  tokenAddr: string
-) => {
+export const fetchExistingNFT = async (dispatch: FormModifier<DaoWizardState>, lcd: LCDClient, tokenAddr: string) => {
   const existingNFTError = validateAddress(tokenAddr);
 
   dispatch({

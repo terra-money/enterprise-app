@@ -58,11 +58,10 @@ export const usePersonalization = () => {
   return context;
 };
 
-interface PersonalizationProviderProps extends UIElementProps { }
+interface PersonalizationProviderProps extends UIElementProps {}
 
 const createStorageKey = (networkName: NetworkName, address?: string) => {
   const parts = ['__personalization', networkName];
-
 
   if (address) {
     parts.push(address);
@@ -74,8 +73,8 @@ const createStorageKey = (networkName: NetworkName, address?: string) => {
 export const PersonalizationProvider = (props: PersonalizationProviderProps) => {
   const { children } = props;
 
-  const networkName = useNetworkName()
-  const myAddress = useMyAddress()
+  const networkName = useNetworkName();
+  const myAddress = useMyAddress();
 
   const storageKey = createStorageKey(networkName, myAddress);
 

@@ -1,7 +1,7 @@
 import { VStack } from 'lib/ui/Stack';
 import { DaoWizardStep, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardStep } from '../WizardStep';
-import { daoTypeName } from 'dao'
+import { daoTypeName } from 'dao';
 import { ReviewSection } from '../review/ReviewSection';
 import { ConditionalRender } from 'components/primitives';
 import { InfoReview } from '../review/InfoReview';
@@ -32,22 +32,26 @@ const reviewSectionTitle: Partial<Record<DaoWizardStep, string>> = {
   tokenInfo: 'Token',
   whitelist: 'Whitelist',
   initialBalances: 'Initial balances',
-}
+};
 
 export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
-  const { formState: { type, steps }, goToStep } = useDaoWizardForm();
+  const {
+    formState: { type, steps },
+    goToStep,
+  } = useDaoWizardForm();
 
-  return <WizardStep title={`Create ${daoTypeName[type]} DAO`} subTitle="Review configuration">
-    <VStack gap={20}>
-      {
-        steps.map(step => {
+  return (
+    <WizardStep title={`Create ${daoTypeName[type]} DAO`} subTitle="Review configuration">
+      <VStack gap={20}>
+        {steps.map((step) => {
           if (immutableSteps.includes(step)) return null;
 
           return (
             <Fragment key={step}>
               <ReviewSection
                 name={reviewSectionTitle[step] ?? step}
-                onEdit={isLoading ? undefined : () => goToStep(step)}>
+                onEdit={isLoading ? undefined : () => goToStep(step)}
+              >
                 <ConditionalRender
                   value={step}
                   type={() => null}
@@ -66,9 +70,9 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
               </ReviewSection>
               <Line />
             </Fragment>
-          )
-        })
-      }
-    </VStack>
-  </WizardStep>
+          );
+        })}
+      </VStack>
+    </WizardStep>
+  );
 }

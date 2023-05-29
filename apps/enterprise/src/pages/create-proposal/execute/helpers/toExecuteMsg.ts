@@ -1,6 +1,6 @@
-import { DelegateMsg } from "pages/create-proposal/delegate/helpers/toDelegateMsg";
-import { RedelegateMsg } from "pages/create-proposal/redelegate/toRedelegateMsg";
-import { UndelegateMsg } from "pages/create-proposal/undelegate/toUndelegateMsg";
+import { DelegateMsg } from 'pages/create-proposal/delegate/helpers/toDelegateMsg';
+import { RedelegateMsg } from 'pages/create-proposal/redelegate/toRedelegateMsg';
+import { UndelegateMsg } from 'pages/create-proposal/undelegate/toUndelegateMsg';
 
 interface WasmMessage {
   execute?: {
@@ -17,12 +17,12 @@ interface WasmMessage {
 
 export interface ExecuteMsgInput {
   wasm?: WasmMessage;
-  bank?: any
+  bank?: any;
   staking?: {
-    delegate?: DelegateMsg
-    undelegate?: UndelegateMsg
-    redelegate?: RedelegateMsg
-  }
+    delegate?: DelegateMsg;
+    undelegate?: UndelegateMsg;
+    redelegate?: RedelegateMsg;
+  };
 }
 
 export const encodedWasmFields: Array<keyof WasmMessage> = ['execute', 'instantiate', 'migrate'];

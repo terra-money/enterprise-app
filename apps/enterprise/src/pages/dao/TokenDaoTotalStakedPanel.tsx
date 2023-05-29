@@ -11,9 +11,7 @@ export const TokenDaoTotalStakedPanel = () => {
 
   const { data: token } = useCW20TokenInfoQuery(dao_membership_contract);
 
-  const { data: totalStaked = Big(0) as u<Big>, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(
-    address
-  );
+  const { data: totalStaked = Big(0) as u<Big>, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(address);
 
   const totalStakedPercent =
     token === undefined || Big(token.total_supply ?? 0).eq(0)

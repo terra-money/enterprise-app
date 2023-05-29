@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Text } from "lib/ui/Text";
+import styled from 'styled-components';
+import { Text } from 'lib/ui/Text';
 
 const Boundary = styled(Text)`
   position: absolute;
@@ -23,8 +23,8 @@ export const MaxIntervalEndBoundary = ({ y, isActive, timestamp }: Props) => (
     }}
   >
     {new Date(timestamp).toLocaleTimeString(undefined, {
-      hour: "2-digit",
-      minute: "2-digit",
+      hour: '2-digit',
+      minute: '2-digit',
     })}
   </Boundary>
 );

@@ -40,7 +40,6 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
       )}
       {daoType === 'multisig' && (
         <HStack alignItems="center">
-
           <Checkbox
             label="Allow early proposal execution"
             value={!!value.allowEarlyProposalExecution}

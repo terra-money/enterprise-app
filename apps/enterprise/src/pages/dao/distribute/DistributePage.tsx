@@ -1,7 +1,7 @@
-import { ConditionalWallet } from "components/conditional-wallet"
-import { SameWidthChildrenRow } from "lib/ui/Layout/SameWidthChildrenRow"
-import { RewardsPanel } from "../staking/RewardsPanel"
-import { DepositIntoFundsDistributor } from "./deposit"
+import { ConditionalWallet } from 'components/conditional-wallet';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { RewardsPanel } from '../staking/RewardsPanel';
+import { DepositIntoFundsDistributor } from './deposit';
 
 export const DistributePage = () => {
   return (
@@ -13,5 +13,5 @@ export const DistributePage = () => {
         </SameWidthChildrenRow>
       )}
     />
-  )
-}
+  );
+};

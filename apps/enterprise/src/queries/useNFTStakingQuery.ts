@@ -22,7 +22,7 @@ export const useNFTStakingQuery = (
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<enterprise.NftUserStake | undefined> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.NFT_STAKING, daoAddress, walletAddress],

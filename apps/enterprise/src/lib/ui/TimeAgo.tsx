@@ -1,10 +1,10 @@
-import { useRhythmicRerender } from "./hooks/useRhythmicRerender";
-import { formatDistanceToNowStrict } from "date-fns"
-import { Text } from "./Text";
-import styled, { keyframes } from "styled-components";
-import { useState } from "react";
-import { useBoolean } from "lib/shared/hooks/useBoolean";
-import { Popover } from "./popover/Popover";
+import { useRhythmicRerender } from './hooks/useRhythmicRerender';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { Text } from './Text';
+import styled, { keyframes } from 'styled-components';
+import { useState } from 'react';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
+import { Popover } from './popover/Popover';
 
 interface TimeAgoProps {
   value: Date;
@@ -30,7 +30,7 @@ const TooltipContainer = styled.div`
 `;
 
 export const TimeAgo = ({ value }: TimeAgoProps) => {
-  useRhythmicRerender()
+  useRhythmicRerender();
 
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
@@ -44,14 +44,10 @@ export const TimeAgo = ({ value }: TimeAgoProps) => {
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric',
-  })
+  });
 
   return (
-    <Text
-      onMouseEnter={showTooltip}
-      onMouseLeave={hideTooltip}
-      ref={setAnchor}
-    >
+    <Text onMouseEnter={showTooltip} onMouseLeave={hideTooltip} ref={setAnchor}>
       {formatDistanceToNowStrict(value, { addSuffix: true })}
       {anchor && isTooltipOpen && (
         <Popover placement="bottom" anchor={anchor}>
@@ -59,5 +55,5 @@ export const TimeAgo = ({ value }: TimeAgoProps) => {
         </Popover>
       )}
     </Text>
-  )
-}
+  );
+};

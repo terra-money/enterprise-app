@@ -1,14 +1,14 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
-import { RectButton, Props as RectButtonProps } from './RectButton'
+import { RectButton, Props as RectButtonProps } from './RectButton';
 
-type GhostButtonKind = 'regular' | 'secondary'
+type GhostButtonKind = 'regular' | 'secondary';
 
-const defaultKind = 'regular'
+const defaultKind = 'regular';
 
 export type Props = RectButtonProps & {
-  kind?: GhostButtonKind
-}
+  kind?: GhostButtonKind;
+};
 
 const Container = styled(RectButton)<Props>`
   ${({ kind = defaultKind }) =>
@@ -28,8 +28,6 @@ const Container = styled(RectButton)<Props>`
         background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
       }
     `};
-`
+`;
 
-export const GhostButton = ({ as, ...rest }: Props) => (
-  <Container forwardedAs={as} {...rest} />
-)
+export const GhostButton = ({ as, ...rest }: Props) => <Container forwardedAs={as} {...rest} />;

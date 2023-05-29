@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const Line = styled.div<{ fullWidth?: boolean }>`
   min-height: 1px;

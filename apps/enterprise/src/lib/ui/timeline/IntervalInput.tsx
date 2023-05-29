@@ -1,28 +1,21 @@
-import { millisecondsInHour, millisecondsInMinute } from "date-fns";
-import { Interval } from "lib/entities/Interval";
-import { enforceRange } from "lib/shared/utils/enforceRange";
-import {
-  MouseEventHandler,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { useEvent } from "react-use";
-import styled, { css } from "styled-components";
-import { HSLA } from "../colors/HSLA";
-import { MoveIcon } from "../icons/MoveIcon";
-import { Text } from "../Text";
-import { centerContentCSS } from "../utils/centerContentCSS";
-import { formatDuration } from "../utils/formatDuration";
-import { getIntervalDuration } from "../utils/getIntervalDuration";
-import { getVerticalMarginCSS } from "../utils/getVerticalMarginCSS";
-import { HourSpace } from "./HourSpace";
+import { millisecondsInHour, millisecondsInMinute } from 'date-fns';
+import { Interval } from 'lib/entities/Interval';
+import { enforceRange } from 'lib/shared/utils/enforceRange';
+import { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { useEvent } from 'react-use';
+import styled, { css } from 'styled-components';
+import { HSLA } from '../colors/HSLA';
+import { MoveIcon } from '../icons/MoveIcon';
+import { Text } from '../Text';
+import { centerContentCSS } from '../utils/centerContentCSS';
+import { formatDuration } from '../utils/formatDuration';
+import { getIntervalDuration } from '../utils/getIntervalDuration';
+import { getVerticalMarginCSS } from '../utils/getVerticalMarginCSS';
+import { HourSpace } from './HourSpace';
 
-import { InteractiveBoundaryArea } from "./InteractiveBoundaryArea";
-import { IntervalRect } from "./IntervalRect";
-import { MaxIntervalEndBoundary } from "./MaxIntervalEndBoundary";
+import { InteractiveBoundaryArea } from './InteractiveBoundaryArea';
+import { IntervalRect } from './IntervalRect';
+import { MaxIntervalEndBoundary } from './MaxIntervalEndBoundary';
 
 interface RenderContentParams {
   pxInMs: number;
@@ -48,7 +41,7 @@ const Container = styled.div`
   user-select: none;
 `;
 
-type IntervalEditorControl = "start" | "end" | "position";
+type IntervalEditorControl = 'start' | 'end' | 'position';
 
 const MoveIconWr = styled.div`
   font-size: 16px;
@@ -90,8 +83,7 @@ export const IntervalInput = ({
 }: IntervalInputProps) => {
   const hoursCount = endHour - startHour;
 
-  const maxIntervalEnd =
-    optionalMaxIntervalEnd ?? startOfDay + millisecondsInHour * endHour;
+  const maxIntervalEnd = optionalMaxIntervalEnd ?? startOfDay + millisecondsInHour * endHour;
 
   const minIntervalStart = startOfDay + millisecondsInHour * startHour;
   const timelineStart = minIntervalStart;
@@ -99,10 +91,9 @@ export const IntervalInput = ({
   const height = hoursCount * pxInHour;
   const pxInMs = height / (hoursCount * millisecondsInHour);
 
-  const [activeControl, setActiveControl] =
-    useState<IntervalEditorControl | null>(null);
+  const [activeControl, setActiveControl] = useState<IntervalEditorControl | null>(null);
 
-  useEvent("mouseup", () => setActiveControl(null));
+  useEvent('mouseup', () => setActiveControl(null));
 
   const containerElement = useRef<HTMLDivElement | null>(null);
   const intervalElement = useRef<HTMLDivElement | null>(null);
@@ -118,21 +109,14 @@ export const IntervalInput = ({
     const containerRect = containerElement?.current?.getBoundingClientRect();
     if (!containerRect) return;
 
-    const y =
-      enforceRange(clientY, containerRect.top, containerRect.bottom) -
-      containerRect.top;
+    const y = enforceRange(clientY, containerRect.top, containerRect.bottom) - containerRect.top;
 
     const getNewInterval = () => {
-      if (activeControl === "position") {
-        const oldCenter =
-          (value.start + valueDuration / 2 - timelineStart) * pxInMs;
+      if (activeControl === 'position') {
+        const oldCenter = (value.start + valueDuration / 2 - timelineStart) * pxInMs;
 
         const offset = y - oldCenter;
-        const msOffset = enforceRange(
-          offset / pxInMs,
-          minIntervalStart - value.start,
-          maxIntervalEnd - value.end
-        );
+        const msOffset = enforceRange(offset / pxInMs, minIntervalStart - value.start, maxIntervalEnd - value.end);
 
         return {
           start: value.start + msOffset,
@@ -143,18 +127,12 @@ export const IntervalInput = ({
 
         return {
           start:
-            activeControl === "start"
-              ? Math.max(
-                  Math.min(timestamp, value.end - minDuration),
-                  minIntervalStart
-                )
+            activeControl === 'start'
+              ? Math.max(Math.min(timestamp, value.end - minDuration), minIntervalStart)
               : value.start,
           end:
-            activeControl === "end"
-              ? Math.min(
-                  Math.max(timestamp, value.start + minDuration),
-                  maxIntervalEnd
-                )
+            activeControl === 'end'
+              ? Math.min(Math.max(timestamp, value.start + minDuration), maxIntervalEnd)
               : value.end,
         };
       }
@@ -166,9 +144,9 @@ export const IntervalInput = ({
   const cursor = useMemo(() => {
     if (!activeControl) return undefined;
 
-    if (activeControl === "position") return "grabbing";
+    if (activeControl === 'position') return 'grabbing';
 
-    return "row-resize";
+    return 'row-resize';
   }, [activeControl]);
 
   const intervalStartInPx = pxInMs * (value.start - timelineStart);
@@ -176,15 +154,11 @@ export const IntervalInput = ({
   const intervalDurationInPx = pxInMs * valueDuration;
 
   return (
-    <Container
-      ref={containerElement}
-      style={{ height: height, cursor }}
-      onMouseMove={handleMouseMove}
-    >
+    <Container ref={containerElement} style={{ height: height, cursor }} onMouseMove={handleMouseMove}>
       <HourSpace
         formatHour={(hour) => {
           const date = new Date(startOfDay + hour * millisecondsInHour);
-          return date.toLocaleString(undefined, { hour: "numeric" });
+          return date.toLocaleString(undefined, { hour: 'numeric' });
         }}
         start={startHour}
         end={endHour}
@@ -210,7 +184,7 @@ export const IntervalInput = ({
           }}
           weight="bold"
         >
-          {formatDuration(valueDuration, "ms")}
+          {formatDuration(valueDuration, 'ms')}
         </DurationText>
 
         {optionalMaxIntervalEnd && (
@@ -228,18 +202,12 @@ export const IntervalInput = ({
                 top: intervalStartInPx,
                 height: intervalDurationInPx,
               }}
-              onMouseDown={() => setActiveControl("position")}
+              onMouseDown={() => setActiveControl('position')}
             />
 
-            <InteractiveBoundaryArea
-              y={intervalStartInPx}
-              onMouseDown={() => setActiveControl("start")}
-            />
+            <InteractiveBoundaryArea y={intervalStartInPx} onMouseDown={() => setActiveControl('start')} />
 
-            <InteractiveBoundaryArea
-              y={intervalEndInPx}
-              onMouseDown={() => setActiveControl("end")}
-            />
+            <InteractiveBoundaryArea y={intervalEndInPx} onMouseDown={() => setActiveControl('end')} />
           </>
         )}
       </HourSpace>

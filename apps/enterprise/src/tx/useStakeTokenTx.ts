@@ -17,22 +17,24 @@ interface StakeTokenTxOptions {
 export const useStakeTokenTx = () => {
   const txOverrides = useTxOverrides();
 
-  const myAddress = useMyAddress()
+  const myAddress = useMyAddress();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   return useTx<StakeTokenTxOptions>(
     (options) => {
       const { daoAddress, tokenAddress, amount } = options;
 
       const payload = TxBuilder.new()
-        .hook<enterprise.Cw20HookMsg>(assertDefined(myAddress), daoAddress, tokenAddress, amount.toString(), { stake: {} })
+        .hook<enterprise.Cw20HookMsg>(assertDefined(myAddress), daoAddress, tokenAddress, amount.toString(), {
+          stake: {},
+        })
         .build();
 
       return {
         ...txOverrides,
         ...payload,
-        chainID
+        chainID,
       };
     },
     {

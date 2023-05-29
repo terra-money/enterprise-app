@@ -1,8 +1,7 @@
-import { PrimaryButton, Props as PrimaryButtonProps } from './PrimaryButton'
+import { PrimaryButton, Props as PrimaryButtonProps } from './PrimaryButton';
 
-interface Props
-  extends Pick<PrimaryButtonProps, 'isLoading' | 'onClick' | 'isDisabled'> {
-  text?: string
+interface Props extends Pick<PrimaryButtonProps, 'isLoading' | 'onClick' | 'isDisabled'> {
+  text?: string;
 }
 
 export const SubmitFormButton = ({ text = 'Submit', ...props }: Props) => {
@@ -10,5 +9,5 @@ export const SubmitFormButton = ({ text = 'Submit', ...props }: Props) => {
     <PrimaryButton size="l" {...props}>
       {text}
     </PrimaryButton>
-  )
-}
+  );
+};

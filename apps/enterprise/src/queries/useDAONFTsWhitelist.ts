@@ -14,7 +14,7 @@ export const fetchDAONFTsWhitelist = async (lcd: LCDClient, address: CW20Addr) =
 };
 
 export const useDAONFTsWhitelist = (daoAddress: string) => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   return useQuery(
     [QUERY_KEY.NFTS_WHITELIST, daoAddress],

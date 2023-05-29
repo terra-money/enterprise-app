@@ -1,5 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
+import styled, { keyframes } from 'styled-components';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 
 interface Props {
   size?: string | number;

@@ -14,7 +14,7 @@ interface UseProposalVotesQueryOptions {
 
 export const useProposalVotesQuery = (options: UseProposalVotesQueryOptions) => {
   const { contract, proposalId, limit = 50 } = options;
-  const { query } = useContract()
+  const { query } = useContract();
 
   return useInfiniteQuery(
     [QUERY_KEY.PROPOSAL_VOTES, contract, proposalId],

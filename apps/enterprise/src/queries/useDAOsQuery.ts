@@ -20,7 +20,7 @@ export interface DaoResponse {
   logo: string | undefined;
   membershipContractAddress: string;
   enterpriseFactoryContract: string;
-  fundsDistributorContract: string,
+  fundsDistributorContract: string;
   socials: DAOSocials;
   config: DAOGovernanceConfig;
   council: enterprise.DaoCouncil;
@@ -55,7 +55,7 @@ export const fetchDAOsQuery = async (endpoint: string) => {
 export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Array<DAO> | undefined> => {
   const { query, limit = 100, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS } = options;
 
-  const [areIndexersEnabled] = useAreIndexersEnabled()
+  const [areIndexersEnabled] = useAreIndexersEnabled();
 
   const endpoint = useApiEndpoint({
     path: 'v1/daos',
@@ -66,13 +66,17 @@ export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Arr
     },
   });
 
-  return useQuery([queryKey, endpoint], () => {
-    if (!areIndexersEnabled) {
-      throw new Error('DAOs query is disabled. Enable indexers to use this query.')
-    }
+  return useQuery(
+    [queryKey, endpoint],
+    () => {
+      if (!areIndexersEnabled) {
+        throw new Error('DAOs query is disabled. Enable indexers to use this query.');
+      }
 
-    return fetchDAOsQuery(endpoint);
-  }, {
-    refetchOnMount: false,
-  });
+      return fetchDAOsQuery(endpoint);
+    },
+    {
+      refetchOnMount: false,
+    }
+  );
 };

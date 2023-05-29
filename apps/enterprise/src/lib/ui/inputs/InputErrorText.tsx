@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Text } from "lib/ui/Text";
+import styled from 'styled-components';
+import { Text } from 'lib/ui/Text';
 
 export const InputErrorText = styled(Text)`
   --height: 0.86em;
@@ -8,5 +8,5 @@ export const InputErrorText = styled(Text)`
   min-height: var(--height);
 `;
 InputErrorText.defaultProps = {
-  color: "alert",
+  color: 'alert',
 };

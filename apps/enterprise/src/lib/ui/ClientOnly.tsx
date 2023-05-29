@@ -1,5 +1,5 @@
-import { ComponentWithChildrenProps } from "lib/shared/props";
-import { useEffect, useState } from "react";
+import { ComponentWithChildrenProps } from 'lib/shared/props';
+import { useEffect, useState } from 'react';
 
 export const ClientOnly = ({ children }: ComponentWithChildrenProps) => {
   const [hasMounted, setHasMounted] = useState(false);

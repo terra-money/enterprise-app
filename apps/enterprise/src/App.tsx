@@ -178,10 +178,7 @@ const AppProviders = () => {
 
   return (
     chainOptions && (
-      <WalletProvider
-        {...chainOptions}
-        connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}
-      >
+      <WalletProvider {...chainOptions} connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}>
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />
           <main className={styles.root}>
@@ -208,7 +205,7 @@ const AppProviders = () => {
   );
 };
 
-setupErrorMonitoring()
+setupErrorMonitoring();
 
 const App = () => {
   return <AppProviders />;

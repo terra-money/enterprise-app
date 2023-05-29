@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const UnstyledButton = styled.button`
   cursor: pointer;
@@ -11,4 +11,4 @@ export const UnstyledButton = styled.button`
   font-weight: inherit;
   font-family: inherit;
   line-height: inherit;
-`
+`;

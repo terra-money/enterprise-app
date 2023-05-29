@@ -31,12 +31,12 @@ const Content = styled.div`
     grid-template-columns: auto auto;
 
     > * {
-    :last-child {
-      justify-self: start;
+      :last-child {
+        justify-self: start;
+      }
     }
   }
-  }
-`
+`;
 
 // TODO: display date when contracts provide it
 export const ProposalVotes = () => {
@@ -44,16 +44,18 @@ export const ProposalVotes = () => {
   const { totalVotes, status, dao } = useCurrentProposal();
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
 
-  const proposalVotesQuery = useProposalVotesQuery({ proposalId: proposal.id, contract: proposal.dao.address as CW20Addr });
+  const proposalVotesQuery = useProposalVotesQuery({
+    proposalId: proposal.id,
+    contract: proposal.dao.address as CW20Addr,
+  });
   useFetchEveryPage(proposalVotesQuery);
-  const {
-    data: proposalVotesPages,
-    hasNextPage
-  } = proposalVotesQuery;
+  const { data: proposalVotesPages, hasNextPage } = proposalVotesQuery;
 
   const { data: token } = useCW20TokenInfoQuery(proposal.dao.membershipContractAddress);
 
-  const votes = usePaginatedResultItems(proposalVotesPages, (response) => response.votes).sort((a, b) => b.amount.sub(a.amount).toNumber());
+  const votes = usePaginatedResultItems(proposalVotesPages, (response) => response.votes).sort((a, b) =>
+    b.amount.sub(a.amount).toNumber()
+  );
 
   const isSmallScreen = useIsSmallScreen();
 
@@ -64,22 +66,26 @@ export const ProposalVotes = () => {
   return (
     <LabeledPageSection name="Votes">
       <VStack gap={16}>
-        {hasNextPage ? <Center>
-          <Spinner />
-        </Center> : votes.map(({ outcome, amount, voter }, index) => (
-          <Panel key={index}>
-            <Content>
-              <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
-              <Address truncation={isSmallScreen ? [7, 4] : undefined} address={voter} />
-              {totalAvailableVotes.gt(0) && (
-                <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
-              )}
-              {proposal.type !== 'council' && token && (
-                <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>
-              )}
-            </Content>
-          </Panel>
-        ))}
+        {hasNextPage ? (
+          <Center>
+            <Spinner />
+          </Center>
+        ) : (
+          votes.map(({ outcome, amount, voter }, index) => (
+            <Panel key={index}>
+              <Content>
+                <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
+                <Address truncation={isSmallScreen ? [7, 4] : undefined} address={voter} />
+                {totalAvailableVotes.gt(0) && (
+                  <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
+                )}
+                {proposal.type !== 'council' && token && (
+                  <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>
+                )}
+              </Content>
+            </Panel>
+          ))
+        )}
       </VStack>
     </LabeledPageSection>
   );

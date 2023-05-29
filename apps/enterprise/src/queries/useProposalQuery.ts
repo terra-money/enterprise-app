@@ -22,7 +22,7 @@ type ProposalsQueryArguments = Extract<enterprise.QueryMsg, { proposal: {} }>;
 
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { query } = useContract();
-  const [areIndexersEnabled] = useAreIndexersEnabled()
+  const [areIndexersEnabled] = useAreIndexersEnabled();
 
   const { id, daoAddress, enabled = true } = options;
 
@@ -30,19 +30,19 @@ export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResu
 
   const apiEndpoint = useApiEndpoint({
     path: 'v1/daos/{address}/proposals/{id}',
-    route: { address: daoAddress, id }
-  })
+    route: { address: daoAddress, id },
+  });
 
   return useQuery(
     [QUERY_KEY.PROPOSAL, daoAddress, id],
     async () => {
-      const dao = toDao(assertDefined(daoResponse))
+      const dao = toDao(assertDefined(daoResponse));
       if (areIndexersEnabled) {
         try {
           const response = await fetch(apiEndpoint);
           const json: ProposalApiResponse = await response.json();
-          return apiResponseToProposal(json, dao)
-        } catch { }
+          return apiResponseToProposal(json, dao);
+        } catch {}
       }
 
       let resp = await query<ProposalsQueryArguments, enterprise.ProposalResponse>(daoAddress, {

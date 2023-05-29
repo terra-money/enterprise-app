@@ -29,7 +29,7 @@ export const AddressesOverview = () => {
           </TitledContent>
         </Panel>
         <Panel>
-          <TitledContent title={"Funds distributor address"}>
+          <TitledContent title={'Funds distributor address'}>
             <Address address={funds_distributor_contract} />
           </TitledContent>
         </Panel>

@@ -8,15 +8,11 @@ import { useLCDClient } from '@terra-money/wallet-provider';
 import { assertDefined } from '@terra-money/apps/utils';
 
 export const useNativeBalanceQuery = (): UseQueryResult<u<Big> | undefined> => {
-  const myAddress = useMyAddress()
-  const lcd = useLCDClient()
+  const myAddress = useMyAddress();
+  const lcd = useLCDClient();
 
-  return useQuery(
-    [QUERY_KEY.NATIVE_BALANCE],
-    () => fetchNativeBalance(lcd, assertDefined(myAddress), 'uluna'),
-    {
-      refetchOnMount: false,
-      enabled: myAddress !== undefined,
-    }
-  );
+  return useQuery([QUERY_KEY.NATIVE_BALANCE], () => fetchNativeBalance(lcd, assertDefined(myAddress), 'uluna'), {
+    refetchOnMount: false,
+    enabled: myAddress !== undefined,
+  });
 };

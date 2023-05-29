@@ -1,6 +1,6 @@
-import { Text } from "lib/ui/Text";
-import React from "react";
-import styled from "styled-components";
+import { Text } from 'lib/ui/Text';
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   name: string;
@@ -14,12 +14,7 @@ const Container = styled.div`
 export const SidebarSection = ({ name, children }: Props) => {
   return (
     <Container>
-      <Text
-        color="supporting"
-        style={{ paddingLeft: 20 }}
-        size={14}
-        weight="bold"
-      >
+      <Text color="supporting" style={{ paddingLeft: 20 }} size={14} weight="bold">
         {name}
       </Text>
       {children}

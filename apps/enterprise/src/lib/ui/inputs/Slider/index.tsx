@@ -1,31 +1,27 @@
-import { handleWithStopPropagation } from "lib/shared/events";
-import { useBoundingBox } from "lib/shared/hooks/useBoundingBox";
-import { toPercents } from "lib/shared/utils/toPercents";
-import { defaultTransition } from "lib/ui/animations/transitions";
-import { HSLA } from "lib/ui/colors/HSLA";
-import { centerContentCSS } from "lib/ui/utils/centerContentCSS";
-import { getCSSUnit } from "lib/ui/utils/getCSSUnit";
-import { getSameDimensionsCSS } from "lib/ui/utils/getSameDimensionsCSS";
-import { useEffect, useRef, useState } from "react";
-import styled, { useTheme } from "styled-components";
+import { handleWithStopPropagation } from 'lib/shared/events';
+import { useBoundingBox } from 'lib/shared/hooks/useBoundingBox';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { defaultTransition } from 'lib/ui/animations/transitions';
+import { HSLA } from 'lib/ui/colors/HSLA';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { useEffect, useRef, useState } from 'react';
+import styled, { useTheme } from 'styled-components';
 
-import {
-  InvisibleHTMLSlider,
-  InvisibleHTMLSliderProps,
-} from "./InvisibleHtmlSlider";
+import { InvisibleHTMLSlider, InvisibleHTMLSliderProps } from './InvisibleHtmlSlider';
 
-type SliderSize = "m" | "l";
+type SliderSize = 'm' | 'l';
 
 export interface SliderProps extends InvisibleHTMLSliderProps {
   size?: SliderSize;
   color?: HSLA;
-  height?: React.CSSProperties["height"];
+  height?: React.CSSProperties['height'];
 }
 
 const Control = styled.div<{ value: number; size: number; $color: HSLA }>`
   position: absolute;
-  left: ${({ value, size }) =>
-    `calc(${toPercents(value)} - ${getCSSUnit(size / 2)})`};
+  left: ${({ value, size }) => `calc(${toPercents(value)} - ${getCSSUnit(size / 2)})`};
   ${({ size }) => getSameDimensionsCSS(size)};
   border-radius: 1000px;
   background: ${({ $color }) => $color.getVariant({ a: () => 1 }).toCssValue()};
@@ -39,8 +35,7 @@ const Container = styled.div<{ $color: HSLA }>`
   ${centerContentCSS};
   position: relative;
 
-  --active-outline-color: ${({ $color }) =>
-    $color.getVariant({ a: (a) => a * 0.2 }).toCssValue()};
+  --active-outline-color: ${({ $color }) => $color.getVariant({ a: (a) => a * 0.2 }).toCssValue()};
 
   :focus-within ${Control} {
     outline: 12px solid var(--active-outline-color);
@@ -82,7 +77,7 @@ export const Slider = ({
   max,
   step,
   autoFocus,
-  size = "m",
+  size = 'm',
   color: optionalColor,
   height = 40,
 }: SliderProps) => {
@@ -108,9 +103,9 @@ export const Slider = ({
     const handleMouseUp = () => {
       isActive.current = false;
     };
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mouseup', handleMouseUp);
     return () => {
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
   });
 
@@ -130,14 +125,7 @@ export const Slider = ({
       })}
       onMouseMove={({ clientX }) => handleMove(clientX)}
     >
-      <InvisibleHTMLSlider
-        step={step}
-        value={value}
-        onChange={onChange}
-        min={min}
-        max={max}
-        autoFocus={autoFocus}
-      />
+      <InvisibleHTMLSlider step={step} value={value} onChange={onChange} min={min} max={max} autoFocus={autoFocus} />
       <Line style={{ height: lineHeight[size] }}>
         <Filler $color={color} value={ratio} />
       </Line>

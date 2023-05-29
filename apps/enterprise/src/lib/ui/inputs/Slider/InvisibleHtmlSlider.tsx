@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface InvisibleHTMLSliderProps {
   min: number;
@@ -23,14 +23,7 @@ const SliderInput = styled.input`
   direction: ltr;
 `;
 
-export const InvisibleHTMLSlider = ({
-  min,
-  max,
-  step,
-  autoFocus,
-  value,
-  onChange,
-}: InvisibleHTMLSliderProps) => (
+export const InvisibleHTMLSlider = ({ min, max, step, autoFocus, value, onChange }: InvisibleHTMLSliderProps) => (
   <SliderInput
     type="range"
     min={min}

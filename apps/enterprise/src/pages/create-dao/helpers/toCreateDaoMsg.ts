@@ -20,10 +20,10 @@ const getDaoMembership = (input: DaoWizardInput) => {
       type === 'token'
         ? input.existingTokenAddr
         : type === 'nft'
-          ? input.existingNFTAddr
-          : type === 'multisig'
-            ? input.existingMultisigAddr
-            : undefined;
+        ? input.existingNFTAddr
+        : type === 'multisig'
+        ? input.existingMultisigAddr
+        : undefined;
 
     return {
       existing_membership: {
@@ -106,8 +106,8 @@ const getMinimumWeightForRewards = ({ govConfig, type, tokenInfo }: DaoWizardSta
     return microfy(minimumWeightForRewards, tokenInfo.decimals).toString();
   }
 
-  return minimumWeightForRewards.toString()
-}
+  return minimumWeightForRewards.toString();
+};
 
 export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
   const {
@@ -122,11 +122,11 @@ export const toCreateDaoMsg = (input: DaoWizardState): CreateDaoMsgType => {
       dao_council:
         council && council.members.length > 0
           ? {
-            members: council.members.map((member) => member.address),
-            allowed_proposal_action_types: council.allowedProposalTypes,
-            quorum: getDaoRatio(council.quorum),
-            threshold: getDaoRatio(council.threshold),
-          }
+              members: council.members.map((member) => member.address),
+              allowed_proposal_action_types: council.allowedProposalTypes,
+              quorum: getDaoRatio(council.quorum),
+              threshold: getDaoRatio(council.threshold),
+            }
           : null,
       dao_membership: getDaoMembership(input),
       dao_metadata: {

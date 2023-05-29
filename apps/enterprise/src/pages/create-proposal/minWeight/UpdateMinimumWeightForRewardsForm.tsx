@@ -1,22 +1,25 @@
-import { useState } from "react";
-import { ProposalForm } from "../shared/ProposalForm";
-import { MinimumWeightForRewardsInput } from "pages/create-dao/MinimumWeightForRewardsInput";
-import { useCurrentDaoMinimumWeightForRewards } from "./CurrentDAOMinimumWeightForRewardsProvider";
-import { useCurrentDaoToken } from "dao/components/CurrentDaoTokenProvider";
-import { fromChainAmount } from "chain/utils/fromChainAmount";
-import { toChainAmount } from "chain/utils/toChainAmount";
+import { useState } from 'react';
+import { ProposalForm } from '../shared/ProposalForm';
+import { MinimumWeightForRewardsInput } from 'pages/create-dao/MinimumWeightForRewardsInput';
+import { useCurrentDaoMinimumWeightForRewards } from './CurrentDAOMinimumWeightForRewardsProvider';
+import { useCurrentDaoToken } from 'dao/components/CurrentDaoTokenProvider';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 
 interface UpdateMinimumWeightForRewardsFormProps {
-  initialValue: number
+  initialValue: number;
   formatValue: (value: number) => string;
 }
 
-export const UpdateMinimumWeightForRewardsForm = ({ initialValue, formatValue }: UpdateMinimumWeightForRewardsFormProps) => {
+export const UpdateMinimumWeightForRewardsForm = ({
+  initialValue,
+  formatValue,
+}: UpdateMinimumWeightForRewardsFormProps) => {
   const [value, setValue] = useState<number | undefined>(initialValue);
 
-  const error = isNaN(Number(value)) ? 'Invalid number' : undefined
+  const error = isNaN(Number(value)) ? 'Invalid number' : undefined;
 
-  const isDisabled = error !== undefined
+  const isDisabled = error !== undefined;
 
   return (
     <ProposalForm
@@ -26,39 +29,30 @@ export const UpdateMinimumWeightForRewardsForm = ({ initialValue, formatValue }:
           {
             update_minimum_weight_for_rewards: {
               minimum_weight_for_rewards: formatValue(value || 0),
-            }
+            },
           },
-        ]
+        ];
       }}
     >
-      <MinimumWeightForRewardsInput
-        value={value}
-        onChange={setValue}
-        error={error}
-      />
+      <MinimumWeightForRewardsInput value={value} onChange={setValue} error={error} />
     </ProposalForm>
   );
-}
+};
 
 export const UpdateMinimumWeightForRewardsFormTokenDao = () => {
-  const value = useCurrentDaoMinimumWeightForRewards()
-  const token = useCurrentDaoToken()
+  const value = useCurrentDaoMinimumWeightForRewards();
+  const token = useCurrentDaoToken();
 
   return (
     <UpdateMinimumWeightForRewardsForm
       initialValue={fromChainAmount(value, token.decimals)}
       formatValue={(value) => toChainAmount(value, token.decimals)}
     />
-  )
-}
+  );
+};
 
 export const UpdateMinimumWeightForRewardsFormMultisigOrNftDao = () => {
-  const value = useCurrentDaoMinimumWeightForRewards()
+  const value = useCurrentDaoMinimumWeightForRewards();
 
-  return (
-    <UpdateMinimumWeightForRewardsForm
-      initialValue={value}
-      formatValue={(value) => value.toString()}
-    />
-  )
-}
+  return <UpdateMinimumWeightForRewardsForm initialValue={value} formatValue={(value) => value.toString()} />;
+};

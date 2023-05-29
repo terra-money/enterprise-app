@@ -12,6 +12,6 @@ export const useDoIHaveVotingPowerQuery = () => {
 
   return {
     ...rest,
-    data: votingPower.gt(0)
-  }
+    data: votingPower.gt(0),
+  };
 };

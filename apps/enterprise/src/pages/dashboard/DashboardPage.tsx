@@ -19,7 +19,7 @@ export const DashboardPage = () => {
       <RecentDAOs />
       <RecentProposals />
     </IndexersAreRequired>
-  )
+  );
 
   return (
     <Navigation>

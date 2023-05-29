@@ -1,12 +1,9 @@
-import { ReactNode, createContext, useState } from "react";
-import { ComponentWithChildrenProps } from "lib/shared/props";
+import { ReactNode, createContext, useState } from 'react';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
 
-import { createContextHook } from "./createContextHook";
+import { createContextHook } from './createContextHook';
 
-export function getViewSetup<T extends string | number | symbol>(
-  defaultView: T,
-  name: string
-) {
+export function getViewSetup<T extends string | number | symbol>(defaultView: T, name: string) {
   interface ViewState {
     view: T;
     setView: (view: T) => void;
@@ -17,11 +14,7 @@ export function getViewSetup<T extends string | number | symbol>(
   const ViewProvider = ({ children }: ComponentWithChildrenProps) => {
     const [view, setView] = useState<T>(defaultView);
 
-    return (
-      <ViewContext.Provider value={{ view, setView }}>
-        {children}
-      </ViewContext.Provider>
-    );
+    return <ViewContext.Provider value={{ view, setView }}>{children}</ViewContext.Provider>;
   };
 
   const useView = createContextHook(ViewContext, `${name}ViewContent`);

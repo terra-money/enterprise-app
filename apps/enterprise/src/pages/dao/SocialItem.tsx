@@ -12,11 +12,11 @@ interface SocialItemProps {
   getUrl: (username: string) => string;
 }
 
-const sanitizeUsername = (username: string) => getLast(username.split('/'))
+const sanitizeUsername = (username: string) => getLast(username.split('/'));
 const isLink = (value: string) => {
   const validStarts = ['http', 'https', 'www'];
   return validStarts.some((start) => value.startsWith(start));
-}
+};
 
 const Container = styled(ExternalLink)`
   ${defaultTransitionCSS};
@@ -26,10 +26,10 @@ const Container = styled(ExternalLink)`
   :hover {
     color: ${({ theme }) => theme.colors.text.toCssValue()};
   }
-`
+`;
 
 export const SocialItem = ({ icon, username, getUrl }: SocialItemProps) => {
-  const to = isLink(username) ? username : getUrl(username)
+  const to = isLink(username) ? username : getUrl(username);
 
   return (
     <Container to={to}>
@@ -38,6 +38,5 @@ export const SocialItem = ({ icon, username, getUrl }: SocialItemProps) => {
         <Text>{sanitizeUsername(username)}</Text>
       </HStack>
     </Container>
-
   );
 };

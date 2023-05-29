@@ -1,5 +1,5 @@
-import { HSLA } from "../colors/HSLA";
-import { generatePaleteCollorGetter } from "../colors/palette";
+import { HSLA } from '../colors/HSLA';
+import { generatePaleteCollorGetter } from '../colors/palette';
 
 export const sharedColors = {
   primary: new HSLA(210, 77, 51),

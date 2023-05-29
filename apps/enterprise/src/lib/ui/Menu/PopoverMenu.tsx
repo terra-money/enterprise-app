@@ -1,17 +1,17 @@
-import { ClosableComponentProps } from 'lib/shared/props'
-import { ReactNode } from 'react'
-import styled from 'styled-components'
-import { Panel } from 'lib/ui/Panel/Panel'
-import { HStack, VStack } from 'lib/ui/Stack'
-import { Text } from 'lib/ui/Text'
+import { ClosableComponentProps } from 'lib/shared/props';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { HStack, VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
-import { getVerticalPaddingCSS } from 'lib/ui/utils/getVerticalPaddingCSS'
-import { CloseIconButton } from '../buttons/square/CloseIconButton'
-import { getHorizontalMarginCSS } from '../utils/getHorizontalMarginCSS'
+import { getVerticalPaddingCSS } from 'lib/ui/utils/getVerticalPaddingCSS';
+import { CloseIconButton } from '../buttons/square/CloseIconButton';
+import { getHorizontalMarginCSS } from '../utils/getHorizontalMarginCSS';
 
 interface Props extends ClosableComponentProps {
-  title: ReactNode
-  children: ReactNode
+  title: ReactNode;
+  children: ReactNode;
 }
 
 const Container = styled(Panel)`
@@ -20,7 +20,7 @@ const Container = styled(Panel)`
   overflow: hidden;
   min-width: 260px;
   max-width: 320px;
-`
+`;
 
 const Header = styled(HStack)`
   align-items: center;
@@ -28,9 +28,8 @@ const Header = styled(HStack)`
   justify-content: space-between;
   ${getHorizontalMarginCSS(12)};
   ${getVerticalPaddingCSS(12)};
-  border-bottom: 1px solid
-    ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
-`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+`;
 
 export const PopoverMenu = ({ children, title, onClose }: Props) => {
   return (
@@ -47,5 +46,5 @@ export const PopoverMenu = ({ children, title, onClose }: Props) => {
         </VStack>
       </VStack>
     </Container>
-  )
-}
+  );
+};

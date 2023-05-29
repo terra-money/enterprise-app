@@ -17,11 +17,11 @@ const getColumnMax = (maxColumns: number | undefined, gap: number) => {
   const totalGapWidth = `calc(${gapCount} * ${getCSSUnit(gap)})`;
 
   return `calc((100% - ${totalGapWidth}) / ${maxColumns})`;
-}
+};
 
 const getColumnWidth = ({ minChildrenWidth, maxColumns, gap, childrenWidth }: Props) => {
   if (childrenWidth !== undefined) {
-    return getCSSUnit(childrenWidth)
+    return getCSSUnit(childrenWidth);
   }
 
   return css`
@@ -31,16 +31,12 @@ const getColumnWidth = ({ minChildrenWidth, maxColumns, gap, childrenWidth }: Pr
         ${getColumnMax(maxColumns, gap)}
       ),
       1fr
-  )`
-
-}
+  )`;
+};
 
 export const SameWidthChildrenRow = styled.div<Props>`
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    ${getColumnWidth}
-  );
+  grid-template-columns: repeat(auto-fit, ${getColumnWidth});
   gap: ${({ gap }) => getCSSUnit(gap)};
   ${({ rowHeight }) =>
     rowHeight &&

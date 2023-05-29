@@ -9,10 +9,9 @@ export const fetchStakingAmount = async (
   walletAddress?: CW20Addr
 ): Promise<u<Big>> => {
   if (walletAddress === undefined) {
-    const response = await lcd.wasm.contractQuery<{ total_staked_amount: string }>(
-      daoAddress,
-      { total_staked_amount: {} }
-    );
+    const response = await lcd.wasm.contractQuery<{ total_staked_amount: string }>(daoAddress, {
+      total_staked_amount: {},
+    });
     return Big(response.total_staked_amount) as u<Big>;
   }
 

@@ -19,16 +19,10 @@ export const NetworkGuard = (props: UIElementProps) => {
   if (!supportedChains.includes(chainID)) {
     return (
       <Center>
-        <Text>
-          {chainID} is not supported.
-        </Text>
+        <Text>{chainID} is not supported.</Text>
       </Center>
-    )
+    );
   }
 
-  return (
-    <>
-      {children}
-    </>
-  )
+  return <>{children}</>;
 };

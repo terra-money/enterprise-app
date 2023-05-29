@@ -29,7 +29,7 @@ interface ClockProps {
 
 const Wrapper = styled.div`
   position: relative;
-`
+`;
 
 const Clock = (props: ClockProps) => {
   const { expiry, variant } = props;
@@ -82,17 +82,16 @@ const DaoLinkWrapper = styled(HStack)`
   :hover {
     color: ${({ theme }) => theme.colors.text.toCssValue()};
   }
-`
+`;
 
 const DaoLinkOverlay = styled.div`
   position: absolute;
   left: 24px;
   bottom: 32px;
-`
+`;
 
 export const ProposalCard = (props: ProposalCardProps) => {
   const { proposal, variant = 'compact' } = props;
-
 
   const location = useLocation();
   const [isDashboard, setIsDashboard] = useState(false);
@@ -100,7 +99,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   useEffect(() => {
     setIsDashboard(location.pathname === '/dashboard');
   }, [location.pathname]);
-  
+
   const { data: totalStaked = Big(0) } = useTokenStakingAmountQuery(proposal?.dao.address ?? '', undefined, {
     enabled: proposal !== undefined && proposal.status === 'in_progress',
   });
@@ -116,8 +115,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
     );
   }
 
-  
-
   const { dao, title, description, id } = proposal;
 
   const expiry = getProposalEstimatedExpiry(proposal);
@@ -126,17 +123,17 @@ export const ProposalCard = (props: ProposalCardProps) => {
     dao.type === 'multisig'
       ? proposal.totalVotes
       : proposal.status === 'in_progress'
-        ? totalStaked
-        : proposal.totalVotes;
+      ? totalStaked
+      : proposal.totalVotes;
 
   const daoLinkContent = (
-    <DaoLinkWrapper alignItems='center' gap={8}>
+    <DaoLinkWrapper alignItems="center" gap={8}>
       <DAOLogo size="s" logo={dao.logo} />
       <Text cropped className={styles.name}>
         {dao.name}
       </Text>
     </DaoLinkWrapper>
-  )
+  );
 
   return (
     <Wrapper className={styles.wrapper}>
@@ -152,28 +149,30 @@ export const ProposalCard = (props: ProposalCardProps) => {
               <ProposalTags proposal={proposal} />
               {expiry && <Clock variant={variant} expiry={expiry} />}
             </Container>
-            <HStack className={styles.title} alignItems='center' gap={8}>
-              <Text weight="semibold" color="supporting3">#{id}</Text>
-              <Text cropped weight="semibold">{title}</Text>
+            <HStack className={styles.title} alignItems="center" gap={8}>
+              <Text weight="semibold" color="supporting3">
+                #{id}
+              </Text>
+              <Text cropped weight="semibold">
+                {title}
+              </Text>
             </HStack>
 
             <DeprecatedText className={styles.description} variant="text">
               {description}
             </DeprecatedText>
-            {isDashboard && (<Container className={styles.footer}>
-              <div style={{ opacity: 0 }}>
-                {daoLinkContent}
-              </div>
-            </Container>)}
+            {isDashboard && (
+              <Container className={styles.footer}>
+                <div style={{ opacity: 0 }}>{daoLinkContent}</div>
+              </Container>
+            )}
           </Container>
           <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
         </Container>
       </InternalLink>
       {isDashboard && (
         <DaoLinkOverlay>
-          <InternalLink to={`/dao/${dao.address}`}>
-            {daoLinkContent}
-          </InternalLink>
+          <InternalLink to={`/dao/${dao.address}`}>{daoLinkContent}</InternalLink>
         </DaoLinkOverlay>
       )}
     </Wrapper>

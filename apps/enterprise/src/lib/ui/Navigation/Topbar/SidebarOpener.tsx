@@ -1,62 +1,62 @@
-import { useCallback, useEffect, useRef } from "react"
-import { Burger } from "./Burger"
+import { useCallback, useEffect, useRef } from 'react';
+import { Burger } from './Burger';
 
 interface Props {
-  onOpenSidebarRequest: () => void
+  onOpenSidebarRequest: () => void;
 }
 
-const TOUCH_AREA_INTERACTIVE_X = 40
+const TOUCH_AREA_INTERACTIVE_X = 40;
 
 export const SidebarOpener = ({ onOpenSidebarRequest }: Props) => {
-  const activeTouchX = useRef<number | null>(null)
+  const activeTouchX = useRef<number | null>(null);
 
   const cancelTouchTracking = useCallback(() => {
-    activeTouchX.current = null
-  }, [])
+    activeTouchX.current = null;
+  }, []);
 
   useEffect(() => {
     const handleTouchStart = ({ changedTouches }: TouchEvent) => {
-      if (!changedTouches.length) return
+      if (!changedTouches.length) return;
 
-      const { clientX } = changedTouches[0]
+      const { clientX } = changedTouches[0];
       // only consider touches started close to the left side of the screen
-      if (clientX > TOUCH_AREA_INTERACTIVE_X) return
+      if (clientX > TOUCH_AREA_INTERACTIVE_X) return;
 
-      activeTouchX.current = clientX
-    }
+      activeTouchX.current = clientX;
+    };
 
-    document.addEventListener('touchstart', handleTouchStart)
+    document.addEventListener('touchstart', handleTouchStart);
 
-    return () => document.removeEventListener('touchstart', handleTouchStart)
-  }, [])
-
-  useEffect(() => {
-    document.addEventListener('touchend', cancelTouchTracking)
-
-    return () => document.removeEventListener('touchend', cancelTouchTracking)
-  }, [cancelTouchTracking])
+    return () => document.removeEventListener('touchstart', handleTouchStart);
+  }, []);
 
   useEffect(() => {
-    document.addEventListener('touchcancel', cancelTouchTracking)
+    document.addEventListener('touchend', cancelTouchTracking);
 
-    return () => document.removeEventListener('touchcancel', cancelTouchTracking)
-  }, [cancelTouchTracking])
+    return () => document.removeEventListener('touchend', cancelTouchTracking);
+  }, [cancelTouchTracking]);
+
+  useEffect(() => {
+    document.addEventListener('touchcancel', cancelTouchTracking);
+
+    return () => document.removeEventListener('touchcancel', cancelTouchTracking);
+  }, [cancelTouchTracking]);
 
   useEffect(() => {
     const handleTouchMove = ({ changedTouches }: TouchEvent) => {
-      if (activeTouchX.current === null || !changedTouches.length) return 
+      if (activeTouchX.current === null || !changedTouches.length) return;
 
-      const { clientX } = changedTouches[0]
+      const { clientX } = changedTouches[0];
       if (clientX > activeTouchX.current) {
-        onOpenSidebarRequest()
-        cancelTouchTracking()
+        onOpenSidebarRequest();
+        cancelTouchTracking();
       }
-    }
+    };
 
-    document.addEventListener('touchmove', handleTouchMove)
+    document.addEventListener('touchmove', handleTouchMove);
 
-    return () => document.removeEventListener('touchmove', handleTouchMove)
-  }, [cancelTouchTracking, onOpenSidebarRequest])
+    return () => document.removeEventListener('touchmove', handleTouchMove);
+  }, [cancelTouchTracking, onOpenSidebarRequest]);
 
-  return <Burger onClick={onOpenSidebarRequest} />
-}
+  return <Burger onClick={onOpenSidebarRequest} />;
+};

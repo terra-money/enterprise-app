@@ -1,6 +1,6 @@
 import { Container } from '@terra-money/apps/components';
 import classNames from 'classnames';
-import { Text } from 'lib/ui/Text'
+import { Text } from 'lib/ui/Text';
 import { DAO } from 'types';
 import { Skeleton } from 'components/skeleton';
 import { useNavigate } from 'react-router';
@@ -21,8 +21,8 @@ interface DAOCardProps {
 const daoTypeName: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
   nft: 'NFT DAO',
-  token: 'Token DAO'
-}
+  token: 'Token DAO',
+};
 
 export const DAOCard = (props: DAOCardProps) => {
   const { className, dao, skeleton } = props;
@@ -39,7 +39,7 @@ export const DAOCard = (props: DAOCardProps) => {
     );
   }
 
-  const { tvl } = dao
+  const { tvl } = dao;
 
   return (
     <Container className={classNames(className, styles.root)} onClick={() => navigate(`/dao/${dao.address}`)}>
@@ -50,10 +50,14 @@ export const DAOCard = (props: DAOCardProps) => {
         {dao.name}
       </Text>
       <SeparatedBy separator={dotSeparator}>
-        <Text size={14} weight='semibold' color="supporting">{daoTypeName[dao.type]}</Text>
+        <Text size={14} weight="semibold" color="supporting">
+          {daoTypeName[dao.type]}
+        </Text>
         {tvl && tvl > 0 && (
           <SimpleTooltip text="Total value locked">
-            <Text size={14} weight='semibold' color="supporting">$ {formatAmount(tvl)}</Text>
+            <Text size={14} weight="semibold" color="supporting">
+              $ {formatAmount(tvl)}
+            </Text>
           </SimpleTooltip>
         )}
       </SeparatedBy>

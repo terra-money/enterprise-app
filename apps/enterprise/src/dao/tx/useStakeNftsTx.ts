@@ -13,7 +13,7 @@ interface StakeNftTxParams {
 export const useStakeNftsTx = () => {
   const walletAddress = useAssertMyAddress();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   return useTx<StakeNftTxParams>(
     ({ daoAddress, collectionAddress, tokenIds }: StakeNftTxParams) => {
@@ -27,8 +27,8 @@ export const useStakeNftsTx = () => {
 
       return {
         ...builder.build(),
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.STAKE_NFT,

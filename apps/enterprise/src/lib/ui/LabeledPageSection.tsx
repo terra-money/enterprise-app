@@ -9,16 +9,20 @@ interface Props extends ComponentWithChildrenProps {
 
 const navLinkStyle = {
   textDecoration: 'none',
-  color: '#75808A'
-}
+  color: '#75808A',
+};
 export const LabeledPageSection = ({ children, name }: Props) => {
   return (
     <VStack gap={16}>
-      <HStack justifyContent={"space-between"}>
+      <HStack justifyContent={'space-between'}>
         <Text size={18} weight="semibold">
           {name}
         </Text>
-        {name === 'Recent DAOs' && <NavLink style={navLinkStyle}  to={'/daos'}>All DAOs</NavLink>}
+        {name === 'Recent DAOs' && (
+          <NavLink style={navLinkStyle} to={'/daos'}>
+            All DAOs
+          </NavLink>
+        )}
       </HStack>
       {children}
     </VStack>

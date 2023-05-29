@@ -1,7 +1,7 @@
-import { range } from "lib/shared/utils/range";
-import styled from "styled-components";
-import { VStack } from "../Stack";
-import { Text } from "../Text";
+import { range } from 'lib/shared/utils/range';
+import styled from 'styled-components';
+import { VStack } from '../Stack';
+import { Text } from '../Text';
 
 interface Props {
   start: number;
@@ -62,15 +62,8 @@ export const HourSpace = ({
   const hours = range(end + 1 - start).map((index) => start + index);
 
   return (
-    <Container
-      className={className}
-      justifyContent="space-between"
-      fullHeight
-      fullWidth
-    >
-      {underLinesContent && (
-        <Content leftOffset={hourLabelWidthInPx}>{underLinesContent}</Content>
-      )}
+    <Container className={className} justifyContent="space-between" fullHeight fullWidth>
+      {underLinesContent && <Content leftOffset={hourLabelWidthInPx}>{underLinesContent}</Content>}
       {hours.map((hour) => {
         return (
           <HourWr key={hour}>
@@ -85,9 +78,7 @@ export const HourSpace = ({
           </HourWr>
         );
       })}
-      {children && (
-        <Content leftOffset={hourLabelWidthInPx}>{children}</Content>
-      )}
+      {children && <Content leftOffset={hourLabelWidthInPx}>{children}</Content>}
     </Container>
   );
 };

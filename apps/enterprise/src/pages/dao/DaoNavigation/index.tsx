@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const daoView = ['overview', 'treasury', 'proposals', 'distribute', 'staking', 'members'] as const;
-type DaoView = typeof daoView[number];
+type DaoView = (typeof daoView)[number];
 
 const daoViewName: Record<DaoView, string> = {
   overview: 'Overview',

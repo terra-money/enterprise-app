@@ -42,14 +42,12 @@ const createCollectionQuery = (vars: Variables) => {
 `;
 };
 
-
 const nftQuery = async (collectionAddr: CW20Addr, tokenid: string, lcd: LCDClient) => {
   const queryData: any = await lcd.wasm.contractQuery(collectionAddr, {
-    nft_info: { token_id: tokenid }
-  })
-  return queryData
-}
-
+    nft_info: { token_id: tokenid },
+  });
+  return queryData;
+};
 
 const fetchNFTData = async (collectionAddr: string, tokenId: string, lcd: LCDClient) => {
   const variables: Variables = {
@@ -83,12 +81,10 @@ async function fetchNFTDataForMultipleTokenIds(
 ): Promise<{ [tokenId: string]: any }> {
   const result: { [tokenId: string]: any } = {};
 
-
   for (const tokenId of tokenIds) {
     const data = await fetchNFTData(collectionAddr, tokenId, lcd);
     result[tokenId] = data;
   }
-
 
   return result;
 }
@@ -97,7 +93,7 @@ export const useNFTInfoQuery = (
   collectionAddr: string,
   tokenIds: TokenIds
 ): UseQueryResult<{ [tokenId: string]: any }> => {
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
   return useQuery([collectionAddr, tokenIds], async () => {
     const data = await fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds, lcd);
     return data;

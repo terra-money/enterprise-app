@@ -12,10 +12,10 @@ export const fetchBlockHeight = async (lcdBaseUrl: string): Promise<number> => {
 };
 
 export const useBlockHeightQuery = (): UseQueryResult<number> => {
-  const lcd = useLCDClient()
-  const chainID = useChainID()
+  const lcd = useLCDClient();
+  const chainID = useChainID();
 
-  const lcdBaseUrl = lcd.config[chainID].lcd
+  const lcdBaseUrl = lcd.config[chainID].lcd;
 
   return useQuery(
     QUERY_KEY.BLOCK_HEIGHT,

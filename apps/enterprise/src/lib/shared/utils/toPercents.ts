@@ -12,4 +12,3 @@ export const toPercents = (value: number, format?: Format, decimalPlaces?: numbe
 
   return `${roundedNumber}%`;
 };
-

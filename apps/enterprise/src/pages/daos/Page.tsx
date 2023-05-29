@@ -36,53 +36,37 @@ export const Page = () => {
     }
   }, [showDropdown]);
 
-
   const [searchText, setSearchText] = useState('');
 
   const { data = [], isLoading } = useAllDaosQuery();
 
-  const items = data.filter(item => daoTypesToDisplay.includes(item.type)).filter(dao => dao.name.includes(searchText)).sort((a, b) => (b.tvl ?? 0) - (a.tvl ?? 0));
+  const items = data
+    .filter((item) => daoTypesToDisplay.includes(item.type))
+    .filter((dao) => dao.name.includes(searchText))
+    .sort((a, b) => (b.tvl ?? 0) - (a.tvl ?? 0));
 
   const searchInput = (
     <SearchInput
       value={searchText}
       onChange={setSearchText}
       onClear={() => {
-        setSearchText('')
+        setSearchText('');
       }}
     />
   );
 
-  const filters = (
-    <DaoFilter
-      value={daoTypesToDisplay}
-      onChange={setDaoTypesToDisplay}
-    />
-  )
+  const filters = <DaoFilter value={daoTypesToDisplay} onChange={setDaoTypesToDisplay} />;
 
   const noResults = (
     <Container className={styles.noResultsContainer}>
-      <IconButton
-        className={styles.Icon}
-        onClick={() =>
-          setSearchText('')
-        }
-      >
+      <IconButton className={styles.Icon} onClick={() => setSearchText('')}>
         <ErrorIcon />
       </IconButton>
-      <Text className={styles.noResultsLabel}>
-        We couldn’t find any DAOs matching your criteria. Please try again.
-      </Text>
+      <Text className={styles.noResultsLabel}>We couldn’t find any DAOs matching your criteria. Please try again.</Text>
     </Container>
-  )
+  );
 
-  const content = (
-    isLoading || data.length > 0 ? (
-      <List items={items} isLoading={isLoading} />
-    ) : (
-      noResults
-    )
-  )
+  const content = isLoading || data.length > 0 ? <List items={items} isLoading={isLoading} /> : noResults;
 
   return (
     <Navigation>
@@ -124,9 +108,7 @@ export const Page = () => {
                 />
               }
             >
-              <IndexersAreRequired>
-                {content}
-              </IndexersAreRequired>
+              <IndexersAreRequired>{content}</IndexersAreRequired>
             </PageLayout>
           </ScrollableContainer>
         )}

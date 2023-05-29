@@ -4,7 +4,7 @@ import { NumericPanel } from 'components/numeric-panel';
 import { useCurrentDaoAddress } from 'dao/navigation';
 
 export const TokenDaoPricePanel = () => {
-  const address = useCurrentDaoAddress()
+  const address = useCurrentDaoAddress();
 
   const price = usePrice(address);
   if (!price) return null;

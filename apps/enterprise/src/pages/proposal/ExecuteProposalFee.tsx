@@ -16,7 +16,6 @@ export const ExecuteProposalFee = () => {
 
   const { data, isLoading } = useEstimatedFeeQuery([msg]);
 
-
   if (!isLoading && !data) return null;
 
   return (

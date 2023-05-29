@@ -9,11 +9,11 @@ import { UnstyledButton } from '../UnstyledButton';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 import { MouseEvent } from 'react';
 import { useBoolean } from 'lib/shared/hooks/useBoolean';
-import { offset, shift, useFloating } from "@floating-ui/react";
+import { offset, shift, useFloating } from '@floating-ui/react';
 
 export const rectButtonSizes = ['xs', 's', 'm', 'l', 'xl'] as const;
 
-type RectButtonSize = typeof rectButtonSizes[number];
+type RectButtonSize = (typeof rectButtonSizes)[number];
 
 export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> &
   ComponentWithChildrenProps & {
@@ -31,7 +31,7 @@ interface ContainerProps {
   isLoading?: boolean;
 }
 
-const Container = styled(UnstyledButton) <ContainerProps>`
+const Container = styled(UnstyledButton)<ContainerProps>`
   color: ${({ theme }) => theme.colors.text.toCssValue()};
   ${defaultTransitionCSS};
 
@@ -40,33 +40,33 @@ const Container = styled(UnstyledButton) <ContainerProps>`
   ${roundedCSS};
 
   ${({ size }) =>
-  ({
-    xs: css`
+    ({
+      xs: css`
         ${getHorizontalPaddingCSS(8)}
         height: 28px;
         font-size: 14px;
       `,
-    s: css`
+      s: css`
         ${getHorizontalPaddingCSS(16)}
         height: 36px;
         font-size: 14px;
       `,
-    m: css`
+      m: css`
         ${getHorizontalPaddingCSS(24)}
         height: 64px;
         font-size: 16px;
       `,
-    l: css`
+      l: css`
         ${getHorizontalPaddingCSS(20)}
         height: 56px;
         font-size: 14px;
       `,
-    xl: css`
+      xl: css`
         ${getHorizontalPaddingCSS(40)}
         height: 56px;
         font-size: 18px;
       `,
-  }[size])};
+    }[size])};
 
   font-weight: 600;
   white-space: nowrap;
@@ -115,19 +115,14 @@ export const RectButton = ({
   ...rest
 }: Props) => {
   const { x, y, strategy, refs } = useFloating({
-    placement: "bottom",
-    strategy: "fixed",
-    middleware: [
-      offset(4),
-      shift()
-    ]
+    placement: 'bottom',
+    strategy: 'fixed',
+    middleware: [offset(4), shift()],
   });
 
+  const [isTooltipOpen, { unset: hideTooltip, set: showTooltip }] = useBoolean(false);
 
-  const [isTooltipOpen, { unset: hideTooltip, set: showTooltip }] =
-    useBoolean(false);
-
-  const isTooltipEnabled = typeof isDisabled === "string";
+  const isTooltipEnabled = typeof isDisabled === 'string';
 
   return (
     <>
@@ -148,7 +143,6 @@ export const RectButton = ({
         {...rest}
       >
         <div className="content">{isLoading ? <Spinner /> : <>{children}</>}</div>
-
       </Container>
       {isTooltipOpen && (
         <TooltipContainer
@@ -157,9 +151,11 @@ export const RectButton = ({
             position: strategy,
             top: y ?? 0,
             left: x ?? 0,
-            width: 'max-content'
+            width: 'max-content',
           }}
-        >{isDisabled}</TooltipContainer>
+        >
+          {isDisabled}
+        </TooltipContainer>
       )}
     </>
   );

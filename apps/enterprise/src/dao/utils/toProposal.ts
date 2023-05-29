@@ -5,7 +5,7 @@ import { Proposal } from 'dao/shared/proposal';
 
 export const toProposal = (
   { proposal, results, total_votes_available }: enterprise.ProposalResponse,
-  dao: DAO,
+  dao: DAO
 ): Proposal => {
   const [yesVotes, noVotes, abstainVotes, vetoVotes] = results.reduce(
     (previous, [t, v]) => {

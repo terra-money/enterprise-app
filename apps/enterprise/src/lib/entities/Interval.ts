@@ -1,4 +1,4 @@
 export interface Interval {
-  start: number
-  end: number
+  start: number;
+  end: number;
 }

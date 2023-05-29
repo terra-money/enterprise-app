@@ -84,7 +84,7 @@ export interface DaoWizardInput {
   existingMultisigVotersLoading: boolean;
   existingMultisigVotersError: string | undefined;
 
-  whitelistedAssets: enterprise.AssetInfoBaseFor_Addr[]
+  whitelistedAssets: enterprise.AssetInfoBaseFor_Addr[];
 }
 
 export interface NftMembershipInfo {
@@ -136,13 +136,7 @@ export interface DaoWizardState extends DaoWizardInput {
 }
 
 const sharedInitialSteps: DaoWizardStep[] = ['type', 'info', 'daoImport'];
-const sharedLastSteps: DaoWizardStep[] = [
-  'govConfig',
-  'whitelist',
-  'council',
-  'socials',
-  'confirm',
-];
+const sharedLastSteps: DaoWizardStep[] = ['govConfig', 'whitelist', 'council', 'socials', 'confirm'];
 
 const daoTypeSpecificSteps: Record<enterprise.DaoType, DaoWizardStep[]> = {
   multisig: ['members'],
@@ -186,7 +180,7 @@ const getInitialState = (timeConversionFactor: number, walletAddr: string | unde
     vetoThreshold: 0.51,
     unlockingPeriod: 14,
     voteDuration: 7,
-    allowEarlyProposalExecution: true
+    allowEarlyProposalExecution: true,
   },
 
   daoImport: {
@@ -320,8 +314,8 @@ const validateCurrentStep = (state: DaoWizardState): Partial<DaoWizardState> => 
 
     whitelist: () => {
       return {
-        isValid: true
-      }
+        isValid: true,
+      };
     },
 
     membership: () => {
@@ -362,7 +356,7 @@ const objectContains = <TInput,>(input: Partial<TInput>, key: keyof TInput): boo
 export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) => {
   const { timeConversionFactor } = useEnv();
 
-  const lcd = useLCDClient()
+  const lcd = useLCDClient();
 
   const myAddress = useMyAddress();
 
@@ -419,10 +413,13 @@ export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) 
     updateFormState({ ...newState, ...validateCurrentStep(newState) });
   }, [formState, steps, updateFormState]);
 
-  const goToStep = useCallback((step: DaoWizardStep) => {
-    const newState = { ...formState, steps: steps.slice(0, steps.indexOf(step) + 1) };
-    updateFormState({ ...newState, ...validateCurrentStep(newState) });
-  }, [formState, steps, updateFormState]);
+  const goToStep = useCallback(
+    (step: DaoWizardStep) => {
+      const newState = { ...formState, steps: steps.slice(0, steps.indexOf(step) + 1) };
+      updateFormState({ ...newState, ...validateCurrentStep(newState) });
+    },
+    [formState, steps, updateFormState]
+  );
 
   return (
     <DaoWizardFormContext.Provider

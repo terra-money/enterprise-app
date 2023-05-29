@@ -1,9 +1,9 @@
-import { useToggle } from "react-use";
-import styled from "styled-components";
-import { ScreenCover } from "lib/ui/ScreenCover";
-import { Spacer } from "lib/ui/Spacer";
+import { useToggle } from 'react-use';
+import styled from 'styled-components';
+import { ScreenCover } from 'lib/ui/ScreenCover';
+import { Spacer } from 'lib/ui/Spacer';
 
-import { SidebarOpener } from "./SidebarOpener";
+import { SidebarOpener } from './SidebarOpener';
 
 const Container = styled.div`
   width: 100%;
@@ -27,9 +27,7 @@ export const Topbar = ({ renderSidebar }: Props) => {
 
   return (
     <>
-      {isSidebarOpen && (
-        <Cover onClick={toggleSidebar}>{renderSidebar()}</Cover>
-      )}
+      {isSidebarOpen && <Cover onClick={toggleSidebar}>{renderSidebar()}</Cover>}
       <Container>
         <SidebarOpener onOpenSidebarRequest={toggleSidebar} />
       </Container>

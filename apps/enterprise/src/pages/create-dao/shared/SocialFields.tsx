@@ -19,7 +19,7 @@ export const socialName: Record<keyof DaoSocialDataInput, string> = {
   twitterUsername: 'Twitter',
   discordUsername: 'Discord',
   telegramUsername: 'Telegram',
-}
+};
 
 const socialIcon: Record<keyof DaoSocialDataInput, ReactNode> = {
   githubUsername: <GithubIcon />,

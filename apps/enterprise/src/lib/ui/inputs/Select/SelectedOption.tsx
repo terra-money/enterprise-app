@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { CloseIconButton } from "lib/ui/buttons/square/CloseIconButton";
-import { HStack } from "lib/ui/Stack";
-import { Text } from "lib/ui/Text";
-import { Panel } from "lib/ui/Panel/Panel";
+import styled from 'styled-components';
+import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
+import { HStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 interface Props {
   value: string;

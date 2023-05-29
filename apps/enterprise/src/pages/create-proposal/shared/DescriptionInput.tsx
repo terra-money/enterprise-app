@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { FormControl } from 'components/form-control/FormControl';
 import { Text, Tooltip, useFocusedInput } from 'components/primitives';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
-import React, { useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormTextInput } from 'components/form-text-input';
 import styles from './DescriptionInput.module.sass';
 
@@ -66,4 +66,3 @@ export const DescriptionInput = (props: DescriptionInputProps) => {
     </FormControl>
   );
 };
-

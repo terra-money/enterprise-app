@@ -4,7 +4,7 @@ import { SettingsIcon } from 'lib/ui/icons/SettingsIcon';
 
 export const SettingsNavigationItem = () => {
   return (
-    <Tooltip title="Settings" placement="right" arrow={true} >
+    <Tooltip title="Settings" placement="right" arrow={true}>
       <div>
         <InternalLink to="/settings">
           <IconButton variant="outline">
@@ -12,6 +12,6 @@ export const SettingsNavigationItem = () => {
           </IconButton>
         </InternalLink>
       </div>
-    </Tooltip >
-  )
-}
+    </Tooltip>
+  );
+};

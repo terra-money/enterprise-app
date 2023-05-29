@@ -1,37 +1,31 @@
-import { ReactNode, useState } from 'react'
-import { BottomSlideOver } from 'lib/ui/BottomSlideOver'
+import { ReactNode, useState } from 'react';
+import { BottomSlideOver } from 'lib/ui/BottomSlideOver';
 
-import { MenuOption, MenuOptionProps } from './MenuOption'
-import { PopoverMenu } from './PopoverMenu'
-import { useBoolean } from 'lib/shared/hooks/useBoolean'
-import { PrimaryButton } from '../buttons/rect/PrimaryButton'
-import { Popover } from '../popover/Popover'
-import { ResponsiveView } from '../ResponsiveView'
-import { HStack, VStack } from '../Stack'
-import { Text } from '../Text'
+import { MenuOption, MenuOptionProps } from './MenuOption';
+import { PopoverMenu } from './PopoverMenu';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
+import { PrimaryButton } from '../buttons/rect/PrimaryButton';
+import { Popover } from '../popover/Popover';
+import { ResponsiveView } from '../ResponsiveView';
+import { HStack, VStack } from '../Stack';
+import { Text } from '../Text';
 
 interface OpenerParams {
-  ref: (anchor: HTMLElement | null) => void
-  onClick: () => void
+  ref: (anchor: HTMLElement | null) => void;
+  onClick: () => void;
 }
 
 interface OverlayMenuProps {
-  title: ReactNode
-  content?: ReactNode
-  options?: MenuOptionProps[]
-  renderOpener: (params: OpenerParams) => ReactNode
+  title: ReactNode;
+  content?: ReactNode;
+  options?: MenuOptionProps[];
+  renderOpener: (params: OpenerParams) => ReactNode;
 }
 
-export function OverlayMenu({
-  options,
-  renderOpener,
-  title,
-  content
-}: OverlayMenuProps) {
-  const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+export function OverlayMenu({ options, renderOpener, title, content }: OverlayMenuProps) {
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
-  const [isMenuOpen, { unset: closeMenu, toggle: toggleMenu }] =
-    useBoolean(false)
+  const [isMenuOpen, { unset: closeMenu, toggle: toggleMenu }] = useBoolean(false);
 
   return (
     <>
@@ -46,56 +40,53 @@ export function OverlayMenu({
                     {content}
                   </VStack>
                 )}
-                {options && options.map(({ text, icon, onSelect, kind }) => (
-                  <PrimaryButton
-                    style={{ justifyContent: 'flex-start', height: 56 }}
-                    kind={kind === 'alert' ? 'alert' : 'secondary'}
-                    size="l"
-                    isRounded={true}
-                    key={text}
-                    onClick={() => {
-                      onSelect()
-                      closeMenu()
-                    }}
-                  >
-                    <HStack alignItems="center" gap={8}>
-                      {icon} <Text>{text}</Text>
-                    </HStack>
-                  </PrimaryButton>
-                ))}
+                {options &&
+                  options.map(({ text, icon, onSelect, kind }) => (
+                    <PrimaryButton
+                      style={{ justifyContent: 'flex-start', height: 56 }}
+                      kind={kind === 'alert' ? 'alert' : 'secondary'}
+                      size="l"
+                      isRounded={true}
+                      key={text}
+                      onClick={() => {
+                        onSelect();
+                        closeMenu();
+                      }}
+                    >
+                      <HStack alignItems="center" gap={8}>
+                        {icon} <Text>{text}</Text>
+                      </HStack>
+                    </PrimaryButton>
+                  ))}
               </VStack>
             </BottomSlideOver>
           )}
           normal={() => (
-            <Popover
-              placement="bottom"
-              onClickOutside={toggleMenu}
-              anchor={anchor}
-              enableScreenCover
-            >
+            <Popover placement="bottom" onClickOutside={toggleMenu} anchor={anchor} enableScreenCover>
               <PopoverMenu onClose={closeMenu} title={title}>
                 {content && (
                   <VStack style={{ padding: 12 }} gap={8}>
                     {content}
                   </VStack>
                 )}
-                {options && options.map(({ text, icon, onSelect, kind }) => (
-                  <MenuOption
-                    text={text}
-                    key={text}
-                    icon={icon}
-                    kind={kind}
-                    onSelect={() => {
-                      closeMenu()
-                      onSelect()
-                    }}
-                  />
-                ))}
+                {options &&
+                  options.map(({ text, icon, onSelect, kind }) => (
+                    <MenuOption
+                      text={text}
+                      key={text}
+                      icon={icon}
+                      kind={kind}
+                      onSelect={() => {
+                        closeMenu();
+                        onSelect();
+                      }}
+                    />
+                  ))}
               </PopoverMenu>
             </Popover>
           )}
         />
       )}
     </>
-  )
+  );
 }

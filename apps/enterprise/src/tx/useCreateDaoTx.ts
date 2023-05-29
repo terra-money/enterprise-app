@@ -13,9 +13,9 @@ export const useCreateDAOTx = () => {
 
   const txOverrides = useTxOverrides();
 
-  const myAddress = useMyAddress()
+  const myAddress = useMyAddress();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   return useTx<CreateDaoMsgType>(
     ({ create_dao, wallet }) => {

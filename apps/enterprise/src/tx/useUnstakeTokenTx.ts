@@ -13,8 +13,8 @@ interface UnstakeTokenTxOptions {
 }
 
 export const useUnstakeTokenTx = () => {
-  const myAddress = useMyAddress()
-  const chainID = useChainID()
+  const myAddress = useMyAddress();
+  const chainID = useChainID();
 
   return useTx<UnstakeTokenTxOptions>(
     (options) => {
@@ -28,8 +28,8 @@ export const useUnstakeTokenTx = () => {
 
       return {
         ...payload,
-        chainID
-      }
+        chainID,
+      };
     },
     {
       txKey: TX_KEY.UNSTAKE_TOKEN,

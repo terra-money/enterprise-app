@@ -19,9 +19,9 @@ export const useDAOQuery = (address: string) => {
       const daoInfo: DaoInfo = {
         ...response,
         address,
-      }
+      };
 
-      return daoInfo
+      return daoInfo;
     },
     {
       refetchOnMount: false,
