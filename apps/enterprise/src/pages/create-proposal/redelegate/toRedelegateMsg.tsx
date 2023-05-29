@@ -8,12 +8,10 @@ interface UndelegateMsgParams {
 }
 
 export interface RedelegateMsg {
-  amount: [
-    {
-      amount: string;
-      denom: string;
-    },
-  ]
+  amount: {
+    amount: string;
+    denom: string;
+  },
   src_validator: string;
   dst_validator: string;
 
@@ -21,12 +19,11 @@ export interface RedelegateMsg {
 
 export const toRedelegateMsg = ({ amount, oldAddress, newAddress }: UndelegateMsgParams) => {
   const redelegate: RedelegateMsg = {
-    amount: [
-      {
-        amount: microfy(amount, lunaDecimals).toString(),
-        denom: 'uluna',
-      },
-    ],
+    amount:
+    {
+      amount: microfy(amount, lunaDecimals).toString(),
+      denom: 'uluna',
+    },
     src_validator: oldAddress,
     dst_validator: newAddress,
   }

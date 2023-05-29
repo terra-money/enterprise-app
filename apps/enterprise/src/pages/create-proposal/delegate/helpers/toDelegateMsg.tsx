@@ -8,20 +8,19 @@ interface DelegateMsgParams {
 
 export interface DelegateMsg {
   validator: string
-  amount: [
-    {
-      denom: string
-      amount: string
-    }
-  ]
+  amount:
+  {
+    denom: string
+    amount: string
+  }
 }
 
 export const toDelegateMsg = ({ amount, address, tokenDecimals }: DelegateMsgParams) => {
   const delegate: DelegateMsg = {
-    amount: [{
+    amount: {
       denom: 'uluna',
       amount: microfy(amount, tokenDecimals).toString(),
-    }],
+    },
     validator: address,
   }
   return JSON.stringify({

@@ -71,13 +71,14 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
 
     if ('delegate' in staking) {
       const { delegate } = staking
+      console.log(delegate)
       if (!delegate) return null
 
       return (
-        <CurrentAssetInfoProvider id={delegate.amount[0].denom} type="native">
+        <CurrentAssetInfoProvider id={delegate.amount.denom} type="native">
           <DelegateSummary
             validator={delegate.validator}
-            amount={delegate.amount[0].amount}
+            amount={delegate.amount.amount}
           />
         </CurrentAssetInfoProvider>
       )
@@ -86,10 +87,10 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
       if (!undelegate) return null
 
       return (
-        <CurrentAssetInfoProvider id={undelegate.amount[0].denom} type="native">
+        <CurrentAssetInfoProvider id={undelegate.amount.denom} type="native">
           <UndelegateSummary
             validator={undelegate.validator}
-            amount={undelegate.amount[0].amount}
+            amount={undelegate.amount.amount}
           />
         </CurrentAssetInfoProvider>
       )
@@ -98,11 +99,11 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
       if (!redelegate) return null
 
       return (
-        <CurrentAssetInfoProvider id={redelegate.amount[0].denom} type="native">
+        <CurrentAssetInfoProvider id={redelegate.amount.denom} type="native">
           <RedelegateSummary
             srcValidator={redelegate.src_validator}
             distValidator={redelegate.dst_validator}
-            amount={redelegate.amount[0].amount}
+            amount={redelegate.amount.amount}
           />
         </CurrentAssetInfoProvider>
       )

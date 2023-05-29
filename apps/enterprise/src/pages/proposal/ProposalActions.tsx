@@ -29,7 +29,7 @@ export const ProposalActions = () => {
     <VStack gap={40}>
       {proposal.actions.filter(
         (action) =>
-          !(action.hasOwnProperty("update_minimum_weight_for_rewards") && !isUpToDate) 
+          !(action.hasOwnProperty("update_minimum_weight_for_rewards") && !isUpToDate)
       ).map((action) => {
         const type = getProposalActionType(action);
         const msg = getProposalActionMsg(action);
