@@ -1,6 +1,6 @@
 import { Token } from 'types';
 import { u } from '@terra-money/apps/types';
-import Big, { BigSource } from 'big.js';
+import { BigSource } from 'big.js';
 import { Address } from 'components/address';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
@@ -10,7 +10,6 @@ import { useCurrentDaoAddress } from 'dao/navigation';
 import { AssetCard } from './AssetCard';
 import { DaoTVL } from './DaoTVL';
 import { useDaoAssets } from 'queries/useDaoAssets';
-import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { sum } from 'lib/shared/utils/sum';
 import { getAssetBalanceInUsd } from 'chain/Asset';
 
