@@ -70,7 +70,7 @@ export const useDaoAssets = () => {
           usd: assertDefined(liquidAssetsPrices)[asset.id] || 0
         })
       } catch (err) {
-        console.log(`Failed to get info or price for a ${asset.type} asset with id=${asset.id}: ${err}}`)
+        console.log(`Failed to get info for a ${asset.type} asset with id=${asset.id}: ${err}}`)
       }
     }))
 
