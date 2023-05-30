@@ -4,7 +4,6 @@ import { createUsePersistantStorageValueHook } from 'lib/state/createUsePersista
 
 export enum PersistentStorageKey {
   BetaAccept = '__enterprise_beta_accept',
-  AreIndexersEnabled = '__enterprise_are_indexers_enabled',
 }
 
 export const persistentStorage =

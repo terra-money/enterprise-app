@@ -8,17 +8,16 @@ import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
 
 export const DashboardPage = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const content = (
-    <IndexersAreRequired>
+    <>
       <Overview />
       <RecentDAOs />
       <RecentProposals />
-    </IndexersAreRequired>
+    </>
   );
 
   return (
