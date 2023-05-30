@@ -1,7 +1,6 @@
 import { CW20Addr } from '@terra-money/apps/types';
 import { assertDefined } from '@terra-money/apps/utils';
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { Navigation } from 'components/Navigation';
 import { ConnectWalletPrompt } from 'components/not-connected';
 import { ConditionalRender } from 'components/primitives';
 import { useDAOQuery } from 'queries';
@@ -64,44 +63,42 @@ export const CreateProposalPage = () => {
 
   return (
     <CreateProposalProvider value={{ proposalVotingType }}>
-      <Navigation>
-        <LoadingPage isLoading={isLoading}>
-          <ConditionalWallet
-            notConnected={() => <ConnectWalletPrompt />}
-            connected={() => (
-              <AnimatedPage>
-                <Container>
-                  {dao ? (
-                    <CurrentDaoProvider value={dao}>
-                      <Header title={proposalTitle[type]} />
-                      <ConditionalRender
-                        value={assertDefined(type)}
-                        metadata={() => <MetadataProposalForm />}
-                        council={() => <CouncilForm />}
-                        text={() => <TextProposalForm />}
-                        config={() => <CreateConfigProposalPage />}
-                        upgrade={() => <UpgradeProposalForm />}
-                        assets={() => <UpdateWhitelistedAssetsProposalPage />}
-                        nfts={() => <UpdateWhitelistedNFTsProposalPage />}
-                        execute={() => <ExecuteMessageProposalForm />}
-                        members={() => <MultisigMembersProposalPage />}
-                        mint={() => <MintTokensProposalForm />}
-                        mintNft={() => <MintNftProposalPage />}
-                        spend={() => <SpendTreasuryProposalPage />}
-                        burn={() => <BurnTokensProposalPage />}
-                        delegate={() => <DelegateProposalPage />}
-                        undelegate={() => <UndelegateProposalForm />}
-                        redelegate={() => <RedelegateProposalForm />}
-                        minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
-                      />
-                    </CurrentDaoProvider>
-                  ) : null}
-                </Container>
-              </AnimatedPage>
-            )}
-          />
-        </LoadingPage>
-      </Navigation>
+      <LoadingPage isLoading={isLoading}>
+        <ConditionalWallet
+          notConnected={() => <ConnectWalletPrompt />}
+          connected={() => (
+            <AnimatedPage>
+              <Container>
+                {dao ? (
+                  <CurrentDaoProvider value={dao}>
+                    <Header title={proposalTitle[type]} />
+                    <ConditionalRender
+                      value={assertDefined(type)}
+                      metadata={() => <MetadataProposalForm />}
+                      council={() => <CouncilForm />}
+                      text={() => <TextProposalForm />}
+                      config={() => <CreateConfigProposalPage />}
+                      upgrade={() => <UpgradeProposalForm />}
+                      assets={() => <UpdateWhitelistedAssetsProposalPage />}
+                      nfts={() => <UpdateWhitelistedNFTsProposalPage />}
+                      execute={() => <ExecuteMessageProposalForm />}
+                      members={() => <MultisigMembersProposalPage />}
+                      mint={() => <MintTokensProposalForm />}
+                      mintNft={() => <MintNftProposalPage />}
+                      spend={() => <SpendTreasuryProposalPage />}
+                      burn={() => <BurnTokensProposalPage />}
+                      delegate={() => <DelegateProposalPage />}
+                      undelegate={() => <UndelegateProposalForm />}
+                      redelegate={() => <RedelegateProposalForm />}
+                      minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
+                    />
+                  </CurrentDaoProvider>
+                ) : null}
+              </Container>
+            </AnimatedPage>
+          )}
+        />
+      </LoadingPage>
     </CreateProposalProvider>
   );
 };

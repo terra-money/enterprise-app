@@ -14,43 +14,46 @@ import { AddressesOverview } from './AddressesOverview';
 import { GovernanceOverview } from './GovernanceOverview';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { UpgradeDaoPrompt } from './UpgradeDaoPrompt';
+import { DaoErrorBoundary } from './DaoErrorBoundary';
 
 export const Overview = () => {
   const dao = useCurrentDao();
 
   return (
-    <VStack gap={16}>
-      <UpgradeDaoPrompt />
-      <SameWidthChildrenRow gap={16} maxColumns={2} minChildrenWidth={320}>
-        <VStack justifyContent="space-between" gap={16}>
-          <ConditionalRender
-            value={dao.dao_type}
-            multisig={() => (
-              <VStack gap={16}>
-                <MultisigDaoMembersPanel />
-              </VStack>
-            )}
-            token={() => (
-              <>
-                <TokenDaoTotalSupplyPanel />
-                <TokenDaoTotalStakedPanel />
-                <TokenDaoPricePanel />
-              </>
-            )}
-            nft={() => (
-              <>
-                <NftDaoTotalSupplyPanel />
-                <NftDaoTotalStakedPanel />
-              </>
-            )}
-          />
-        </VStack>
-        <GovernanceOverview />
-      </SameWidthChildrenRow>
-      <RecentProposals />
-      <AddressesOverview />
-      <DaoCouncilOverview />
-      <SocialChannels />
-    </VStack>
+    <DaoErrorBoundary>
+      <VStack gap={16}>
+        <UpgradeDaoPrompt />
+        <SameWidthChildrenRow gap={16} maxColumns={2} minChildrenWidth={320}>
+          <VStack justifyContent="space-between" gap={16}>
+            <ConditionalRender
+              value={dao.dao_type}
+              multisig={() => (
+                <VStack gap={16}>
+                  <MultisigDaoMembersPanel />
+                </VStack>
+              )}
+              token={() => (
+                <>
+                  <TokenDaoTotalSupplyPanel />
+                  <TokenDaoTotalStakedPanel />
+                  <TokenDaoPricePanel />
+                </>
+              )}
+              nft={() => (
+                <>
+                  <NftDaoTotalSupplyPanel />
+                  <NftDaoTotalStakedPanel />
+                </>
+              )}
+            />
+          </VStack>
+          <GovernanceOverview />
+        </SameWidthChildrenRow>
+        <RecentProposals />
+        <AddressesOverview />
+        <DaoCouncilOverview />
+        <SocialChannels />
+      </VStack>
+    </DaoErrorBoundary>
   );
 };

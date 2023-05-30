@@ -5,21 +5,16 @@ import { SnackbarContainer } from 'components/snackbar';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Navigate, Route, Routes } from 'react-router';
-import { useTransactionSnackbars } from 'hooks';
 import { DashboardPage } from 'pages/dashboard';
 import {
   DAOPage,
   Overview as DAOOverviewPage,
   TreasuryPage as DAOTreasuryPage,
-  ProposalsPage as DAOProposalsPage,
   Staking as DAOStakingPage,
-  Members as DAOMembersPage,
 } from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
 import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
-import { Page as ProposalPage } from 'pages/proposal';
-import { BetaGuard } from 'components/beta-guard';
 import { LandingPage } from 'pages/landing';
 import { Path } from 'navigation';
 import styles from './App.module.sass';
@@ -31,145 +26,15 @@ import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
 import { DistributePage } from 'pages/dao/distribute/DistributePage';
-import { DaoErrorBoundary } from 'pages/dao/DaoErrorBoundary';
 import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
 import { setupErrorMonitoring } from 'errors/errorMonitoring';
+import { Navigation } from 'components/Navigation';
+import { BetaGuard } from 'components/beta-guard';
+import { ProposalsPage } from 'pages/dao/proposals';
+import { DaoMembersPage } from 'pages/dao/members';
+import { ProposalPage } from 'pages/proposal';
 
 const queryClient = new QueryClient();
-
-const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route index={true} element={<LandingPage />} />
-      <Route path="*" element={<AppBetaRoutes />} />
-    </Routes>
-  );
-};
-
-const AppBetaRoutes = () => {
-  useTransactionSnackbars();
-
-  return (
-    <BetaGuard>
-      <Routes>
-        <Route path={Path.Dashboard} element={<DashboardPage />} />
-        <Route path={Path.Daos} element={<DAOsPage />} />
-        <Route
-          path="/dao/:address"
-          element={
-            <InitizalizedWalletOnly>
-              <DaoErrorBoundary>
-                <DAOPage />
-              </DaoErrorBoundary>
-            </InitizalizedWalletOnly>
-          }
-        >
-          <Route
-            index={true}
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DAOOverviewPage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-          <Route
-            path="treasury"
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DAOTreasuryPage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-          <Route
-            path="proposals"
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DAOProposalsPage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-          <Route
-            path="rewards"
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DistributePage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-          <Route
-            path="staking"
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DAOStakingPage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-          <Route
-            path="members"
-            element={
-              <InitizalizedWalletOnly>
-                <DaoErrorBoundary>
-                  <DAOMembersPage />
-                </DaoErrorBoundary>
-              </InitizalizedWalletOnly>
-            }
-          />
-        </Route>
-        <Route
-          path="/dao/:address/proposals/create"
-          element={
-            <InitizalizedWalletOnly>
-              <DaoErrorBoundary>
-                <ConditionalWallet connected={() => <SelectProposalTypePage />} />
-              </DaoErrorBoundary>
-            </InitizalizedWalletOnly>
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/create/:type"
-          element={
-            <InitizalizedWalletOnly>
-              <DaoErrorBoundary>
-                <CreateProposalPage />
-              </DaoErrorBoundary>
-            </InitizalizedWalletOnly>
-          }
-        />
-        <Route
-          path="/dao/create"
-          element={
-            <InitizalizedWalletOnly>
-              <DaoErrorBoundary>
-                <CreateDAOPage />
-              </DaoErrorBoundary>
-            </InitizalizedWalletOnly>
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/:id"
-          element={
-            <InitizalizedWalletOnly>
-              <DaoErrorBoundary>
-                <ProposalPage />
-              </DaoErrorBoundary>
-            </InitizalizedWalletOnly>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BetaGuard>
-  );
-};
 
 const AppProviders = () => {
   const chainOptions = useChainOptions();
@@ -189,7 +54,87 @@ const AppProviders = () => {
                       content={(key, message) => <SnackbarContainer id={key} message={message} />}
                     >
                       <PersonalizationProvider>
-                        <AppRoutes />
+                        <Routes>
+                          <Route index={true} element={<LandingPage />} />
+                          <Route path="/" element={(
+                            <InitizalizedWalletOnly>
+                              <BetaGuard>
+                                <Navigation />
+                              </BetaGuard>
+                            </InitizalizedWalletOnly>
+                          )}>
+                            <Route path={Path.Dashboard} element={<DashboardPage />} />
+                            <Route path={Path.Daos} element={<DAOsPage />} />
+                            <Route
+                              path="/dao/:address"
+                              element={
+                                <DAOPage />
+                              }
+                            >
+                              <Route
+                                index={true}
+                                element={
+                                  <DAOOverviewPage />
+                                }
+                              />
+                              <Route
+                                path="treasury"
+                                element={
+                                  <DAOTreasuryPage />
+                                }
+                              />
+                              <Route
+                                path="proposals"
+                                element={
+                                  <ProposalsPage />
+                                }
+                              />
+                              <Route
+                                path="rewards"
+                                element={
+                                  <DistributePage />
+                                }
+                              />
+                              <Route
+                                path="staking"
+                                element={
+                                  <DAOStakingPage />
+                                }
+                              />
+                              <Route
+                                path="members"
+                                element={
+                                  <DaoMembersPage />
+                                }
+                              />
+                            </Route>
+                            <Route
+                              path="/dao/:address/proposals/create"
+                              element={
+                                <ConditionalWallet connected={() => <SelectProposalTypePage />} />
+                              }
+                            />
+                            <Route
+                              path="/dao/:address/proposals/create/:type"
+                              element={
+                                <CreateProposalPage />
+                              }
+                            />
+                            <Route
+                              path="/dao/:address/proposals/:id"
+                              element={
+                                <ProposalPage />
+                              }
+                            />
+                            <Route
+                              path="/dao/create"
+                              element={
+                                <CreateDAOPage />
+                              }
+                            />
+                            <Route path="*" element={<Navigate to="/" replace />} />
+                          </Route>
+                        </Routes>
                       </PersonalizationProvider>
                     </SnackbarProvider>
                   </TransactionErrorProvider>
@@ -198,7 +143,7 @@ const AppProviders = () => {
             </QueryClientProvider>
           </main>
         </ThemeProvider>
-      </WalletProvider>
+      </WalletProvider >
     )
   );
 };

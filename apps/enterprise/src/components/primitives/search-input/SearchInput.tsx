@@ -29,7 +29,6 @@ const SearchInput = (props: SearchInputProps) => {
       <TextInput
         className={classNames(className, styles.root)}
         placeholder="Search..."
-        inputProps={{ disableUnderline: true }}
         value={value}
         onChange={(event) => onChange && onChange(event.target.value)}
         endAdornment={
