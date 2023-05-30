@@ -24,15 +24,13 @@ import { GlobalStyle } from 'lib/ui/GlobalStyle';
 import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvider';
 import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
 import { DistributePage } from 'pages/dao/distribute/DistributePage';
 import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
 import { setupErrorMonitoring } from 'errors/errorMonitoring';
-import { Navigation } from 'components/Navigation';
-import { BetaGuard } from 'components/beta-guard';
 import { ProposalsPage } from 'pages/dao/proposals';
 import { DaoMembersPage } from 'pages/dao/members';
 import { ProposalPage } from 'pages/proposal';
+import { AppRoutesWrapper } from 'navigation/components/AppRoutesWrapper';
 
 const queryClient = new QueryClient();
 
@@ -56,13 +54,7 @@ const AppProviders = () => {
                       <PersonalizationProvider>
                         <Routes>
                           <Route index={true} element={<LandingPage />} />
-                          <Route path="/" element={(
-                            <InitizalizedWalletOnly>
-                              <BetaGuard>
-                                <Navigation />
-                              </BetaGuard>
-                            </InitizalizedWalletOnly>
-                          )}>
+                          <Route path="/" element={<AppRoutesWrapper />}>
                             <Route path={Path.Dashboard} element={<DashboardPage />} />
                             <Route path={Path.Daos} element={<DAOsPage />} />
                             <Route
