@@ -32,7 +32,6 @@ import { ConditionalWallet } from 'components/conditional-wallet';
 import { InitizalizedWalletOnly } from 'components/conditional-wallet/InitializedWalletOnly';
 import { DistributePage } from 'pages/dao/distribute/DistributePage';
 import { DaoErrorBoundary } from 'pages/dao/DaoErrorBoundary';
-import { SettingsPage } from 'settings/components/SettingsPage';
 import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
 import { setupErrorMonitoring } from 'errors/errorMonitoring';
 
@@ -55,7 +54,6 @@ const AppBetaRoutes = () => {
       <Routes>
         <Route path={Path.Dashboard} element={<DashboardPage />} />
         <Route path={Path.Daos} element={<DAOsPage />} />
-        <Route path={Path.Settings} element={<SettingsPage />} />
         <Route
           path="/dao/:address"
           element={

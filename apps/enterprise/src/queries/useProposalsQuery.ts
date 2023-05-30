@@ -4,7 +4,6 @@ import { ApiEndpoints, Direction, useApiEndpoint } from 'hooks';
 import { useDAOsQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from './queryKey';
-import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 import { ProposalApiResponse, apiResponseToProposal } from 'proposal/ProposalApiResponse';
 
 interface UseProposalsQueryOptions {
@@ -20,29 +19,27 @@ export type ProposalsQueryResponse = Array<ProposalApiResponse>;
 export const useProposalsQuery = (
   options: UseProposalsQueryOptions = {}
 ): UseQueryResult<Array<Proposal> | undefined> => {
-  const [areIndexersEnabled] = useAreIndexersEnabled();
-
   const { daoAddress, limit = 12, enabled = true, direction = 'desc', queryKey = QUERY_KEY.PROPOSALS } = options;
 
   const template: ApiEndpoints =
     daoAddress === undefined
       ? {
-          path: 'v1/proposals',
-          params: {
-            limit,
-            direction,
-          },
-        }
+        path: 'v1/proposals',
+        params: {
+          limit,
+          direction,
+        },
+      }
       : {
-          path: 'v1/daos/{address}/proposals',
-          route: {
-            address: daoAddress,
-          },
-          params: {
-            limit,
-            direction,
-          },
-        };
+        path: 'v1/daos/{address}/proposals',
+        route: {
+          address: daoAddress,
+        },
+        params: {
+          limit,
+          direction,
+        },
+      };
 
   const endpoint = useApiEndpoint(template);
 
@@ -54,9 +51,6 @@ export const useProposalsQuery = (
   return useQuery(
     [queryKey, endpoint],
     async () => {
-      if (!areIndexersEnabled) {
-        throw new Error('Proposals query is not supported without indexers');
-      }
       const response = await fetch(endpoint);
 
       const proposals: Proposal[] = [];

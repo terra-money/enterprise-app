@@ -3,7 +3,6 @@ import { enterprise } from 'types/contracts';
 import { DAO, DAOGovernanceConfig, DAOSocials } from 'types';
 import { QUERY_KEY } from './queryKey';
 import { Direction, useApiEndpoint } from 'hooks';
-import { useAreIndexersEnabled } from 'state/hooks/useAreIndexersEnabled';
 
 interface DAOsQueryOptions {
   query?: string;
@@ -55,8 +54,6 @@ export const fetchDAOsQuery = async (endpoint: string) => {
 export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Array<DAO> | undefined> => {
   const { query, limit = 100, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS } = options;
 
-  const [areIndexersEnabled] = useAreIndexersEnabled();
-
   const endpoint = useApiEndpoint({
     path: 'v1/daos',
     params: {
@@ -69,10 +66,6 @@ export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Arr
   return useQuery(
     [queryKey, endpoint],
     () => {
-      if (!areIndexersEnabled) {
-        throw new Error('DAOs query is disabled. Enable indexers to use this query.');
-      }
-
       return fetchDAOsQuery(endpoint);
     },
     {

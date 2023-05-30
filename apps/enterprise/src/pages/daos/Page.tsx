@@ -13,7 +13,6 @@ import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
-import { IndexersAreRequired } from 'settings/components/IndexersAreRequired';
 import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
 
 export const Page = () => {
@@ -76,10 +75,8 @@ export const Page = () => {
             <Text size={24} weight="bold">
               DAOs
             </Text>
-            <IndexersAreRequired>
-              {searchInput}
-              {content}
-            </IndexersAreRequired>
+            {searchInput}
+            {content}
           </VStack>
         )}
         normal={() => (
@@ -108,7 +105,7 @@ export const Page = () => {
                 />
               }
             >
-              <IndexersAreRequired>{content}</IndexersAreRequired>
+              {content}
             </PageLayout>
           </ScrollableContainer>
         )}
