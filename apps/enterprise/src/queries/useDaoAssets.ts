@@ -11,6 +11,8 @@ import Big from 'big.js';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
 import { usePricesOfLiquidAssets } from 'chain/queries/usePricesOfLiquidAssets';
 import { assertDefined } from '@terra-money/apps/utils';
+import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
+import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 
 const toAsset = (
   response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
@@ -26,6 +28,8 @@ const toAsset = (
       id: response.cw20,
     };
   }
+
+  return undefined;
 };
 
 export const useDaoAssets = () => {
@@ -47,13 +51,7 @@ export const useDaoAssets = () => {
         asset_whitelist: {},
       });
 
-      const whitelist: Asset[] = [];
-      [...globalWhitelist, ...assetsWhitelist].forEach((item) => {
-        const asset = toAsset(item);
-        if (asset && !whitelist.find((a) => areSameAsset(a, asset))) {
-          whitelist.push(asset);
-        }
-      });
+      const whitelist: Asset[] = withoutDuplicates(removeUndefinedItems([...globalWhitelist, ...assetsWhitelist].map(toAsset)), areSameAsset);
 
       const assets: AssetInfoWithPrice[] = [];
       await Promise.all(

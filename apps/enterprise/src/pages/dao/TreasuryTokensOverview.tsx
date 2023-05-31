@@ -74,8 +74,8 @@ export const TreasuryTokensOverview = () => {
     return (
       <AssetsContainer>
         {treasuryTotalInUSD !== undefined &&
-          tokenBalancesWithPrice?.map((token) => (
-            <AssetCard token={token} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
+          tokenBalancesWithPrice?.map((token, index) => (
+            <AssetCard key={index} token={token} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
           ))}
       </AssetsContainer>
     );
