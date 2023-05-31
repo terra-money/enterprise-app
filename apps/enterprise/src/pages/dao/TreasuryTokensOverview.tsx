@@ -53,13 +53,8 @@ const SmallScreenWidthContainer = styled.div`
 export const TreasuryTokensOverview = () => {
   const address = useCurrentDaoAddress();
 
-  const { data: tokenBalances } = useDaoAssets();
+  const { data: assets = [] } = useDaoAssets();
 
-  const tokenBalancesWithPrice = tokenBalances
-    ? tokenBalances.filter((t) => t.usd).sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
-    : undefined;
-
-  const treasuryTotalInUSD = tokenBalancesWithPrice ? sum(tokenBalancesWithPrice.map(getAssetBalanceInUsd)) : undefined;
 
   const renderBasicInfo = () => {
     return (
@@ -71,12 +66,15 @@ export const TreasuryTokensOverview = () => {
   };
 
   const renderAssets = () => {
+    const treasuryTotalInUSD = sum(assets.map(getAssetBalanceInUsd))
+
+    const sortedAssets = assets.sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
+
     return (
       <AssetsContainer>
-        {treasuryTotalInUSD !== undefined &&
-          tokenBalancesWithPrice?.map((token, index) => (
-            <AssetCard key={index} token={token} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
-          ))}
+        {sortedAssets.map((asset, index) => (
+          <AssetCard key={index} token={asset} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
+        ))}
       </AssetsContainer>
     );
   };
