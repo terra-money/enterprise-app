@@ -1,14 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { DashboardPage } from 'pages/dashboard';
 import {
-  DAOPage,
   Overview as DAOOverviewPage,
   TreasuryPage as DAOTreasuryPage,
   Staking as DAOStakingPage,
 } from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
-import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
 import { LandingPage } from 'pages/landing';
 import { Path } from 'navigation';
 import { CreateProposalPage } from 'pages/create-proposal/CreateProposalPage';
@@ -19,6 +17,8 @@ import { DaoMembersPage } from 'pages/dao/members';
 import { ProposalPage } from 'pages/proposal';
 import { AppRoutesWrapper } from 'navigation/components/AppRoutesWrapper';
 import { useTransactionSnackbars } from 'hooks/useTransactionSnackbars';
+import { DaoPage } from 'pages/dao/DaoPage';
+import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
 
 export const AppRoutes = () => {
   useTransactionSnackbars();
@@ -31,7 +31,7 @@ export const AppRoutes = () => {
         <Route
           path="/dao/:address"
           element={
-            <DAOPage />
+            <DaoPage />
           }
         >
           <Route

@@ -1,4 +1,4 @@
-export * from './DAOPage';
+export * from './DAOPageContent';
 export * from './Overview';
 export * from './treasury/TreasuryPage';
 export * from './staking/Staking';
