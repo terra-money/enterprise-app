@@ -1,6 +1,5 @@
 import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
-import { Navigation } from 'components/Navigation';
 import { IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -68,48 +67,46 @@ export const Page = () => {
   const content = isLoading || data.length > 0 ? <List items={items} isLoading={isLoading} /> : noResults;
 
   return (
-    <Navigation>
-      <ResponsiveView
-        small={() => (
-          <VStack gap={24}>
-            <Text size={24} weight="bold">
-              DAOs
-            </Text>
-            {searchInput}
-            {content}
-          </VStack>
-        )}
-        normal={() => (
-          <ScrollableContainer
-            stickyRef={stickyRef}
-            header={(visible) => (
-              <StickyHeader visible={visible}>
-                <Header
-                  compact={true}
-                  isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
-                  searchInput={searchInput}
-                  filters={filters}
-                />
-              </StickyHeader>
-            )}
+    <ResponsiveView
+      small={() => (
+        <VStack gap={24}>
+          <Text size={24} weight="bold">
+            DAOs
+          </Text>
+          {searchInput}
+          {content}
+        </VStack>
+      )}
+      normal={() => (
+        <ScrollableContainer
+          stickyRef={stickyRef}
+          header={(visible) => (
+            <StickyHeader visible={visible}>
+              <Header
+                compact={true}
+                isLoading={isLoading}
+                totalCount={items?.length ?? 0}
+                searchInput={searchInput}
+                filters={filters}
+              />
+            </StickyHeader>
+          )}
+        >
+          <PageLayout
+            header={
+              <Header
+                ref={stickyRef}
+                isLoading={isLoading}
+                totalCount={items?.length ?? 0}
+                searchInput={searchInput}
+                filters={filters}
+              />
+            }
           >
-            <PageLayout
-              header={
-                <Header
-                  ref={stickyRef}
-                  isLoading={isLoading}
-                  totalCount={items?.length ?? 0}
-                  searchInput={searchInput}
-                  filters={filters}
-                />
-              }
-            >
-              {content}
-            </PageLayout>
-          </ScrollableContainer>
-        )}
-      />
-    </Navigation>
+            {content}
+          </PageLayout>
+        </ScrollableContainer>
+      )}
+    />
   );
 };

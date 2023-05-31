@@ -12,13 +12,12 @@ import { ProposalActions } from './ProposalActions';
 import { PageLayout } from 'components/layout';
 import { ProposalSummaryText } from './ProposalSummaryText';
 import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
-import { Navigation } from 'components/Navigation';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { SmallScreenProposalHeader } from './SmallScreenProposalHeader';
 import { ProposedBy } from './ProposedBy';
 
-export const Page = () => {
+export const ProposalPageContent = () => {
   const { id, address } = useParams();
   const proposalId = Number(id);
 
@@ -42,38 +41,36 @@ export const Page = () => {
   );
 
   return (
-    <Navigation>
-      <LoadingPage isLoading={isLoading}>
-        {dao && (
-          <CurrentDaoProvider value={dao}>
-            {proposal && (
-              <CurrentProposalProvider value={proposal}>
-                <ResponsiveView
-                  normal={() => (
-                    <ScrollableContainer
-                      stickyRef={ref}
-                      threshold={0.5}
-                      header={(visible) => (
-                        <StickyHeader visible={visible}>
-                          <Header compact={true} />
-                        </StickyHeader>
-                      )}
-                    >
-                      <PageLayout header={<Header ref={ref} />}>{content}</PageLayout>
-                    </ScrollableContainer>
-                  )}
-                  small={() => (
-                    <VStack gap={24}>
-                      <SmallScreenProposalHeader />
-                      {content}
-                    </VStack>
-                  )}
-                />
-              </CurrentProposalProvider>
-            )}
-          </CurrentDaoProvider>
-        )}
-      </LoadingPage>
-    </Navigation>
+    <LoadingPage isLoading={isLoading}>
+      {dao && (
+        <CurrentDaoProvider value={dao}>
+          {proposal && (
+            <CurrentProposalProvider value={proposal}>
+              <ResponsiveView
+                normal={() => (
+                  <ScrollableContainer
+                    stickyRef={ref}
+                    threshold={0.5}
+                    header={(visible) => (
+                      <StickyHeader visible={visible}>
+                        <Header compact={true} />
+                      </StickyHeader>
+                    )}
+                  >
+                    <PageLayout header={<Header ref={ref} />}>{content}</PageLayout>
+                  </ScrollableContainer>
+                )}
+                small={() => (
+                  <VStack gap={24}>
+                    <SmallScreenProposalHeader />
+                    {content}
+                  </VStack>
+                )}
+              />
+            </CurrentProposalProvider>
+          )}
+        </CurrentDaoProvider>
+      )}
+    </LoadingPage>
   );
 };

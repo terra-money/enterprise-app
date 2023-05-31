@@ -1,13 +1,13 @@
-import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { NormalScreenNavigation } from './NormalScreenNavigation';
 import { SmallScreenNavigation } from './SmallScreenNavigation';
+import { Outlet } from 'react-router';
 
-export const Navigation = ({ children }: ComponentWithChildrenProps) => {
+export const Navigation = () => {
   return (
     <ResponsiveView
-      small={() => <SmallScreenNavigation>{children}</SmallScreenNavigation>}
-      normal={() => <NormalScreenNavigation>{children}</NormalScreenNavigation>}
+      small={() => <SmallScreenNavigation><Outlet /></SmallScreenNavigation>}
+      normal={() => <NormalScreenNavigation><Outlet /></NormalScreenNavigation>}
     />
   );
 };
