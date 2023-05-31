@@ -1,10 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { DashboardPage } from 'pages/dashboard';
-import {
-  Overview as DAOOverviewPage,
-  TreasuryPage as DAOTreasuryPage,
-  Staking as DAOStakingPage,
-} from 'pages/dao';
 import { Page as DAOsPage } from 'pages/daos';
 import { CreateDAOPage } from 'pages/create-dao';
 import { LandingPage } from 'pages/landing';
@@ -17,8 +12,11 @@ import { DaoMembersPage } from 'pages/dao/members';
 import { ProposalPage } from 'pages/proposal';
 import { AppRoutesWrapper } from 'navigation/components/AppRoutesWrapper';
 import { useTransactionSnackbars } from 'hooks/useTransactionSnackbars';
-import { DaoPage } from 'pages/dao/DaoPage';
+import { DaoPage } from 'pages/dao';
 import { SelectProposalTypePage } from 'pages/create-proposal/SelectProposalTypePage';
+import { Overview } from 'pages/dao/Overview';
+import { TreasuryPage } from 'pages/dao/treasury/TreasuryPage';
+import { Staking } from 'pages/dao/staking';
 
 export const AppRoutes = () => {
   useTransactionSnackbars();
@@ -37,13 +35,13 @@ export const AppRoutes = () => {
           <Route
             index={true}
             element={
-              <DAOOverviewPage />
+              <Overview />
             }
           />
           <Route
             path="treasury"
             element={
-              <DAOTreasuryPage />
+              <TreasuryPage />
             }
           />
           <Route
@@ -61,7 +59,7 @@ export const AppRoutes = () => {
           <Route
             path="staking"
             element={
-              <DAOStakingPage />
+              <Staking />
             }
           />
           <Route
