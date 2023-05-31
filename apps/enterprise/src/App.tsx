@@ -12,6 +12,7 @@ import { TransactionErrorProvider } from 'chain/components/TransactionErrorProvi
 import { PersonalizationProvider } from 'libs/personalization/PersonalizationProvider';
 import { setupErrorMonitoring } from 'errors/errorMonitoring';
 import { AppRoutes } from 'navigation/AppRoutes';
+import { GlobalErrorBoundary } from 'errors/components/GlobalErrorBoundary';
 
 const queryClient = new QueryClient();
 
@@ -23,24 +24,26 @@ const AppProviders = () => {
       <WalletProvider {...chainOptions} connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}>
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />
-          <main className={styles.root}>
-            <QueryClientProvider client={queryClient}>
-              <NetworkGuard>
-                <TransactionsProvider>
-                  <TransactionErrorProvider>
-                    <SnackbarProvider
-                      autoHideDuration={null}
-                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                    >
-                      <PersonalizationProvider>
-                        <AppRoutes />
-                      </PersonalizationProvider>
-                    </SnackbarProvider>
-                  </TransactionErrorProvider>
-                </TransactionsProvider>
-              </NetworkGuard>
-            </QueryClientProvider>
-          </main>
+          <GlobalErrorBoundary>
+            <main className={styles.root}>
+              <QueryClientProvider client={queryClient}>
+                <NetworkGuard>
+                  <TransactionsProvider>
+                    <TransactionErrorProvider>
+                      <SnackbarProvider
+                        autoHideDuration={null}
+                        content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                      >
+                        <PersonalizationProvider>
+                          <AppRoutes />
+                        </PersonalizationProvider>
+                      </SnackbarProvider>
+                    </TransactionErrorProvider>
+                  </TransactionsProvider>
+                </NetworkGuard>
+              </QueryClientProvider>
+            </main>
+          </GlobalErrorBoundary>
         </ThemeProvider>
       </WalletProvider >
     )
