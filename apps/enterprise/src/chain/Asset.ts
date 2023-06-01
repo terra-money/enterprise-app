@@ -15,7 +15,7 @@ export interface AssetWithPrice extends Asset {
 
 export interface AssetInfo {
   name: string;
-  symbol: string;
+  symbol?: string;
   decimals: number;
   icon?: string;
 }

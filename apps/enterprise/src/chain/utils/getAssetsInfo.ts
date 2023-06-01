@@ -17,7 +17,7 @@ interface TFMAssetInfo {
 
 interface TFLAssetInfo {
   denom: string;
-  sybmol: string;
+  sybmol?: string;
   name: string;
   icon: string;
   decimals?: number;
@@ -27,7 +27,6 @@ type TFLAssetsInfo = Record<NetworkName, Record<string, TFLAssetInfo>>
 
 export const getAssetsInfo = memoize(async (network: NetworkName = 'mainnet') => {
   const { data: tflData } = await axios.get<TFLAssetsInfo>(TFL_ASSETS_INFO_URL);
-  console.log(Object.values(tflData[network]))
   const assets: Array<AssetInfo & { id: string }> = Object.values(tflData[network]).filter(asset => asset.decimals).map(info => ({
     name: info.name,
     symbol: info.sybmol,
@@ -38,15 +37,14 @@ export const getAssetsInfo = memoize(async (network: NetworkName = 'mainnet') =>
 
   if (network === 'mainnet') {
     const { data: tfmData } = await axios.get<TFMAssetInfo[]>(TFM_ASSETS_INFO_URL);
-    assets.push(...tfmData.map(info => ({
+    const tfmAssets = tfmData.map(info => ({
       name: info.name,
       symbol: info.symbol,
       decimals: info.decimals,
       id: info.contract_addr,
-    })))
+    }))
+    assets.push(...tfmAssets)
   }
-
-  console.log(assets)
 
   return assets;
 });

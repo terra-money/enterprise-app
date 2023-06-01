@@ -21,14 +21,13 @@ export const AssetCard = ({ token, treasuryTotalInUSD }: AssetCardProps) => {
           <TokenIcon className={styles.icon} symbol={token.symbol} path={token.icon} />
         </Container>
         <Container className={styles.assetContainer}>
-          <Text>{token.symbol}</Text>
+          <Text>{token.symbol || token.name}</Text>
           <Text as="div" color="supporting">
             {token.usd > 0 && (
               <SeparatedBy separator={dotSeparator}>
                 <div>{formatAmount(getAssetBalanceInUsd(token))} $</div>
                 {treasuryTotalInUSD > 0 && <div>{toPercents(getAssetBalanceInUsd(token) / treasuryTotalInUSD, 'round')}</div>}
               </SeparatedBy>
-
             )}
           </Text>
         </Container>
