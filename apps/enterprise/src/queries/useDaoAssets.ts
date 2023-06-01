@@ -13,6 +13,7 @@ import { usePricesOfLiquidAssets } from 'chain/queries/usePricesOfLiquidAssets';
 import { assertDefined } from '@terra-money/apps/utils';
 import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
+import { useNetworkName } from '@terra-money/apps/hooks';
 
 const toAsset = (
   response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
@@ -37,6 +38,8 @@ export const useDaoAssets = () => {
   const { query } = useContract();
 
   const lcd = useLCDClient();
+
+  const networkName = useNetworkName();
 
   const { data: liquidAssetsPrices } = usePricesOfLiquidAssets();
 
@@ -69,7 +72,7 @@ export const useDaoAssets = () => {
           }
 
           try {
-            const info = await getAssetInfo({ asset, lcd });
+            const info = await getAssetInfo({ asset, lcd, networkName });
 
             assets.push({
               ...asset,

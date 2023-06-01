@@ -55,7 +55,6 @@ export const TreasuryTokensOverview = () => {
 
   const { data: assets = [] } = useDaoAssets();
 
-
   const renderBasicInfo = () => {
     return (
       <BasicInfoContainer>

@@ -1,6 +1,7 @@
 import { LCDClient } from '@terra-money/feather.js';
 import { Asset, AssetInfo } from 'chain/Asset';
 import { getAssetsInfo } from './getAssetsInfo';
+import { NetworkName } from '@terra-money/apps/hooks';
 
 interface CW20TokenInfoResponse {
   name: string;
@@ -12,9 +13,10 @@ interface CW20TokenInfoResponse {
 interface GetAssetInfoParams {
   asset: Asset;
   lcd: LCDClient;
+  networkName: NetworkName
 }
 
-export const getAssetInfo = async ({ asset: { id, type }, lcd }: GetAssetInfoParams): Promise<AssetInfo> => {
+export const getAssetInfo = async ({ asset: { id, type }, lcd, networkName }: GetAssetInfoParams): Promise<AssetInfo> => {
   if (type === 'cw20') {
     const { name, symbol, decimals } = await lcd.wasm.contractQuery<CW20TokenInfoResponse>(id, {
       token_info: {},
@@ -36,14 +38,10 @@ export const getAssetInfo = async ({ asset: { id, type }, lcd }: GetAssetInfoPar
     };
   }
 
-  const tfmAssets = await getAssetsInfo();
-  const tfmAsset = tfmAssets.find((asset) => asset.contract_addr === id);
-  if (tfmAsset) {
-    return {
-      name: tfmAsset.name,
-      symbol: tfmAsset.symbol,
-      decimals: tfmAsset.decimals,
-    };
+  const assets = await getAssetsInfo(networkName);
+  const asset = assets.find((asset) => asset.id === id);
+  if (asset) {
+    return asset
   }
 
   throw new Error(`Asset with id=${id} not found`);
