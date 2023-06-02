@@ -1,0 +1,1 @@
+export type NetworkName = 'testnet' | 'mainnet'
