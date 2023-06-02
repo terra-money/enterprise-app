@@ -44,6 +44,7 @@ export const getDaoAssets = async ({ address, enterpriseFactoryContract, members
         const totalStakedAmount = await getDaoTotalStakedAmount({ address })
         balance = Big(balance).minus(totalStakedAmount).toString()
       }
+      if (Big(balance).lte(0)) return
     } catch (err) {
       console.error(`Failed to get balance of ${asset.type} asset with id=${asset.id}: ${err}`)
       return
