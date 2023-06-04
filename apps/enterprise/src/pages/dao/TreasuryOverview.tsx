@@ -31,7 +31,6 @@ export const TreasuryOverview = () => {
   }, []);
 
   const { data: whitelist = [] } = useDAONFTsWhitelist(address);
-
   let nftCollection: NFTPairs[] | undefined = [];
   const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
   if (dao.dao_type !== 'nft') {
