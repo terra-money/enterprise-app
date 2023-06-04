@@ -21,6 +21,15 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
 
     const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
     const nftCollection: NFTPairs[] | undefined = data;
+
+    const nftCount = () => {
+        let count = 0;
+        nftCollection?.forEach((nftPair) => {
+            count += nftPair.tokenIds?.tokens?.length || 0;
+        });
+        return count;
+    }
+    
     return (
         <Modal
             width={970}
@@ -31,7 +40,7 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
                 return (
                     <VStack className={styles.modalContent} gap={32}>
                         <Container className={styles.subheader} gap={32}>
-                        <Text variant='label'> Displaying {nftCollection?.length} NFTs in treasury</Text>
+                        <Text variant='label'> Displaying {nftCount()} NFTs in treasury</Text>
                         </Container>
                         <Container className={styles.scrollableContainer}>
                             {nftCollection?.length && nftCollection[0]?.tokenIds.length !== 0 ? (
