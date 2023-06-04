@@ -26,7 +26,7 @@ export const NFTCard = (props: NFTCardProps) => {
   const nftData = useNFTInfoQuery(nftCollectionAdress, tokenIds);
   const nftObject = nftData.data as any;
   console.log(nftObject);
-  
+
   return (
     <>
       {nftData.data &&
@@ -59,7 +59,7 @@ export const NFTCard = (props: NFTCardProps) => {
               </Container>
             );
           } else {
-            let imageDataUrl = nftObject[index].image_data ? nftObject[index].image_data: nftObject[index].image;
+            let imageDataUrl = nftObject[index].image_data ? nftObject[index].image_data : nftObject[index].image;
             if (isIPFSUrl(imageDataUrl)) {
               imageDataUrl = convertIPFSUrl(imageDataUrl);
             }
