@@ -42,7 +42,6 @@ export class Indexer extends EventIndexer<Entity> {
         ])
       )
     );
-
     Array.from(new Set<string>(groupedProposals.flatMap((s) => s)))
       .filter(Boolean)
       .forEach((stringifiedKey) => {
@@ -67,11 +66,10 @@ export class Indexer extends EventIndexer<Entity> {
 
     const daoAddresses = Array.from(new Set<string>(groupedDaos.flatMap((s) => s))).filter(Boolean);
     const lcd = createLCDClient();
-
     await Promise.all(
       daoAddresses.map(async (daoAddress) => {
         try {
-          console.log(`Getting proposals for ${daoAddress} DAO.`);
+          this.logger.info(`Getting proposals for ${daoAddress} DAO.`);
           const { proposals } = await lcd.wasm.contractQuery<enterprise.ProposalsResponse>(daoAddress, {
             proposals: {
               filter: 'in_progress',
@@ -100,13 +98,12 @@ export class Indexer extends EventIndexer<Entity> {
             daoAddress: payload.dao_address,
             id: Number(payload.proposal_id),
             txHash,
-          }
+          },
         ])
       )
     );
-
-    return proposals.flatMap(p => p)
-  }
+    return proposals.flatMap((p) => p);
+  };
 
   override index = async (options: IndexFnOptions): Promise<void> => {
     const { current, genesis } = options;
@@ -115,8 +112,8 @@ export class Indexer extends EventIndexer<Entity> {
 
     await batch(height, current.height, 1000, async ({ min, max }) => {
       this.logger.info(`Processing blocks between ${min} and ${max}.`);
-
       const modifiedProposalsKeys = await this.getModifiedProposals(min, max);
+
       const executedProposalsHashes = await this.getExecutedProposals(min, max);
 
       const entities = [];
@@ -127,11 +124,11 @@ export class Indexer extends EventIndexer<Entity> {
             const proposal = await getProposalFromContract({
               daoAddress,
               id,
-              logger: this.logger
+              logger: this.logger,
             });
-            const execution = executedProposalsHashes.find(p => p.daoAddress === daoAddress && p.id === id)
+            const execution = executedProposalsHashes.find((p) => p.daoAddress === daoAddress && p.id === id);
             if (execution) {
-              proposal.executionTxHash = execution.txHash
+              proposal.executionTxHash = execution.txHash;
             }
 
             entities.push(proposal);
@@ -140,9 +137,7 @@ export class Indexer extends EventIndexer<Entity> {
           }
         })
       );
-
-      this.persistence.save(entities)
-
+      await this.persistence.save(entities);
       await this.state.set({ height: max });
     });
   };
