@@ -378,8 +378,7 @@ jobs:
     steps:
       - name: Set Remote ref
         run: |
-          # if [ ${GITHUB_REF} == "refs/heads/main" ]; then
-          if [ ${GITHUB_REF} == "refs/heads/feat/update_github_actions" ]; then
+          if [ ${GITHUB_REF} == "refs/heads/main" ]; then
             echo "TF_GITHUB_REF=pisco-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
             echo "TF_GITHUB_REF=pisco-1-staging" >> $GITHUB_ENV
