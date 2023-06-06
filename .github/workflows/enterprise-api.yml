@@ -343,6 +343,25 @@ jobs:
           # Set environment variable for subsequent steps
           echo "BLOCK_HEIGHT=$BLOCK_HEIGHT" >> $GITHUB_ENV
 
+      - name: Check variables
+        run: |
+          if [ -z "${{ needs.refs-parsing.outputs.testnet_enterprise_factory_address }}" ] || [ -z "${{ env.BLOCK_HEIGHT }}" ]; then
+            echo "Either FACTORY_ADDRESS or GENESIS_HEIGHT is empty"
+            exit 1
+          fi
+
+          if [[ ! "${{ needs.refs-parsing.outputs.testnet_enterprise_factory_address }}" =~ ^terra ]]; then
+            echo "FACTORY_ADDRESS does not start with 'terra'"
+            exit 1
+          fi
+
+          if [ "${{ env.BLOCK_HEIGHT }}" -eq "${{ env.BLOCK_HEIGHT }}" ] 2>/dev/null; then
+            echo "GENESIS_HEIGHT is a number"
+          else
+            echo "GENESIS_HEIGHT is not a number"
+            exit 1
+          fi
+
       - name: Invoke Terraform Workflow
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
@@ -377,6 +396,25 @@ jobs:
 
           # Set environment variable for subsequent steps
           echo "BLOCK_HEIGHT=$BLOCK_HEIGHT" >> $GITHUB_ENV
+
+      - name: Check variables
+        run: |
+          if [ -z "${{ needs.refs-parsing.outputs.testnet_enterprise_factory_address }}" ] || [ -z "${{ env.BLOCK_HEIGHT }}" ]; then
+            echo "Either FACTORY_ADDRESS or GENESIS_HEIGHT is empty"
+            exit 1
+          fi
+
+          if [[ ! "${{ needs.refs-parsing.outputs.testnet_enterprise_factory_address }}" =~ ^terra ]]; then
+            echo "FACTORY_ADDRESS does not start with 'terra'"
+            exit 1
+          fi
+
+          if [ "${{ env.BLOCK_HEIGHT }}" -eq "${{ env.BLOCK_HEIGHT }}" ] 2>/dev/null; then
+            echo "GENESIS_HEIGHT is a number"
+          else
+            echo "GENESIS_HEIGHT is not a number"
+            exit 1
+          fi
 
       - name: Invoke Terraform Workflow
         uses: aurelien-baudet/workflow-dispatch@v2
