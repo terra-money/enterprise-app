@@ -1,4 +1,4 @@
-import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { ScrollableContainer } from '@terra-money/apps/components';
 import { useRef } from 'react';
 import { Header } from './Header';
 import { Outlet } from 'react-router';

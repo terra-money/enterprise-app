@@ -10,7 +10,6 @@ import { useDAONFTsWhitelist } from 'queries/useDAONFTsWhitelist';
 import { CW20Addr } from '@terra-money/apps/types';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { ViewMoreNft } from './viewMoreNft';
-import { DepositIntoTreasury } from './deposit';
 import { useState, useEffect, useMemo } from 'react';
 import { DepositNFTIntoTreasury } from './depositNFT';
 
