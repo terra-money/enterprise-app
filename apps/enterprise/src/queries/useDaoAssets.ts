@@ -14,6 +14,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { useDAOAssetWhitelist } from 'queries';
 
 const toAsset = (
   response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
