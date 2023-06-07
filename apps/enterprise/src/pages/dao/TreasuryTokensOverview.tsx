@@ -12,6 +12,9 @@ import { DaoTVL } from './DaoTVL';
 import { useDaoAssets } from 'queries/useDaoAssets';
 import { sum } from 'lib/shared/utils/sum';
 import { getAssetBalanceInUsd } from 'chain/Asset';
+import styles from './TreasuryTokensOverview.module.sass'
+import { Container } from '@terra-money/apps/components';
+import { ViewMoreAssets } from './viewMoreAssets';
 
 export type TreasuryToken = Token & { amount: u<BigSource>; usdAmount?: BigSource };
 
@@ -66,15 +69,16 @@ export const TreasuryTokensOverview = () => {
   };
 
   const renderAssets = () => {
-    const treasuryTotalInUSD = sum(assets.map(getAssetBalanceInUsd))
-
-    const sortedAssets = assets.sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a))
-
+    const treasuryTotalInUSD = sum(assets.map(getAssetBalanceInUsd));
+    const sortedAssets = assets.sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a));
     return (
       <AssetsContainer>
-        {sortedAssets.map((asset, index) => (
-          <AssetCard key={index} token={asset} treasuryTotalInUSD={treasuryTotalInUSD}></AssetCard>
-        ))}
+        {sortedAssets.map((asset, index) => {
+          if (index < 9) {
+            return <AssetCard key={index} token={asset} treasuryTotalInUSD={treasuryTotalInUSD} />;
+          }
+          return null;
+        })}
       </AssetsContainer>
     );
   };
