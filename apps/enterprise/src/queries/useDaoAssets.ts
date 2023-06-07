@@ -14,6 +14,7 @@ import { assertDefined } from '@terra-money/apps/utils';
 import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { useDAOAssetWhitelist } from 'queries';
 
 const toAsset = (
   response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
@@ -50,9 +51,24 @@ export const useDaoAssets = () => {
         enterprise_factory.QueryMsg,
         enterprise_factory.AssetWhitelistResponse
       >(enterprise_factory_contract, { global_asset_whitelist: {} });
-      const { assets: assetsWhitelist } = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
-        asset_whitelist: {},
-      });
+
+      let assetsWhitelist: enterprise.AssetInfoBaseFor_Addr[] = [];
+      let lastAsset: enterprise.AssetInfoBaseFor_Addr | undefined;
+      let response;
+
+      do {
+        response = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
+          asset_whitelist: {
+            start_after: lastAsset ? lastAsset : undefined,
+            limit: 30
+          },
+        });
+      
+        if (response.assets) {
+          assetsWhitelist = [...assetsWhitelist, ...response.assets];
+          lastAsset = response.assets[response.assets.length - 1];
+        }
+      } while (response.assets && response.assets.length !== 0);
 
       const whitelist: Asset[] = withoutDuplicates(removeUndefinedItems([...globalWhitelist, ...assetsWhitelist].map(toAsset)), areSameAsset);
 

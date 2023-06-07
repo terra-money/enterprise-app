@@ -27,6 +27,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
     return (
       <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo}>
+          nbwaro
           <DAOLogo size="m" logo={getDaoLogo(dao)} />
         </div>
         <FavouriteToggle className={styles.favourite} dao={toDao(dao)} />

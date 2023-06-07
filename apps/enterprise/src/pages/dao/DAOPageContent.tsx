@@ -33,11 +33,11 @@ export const DAOPageContent = () => {
             normal={() => (
               <ScrollableContainer
                 stickyRef={ref}
-                header={(visible) => (
-                  <StickyHeader visible={visible}>
-                    <Header compact={true} />
-                  </StickyHeader>
-                )}
+                // header={(visible) => (
+                //   <StickyHeader visible={visible}>
+                //     <Header compact={true} />
+                //   </StickyHeader>
+                // )}
               >
                 <PageLayout header={<Header ref={ref} />}>
                   <Outlet />
