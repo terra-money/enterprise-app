@@ -11,6 +11,7 @@ import styles from './ViewMoreNftOverlay.module.sass'
 import { NFTCard } from '../NFTCard';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { LoadingPage } from 'pages/shared/LoadingPage';
 
 
 export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
@@ -19,7 +20,7 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
     const { data: whitelist = [] } = useDAONFTsWhitelist(address)
 
 
-    const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
+    const { data, isLoading } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
     const nftCollection: NFTPairs[] | undefined = data;
 
     const nftCount = () => {
@@ -29,6 +30,7 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
         });
         return count;
     }
+
     
     return (
         <Modal
@@ -38,7 +40,8 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
             onClose={onClose}
             renderContent={() => {
                 return (
-                    <VStack className={styles.modalContent} gap={32}>
+                    <LoadingPage isLoading={isLoading}>
+                        <VStack className={styles.modalContent} gap={32}>
                         <Container className={styles.subheader} gap={32}>
                         <Text variant='label'> Displaying {nftCount()} NFTs in treasury</Text>
                         </Container>
@@ -60,6 +63,8 @@ export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
                             Close
                         </PrimaryButton>
                     </VStack>
+                    </LoadingPage>
+                    
 
                 );
             }}

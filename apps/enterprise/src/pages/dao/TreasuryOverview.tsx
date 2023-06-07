@@ -1,6 +1,6 @@
 import { Container } from '@terra-money/apps/components';
 import { Panel } from 'components/panel';
-import { NFTPairs, useNFTsOwnersQuery, useStakedNfts } from 'queries';
+import { NFTPairs, useNFTsOwnersQuery } from 'queries';
 import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -11,14 +11,28 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { ViewMoreNft } from './viewMoreNft';
 import { DepositIntoTreasury } from './deposit';
+import { useState, useEffect, useMemo } from 'react';
+import { DepositNFTIntoTreasury } from './depositNFT';
 
 export const TreasuryOverview = () => {
   const address = useCurrentDaoAddress();
   const dao = useCurrentDao();
 
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const { data: whitelist = [] } = useDAONFTsWhitelist(address);
-  const { data: stakedNfts = [] } =  useStakedNfts(address);
-  
+
   let nftCollection: NFTPairs[] | undefined = [];
   const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
   if (dao.dao_type !== 'nft') {
@@ -26,26 +40,36 @@ export const TreasuryOverview = () => {
   } else {
     nftCollection = [];
   }
+  
+  const minimumNFTsAmmount = 3;
+
+  const nftDisplayLimit = useMemo(() => {
+
+    const breakpoints = [1150, 1290, 1404, 1550, 1750, 2000]
+    const displayLimits = [3, 4, 4, 5, 5, 6]
+
+    for (let i = breakpoints.length - 1; i >= 0; i--) {
+      if (windowWidth >= breakpoints[i]) {
+        return displayLimits[i];
+      }
+    }
+    return minimumNFTsAmmount;
+  }, [windowWidth]);
 
   let nftTokensToDisplay = [];
 
   if (nftCollection) {
-    for (let i = 0; i < nftCollection.length; i++) {
+    for (let i = 0; i < nftCollection.length && nftTokensToDisplay.length < nftDisplayLimit; i++) {
       const nft = nftCollection[i];
       if (nft.tokenIds.tokens?.length) {
-        for (let j = 0; j < nft.tokenIds.tokens.length; j++) {
+        for (let j = 0; j < nft.tokenIds.tokens.length && nftTokensToDisplay.length < nftDisplayLimit; j++) {
           const token = nft.tokenIds.tokens[j];
           nftTokensToDisplay.push({ token: [token], collectionAddress: nft.collectionAddress });
-          if (nftTokensToDisplay.length === 4) {
-            break;
-          }
         }
-      }
-      if (nftTokensToDisplay.length === 4) {
-        break;
       }
     }
   }
+
   return (
     <>
       <Panel className={styles.root}>
@@ -77,8 +101,8 @@ export const TreasuryOverview = () => {
           </>
         </Container>
         {nftCollection?.length && <Container gap={16} className={styles.nftsActionContainer}>
-           <ViewMoreNft/>
-           <DepositIntoTreasury />
+          <ViewMoreNft />
+         <DepositNFTIntoTreasury />
         </Container>}
       </Container>
     </>
