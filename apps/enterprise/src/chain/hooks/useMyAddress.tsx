@@ -5,5 +5,6 @@ export const useMyAddress = () => {
   const connectedWallet = useConnectedWallet();
   const chainID = useChainID();
 
-  return connectedWallet?.addresses[chainID];
+  const address = connectedWallet?.addresses[chainID];
+  return address ? address : "";
 };
