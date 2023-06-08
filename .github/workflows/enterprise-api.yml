@@ -97,7 +97,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Test Build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: false
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -153,7 +153,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Test Build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: false
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -204,7 +204,7 @@ jobs:
           fi
 
       - name: Build, tag, and push docker image to AWS ECR
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -310,7 +310,7 @@ jobs:
           fi
 
       - name: Build, tag, and push docker image to AWS ECR
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
