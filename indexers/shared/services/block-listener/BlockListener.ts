@@ -52,7 +52,7 @@ export class BlockListener {
 
         return [blockInfo, txs];
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response.status === 400) {
+        if (axios.isAxiosError(err) && err.response && err.response.status === 400) {
           // likely the block doesn't exist so we skip writing this as an error
           await sleep(1000);
           continue;
