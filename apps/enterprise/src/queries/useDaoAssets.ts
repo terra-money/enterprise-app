@@ -71,6 +71,8 @@ export const useDaoAssets = () => {
             return;
           }
 
+          if (balance === '0') return
+
           try {
             const info = await getAssetInfo({ asset, lcd, networkName });
 
