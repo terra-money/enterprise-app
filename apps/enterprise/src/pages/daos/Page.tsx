@@ -40,7 +40,7 @@ export const Page = () => {
 
   const items = data
     .filter((item) => daoTypesToDisplay.includes(item.type))
-    .filter((dao) => dao.name.includes(searchText))
+    .filter((dao) => dao.name.toLowerCase().includes(searchText.toLowerCase()))
     .sort((a, b) => (b.tvl ?? 0) - (a.tvl ?? 0));
 
   const searchInput = (
