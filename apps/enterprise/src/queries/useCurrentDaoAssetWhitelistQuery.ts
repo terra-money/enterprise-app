@@ -13,18 +13,6 @@ import { fetchAll } from "lib/shared/utils/fetchAll";
 
 const limit = 30
 
-export const fromAsset = (asset: Asset): enterprise.AssetInfoBaseFor_Addr => {
-  if (asset.type === 'native') {
-    return {
-      native: asset.id,
-    };
-  }
-
-  return {
-    cw20: asset.id,
-  };
-}
-
 export const useCurrentDaoAssetWhitelistQuery = () => {
   const { address, dao_code_version } = useCurrentDao()
   const { query } = useContract();

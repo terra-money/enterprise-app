@@ -1,6 +1,6 @@
 import { enterprise } from 'types/contracts';
 import { Asset, areSameAsset } from 'chain/Asset';
-import { fromAsset } from 'queries/useCurrentDaoAssetWhitelistQuery';
+import { fromAsset } from 'dao/utils/whitelist';
 
 export const toUpdateAssetWhitelistMsg = (
   initialAssets: Asset[],
