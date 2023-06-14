@@ -1,6 +1,6 @@
 import { Event, EventPK as PK } from '@apps-shared/indexers/services/event-store';
 
-export type EnterpriseFactoryActions = 'instantiate_dao';
+export type EnterpriseFactoryActions = 'create_dao';
 
 export type EnterpriseDaoActions =
   | 'instantiate'
@@ -31,7 +31,7 @@ export class EnterpriseEventPK {
 
 export interface InstantiateDaoEvent extends Event {
   contract: 'enterprise-factory';
-  action: 'instantiate_dao';
+  action: 'create_dao';
   payload: {
     _contract_address: string;
     action: string;

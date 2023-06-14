@@ -27,7 +27,7 @@ export class Indexer extends EventIndexer<DaoEntity> {
 
   private getModifiedDAOAddresses = async (min: number, max: number): Promise<Array<string>> => {
     const pks = [
-      EnterpriseEventPK.factory('instantiate_dao'),
+      EnterpriseEventPK.factory('create_dao'),
       EnterpriseEventPK.dao('execute_proposal'),
       EnterpriseEventPK.dao('stake_cw20'),
       EnterpriseEventPK.dao('stake_cw721'),
@@ -46,7 +46,6 @@ export class Indexer extends EventIndexer<DaoEntity> {
 
   private fetchDAO = async (lcd: LCDClient, address: string): Promise<DaoEntity> => {
     const response = await lcd.wasm.contractQuery<enterprise.DaoInfoResponse>(address, { dao_info: {} });
-
     const created = 'creation_date' in response ? Math.trunc(Big(response.creation_date).div(1000000).toNumber()) : 0;
 
     return {
@@ -98,7 +97,6 @@ export class Indexer extends EventIndexer<DaoEntity> {
 
     await batch(height, current.height, 1000, async ({ min, max }) => {
       this.logger.info(`Processing blocks between ${min} and ${max}.`);
-
       await this.synchronize(await this.getModifiedDAOAddresses(min, max));
 
       await this.state.set({ height: max });
