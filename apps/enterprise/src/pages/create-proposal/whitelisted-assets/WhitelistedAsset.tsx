@@ -4,13 +4,12 @@ import { DeleteIconButton } from 'components/delete-icon-button';
 import { Text } from 'components/primitives';
 import { TokenIcon } from 'components/token-icon';
 import { useCW20TokenInfoQuery } from 'queries';
-import { enterprise } from 'types/contracts';
-import { getAssetKey, getAssetType } from './helpers/areSameAssets';
 import styles from './WhitelistedAsset.module.sass';
 import classnames from 'classnames';
+import { Asset } from 'chain/Asset';
 
 interface WhitelistedAssetProps {
-  asset: enterprise.AssetInfoBaseFor_Addr;
+  asset: Asset;
   onRemove?: () => void;
 }
 
@@ -18,8 +17,8 @@ interface WhitelistedAssetProps {
 export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => {
   const { tokens } = useTokens();
 
-  const assetKey = getAssetKey(asset);
-  const assetType = getAssetType(asset);
+  const assetKey = asset.id
+  const assetType = asset.type
   const isCW20 = assetType === 'cw20';
 
   const { data: cw20Token } = useCW20TokenInfoQuery(assetKey as CW20Addr, {
@@ -27,8 +26,6 @@ export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => 
   });
 
   const token = tokens[assetKey] || cw20Token;
-
-  const key = getAssetKey(asset);
 
   return (
     <div className={styles.root}>
@@ -38,7 +35,7 @@ export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => 
         ) : (
           <div className={classnames(styles.icon, styles.loader)}></div>
         )}
-        <Text variant="text">{token ? token.name ?? token.symbol : key}</Text>
+        <Text variant="text">{token ? token.name ?? token.symbol : assetKey}</Text>
       </div>
       {onRemove && <DeleteIconButton onClick={onRemove} />}
     </div>
