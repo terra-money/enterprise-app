@@ -29,7 +29,6 @@ export const useCurrentDaoAssetWhitelistQuery = () => {
   const { address, dao_code_version } = useCurrentDao()
   const { query } = useContract();
 
-
   const { data: globalWhitelist } = useCurrentDaoGlobalAssetWhitelistQuery()
 
   const { data: assetsWhitelist } = useQuery(
@@ -43,7 +42,7 @@ export const useCurrentDaoAssetWhitelistQuery = () => {
             const { assets } = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
               asset_whitelist: {
                 start_after,
-                limit: 30
+                limit
               },
             })
 
@@ -60,7 +59,6 @@ export const useCurrentDaoAssetWhitelistQuery = () => {
       return assets
     }
   );
-
 
   if (!assetsWhitelist || !globalWhitelist) {
     return {
