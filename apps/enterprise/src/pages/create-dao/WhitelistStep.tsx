@@ -6,9 +6,8 @@ import { toWhitelistedAsset } from './helpers/toWhitelistedAsset';
 import { hasAsset } from 'pages/create-proposal/whitelisted-assets/helpers/areSameAssets';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
 import { removeByIndex } from '@terra-money/apps/utils';
-import { fromAsset } from 'queries/useCurrentDaoAssetWhitelistQuery';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
-import { toAsset } from 'dao/utils/whitelist';
+import { fromAsset, toAsset } from 'dao/utils/whitelist';
 
 export const WhitelistStep = () => {
   const {
