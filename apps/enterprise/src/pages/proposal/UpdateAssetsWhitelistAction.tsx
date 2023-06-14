@@ -4,6 +4,8 @@ import { HStack } from 'lib/ui/Stack';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
 import { enterprise } from 'types/contracts';
 import styles from './UpdateAssetsWhitelistAction.module.sass';
+import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
+import { toAsset } from 'dao/utils/whitelist';
 
 export const UpdateAssetsWhitelistAction = () => {
   const { msg } = useCurrentProposalAction();
@@ -17,7 +19,7 @@ export const UpdateAssetsWhitelistAction = () => {
           <div key={action} className={styles.section}>
             <Text variant="heading4">Whitelisted assets to {action}</Text>
             <HStack gap={16} wrap="wrap">
-              {(assets as enterprise.AssetInfoBaseFor_Addr[]).map((asset, index) => (
+              {removeUndefinedItems((assets as enterprise.AssetInfoBaseFor_Addr[]).map(toAsset)).map((asset, index) => (
                 <WhitelistedAsset key={index} asset={asset} />
               ))}
             </HStack>

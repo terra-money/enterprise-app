@@ -1,9 +1,7 @@
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from './queryKey';
-import { useContract } from 'chain/hooks/useContract';
-import { enterprise, enterprise_factory } from 'types/contracts';
-import { Asset, AssetInfoWithPrice, areSameAsset } from 'chain/Asset';
+import { AssetInfoWithPrice } from 'chain/Asset';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { getAssetBalance } from 'chain/utils/getAssetBalance';
 import { getDaoTotalStakedAmount } from 'dao/utils/getDaoTotalStakedAmount';
@@ -11,69 +9,25 @@ import Big from 'big.js';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
 import { usePricesOfLiquidAssets } from 'chain/queries/usePricesOfLiquidAssets';
 import { assertDefined } from '@terra-money/apps/utils';
-import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
-import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 import { useNetworkName } from '@terra-money/apps/hooks';
-
-const toAsset = (
-  response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
-): Asset | undefined => {
-  if ('native' in response) {
-    return {
-      type: 'native',
-      id: response.native,
-    };
-  } else if ('cw20' in response) {
-    return {
-      type: 'cw20',
-      id: response.cw20,
-    };
-  }
-
-  return undefined;
-};
+import { useCurrentDaoAssetWhitelistQuery } from './useCurrentDaoAssetWhitelistQuery';
 
 export const useDaoAssets = () => {
-  const { address, enterprise_factory_contract, dao_membership_contract } = useCurrentDao();
-  const { query } = useContract();
+  const { address, dao_membership_contract } = useCurrentDao();
 
   const lcd = useLCDClient();
 
   const networkName = useNetworkName();
 
   const { data: liquidAssetsPrices } = usePricesOfLiquidAssets();
+  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery()
 
   return useQuery(
     [QUERY_KEY.DAO_ASSETS, address],
     async () => {
-      const { assets: globalWhitelist } = await query<
-        enterprise_factory.QueryMsg,
-        enterprise_factory.AssetWhitelistResponse
-      >(enterprise_factory_contract, { global_asset_whitelist: {} });
-
-      let assetsWhitelist: enterprise.AssetInfoBaseFor_Addr[] = [];
-      let lastAsset: enterprise.AssetInfoBaseFor_Addr | undefined;
-      let response;
-
-      do {
-        response = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
-          asset_whitelist: {
-            start_after: lastAsset ? lastAsset : undefined,
-            limit: 30
-          },
-        });
-      
-        if (response.assets) {
-          assetsWhitelist = [...assetsWhitelist, ...response.assets];
-          lastAsset = response.assets[response.assets.length - 1];
-        }
-      } while (response.assets && response.assets.length !== 0);
-
-      const whitelist: Asset[] = withoutDuplicates(removeUndefinedItems([...globalWhitelist, ...assetsWhitelist].map(toAsset)), areSameAsset);
-
       const assets: AssetInfoWithPrice[] = [];
       await Promise.all(
-        whitelist.map(async (asset) => {
+        assertDefined(whitelist).map(async (asset) => {
           let balance = '0';
           try {
             balance = await getAssetBalance({ asset, address, lcd });
@@ -106,7 +60,7 @@ export const useDaoAssets = () => {
       return assets;
     },
     {
-      enabled: !!liquidAssetsPrices,
+      enabled: Boolean(liquidAssetsPrices && whitelist),
     }
   );
 };
