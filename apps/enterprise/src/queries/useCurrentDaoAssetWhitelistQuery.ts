@@ -4,7 +4,7 @@ import { useContract } from "chain/hooks/useContract";
 import { enterprise } from "types/contracts";
 import { useCurrentDao } from "dao/components/CurrentDaoProvider";
 import { getLast } from "lib/shared/utils/getlast";
-import { Asset, areSameAsset } from "chain/Asset";
+import { areSameAsset } from "chain/Asset";
 import { removeUndefinedItems } from "lib/shared/utils/removeUndefinedItems";
 import { withoutDuplicates } from "lib/shared/utils/withoutDuplicates";
 import { toAsset } from "dao/utils/whitelist";
@@ -19,13 +19,15 @@ export const useCurrentDaoAssetWhitelistQuery = () => {
 
   const { data: globalWhitelist } = useCurrentDaoGlobalAssetWhitelistQuery()
 
-  const { data: assetsWhitelist } = useQuery(
-    [QUERY_KEY.PROPOSAL_VOTES, address],
+  const { data: customWhitelist } = useQuery(
+    [QUERY_KEY.CUSTOM_ASSET_WHITELIST, address],
     async () => {
       const hasPaginatedWhitelist = Number(dao_code_version) >= 5
 
+      let result: enterprise.AssetInfoBaseFor_Addr[] = []
+
       if (hasPaginatedWhitelist) {
-        return fetchAll<enterprise.AssetInfoBaseFor_Addr, enterprise.AssetInfoBaseFor_Addr>(
+        result = await fetchAll<enterprise.AssetInfoBaseFor_Addr, enterprise.AssetInfoBaseFor_Addr>(
           async start_after => {
             const { assets } = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
               asset_whitelist: {
@@ -38,25 +40,25 @@ export const useCurrentDaoAssetWhitelistQuery = () => {
           },
           lastPage => lastPage.length < limit ? null : getLast(lastPage)
         )
+      } else {
+        const { assets } = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
+          asset_whitelist: {},
+        });
+
+        result = assets
       }
 
-      const { assets } = await query<enterprise.QueryMsg, enterprise.AssetWhitelistResponse>(address, {
-        asset_whitelist: {},
-      });
-
-      return assets
+      return removeUndefinedItems(result.map(toAsset))
     }
   );
 
-  if (!assetsWhitelist || !globalWhitelist) {
+  if (customWhitelist && globalWhitelist) {
     return {
-      data: undefined,
+      data: withoutDuplicates([...globalWhitelist, ...customWhitelist], areSameAsset)
     }
   }
 
-  const data: Asset[] = withoutDuplicates(removeUndefinedItems([...globalWhitelist, ...assetsWhitelist.map(toAsset)]), areSameAsset);
-
   return {
-    data,
+    data: undefined
   }
 }

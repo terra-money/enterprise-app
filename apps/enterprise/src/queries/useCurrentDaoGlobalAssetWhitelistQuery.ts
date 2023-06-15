@@ -10,7 +10,7 @@ export const useCurrentDaoGlobalAssetWhitelistQuery = () => {
   const { address, enterprise_factory_contract } = useCurrentDao()
   const { query } = useContract();
 
-  return useQuery([QUERY_KEY.GLOBAL_ASSETS_WHITELIST, address], async () => {
+  return useQuery([QUERY_KEY.GLOBAL_ASSET_WHITELIST, address], async () => {
     const { assets } = await query<
       enterprise_factory.QueryMsg,
       enterprise_factory.AssetWhitelistResponse

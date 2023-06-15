@@ -1,24 +1,20 @@
 import { Container } from '@terra-money/apps/components';
 import { CW20Addr } from '@terra-money/apps/types';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { useCurrentDaoAddress } from 'dao/navigation';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { NFTPairs, useNFTsOwnersQuery } from 'queries';
-import { useDAONFTsWhitelist } from 'queries/useDAONFTsWhitelist';
 import { Text } from 'components/primitives';
 import styles from './ViewMoreNftOverlay.module.sass'
 import { NFTCard } from '../NFTCard';
 import { VStack } from 'lib/ui/Stack';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { LoadingPage } from 'pages/shared/LoadingPage';
-
+import { useCurrentDaoNftWhitelistQuery } from 'queries/useCurrentDaoNftWhitelistQuery';
 
 export const ViewMoreNftOverlay = ({ onClose }: ClosableComponentProps) => {
-    const address = useCurrentDaoAddress();
     const dao = useCurrentDao()
-    const { data: whitelist = [] } = useDAONFTsWhitelist(address)
-
+    const { data: whitelist = [] } = useCurrentDaoNftWhitelistQuery()
 
     const { data, isLoading } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);
     const nftCollection: NFTPairs[] | undefined = data;

@@ -5,7 +5,6 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { QUERY_KEY } from './queryKey';
 import { LCDClient } from '@terra-money/feather.js';
 
-
 async function fetchStakedNfts(lcd: LCDClient, address: CW20Addr): Promise<string[]> {
   let nfts: string[] = [];
   let lastNft: string | undefined;
@@ -29,7 +28,7 @@ export const useStakedNfts = (daoAddress: string) => {
   const lcd = useLCDClient();
 
   return useQuery(
-    [QUERY_KEY.NFTS_WHITELIST, daoAddress],
+    [QUERY_KEY.STAKED_NFTS, daoAddress],
     async () => {
       const stakedNfts = await fetchStakedNfts(lcd, daoAddress as CW20Addr);
       return stakedNfts;
