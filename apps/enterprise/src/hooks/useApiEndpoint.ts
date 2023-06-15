@@ -4,8 +4,8 @@ import { Frequency } from 'utils';
 const API_ENDPOINTS: Record<string, string> = {
   mainnet: 'https://g4cfb9d6qf.execute-api.us-east-1.amazonaws.com/v1',
   //overriding the api gw endpoint to point at the staging environment in staging branch
-  testnet: 'https://jdrv0zpoc4.execute-api.us-east-1.amazonaws.com/v1',
-  //testnet: 'https://4me4sow9wd.execute-api.us-east-1.amazonaws.com/v1',
+  //testnet: 'https://jdrv0zpoc4.execute-api.us-east-1.amazonaws.com/v1',
+  testnet: 'https://4me4sow9wd.execute-api.us-east-1.amazonaws.com/v1',
   //testnet: 'http://localhost:3000',
   localterra: 'http://localhost:3000',
 };
