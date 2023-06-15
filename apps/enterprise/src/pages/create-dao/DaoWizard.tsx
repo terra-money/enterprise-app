@@ -78,7 +78,6 @@ export const DaoWizard = () => {
       await createDaoTx(toCreateDaoMsg(formState));
     } catch (error) {
       setIsFinishLoading(false);
-      console.log(error);
     }
   };
 
