@@ -8,6 +8,7 @@ on:
       - main
       - develop
       - staging
+      - reindex
 
     paths:
       - indexers/enterprise/src/**
@@ -26,6 +27,7 @@ on:
       - main
       - develop
       - staging
+      - reindex
 
     paths:
       - indexers/enterprise/src/**
@@ -199,6 +201,8 @@ jobs:
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
             echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/reindex" ]; then
+            echo "DOCKER_IMAGE_TAG=reindex" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
           fi
@@ -252,6 +256,8 @@ jobs:
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
             echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/reindex" ]; then
+            echo "DOCKER_IMAGE_TAG=reindex" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
           fi
@@ -305,6 +311,8 @@ jobs:
             echo "DOCKER_IMAGE_TAG=pisco-1" >> $GITHUB_ENV
           elif [ ${GITHUB_REF} == "refs/heads/staging" ]; then
             echo "DOCKER_IMAGE_TAG=staging" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} == "refs/heads/reindex" ]; then
+            echo "DOCKER_IMAGE_TAG=reindex" >> $GITHUB_ENV
           else 
             echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
           fi
