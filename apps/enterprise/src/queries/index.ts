@@ -25,4 +25,3 @@ export * from './fetchCW3ListVoters';
 export * from './useProposalVoteQuery';
 export * from './useNFTInfoQuery';
 export * from './useNFTsOwnersQuery';
-export * from './useDAOStakedNFTs';
