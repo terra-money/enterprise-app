@@ -6,17 +6,14 @@ import styles from './TreasuryOverview.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { NFTCard } from './NFTCard';
 import { Text } from 'components/primitives';
-import { useDAONFTsWhitelist } from 'queries/useDAONFTsWhitelist';
 import { CW20Addr } from '@terra-money/apps/types';
-import { useCurrentDaoAddress } from 'dao/navigation';
 import { ViewMoreNft } from './viewMoreNft';
 import { useState, useEffect, useMemo } from 'react';
 import { DepositNFTIntoTreasury } from './depositNFT';
+import { useCurrentDaoNftWhitelistQuery } from 'queries/useCurrentDaoNftWhitelistQuery';
 
 export const TreasuryOverview = () => {
-  const address = useCurrentDaoAddress();
   const dao = useCurrentDao();
-
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -30,7 +27,7 @@ export const TreasuryOverview = () => {
     };
   }, []);
 
-  const { data: whitelist = [] } = useDAONFTsWhitelist(address);
+  const { data: whitelist = [] } = useCurrentDaoNftWhitelistQuery();
 
   let nftCollection: NFTPairs[] | undefined = [];
   const { data } = useNFTsOwnersQuery(whitelist as CW20Addr[], dao.address);

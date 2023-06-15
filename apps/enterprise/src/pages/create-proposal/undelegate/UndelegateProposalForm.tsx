@@ -28,7 +28,6 @@ export const UndelegateProposalForm = () => {
     if (!validator) return undefined;
 
     const delegation = assertDefined(delegations.find((d) => d.validator_address === validator));
-    console.log(delegation.balance.amount);
     return demicrofy(delegation.balance.amount.toNumber(), lunaDecimals).toNumber();
   }, [delegations, validator]);
 

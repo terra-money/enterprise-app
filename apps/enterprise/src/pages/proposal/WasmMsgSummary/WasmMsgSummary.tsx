@@ -63,7 +63,6 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
 
     if ('delegate' in staking) {
       const { delegate } = staking;
-      console.log(delegate);
       if (!delegate) return null;
 
       return (
