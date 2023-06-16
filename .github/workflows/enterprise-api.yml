@@ -9,7 +9,6 @@ on:
       - develop
       - staging
 
-
     paths:
       - indexers/enterprise/src/**
       - indexers/shared/src/**
@@ -27,7 +26,6 @@ on:
       - main
       - develop
       - staging
-
 
     paths:
       - indexers/enterprise/src/**
