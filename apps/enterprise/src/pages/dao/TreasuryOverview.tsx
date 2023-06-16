@@ -11,6 +11,7 @@ import { ViewMoreNft } from './viewMoreNft';
 import { useState, useEffect, useMemo } from 'react';
 import { DepositNFTIntoTreasury } from './depositNFT';
 import { useCurrentDaoNftWhitelistQuery } from 'queries/useCurrentDaoNftWhitelistQuery';
+import { CurrentDaoTreasuryAssets } from 'dao/components/TreasuryAssets/CurrentDaoTreasuryAssets';
 
 export const TreasuryOverview = () => {
   const dao = useCurrentDao();
@@ -68,6 +69,7 @@ export const TreasuryOverview = () => {
 
   return (
     <>
+      <CurrentDaoTreasuryAssets />
       <Panel className={styles.root}>
         <Container direction="column" gap={32}>
           <TreasuryTokensOverview />

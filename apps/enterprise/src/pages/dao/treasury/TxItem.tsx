@@ -83,5 +83,5 @@ export const TxItem = (props: TxItemProps) => {
     </>
   );
 
-  return <ExpandablePanel header={header} renderContent={() => transactionDetials}><div /></ExpandablePanel>;
+  return <ExpandablePanel header={header} renderContent={() => transactionDetials} />;
 };

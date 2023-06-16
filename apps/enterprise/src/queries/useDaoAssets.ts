@@ -1,7 +1,7 @@
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from './queryKey';
-import { AssetInfoWithPrice } from 'chain/Asset';
+import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { getAssetBalance } from 'chain/utils/getAssetBalance';
 import { getDaoTotalStakedAmount } from 'dao/utils/getDaoTotalStakedAmount';
@@ -57,7 +57,7 @@ export const useDaoAssets = () => {
         })
       );
 
-      return assets;
+      return assets.sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a));
     },
     {
       enabled: Boolean(liquidAssetsPrices && whitelist),
