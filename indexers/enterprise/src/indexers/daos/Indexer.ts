@@ -27,7 +27,7 @@ export class Indexer extends EventIndexer<DaoEntity> {
 
   private getModifiedDAOAddresses = async (min: number, max: number): Promise<Array<string>> => {
     const pks = [
-      EnterpriseEventPK.factory('create_dao'),
+      EnterpriseEventPK.factory('instantiate_dao'),
       EnterpriseEventPK.dao('execute_proposal'),
       EnterpriseEventPK.dao('stake_cw20'),
       EnterpriseEventPK.dao('stake_cw721'),
