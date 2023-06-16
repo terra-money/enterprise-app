@@ -23,7 +23,6 @@ export const groupAttributes = (attributes: Array<Attribute>): Array<Array<Attri
   // Step 2: Merge groups that have the same _contract_address and where one of the groups does not have an action key defined
   let result: Array<Array<Attribute>> = [];
   let groupMap: { [key: string]: Array<Attribute> } = {};
-  console.log(groups);
   groups.forEach((group) => {
     let contractAddress = group.find((attribute) => attribute.key === '_contract_address')?.value;
     let hasActionKey = group.some((attribute) => attribute.key === 'action');
