@@ -13,6 +13,9 @@ import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton"
 import { useMemo, useState } from "react"
 import { DepositIntoTreasury } from "pages/dao/deposit"
 import { getHorizontalMarginCSS } from "lib/ui/utils/getHorizontalMarginCSS"
+import { formatAmount } from "@terra-money/apps/libs/formatting"
+import { getAssetBalanceInUsd } from "chain/Asset"
+import { sum } from "lib/shared/utils/sum"
 
 const ContentFrame = styled.div`
   display: grid;
@@ -85,7 +88,10 @@ export const CurrentDaoTreasuryAssets = () => {
             <Text weight="semibold" size={20}>
               Wallet Holdings
             </Text>
-            {isLoading && <Spinner />}
+            {isLoading ? <Spinner /> : assets ?
+              <Text size={20} weight="semibold">
+                ${formatAmount(sum(assets?.map(asset => getAssetBalanceInUsd(asset))))}
+              </Text> : <div />}
           </HStack>
         </ContentFrame>
       )}
