@@ -9,7 +9,6 @@ import { roundedCSS } from "lib/ui/utils/roundedCSS"
 import { useDaoAssets } from "queries/useDaoAssets"
 import styled from "styled-components"
 import { AssetItem } from "./AssetItem"
-import { SameWidthChildrenRow } from "lib/ui/Layout/SameWidthChildrenRow"
 import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton"
 import { useMemo, useState } from "react"
 import { DepositIntoTreasury } from "pages/dao/deposit"
@@ -36,6 +35,12 @@ const ColumnName = styled(Text)`
   color: ${({ theme }) => theme.colors.textSupporting2.toCssValue()};
   font-weight: 500;
   font-size: 16px;
+`
+
+const Actions = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 186px);
+  gap: 16px;
 `
 
 export const CurrentDaoTreasuryAssets = () => {
@@ -107,10 +112,10 @@ export const CurrentDaoTreasuryAssets = () => {
             )}
             <HStack wrap="wrap" alignItems="center" fullWidth justifyContent="space-between">
               <Text color="supporting" size={16}>{renderFooterMsg()}</Text>
-              <SameWidthChildrenRow gap={16} childrenWidth={186}>
-                {assets && assetsToDisplay && assetsToDisplay.length < assets.length && <PrimaryButton kind="secondary" onClick={() => setShouldShowAllAssets(!shouldShowAllAssets)}>Show more</PrimaryButton>}
+              <Actions>
+                {assets ? <PrimaryButton kind="secondary" onClick={() => setShouldShowAllAssets(!shouldShowAllAssets)}>{assetsToDisplay.length < assets.length ? 'Show more' : 'Show less'}</PrimaryButton> : <div />}
                 <DepositIntoTreasury />
-              </SameWidthChildrenRow>
+              </Actions>
             </HStack>
           </VStack>
         </ContentFrame>
