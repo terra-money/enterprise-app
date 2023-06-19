@@ -50,7 +50,7 @@ export const WhitelistedAssetsProposalForm = () => {
           <AddTokenButton
             onSelect={(token) => {
               const asset = toWhitelistedAsset(token);
-              if (whitelistedAssets.some(a => areSameAsset(asset, a))) {
+              if (!whitelistedAssets.some(a => areSameAsset(asset, a))) {
                 setWhitelistedAssets([...whitelistedAssets, asset]);
               }
             }}

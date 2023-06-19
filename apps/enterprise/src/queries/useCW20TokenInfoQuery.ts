@@ -30,6 +30,7 @@ export const useCW20TokenInfoQuery = (
       return fetchCW20TokenInfo(lcd, tokenAddress);
     },
     {
+      enabled: !!tokenAddress,
       refetchOnMount: false,
       ...options,
     }
