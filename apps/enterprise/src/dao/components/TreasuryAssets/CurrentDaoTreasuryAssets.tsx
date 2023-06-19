@@ -8,10 +8,11 @@ import { centerContentCSS } from "lib/ui/utils/centerContentCSS"
 import { roundedCSS } from "lib/ui/utils/roundedCSS"
 import { useDaoAssets } from "queries/useDaoAssets"
 import styled from "styled-components"
-import { AssetItem } from "./AssetItem"
+import { AssetItem, AssetItemFrame } from "./AssetItem"
 import { PrimaryButton } from "lib/ui/buttons/rect/PrimaryButton"
 import { useMemo, useState } from "react"
 import { DepositIntoTreasury } from "pages/dao/deposit"
+import { getHorizontalMarginCSS } from "lib/ui/utils/getHorizontalMarginCSS"
 
 const ContentFrame = styled.div`
   display: grid;
@@ -31,16 +32,18 @@ const Identifier = styled.div`
   color: ${({ theme }) => theme.colors.contrast.toCssValue()};
 `
 
-const ColumnName = styled(Text)`
-  color: ${({ theme }) => theme.colors.textSupporting2.toCssValue()};
-  font-weight: 500;
-  font-size: 16px;
-`
-
 const Actions = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 186px);
   gap: 16px;
+`
+
+const Header = styled(AssetItemFrame)`
+  ${getHorizontalMarginCSS(16)}
+
+  color: ${({ theme }) => theme.colors.textSupporting2.toCssValue()};
+  font-weight: 500;
+  font-size: 16px;
 `
 
 export const CurrentDaoTreasuryAssets = () => {
@@ -92,17 +95,17 @@ export const CurrentDaoTreasuryAssets = () => {
           <VStack gap={24}>
             {assetsToDisplay && assetsToDisplay.length > 0 && (
               <VStack gap={20}>
-                <HStack style={{ paddingRight: 16 }} fullWidth justifyContent="space-between">
-                  <ColumnName>
+                <Header>
+                  <Text>
                     Asset
-                  </ColumnName>
-                  <ColumnName>
+                  </Text>
+                  <Text>
                     Amount
-                  </ColumnName>
-                  <ColumnName>
+                  </Text>
+                  <Text>
                     Price
-                  </ColumnName>
-                </HStack>
+                  </Text>
+                </Header>
                 <VStack gap={16}>
                   {assetsToDisplay.map((asset, index) => (
                     <AssetItem key={index} asset={asset} />

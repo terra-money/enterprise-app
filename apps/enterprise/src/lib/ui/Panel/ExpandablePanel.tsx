@@ -57,7 +57,6 @@ export const ExpandablePanel = ({ header, renderContent, isExpandedInitially = f
         <VStack gap={24}>
           <div />
           <Line />
-          <div />
           {renderContent()}
         </VStack>
       )}
