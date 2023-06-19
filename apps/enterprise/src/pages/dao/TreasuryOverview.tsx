@@ -1,7 +1,5 @@
 import { Container } from '@terra-money/apps/components';
-import { Panel } from 'components/panel';
 import { NFTPairs, useNFTsOwnersQuery } from 'queries';
-import { TreasuryTokensOverview } from './TreasuryTokensOverview';
 import styles from './TreasuryOverview.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { NFTCard } from './NFTCard';
@@ -70,11 +68,6 @@ export const TreasuryOverview = () => {
   return (
     <>
       <CurrentDaoTreasuryAssets />
-      <Panel className={styles.root}>
-        <Container direction="column" gap={32}>
-          <TreasuryTokensOverview />
-        </Container>
-      </Panel>
       <Container className={styles.nftAssets} direction="column" gap={24}>
         <Text className={styles.label} variant="heading4">
           NFT Treasury
