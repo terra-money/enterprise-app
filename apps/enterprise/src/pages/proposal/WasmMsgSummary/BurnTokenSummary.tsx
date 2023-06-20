@@ -1,9 +1,9 @@
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { BurnCW20Msg } from 'chain/CW20';
 import { useCurrentDaoToken } from 'dao/components/CurrentDaoTokenProvider';
 import { Text } from 'lib/ui/Text';
-import { BurnTokenMsg } from 'pages/create-proposal/burn/helpers/toBurnTokensMsg';
 
-export const BurnTokenSummary = ({ amount }: BurnTokenMsg) => {
+export const BurnTokenSummary = ({ amount }: BurnCW20Msg['burn']) => {
   const token = useCurrentDaoToken();
 
   return (
