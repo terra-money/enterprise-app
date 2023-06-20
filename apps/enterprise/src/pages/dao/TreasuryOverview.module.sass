@@ -13,6 +13,7 @@
   display: flex
   align-items: center
   justify-content: space-between
+  padding-left: 24px
 
 .link
   background-color: #252728
@@ -45,9 +46,21 @@
   width: 100%
 
 .nftContainer
+    justify-content: flex-start
     flex-wrap: wrap
+    width: 100%
 
 .scrollableContainer
     width: 100% 
     height: 500px
     overflow-x: hidden
+
+.nftsActionContainer
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    width: 100%
+    gap: 16px
+
+.nftsActionContainer > :first-child 
+  flex: 1

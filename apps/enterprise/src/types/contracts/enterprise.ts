@@ -1,5 +1,4 @@
 export module enterprise {
-  export type Uint128 = string;
   export type AssetInfoBaseFor_Addr =
     | {
         native: string;
@@ -15,19 +14,6 @@ export module enterprise {
         cw1155: [Addr, string];
       };
   export type Addr = string;
-  export interface AssetTreasuryResponse {
-    assets: AssetBaseFor_Addr[];
-  }
-  export interface AssetBaseFor_Addr {
-    /**
-     * Specifies the asset's amount
-     */
-    amount: Uint128;
-    /**
-     * Specifies the asset's type (CW20 or native)
-     */
-    info: AssetInfoBaseFor_Addr;
-  }
   export interface AssetWhitelistResponse {
     assets: AssetInfoBaseFor_Addr[];
   }
@@ -38,6 +24,7 @@ export module enterprise {
     | {
         cw721: Cw721ClaimAsset;
       };
+  export type Uint128 = string;
   export type ReleaseAt =
     | {
         timestamp: Timestamp;
@@ -249,6 +236,16 @@ export module enterprise {
     assets: AssetBaseFor_Addr[];
     recipient: string;
   }
+  export interface AssetBaseFor_Addr {
+    /**
+     * Specifies the asset's amount
+     */
+    amount: Uint128;
+    /**
+     * Specifies the asset's type (CW20 or native)
+     */
+    info: AssetInfoBaseFor_Addr;
+  }
   export interface UpgradeDaoMsg {
     migrate_msg: Binary;
     new_dao_code_id: number;
@@ -351,6 +348,9 @@ export module enterprise {
       }
     | {
         execute_proposal: ExecuteProposalMsg;
+      }
+    | {
+        execute_proposal_actions: ExecuteProposalMsg;
       }
     | {
         unstake: UnstakeMsg;
@@ -510,7 +510,6 @@ export module enterprise {
     voter: Addr;
   }
   export interface MigrateMsg {
-    funds_distributor_code_id: number;
     minimum_eligible_weight?: Uint128 | null;
   }
   export interface MultisigMembersResponse {
@@ -695,10 +694,10 @@ export module enterprise {
         list_multisig_members: ListMultisigMembersMsg;
       }
     | {
-        asset_whitelist: {};
+        asset_whitelist: AssetWhitelistParams;
       }
     | {
-        nft_whitelist: {};
+        nft_whitelist: NftWhitelistParams;
       }
     | {
         proposal: ProposalParams;
@@ -722,19 +721,27 @@ export module enterprise {
         total_staked_amount: {};
       }
     | {
+        staked_nfts: StakedNftsParams;
+      }
+    | {
         claims: ClaimsParams;
       }
     | {
         releasable_claims: ClaimsParams;
-      }
-    | {
-        cw20_treasury: {};
       };
   export type ProposalStatusFilter = 'in_progress' | 'passed' | 'rejected';
   export interface QueryMemberInfoMsg {
     member_address: string;
   }
   export interface ListMultisigMembersMsg {
+    limit?: number | null;
+    start_after?: string | null;
+  }
+  export interface AssetWhitelistParams {
+    limit?: number | null;
+    start_after?: AssetInfoBaseFor_Addr | null;
+  }
+  export interface NftWhitelistParams {
     limit?: number | null;
     start_after?: string | null;
   }
@@ -767,8 +774,15 @@ export module enterprise {
   export interface UserStakeParams {
     user: string;
   }
+  export interface StakedNftsParams {
+    limit?: number | null;
+    start_after?: string | null;
+  }
   export interface ClaimsParams {
     owner: string;
+  }
+  export interface StakedNftsResponse {
+    nfts: string[];
   }
   export interface TotalStakedAmountResponse {
     total_staked_amount: Uint128;
