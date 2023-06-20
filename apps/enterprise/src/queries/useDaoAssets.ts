@@ -20,7 +20,7 @@ export const useDaoAssets = () => {
   const networkName = useNetworkName();
 
   const { data: liquidAssetsPrices } = usePricesOfLiquidAssets();
-  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery()
+  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery();
 
   return useQuery(
     [QUERY_KEY.DAO_ASSETS, address],
@@ -40,7 +40,7 @@ export const useDaoAssets = () => {
             return;
           }
 
-          if (balance === '0') return
+          if (balance === '0') return;
 
           try {
             const info = await getAssetInfo({ asset, lcd, networkName });

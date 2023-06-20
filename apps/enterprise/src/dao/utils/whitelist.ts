@@ -1,5 +1,5 @@
-import { enterprise, enterprise_factory } from "types/contracts";
-import { Asset } from "chain/Asset";
+import { enterprise, enterprise_factory } from 'types/contracts';
+import { Asset } from 'chain/Asset';
 
 export const toAsset = (
   response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr
@@ -29,4 +29,4 @@ export const fromAsset = (asset: Asset): enterprise.AssetInfoBaseFor_Addr => {
   return {
     cw20: asset.id,
   };
-}
+};

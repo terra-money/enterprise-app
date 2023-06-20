@@ -14,7 +14,7 @@ import { useCurrentDaoAssetWhitelistQuery } from 'queries/useCurrentDaoAssetWhit
 
 export const RewardsPanel = () => {
   const { funds_distributor_contract, dao_type, dao_membership_contract } = useCurrentDao();
-  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery()
+  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery();
 
   const tokensToCheck = useMemo(() => {
     if (!whitelist) return;
@@ -34,10 +34,10 @@ export const RewardsPanel = () => {
   const { data: rewards, isLoading: areRewardsLoading } = useMyDaoRewardsQuery(
     tokensToCheck
       ? {
-        fundsDistributorAddress: funds_distributor_contract,
-        nativeDenoms: Array.from(tokensToCheck.native),
-        cw20Assets: Array.from(tokensToCheck.cw20),
-      }
+          fundsDistributorAddress: funds_distributor_contract,
+          nativeDenoms: Array.from(tokensToCheck.native),
+          cw20Assets: Array.from(tokensToCheck.cw20),
+        }
       : undefined
   );
 

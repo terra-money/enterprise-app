@@ -1,7 +1,7 @@
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
-import {DepositNFTIntoTreasuryOverlay} from './DepositNFTIntoTreasuryOverlay'
+import { DepositNFTIntoTreasuryOverlay } from './DepositNFTIntoTreasuryOverlay';
 
 export const DepositNFTIntoTreasury = () => {
   return (

@@ -17,7 +17,7 @@ export const WhitelistedAssetsProposalForm = () => {
 
   const [whitelistedAssets, setWhitelistedAssets] = useState(initialWhitelistedAssets);
 
-  const { data: globalWhitelist } = useCurrentDaoGlobalAssetWhitelistQuery()
+  const { data: globalWhitelist } = useCurrentDaoGlobalAssetWhitelistQuery();
 
   const msg = useMemo(
     () => toUpdateAssetWhitelistMsg(initialWhitelistedAssets, whitelistedAssets),
@@ -37,20 +37,24 @@ export const WhitelistedAssetsProposalForm = () => {
         <div className={styles.root}>
           <div className={styles.list}>
             {whitelistedAssets.map((asset, index) => {
-              const isInGlobalWhitelist = globalWhitelist.some(a => areSameAsset(a, asset));
+              const isInGlobalWhitelist = globalWhitelist.some((a) => areSameAsset(a, asset));
               return (
                 <WhitelistedAsset
                   asset={asset}
                   key={index}
-                  onRemove={isInGlobalWhitelist ? undefined : () => setWhitelistedAssets(removeByIndex(whitelistedAssets, index))}
+                  onRemove={
+                    isInGlobalWhitelist
+                      ? undefined
+                      : () => setWhitelistedAssets(removeByIndex(whitelistedAssets, index))
+                  }
                 />
-              )
+              );
             })}
           </div>
           <AddTokenButton
             onSelect={(token) => {
               const asset = toWhitelistedAsset(token);
-              if (!whitelistedAssets.some(a => areSameAsset(asset, a))) {
+              if (!whitelistedAssets.some((a) => areSameAsset(asset, a))) {
                 setWhitelistedAssets([...whitelistedAssets, asset]);
               }
             }}

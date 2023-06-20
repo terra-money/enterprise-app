@@ -13,9 +13,7 @@ export const PageLayout = (props: PageLayoutProps) => {
   const { header, children } = props;
   return (
     <AnimatedPage className={styles.root}>
-      <ErrorBoundary fallback={params => (
-        <GenericErrorFallback {...params} />
-      )}>
+      <ErrorBoundary fallback={(params) => <GenericErrorFallback {...params} />}>
         <Container className={styles.header} direction="row">
           <Container className={styles.content} direction="row">
             {header}

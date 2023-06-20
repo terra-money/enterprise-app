@@ -17,8 +17,8 @@ interface WhitelistedAssetProps {
 export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => {
   const { tokens } = useTokens();
 
-  const assetKey = asset.id
-  const assetType = asset.type
+  const assetKey = asset.id;
+  const assetType = asset.type;
   const isCW20 = assetType === 'cw20';
 
   const { data: cw20Token } = useCW20TokenInfoQuery(assetKey as CW20Addr, {

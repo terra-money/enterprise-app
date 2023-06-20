@@ -24,22 +24,22 @@ export const useProposalsQuery = (
   const template: ApiEndpoints =
     daoAddress === undefined
       ? {
-        path: 'v1/proposals',
-        params: {
-          limit,
-          direction,
-        },
-      }
+          path: 'v1/proposals',
+          params: {
+            limit,
+            direction,
+          },
+        }
       : {
-        path: 'v1/daos/{address}/proposals',
-        route: {
-          address: daoAddress,
-        },
-        params: {
-          limit,
-          direction,
-        },
-      };
+          path: 'v1/daos/{address}/proposals',
+          route: {
+            address: daoAddress,
+          },
+          params: {
+            limit,
+            direction,
+          },
+        };
 
   const endpoint = useApiEndpoint(template);
 

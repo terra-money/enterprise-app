@@ -45,7 +45,7 @@ const AppProviders = () => {
             </main>
           </GlobalErrorBoundary>
         </ThemeProvider>
-      </WalletProvider >
+      </WalletProvider>
     )
   );
 };

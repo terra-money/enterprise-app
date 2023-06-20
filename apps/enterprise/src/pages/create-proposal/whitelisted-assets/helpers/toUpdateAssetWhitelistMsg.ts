@@ -8,6 +8,6 @@ export const toUpdateAssetWhitelistMsg = (
 ): enterprise.UpdateAssetWhitelistMsg => {
   return {
     add: newAssets.filter((asset) => initialAssets.every((a) => !areSameAsset(a, asset))).map(fromAsset),
-    remove: initialAssets.filter((asset) => newAssets.every((a) => !areSameAsset(a, asset))).map(fromAsset)
+    remove: initialAssets.filter((asset) => newAssets.every((a) => !areSameAsset(a, asset))).map(fromAsset),
   };
 };

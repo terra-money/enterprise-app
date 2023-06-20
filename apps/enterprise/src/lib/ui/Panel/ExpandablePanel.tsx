@@ -40,7 +40,12 @@ const Header = styled(UnstyledButton)`
   }
 `;
 
-export const ExpandablePanel = ({ header, renderContent, isExpandedInitially = false, ...panelProps }: ExpandableProps) => {
+export const ExpandablePanel = ({
+  header,
+  renderContent,
+  isExpandedInitially = false,
+  ...panelProps
+}: ExpandableProps) => {
   const [isExpanded, { toggle }] = useBoolean(isExpandedInitially);
 
   return (

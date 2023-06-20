@@ -25,10 +25,10 @@ export const toSpendTreasuryMsg = ({
           to_address: destinationAddress,
           amount: [
             {
-            denom: assetId,
-            amount: microfy(amount, assetDecimals).toString(),
-          }
-        ],
+              denom: assetId,
+              amount: microfy(amount, assetDecimals).toString(),
+            },
+          ],
         },
       },
     });

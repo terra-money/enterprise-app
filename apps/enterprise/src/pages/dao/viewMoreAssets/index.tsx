@@ -3,7 +3,6 @@ import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { ViewMoreAssetsOverlay } from './ViewMoreAssetsOverlay';
 
-
 export const ViewMoreAssets = () => {
   return (
     <ConditionalWallet

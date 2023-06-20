@@ -26,7 +26,9 @@ export const AssetCard = ({ token, treasuryTotalInUSD }: AssetCardProps) => {
             {token.usd > 0 && (
               <SeparatedBy separator={dotSeparator}>
                 <div>{formatAmount(getAssetBalanceInUsd(token))} $</div>
-                {treasuryTotalInUSD > 0 && <div>{toPercents(getAssetBalanceInUsd(token) / treasuryTotalInUSD, 'round')}</div>}
+                {treasuryTotalInUSD > 0 && (
+                  <div>{toPercents(getAssetBalanceInUsd(token) / treasuryTotalInUSD, 'round')}</div>
+                )}
               </SeparatedBy>
             )}
           </Text>

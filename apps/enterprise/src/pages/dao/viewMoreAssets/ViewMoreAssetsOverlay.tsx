@@ -7,7 +7,7 @@ import { ClosableComponentProps } from 'lib/shared/props';
 import { Container, ScrollableContainer } from '@terra-money/apps/components';
 import { SearchInput } from 'components/primitives';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
-import styles from './ViewMoreAssets.module.sass'
+import styles from './ViewMoreAssets.module.sass';
 import { Text } from 'components/primitives';
 import { useDaoAssets } from 'queries/useDaoAssets';
 import { getAssetBalanceInUsd } from 'chain/Asset';
@@ -23,7 +23,7 @@ const AssetsContainer = styled.div`
   grid-template-rows: repeat(auto-fill, 104px);
   gap: 16px;
   width: 100%;
-  flex:1
+  flex: 1;
 `;
 
 export const ViewMoreAssetsOverlay = ({ onClose }: ClosableComponentProps) => {
@@ -32,13 +32,13 @@ export const ViewMoreAssetsOverlay = ({ onClose }: ClosableComponentProps) => {
     searchText: '',
   });
 
-
   const { data: assets = [] } = useDaoAssets();
   const assetCount = assets?.length;
   const renderAssets = () => {
     const treasuryTotalInUSD = sum(assets.map(getAssetBalanceInUsd));
-    const sortedAssets = assets.filter(asset =>
-      asset.name.toLowerCase().includes(search.searchText.toLowerCase())).sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a));
+    const sortedAssets = assets
+      .filter((asset) => asset.name.toLowerCase().includes(search.searchText.toLowerCase()))
+      .sort((a, b) => getAssetBalanceInUsd(b) - getAssetBalanceInUsd(a));
     return (
       <AssetsContainer>
         {sortedAssets.map((asset, index) => {
@@ -57,7 +57,10 @@ export const ViewMoreAssetsOverlay = ({ onClose }: ClosableComponentProps) => {
       renderContent={() => {
         return (
           <Container className={styles.modalContent} gap={32}>
-            <Text variant='label' className={styles.count}> Displaying {assetCount} Assets in treasury</Text>
+            <Text variant="label" className={styles.count}>
+              {' '}
+              Displaying {assetCount} Assets in treasury
+            </Text>
             <SearchInput
               className={styles.searchInput}
               value={search.input}
@@ -85,15 +88,12 @@ export const ViewMoreAssetsOverlay = ({ onClose }: ClosableComponentProps) => {
               }
             />
             <ScrollableContainer>
-              <AssetsContainer>
-                {renderAssets()}
-              </AssetsContainer>
+              <AssetsContainer>{renderAssets()}</AssetsContainer>
             </ScrollableContainer>
             <PrimaryButton kind="secondary" onClick={onClose} className={styles.closeButton}>
               Close
             </PrimaryButton>
           </Container>
-
         );
       }}
     />

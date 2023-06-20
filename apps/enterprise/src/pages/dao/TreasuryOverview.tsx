@@ -19,7 +19,7 @@ export const TreasuryOverview = () => {
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
-    }
+    };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -39,9 +39,8 @@ export const TreasuryOverview = () => {
   const minimumNFTsAmmount = 3;
 
   const nftDisplayLimit = useMemo(() => {
-
-    const breakpoints = [1150, 1290, 1404, 1550, 1750, 2000]
-    const displayLimits = [3, 4, 4, 5, 5, 6]
+    const breakpoints = [1150, 1290, 1404, 1550, 1750, 2000];
+    const displayLimits = [3, 4, 4, 5, 5, 6];
 
     for (let i = breakpoints.length - 1; i >= 0; i--) {
       if (windowWidth >= breakpoints[i]) {
@@ -76,11 +75,7 @@ export const TreasuryOverview = () => {
           <>
             {nftTokensToDisplay.length !== 0 ? (
               nftTokensToDisplay.map((nft, index) => (
-                <NFTCard
-                  key={index}
-                  nftCollectionAdress={nft.collectionAddress}
-                  tokenIds={nft.token}
-                />
+                <NFTCard key={index} nftCollectionAdress={nft.collectionAddress} tokenIds={nft.token} />
               ))
             ) : (
               <Container className={styles.noNFTToDisplay}>
@@ -91,10 +86,12 @@ export const TreasuryOverview = () => {
             )}
           </>
         </Container>
-        {nftCollection?.length && <Container gap={16} className={styles.nftsActionContainer}>
-          <ViewMoreNft />
-          <DepositNFTIntoTreasury />
-        </Container>}
+        {nftCollection?.length && (
+          <Container gap={16} className={styles.nftsActionContainer}>
+            <ViewMoreNft />
+            <DepositNFTIntoTreasury />
+          </Container>
+        )}
       </Container>
     </>
   );

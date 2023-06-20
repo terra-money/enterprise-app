@@ -3,20 +3,20 @@ import { gradientColorCSS } from '../gradients';
 import { croppedTextCSS } from '../utils/croppedTextCSS';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
-({
-  regular: colors.text,
-  supporting: colors.textSupporting,
-  supporting2: colors.textSupporting2,
-  supporting3: colors.textSupporting3,
+  ({
+    regular: colors.text,
+    supporting: colors.textSupporting,
+    supporting2: colors.textSupporting2,
+    supporting3: colors.textSupporting3,
 
-  primary: colors.primary,
-  attention: colors.attention,
-  alert: colors.alert,
-  idle: colors.idle,
-  success: colors.success,
-  reversed: colors.background,
-  white: colors.contrast,
-} as const);
+    primary: colors.primary,
+    attention: colors.attention,
+    alert: colors.alert,
+    idle: colors.idle,
+    success: colors.success,
+    reversed: colors.background,
+    white: colors.contrast,
+  } as const);
 
 type TextWeight = 'regular' | 'semibold' | 'bold';
 const fontWeight: Record<TextWeight, number> = {
@@ -82,7 +82,5 @@ export const Text = styled.p<Props>`
       text-align: center;
     `}
 
-  ${({ cropped }) =>
-    cropped &&
-    croppedTextCSS}
+  ${({ cropped }) => cropped && croppedTextCSS}
 `;
