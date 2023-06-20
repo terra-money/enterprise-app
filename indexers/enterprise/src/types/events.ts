@@ -5,6 +5,7 @@ export type EnterpriseFactoryActions = 'instantiate_dao';
 export type EnterpriseDaoActions =
   | 'instantiate'
   | 'create_proposal'
+  | 'create_council_proposal'
   | 'execute_proposal'
   | 'cast_vote'
   | 'stake_cw20'

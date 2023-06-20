@@ -29,6 +29,7 @@ export class Indexer extends EventIndexer<Entity> {
 
     const proposalSpecificEventsKeys = [
       EnterpriseEventPK.dao('create_proposal'),
+      EnterpriseEventPK.dao('create_council_proposal'),
       EnterpriseEventPK.dao('execute_proposal'),
       EnterpriseEventPK.dao('cast_vote'),
     ];
