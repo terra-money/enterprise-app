@@ -19,7 +19,7 @@ interface ExpandableProps extends PanelProps {
 
 const ExpandIconWrapper = styled.div<{ isExpanded: boolean }>`
   ${roundedCSS};
-  ${getSameDimensionsCSS(64)};
+  ${getSameDimensionsCSS(48)};
   ${centerContentCSS};
 
   background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};

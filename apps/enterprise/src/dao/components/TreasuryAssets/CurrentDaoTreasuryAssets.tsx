@@ -19,7 +19,7 @@ import { sum } from "lib/shared/utils/sum"
 
 const ContentFrame = styled.div`
   display: grid;
-  grid-template-columns: 64px 1fr;
+  grid-template-columns: 48px 1fr;
   align-items: center;
   gap: 24px;  
   width: 100%;
@@ -85,11 +85,11 @@ export const CurrentDaoTreasuryAssets = () => {
             <DatabaseIcon />
           </Identifier>
           <HStack fullWidth alignItems="center" justifyContent="space-between">
-            <Text weight="semibold" size={20}>
-              Wallet Holdings
+            <Text weight="semibold" >
+              Treasury Holdings
             </Text>
             {isLoading ? <Spinner /> : assets ?
-              <Text size={20} weight="semibold">
+              <Text weight="semibold">
                 ${formatAmount(sum(assets?.map(asset => getAssetBalanceInUsd(asset))))}
               </Text> : <div />}
           </HStack>
