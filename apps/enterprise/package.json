@@ -10,17 +10,6 @@
     "start": "REACT_APP_VERSION=$npm_package_version PORT=4001 react-app-rewired start",
     "test": "react-app-rewired test --passWithNoTests"
   },
-  "lint-staged": {
-    "./src/{**/*,*}.{ts,tsx}": [
-      "prettier --write --single-quote --no-semi",
-      "eslint --max-warnings 0"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
