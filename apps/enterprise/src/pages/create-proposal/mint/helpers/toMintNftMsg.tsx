@@ -1,3 +1,4 @@
+import { MintCW721Msg } from 'chain/CW721';
 import { base64Encode } from 'utils';
 
 // Mint NFT Message: https://github.com/CosmWasm/cw-nfts/blob/main/contracts/cw721-base/src/msg.rs#L52
@@ -20,31 +21,6 @@ export interface MintNftMsgParams {
   // attributes?: any;
 }
 
-interface Trait {
-  display_type?: string;
-  trait_type: string;
-  value: string;
-}
-
-interface NftMetadata {
-  image?: string;
-  image_data?: string;
-  external_url?: string;
-  description?: string;
-  name?: string;
-  attributes?: Trait[];
-  background_color?: string;
-  animation_url?: string;
-  youtube_url?: string;
-}
-
-interface MintNftMsg {
-  token_id: string;
-  owner: string;
-  token_uri?: string;
-  extension: NftMetadata;
-}
-
 export const toMintNftMsg = ({
   contract,
   tokenId,
@@ -54,15 +30,17 @@ export const toMintNftMsg = ({
   imageData,
   externalUrl,
 }: MintNftMsgParams) => {
-  const mint: MintNftMsg = {
-    token_id: tokenId,
-    owner,
-    token_uri: tokenUri,
-    extension: {
-      image: imageUrl,
-      image_data: imageData,
-      external_url: externalUrl,
-    },
+  const mint: MintCW721Msg = {
+    mint: {
+      token_id: tokenId,
+      owner,
+      token_uri: tokenUri,
+      extension: {
+        image: imageUrl,
+        image_data: imageData,
+        external_url: externalUrl,
+      },
+    }
   };
 
   return JSON.stringify({
