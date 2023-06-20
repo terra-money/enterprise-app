@@ -21,7 +21,7 @@ export const RewardsPanel = () => {
 
     const result = {
       native: new Set<string>(whitelist.filter((asset) => asset.type === 'native').map((asset) => asset.id)),
-      cw20: new Set<string>(whitelist.filter((asset) => 'cw20' in asset).map((asset) => asset.id)),
+      cw20: new Set<string>(whitelist.filter((asset) => asset.type === 'cw20').map((asset) => asset.id)),
     };
 
     if (dao_type === 'token') {
@@ -34,10 +34,10 @@ export const RewardsPanel = () => {
   const { data: rewards, isLoading: areRewardsLoading } = useMyDaoRewardsQuery(
     tokensToCheck
       ? {
-          fundsDistributorAddress: funds_distributor_contract,
-          nativeDenoms: Array.from(tokensToCheck.native),
-          cw20Assets: Array.from(tokensToCheck.cw20),
-        }
+        fundsDistributorAddress: funds_distributor_contract,
+        nativeDenoms: Array.from(tokensToCheck.native),
+        cw20Assets: Array.from(tokensToCheck.cw20),
+      }
       : undefined
   );
 
