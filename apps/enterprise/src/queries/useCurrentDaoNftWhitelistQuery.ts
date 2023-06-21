@@ -42,11 +42,6 @@ export const useCurrentDaoNftWhitelistQuery = () => {
     return nfts;
   });
 
-  console.log({
-    customWhitelist,
-    globalWhitelist,
-  });
-
   if (customWhitelist && globalWhitelist) {
     return {
       data: withoutDuplicates([...globalWhitelist, ...customWhitelist]),

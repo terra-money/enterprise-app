@@ -46,7 +46,6 @@ interface TreasuryPanelProps<T> {
 
 export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdValue, depositAction, renderItems, title }: TreasuryPanelProps<T>) {
   const isLoading = !items && !isError;
-  console.log({ itemName, items, isError })
   const [shouldShowAllItems, setShouldShowAllItems] = useState(false);
   const itemsToDisplay = useMemo(() => {
     if (!items) return [];
