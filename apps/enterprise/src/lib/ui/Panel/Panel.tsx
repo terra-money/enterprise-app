@@ -10,8 +10,7 @@ export interface PanelProps {
 
 export const panelBackgroundCSS = css`
   background: ${({ theme: { name, colors } }) =>
-    (name === 'light' ? colors.background : colors.foreground)
-      // : colors.backgroundGlass
+    (name === 'light' ? colors.background : colors.backgroundGlass)
       .toCssValue()};
 `;
 
@@ -22,7 +21,6 @@ const panelPaddingCSS = css<{ padding?: React.CSSProperties['padding'] }>`
 export const Panel = styled.div<PanelProps>`
   ${defaultBorderRadiusCSS};
   width: ${({ width }) => (width ? getCSSUnit(width) : undefined)};
-  box-shadow: ${({ theme }) => theme.shadows.small};
   overflow: hidden;
 
   ${({ withSections }) =>
@@ -33,7 +31,7 @@ export const Panel = styled.div<PanelProps>`
           gap: 1px;
 
           background: ${({ theme }) =>
-            theme.name === 'light' ? theme.colors.backgroundGlass2.toCssValue() : undefined};
+          theme.name === 'light' ? theme.colors.backgroundGlass2.toCssValue() : undefined};
 
           > * {
             ${panelPaddingCSS}
