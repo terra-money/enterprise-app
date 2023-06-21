@@ -1,6 +1,8 @@
+import { formatAmount } from "@terra-money/apps/libs/formatting";
 import { NftInfoWithPrice } from "chain/Nft";
 import { Panel } from "lib/ui/Panel/Panel";
 import { SafeImage } from "lib/ui/SafeImage";
+import { VStack } from "lib/ui/Stack";
 import { Text } from "lib/ui/Text";
 import { CoverImage } from "lib/ui/images/CoverImage";
 import styled from "styled-components";
@@ -20,7 +22,7 @@ const ImageWr = styled.div`
   width: 100%;
 `
 
-export const NftItem = ({ collection, id, image }: NftItemProps) => {
+export const NftItem = ({ collection, id, image, usd }: NftItemProps) => {
   return (
     <Container>
       <ImageWr>
@@ -30,7 +32,14 @@ export const NftItem = ({ collection, id, image }: NftItemProps) => {
         />
       </ImageWr>
       <Info>
-        <Text cropped weight='semibold' color="supporting">{id}</Text>
+        <VStack gap={16}>
+          <Text cropped weight='semibold' color="supporting">{id}</Text>
+          {usd && (
+            <Text weight="semibold" size={20}>
+              ${formatAmount(usd)}
+            </Text>
+          )}
+        </VStack>
       </Info>
     </Container>
   )
