@@ -19,6 +19,7 @@ interface NftToken {
   name: string | null
   collectionName: string | null
   imageUrlFileserver: string | null
+  priceUsd: number | null
 }
 
 interface TFMResponse {
@@ -42,6 +43,7 @@ query MyQuery {
       name
       tokenId
       imageUrlFileserver
+      priceUsd
     }
   }
 }
@@ -70,7 +72,7 @@ export const getNftInfo = async (nft: Nft) => {
   if (!token) return
 
   const price = token.price || token.collectionFloorPrice
-  const usd = (price && token.denom.priceUsd) ? price * token.denom.priceUsd : undefined
+  const usd = token.priceUsd || ((price && token.denom.priceUsd) ? price * token.denom.priceUsd : undefined)
 
   const info: TfmNftInfo = {
     usd,
