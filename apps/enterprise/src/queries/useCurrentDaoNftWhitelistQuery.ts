@@ -7,6 +7,7 @@ import { getLast } from 'lib/shared/utils/getlast';
 import { withoutDuplicates } from 'lib/shared/utils/withoutDuplicates';
 import { useCurrentDaoGlobalNftWhitelistQuery } from './useCurrentDaoGlobalNftWhitelistQuery';
 import { fetchAll } from 'lib/shared/utils/fetchAll';
+import { booleanMatch } from 'lib/shared/utils/match';
 
 const limit = 30;
 
@@ -19,27 +20,30 @@ export const useCurrentDaoNftWhitelistQuery = () => {
   const { data: customWhitelist } = useQuery([QUERY_KEY.CUSTOM_NFT_WHITELIST, address], async () => {
     const hasPaginatedWhitelist = Number(dao_code_version) >= 5;
 
-    if (hasPaginatedWhitelist) {
-      return fetchAll<string, string>(
-        async (start_after) => {
-          const { nfts } = await query<enterprise.QueryMsg, enterprise.NftWhitelistResponse>(address, {
-            nft_whitelist: {
-              start_after,
-              limit,
-            },
-          });
+    return booleanMatch(hasPaginatedWhitelist, {
+      true: () => {
+        return fetchAll<string, string>(
+          async (start_after) => {
+            const { nfts } = await query<enterprise.QueryMsg, enterprise.NftWhitelistResponse>(address, {
+              nft_whitelist: {
+                start_after,
+                limit,
+              },
+            });
 
-          return nfts;
-        },
-        (lastPage) => (lastPage.length < limit ? null : getLast(lastPage))
-      );
-    }
+            return nfts;
+          },
+          (lastPage) => (lastPage.length < limit ? null : getLast(lastPage))
+        )
+      },
+      false: async () => {
+        const { nfts } = await query<enterprise.QueryMsg, enterprise.NftWhitelistResponse>(address, {
+          nft_whitelist: {},
+        });
 
-    const { nfts } = await query<enterprise.QueryMsg, enterprise.NftWhitelistResponse>(address, {
-      nft_whitelist: {},
-    });
-
-    return nfts;
+        return nfts
+      }
+    })
   });
 
   if (customWhitelist && globalWhitelist) {
