@@ -9,7 +9,6 @@ interface TFMError {
 
 interface NftTokenDenom {
   priceUsd: number
-  nativeDenomRate: number
 }
 
 interface NftToken {
@@ -17,11 +16,14 @@ interface NftToken {
   denom: NftTokenDenom
   collectionFloorPrice: number | null
   tokenId: string
+  name: string | null
+  collectionName: string | null
+  imageUrlFileserver: string | null
 }
 
 interface TFMResponse {
   data: {
-    getTokens: {
+    getToken: {
       token: NftToken
     }
   },
@@ -36,17 +38,19 @@ query MyQuery {
       price
       denom {
         priceUsd
-        nativeDenomRate
       }
+      name
       tokenId
+      imageUrlFileserver
     }
   }
 }
 `
 
 export interface TfmNftInfo {
-  price?: number
-  denom?: string
+  usd?: number
+  name?: string
+  image?: string
 }
 
 export type NftsFromCollection = Record<string, TfmNftInfo>
@@ -61,17 +65,17 @@ export const getNftInfo = async (nft: Nft) => {
     throw new Error(`Failed to info for NFT collection=${nft.collection} id=${nft.id} from ${TFM_NFT_API}: ${errors[0]?.message}`)
   }
 
-  const token = data.getTokens.token
+  const token = data.getToken.token
 
   if (!token) return
 
-  const price = token.price || token.collectionFloorPrice || undefined
-  console.log(price)
+  const price = token.price || token.collectionFloorPrice
+  const usd = (price && token.denom.priceUsd) ? price * token.denom.priceUsd : undefined
 
   const info: TfmNftInfo = {
-    price: token.price || token.collectionFloorPrice || undefined,
-    denom: undefined
-    // denom: token.denom || (price ? 'uluna' : undefined),
+    usd,
+    name: token.name || token.collectionName || undefined,
+    image: token.imageUrlFileserver || undefined
   }
 
   return info
