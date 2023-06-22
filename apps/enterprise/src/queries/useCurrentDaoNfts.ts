@@ -7,10 +7,6 @@ import { getNfts } from "chain/utils/getNfts";
 import { useContract } from "chain/hooks/useContract";
 import { assertDefined } from "@terra-money/apps/utils";
 import { usePricesOfLiquidAssets } from "chain/queries/usePricesOfLiquidAssets";
-import { getAssetInfo } from "chain/utils/getAssetInfo";
-import { useNetworkName } from '@terra-money/apps/hooks';
-import { useLCDClient } from '@terra-money/wallet-provider';
-import { fromChainAmount } from "chain/utils/fromChainAmount";
 import { getNftInfo } from "chain/utils/getNftInfo";
 
 export const useCurrentDaoNfts = () => {
@@ -20,15 +16,14 @@ export const useCurrentDaoNfts = () => {
   const { data: liquidAssetsPrices } = usePricesOfLiquidAssets();
 
   const { query } = useContract()
-  const lcd = useLCDClient();
-  const networkName = useNetworkName();
 
   return useQuery([QUERY_KEY.DAO_NFTS, address], async () => {
+    console.log('useCurrentDaoNfts')
     return (await Promise.all(assertDefined(whitelist).map(async collection => {
       const nfts = (await getNfts({ collection, owner: address, query }))
 
       return Promise.all(nfts.map(async ({ collection, id }) => {
-        const nft: NftInfoWithPrice = {
+        let nft: NftInfoWithPrice = {
           collection,
           id,
           usd: undefined,
@@ -38,29 +33,9 @@ export const useCurrentDaoNfts = () => {
 
         try {
           const info = await getNftInfo(nft)
-          if (info) {
-            if (info.denom && info.price) {
-              try {
-                const { decimals } = await getAssetInfo({
-                  asset: {
-                    id: info.denom,
-                    type: 'native'
-                  }, lcd, networkName
-                });
-
-                const assetPriceInUsd = assertDefined(liquidAssetsPrices)[info.denom]
-                if (assetPriceInUsd) {
-                  nft.usd = fromChainAmount(info.price, decimals) * assetPriceInUsd
-                }
-              } catch (err) {
-                console.error(`Failed to get decimals for a denom=${info.denom}: ${err}`);
-              }
-            }
-          }
-
+          nft = { ...nft, ...info }
         } catch {
           console.error(`Failed to get info for an NFT collection=${collection} id=${id}`);
-
         }
 
         return nft
