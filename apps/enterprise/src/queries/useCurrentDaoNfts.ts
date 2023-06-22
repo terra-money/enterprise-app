@@ -8,19 +8,25 @@ import { useContract } from "chain/hooks/useContract";
 import { assertDefined } from "@terra-money/apps/utils";
 import { usePricesOfLiquidAssets } from "chain/queries/usePricesOfLiquidAssets";
 import { getNftInfo } from "chain/utils/getNftInfo";
+import { useCurrentDaoStakedNfts } from "./useCurrentDaoStakedNfts";
 
 export const useCurrentDaoNfts = () => {
-  const { address } = useCurrentDao();
+  const { address, dao_type, dao_membership_contract } = useCurrentDao();
 
   const { data: whitelist } = useCurrentDaoNftWhitelistQuery();
   const { data: liquidAssetsPrices } = usePricesOfLiquidAssets();
+  const { data: stakedNfts } = useCurrentDaoStakedNfts();
 
   const { query } = useContract()
 
   return useQuery([QUERY_KEY.DAO_NFTS, address], async () => {
-    console.log('useCurrentDaoNfts')
     return (await Promise.all(assertDefined(whitelist).map(async collection => {
-      const nfts = (await getNfts({ collection, owner: address, query }))
+      let nfts = (await getNfts({ collection, owner: address, query }))
+
+      if (dao_type === 'nft' && collection === dao_membership_contract) {
+        const stakedNftsSet = new Set(assertDefined(stakedNfts))
+        nfts = nfts.filter(({ id }) => !stakedNftsSet.has(id))
+      }
 
       return Promise.all(nfts.map(async ({ collection, id }) => {
         let nft: NftInfoWithPrice = {
@@ -42,6 +48,6 @@ export const useCurrentDaoNfts = () => {
       }))
     }))).flat()
   }, {
-    enabled: Boolean(whitelist && liquidAssetsPrices)
+    enabled: Boolean(whitelist && liquidAssetsPrices && stakedNfts)
   })
 }
