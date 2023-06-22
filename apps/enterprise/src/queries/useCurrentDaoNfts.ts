@@ -38,7 +38,6 @@ export const useCurrentDaoNfts = () => {
 
         try {
           const info = await getNftInfo(nft)
-          console.log(info)
           if (info) {
             if (info.denom && info.price) {
               try {

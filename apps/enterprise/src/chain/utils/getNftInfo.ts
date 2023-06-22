@@ -1,23 +1,28 @@
 import axios from 'axios'
 import { Nft } from 'chain/Nft'
 
-const TFM_NFT_API = 'https://nft-terra2.tfm.dev/graphql'
+const TFM_NFT_API = 'https://nft-multichain.tfm.com/graphql'
 
 interface TFMError {
   message: string
 }
 
+interface NftTokenDenom {
+  priceUsd: number
+  nativeDenomRate: number
+}
+
 interface NftToken {
   price: number | null
-  denom: string
+  denom: NftTokenDenom
   collectionFloorPrice: number | null
   tokenId: string
 }
 
 interface TFMResponse {
   data: {
-    token: {
-      tokens: NftToken[]
+    getTokens: {
+      token: NftToken
     }
   },
   errors?: TFMError[]
@@ -25,11 +30,14 @@ interface TFMResponse {
 
 const getQuery = ({ collection, id }: Nft) => `
 query MyQuery {
-  token(collectionAddr: "${collection}", tokenId: "${id}") {
-    tokens {
+  getToken(collectionAddr: "${collection}", tokenId: "${id}", chain: "terra2") {
+    token {
       collectionFloorPrice
       price
-      denom
+      denom {
+        priceUsd
+        nativeDenomRate
+      }
       tokenId
     }
   }
@@ -53,15 +61,17 @@ export const getNftInfo = async (nft: Nft) => {
     throw new Error(`Failed to info for NFT collection=${nft.collection} id=${nft.id} from ${TFM_NFT_API}: ${errors[0]?.message}`)
   }
 
-  const token = data.token.tokens[0]
+  const token = data.getTokens.token
 
   if (!token) return
 
   const price = token.price || token.collectionFloorPrice || undefined
+  console.log(price)
 
   const info: TfmNftInfo = {
     price: token.price || token.collectionFloorPrice || undefined,
-    denom: token.denom || (price ? 'uluna' : undefined),
+    denom: undefined
+    // denom: token.denom || (price ? 'uluna' : undefined),
   }
 
   return info
