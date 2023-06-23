@@ -25,7 +25,6 @@ export const NFTCard = (props: NFTCardProps) => {
   const { nftCollectionAdress, tokenIds } = props;
   const nftData = useNFTInfoQuery(nftCollectionAdress, tokenIds);
   const nftObject = nftData.data as any;
-  console.log(nftObject);
 
   return (
     <>

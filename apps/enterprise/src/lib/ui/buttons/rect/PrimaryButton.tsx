@@ -11,33 +11,33 @@ export type Props = RectButtonProps & {
 
 const defaultKind = 'primary';
 
-const Container = styled(RectButton)<Props>`
+const Container = styled(RectButton) <Props>`
   color: ${({ theme }) => theme.colors.contrast.toCssValue()};
 
   ${({ kind = defaultKind }) =>
-    ({
-      primary: css`
+  ({
+    primary: css`
         ${gradientBackgroundCSS};
         color: ${({ theme }) => theme.colors.background.toCssValue()};
       `,
-      attention: css`
+    attention: css`
         background: ${({ theme }) => theme.colors.attention.toCssValue()};
       `,
-      reversed: css`
+    reversed: css`
         background: ${({ theme }) => theme.colors.text.toCssValue()};
         color: ${({ theme }) => theme.colors.background.toCssValue()};
       `,
-      secondary: css`
-        background: ${({ theme }) => theme.colors.foregroundAlt.toCssValue()};
+    secondary: css`
+        background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
         .content {
           ${gradientColorCSS};
         }
       `,
-      alert: css`
+    alert: css`
         background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
         color: ${({ theme }) => theme.colors.alert.toCssValue()};
       `,
-    }[kind])};
+  }[kind])};
   ${({ isDisabled, isLoading, kind = defaultKind }) =>
     !isDisabled &&
     !isLoading &&
