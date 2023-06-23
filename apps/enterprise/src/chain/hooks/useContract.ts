@@ -1,6 +1,8 @@
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { useCallback } from 'react';
 
+export type QueryContract = <QueryMsg extends {}, QueryResponse>(contractAddress: string, message: QueryMsg) => Promise<QueryResponse>
+
 export const useContract = () => {
   const lcd = useLCDClient();
 
