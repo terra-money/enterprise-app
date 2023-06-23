@@ -18,6 +18,7 @@ interface NftsQuery {
   tokens: {
     owner: string
     start_after?: string
+    limit?: number
   }
 }
 
@@ -25,7 +26,7 @@ export const getNfts = async ({ collection, owner, query }: GetNftsParams) => {
   const ids = await fetchAll<string, string>(
     async (start_after) => {
       const response = await query<NftsQuery, NftIdsResponse>(collection, {
-        tokens: { owner, start_after },
+        tokens: { owner, start_after, limit: 100 },
       });
 
       return response.ids || response.tokens || []
