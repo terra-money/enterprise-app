@@ -35,15 +35,9 @@ const getQuery = ({ collection, id }: Nft) => `
 query MyQuery {
   getToken(collectionAddr: "${collection}", tokenId: "${id}", chain: "terra2") {
     token {
-      collectionFloorPrice
-      price
-      denom {
-        priceUsd
-      }
       name
-      tokenId
+      collectionName
       imageUrlFileserver
-      priceUsd
     }
   }
 }
@@ -71,11 +65,7 @@ export const getNftInfo = async (nft: Nft) => {
 
   if (!token) return
 
-  const price = token.price || token.collectionFloorPrice
-  const usd = token.priceUsd || ((price && token.denom.priceUsd) ? price * token.denom.priceUsd : undefined)
-
   const info: TfmNftInfo = {
-    usd,
     name: token.name || token.collectionName || undefined,
     image: token.imageUrlFileserver || undefined
   }
