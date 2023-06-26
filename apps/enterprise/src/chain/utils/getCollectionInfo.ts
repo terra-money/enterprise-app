@@ -13,7 +13,7 @@ interface TfmCollection {
 interface TFMResponse {
   data: {
     getCollection: {
-      content: [TfmCollection]
+      content: TfmCollection[]
     }
   },
   errors?: TFMError[]
@@ -36,12 +36,12 @@ export const getCollectionInfo = async (collection: string) => {
   })
 
   if (errors) {
-    throw new Error(`Failed to info for NFT collection=${collection} from ${TFM_NFT_API}: ${errors[0]?.message}`)
+    throw new Error(`Failed to get info for NFT collection=${collection} from ${TFM_NFT_API}: ${errors[0]?.message}`)
   }
 
   const info = data.getCollection.content[0]
 
-  const floorPriceInLuna = info.floorPrice || undefined
+  const floorPriceInLuna = info?.floorPrice || undefined
 
   return {
     floorPriceInLuna

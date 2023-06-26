@@ -9,6 +9,7 @@ import { assertDefined } from "@terra-money/apps/utils";
 import { usePricesOfLiquidAssets } from "chain/queries/usePricesOfLiquidAssets";
 import { useCurrentDaoStakedNfts } from "./useCurrentDaoStakedNfts";
 import { getCollectionInfo } from "chain/utils/getCollectionInfo";
+import { retry } from "lib/shared/utils/retry";
 
 export const useCurrentDaoNfts = () => {
   const { address, dao_type, dao_membership_contract } = useCurrentDao();
@@ -28,18 +29,17 @@ export const useCurrentDaoNfts = () => {
         nfts = nfts.filter(({ id }) => !stakedNftsSet.has(id))
       }
 
-      try {
-        const info = await getCollectionInfo(collection)
-        if (info.floorPriceInLuna) {
-          const lunaPrice = assertDefined(liquidAssetsPrices)['uluna']
-          const usd = info.floorPriceInLuna * lunaPrice
-          nfts = nfts.map(nft => ({
-            ...nft,
-            usd
-          }))
-        }
-      } catch (err) {
-        console.log(err)
+      const info = await retry({
+        func: () => getCollectionInfo(collection),
+        delay: 5000
+      })
+      if (info.floorPriceInLuna) {
+        const lunaPrice = assertDefined(liquidAssetsPrices)['uluna']
+        const usd = info.floorPriceInLuna * lunaPrice
+        nfts = nfts.map(nft => ({
+          ...nft,
+          usd
+        }))
       }
 
       return nfts
