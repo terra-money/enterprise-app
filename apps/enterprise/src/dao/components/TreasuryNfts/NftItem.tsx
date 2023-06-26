@@ -1,6 +1,7 @@
 import { formatAmount } from "@terra-money/apps/libs/formatting";
 import { NftWithPrice } from "chain/Nft";
 import { getNftInfo } from "chain/utils/getNftInfo";
+import { retry } from "lib/shared/utils/retry";
 import { Panel } from "lib/ui/Panel/Panel";
 import { SafeImage } from "lib/ui/SafeImage";
 import { VStack } from "lib/ui/Stack";
@@ -31,7 +32,10 @@ export const NftItem = ({ usd, ...nft }: NftItemProps) => {
   const { data: info, isLoading, isError } = useQuery(
     [QUERY_KEY.NFT_INFO, nft],
     async () => {
-      return getNftInfo(nft)
+      return retry({
+        func: () => getNftInfo(nft),
+        delay: 5000
+      })
     }
   );
 
