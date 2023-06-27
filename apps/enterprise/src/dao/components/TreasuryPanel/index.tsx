@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { ReactNode, useMemo, useState } from 'react';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 
 const ContentFrame = styled.div`
   display: grid;
@@ -27,12 +28,6 @@ const Identifier = styled.div`
   color: ${({ theme }) => theme.colors.contrast.toCssValue()};
 `;
 
-const Actions = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 186px);
-  gap: 16px;
-`;
-
 interface TreasuryPanelProps<T> {
   title: string
   icon: ReactNode
@@ -43,6 +38,11 @@ interface TreasuryPanelProps<T> {
   depositAction: ReactNode
   renderItems: (items: T[]) => ReactNode
 }
+
+const Actions = styled(SameWidthChildrenRow)`
+  flex: 1;
+  justify-content: flex-end;
+`
 
 export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdValue, depositAction, renderItems, title }: TreasuryPanelProps<T>) {
   const isLoading = !items && !isError;
@@ -98,13 +98,11 @@ export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdVa
               <Text color="supporting" size={16}>
                 {renderFooterMsg()}
               </Text>
-              <Actions>
-                {items ? (
+              <Actions childrenWidth={186} gap={16}>
+                {items && (
                   <PrimaryButton kind="secondary" onClick={() => setShouldShowAllItems(!shouldShowAllItems)}>
                     {itemsToDisplay.length < items.length ? 'Show more' : 'Show less'}
                   </PrimaryButton>
-                ) : (
-                  <div />
                 )}
                 {depositAction}
               </Actions>
