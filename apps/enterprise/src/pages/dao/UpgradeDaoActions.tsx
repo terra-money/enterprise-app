@@ -8,10 +8,12 @@ export const UpgradeDaoActions = () => (
     connected={() => <UpgradeDAOPromptActions />}
     notConnected={() => (
       <ConnectWallet
-        renderOpener={({ onClick }) => (
-          <PrimaryButton kind="primary" onClick={onClick}>
-            Connect a wallet
-          </PrimaryButton>
+        renderOpener={props => (
+          <div {...props}>
+            <PrimaryButton kind="primary">
+              Connect a wallet
+            </PrimaryButton>
+          </div>
         )}
       />
     )}

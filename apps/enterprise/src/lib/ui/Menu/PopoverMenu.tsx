@@ -1,50 +1,51 @@
-import { ClosableComponentProps } from 'lib/shared/props';
-import { ReactNode } from 'react';
-import styled from 'styled-components';
-import { Panel } from 'lib/ui/Panel/Panel';
-import { HStack, VStack } from 'lib/ui/Stack';
-import { Text } from 'lib/ui/Text';
+import {
+  ReferenceType,
+} from '@floating-ui/react'
+import { ReactNode } from 'react'
+import styled from 'styled-components'
 
-import { getVerticalPaddingCSS } from 'lib/ui/utils/getVerticalPaddingCSS';
-import { CloseIconButton } from '../buttons/square/CloseIconButton';
-import { getHorizontalMarginCSS } from '../utils/getHorizontalMarginCSS';
+import { HStack, VStack } from '../Stack'
+import { Text } from '../Text'
+import { CloseIconButton } from '../buttons/square/CloseIconButton'
+import { SeparatedByLine } from '../SeparatedByLine'
+import { PopoverPanel, PopoverPanelProps } from './PopoverPanel'
 
-interface Props extends ClosableComponentProps {
-  title: ReactNode;
-  children: ReactNode;
+export interface RenderOpenerProps extends Record<string, unknown> {
+  ref: (node: ReferenceType | null) => void
 }
 
-const Container = styled(Panel)`
-  background: ${({ theme: { colors, name } }) =>
-    (name === 'dark' ? colors.foreground : colors.background).toCssValue()};
-  overflow: hidden;
+export interface PopoverMenuProps extends Pick<PopoverPanelProps, 'renderContent' | 'renderOpener'> {
+  title: ReactNode
+}
+
+const Container = styled(PopoverPanel)`
   min-width: 260px;
-  max-width: 320px;
-`;
+`
 
 const Header = styled(HStack)`
   align-items: center;
   gap: 12px;
   justify-content: space-between;
-  ${getHorizontalMarginCSS(12)};
-  ${getVerticalPaddingCSS(12)};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
-`;
+`
 
-export const PopoverMenu = ({ children, title, onClose }: Props) => {
+export const PopoverMenu = ({
+  renderContent,
+  renderOpener,
+  title,
+}: PopoverMenuProps) => {
   return (
-    <Container padding={4}>
-      <VStack gap={12}>
+    <Container renderContent={({ onClose }) => (
+      <SeparatedByLine gap={12}>
         <Header>
           <Text weight="semibold" color="supporting" cropped>
             {title}
           </Text>
           <CloseIconButton onClick={onClose} />
         </Header>
-        <VStack fullWidth alignItems="start">
-          {children}
+        <VStack>
+          {renderContent({ onClose })}
         </VStack>
-      </VStack>
-    </Container>
-  );
-};
+      </SeparatedByLine>
+    )} renderOpener={renderOpener} />
+  )
+}

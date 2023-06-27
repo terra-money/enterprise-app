@@ -7,7 +7,11 @@ export const ManageWallet = () => {
   return (
     <ConditionalWallet
       connected={() => <ManageConnectedWallet />}
-      notConnected={() => <ConnectWallet renderOpener={({ onClick }) => <WalletButton onClick={onClick} />} />}
+      notConnected={() => <ConnectWallet renderOpener={(props) => (
+        <div {...props}>
+          <WalletButton />
+        </div>
+      )} />}
     />
   );
 };

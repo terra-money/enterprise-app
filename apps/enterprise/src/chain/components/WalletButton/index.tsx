@@ -22,7 +22,7 @@ const Indicator = (props: IndicatorProps) => {
 };
 
 interface WalletButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const WalletButton = ({ onClick }: WalletButtonProps) => {

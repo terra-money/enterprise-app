@@ -8,10 +8,12 @@ export const ConnectWalletPrompt = () => {
     <Panel className={styles.root}>
       <Text variant="text">Please connect your wallet</Text>
       <ConnectWallet
-        renderOpener={({ onClick }) => (
-          <Button variant="primary" onClick={onClick}>
-            Connect
-          </Button>
+        renderOpener={(props) => (
+          <div {...props}>
+            <Button variant="primary">
+              Connect
+            </Button>
+          </div>
         )}
       />
     </Panel>
