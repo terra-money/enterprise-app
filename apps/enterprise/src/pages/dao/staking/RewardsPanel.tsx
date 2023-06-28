@@ -68,9 +68,8 @@ export const RewardsPanel = () => {
               </VStack>
               <PrimaryButton
                 kind="secondary"
-                isDisabled={!areRewardsAvailable}
+                isDisabled={areNoRewards && 'No tokens to claim'}
                 isLoading={txResult.loading}
-                tooltipText={areNoRewards && 'No tokens to claim'}
                 onClick={() => {
                   // try to claim everything just in case
                   const { cw20, native } = assertDefined(tokensToCheck);

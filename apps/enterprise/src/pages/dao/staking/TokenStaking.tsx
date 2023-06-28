@@ -126,8 +126,7 @@ export const TokenStakingConnectedView = () => {
                   renderOpener={({ onOpen }) => (
                     <PrimaryButton
                       isLoading={isLoading}
-                      tooltipText={isStakeDisabled ? 'No tokens to stake' : undefined}
-                      isDisabled={isStakeDisabled}
+                      isDisabled={isStakeDisabled ? 'No tokens to stake' : undefined}
                       onClick={onOpen}
                     >
                       Stake
@@ -151,8 +150,7 @@ export const TokenStakingConnectedView = () => {
                     <PrimaryButton
                       kind="secondary"
                       isLoading={isLoading}
-                      isDisabled={isUnstakeDisabled}
-                      tooltipText={isUnstakeDisabled && `You don't have any staked tokens`}
+                      isDisabled={isUnstakeDisabled && `You don't have any staked tokens`}
                       onClick={onOpen}
                     >
                       Unstake
@@ -192,9 +190,8 @@ export const TokenStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={isClaimDisabled}
+                    isDisabled={isClaimDisabled && 'No tokens to claim'}
                     isLoading={claimTxResult.loading}
-                    tooltipText={isClaimDisabled && 'No tokens to claim'}
                     onClick={() => {
                       claimTx({ daoAddress: address });
                     }}

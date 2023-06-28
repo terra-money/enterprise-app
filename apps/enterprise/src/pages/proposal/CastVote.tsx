@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { CW20Addr } from '@terra-money/apps/types';
-import { Button, IconButton, Text, Tooltip } from 'components/primitives';
+import { Button, IconButton, Text } from 'components/primitives';
 import { useProposalVoteQuery, useVotingPowerQuery } from 'queries';
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -15,6 +15,7 @@ import styles from './CastVote.module.sass';
 import classNames from 'classnames';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { Tooltip } from 'lib/ui/Tooltip';
 
 interface VoteOption {
   outcome: enterprise.VoteOutcome;
@@ -75,30 +76,37 @@ export const CastVote = () => {
   return (
     <Stack spacing={2} direction="row">
       {VoteOptions.map(({ outcome, icon, tooltip }, index) => (
-        <Tooltip title={tooltip} placement="top">
-          <IconButton
-            key={outcome}
-            className={classNames({ [styles.active]: myVote?.outcome === index })}
-            size="small"
-            variant="secondary"
-            loading={txResult.loading && outcome === vote}
-            disabled={txResult.loading && outcome !== vote}
-            onClick={async () => {
-              setVote(outcome);
-              try {
-                await tx({
-                  contract: proposal.dao.address,
-                  outcome: outcome,
-                  id: proposal.id,
-                });
-              } finally {
-                setVote(undefined);
-              }
-            }}
-          >
-            {icon}
-          </IconButton>
-        </Tooltip>
+        <Tooltip
+          content={tooltip}
+          renderOpener={props => (
+            <div
+              {...props}
+            >
+              <IconButton
+                key={outcome}
+                className={classNames({ [styles.active]: myVote?.outcome === index })}
+                size="small"
+                variant="secondary"
+                loading={txResult.loading && outcome === vote}
+                disabled={txResult.loading && outcome !== vote}
+                onClick={async () => {
+                  setVote(outcome);
+                  try {
+                    await tx({
+                      contract: proposal.dao.address,
+                      outcome: outcome,
+                      id: proposal.id,
+                    });
+                  } finally {
+                    setVote(undefined);
+                  }
+                }}
+              >
+                {icon}
+              </IconButton>
+            </div>
+          )}
+        />
       ))}
     </Stack>
   );
