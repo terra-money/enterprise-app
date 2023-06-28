@@ -31,7 +31,7 @@ interface ContainerProps {
   isLoading?: boolean;
 }
 
-const Container = styled(UnstyledButton)<ContainerProps>`
+const Container = styled(UnstyledButton) <ContainerProps>`
   color: ${({ theme }) => theme.colors.text.toCssValue()};
   ${defaultTransitionCSS};
 
@@ -40,33 +40,33 @@ const Container = styled(UnstyledButton)<ContainerProps>`
   ${roundedCSS};
 
   ${({ size }) =>
-    ({
-      xs: css`
+  ({
+    xs: css`
         ${getHorizontalPaddingCSS(8)}
         height: 28px;
         font-size: 14px;
       `,
-      s: css`
+    s: css`
         ${getHorizontalPaddingCSS(16)}
         height: 36px;
         font-size: 14px;
       `,
-      m: css`
+    m: css`
         ${getHorizontalPaddingCSS(24)}
         height: 64px;
         font-size: 16px;
       `,
-      l: css`
+    l: css`
         ${getHorizontalPaddingCSS(20)}
         height: 56px;
         font-size: 14px;
       `,
-      xl: css`
+    xl: css`
         ${getHorizontalPaddingCSS(40)}
         height: 56px;
         font-size: 18px;
       `,
-    }[size])};
+  }[size])};
 
   font-weight: 600;
   white-space: nowrap;
@@ -148,6 +148,7 @@ export const RectButton = ({
         <TooltipContainer
           ref={refs.setFloating}
           style={{
+            zIndex: 1,
             position: strategy,
             top: y ?? 0,
             left: x ?? 0,
