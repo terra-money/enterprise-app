@@ -21,6 +21,12 @@ export const getAssetInfo = async ({
   lcd,
   networkName,
 }: GetAssetInfoParams): Promise<AssetInfo> => {
+  const record = await getAssetsInfo(networkName);
+
+  if (record[id]) {
+    return record[id];
+  }
+
   if (type === 'cw20') {
     const { name, symbol, decimals } = await lcd.wasm.contractQuery<CW20TokenInfoResponse>(id, {
       token_info: {},
@@ -33,20 +39,5 @@ export const getAssetInfo = async ({
     };
   }
 
-  if (id === 'uluna') {
-    return {
-      name: 'LUNA',
-      symbol: 'LUNA',
-      icon: 'https://assets.terra.money/icon/svg/Luna.svg',
-      decimals: 6,
-    };
-  }
-
-  const assets = await getAssetsInfo(networkName);
-  const asset = assets.find((asset) => asset.id === id);
-  if (asset) {
-    return asset;
-  }
-
-  throw new Error(`Asset with id=${id} not found`);
+  throw new Error(`No info about ${type} asset ${id}`);
 };
