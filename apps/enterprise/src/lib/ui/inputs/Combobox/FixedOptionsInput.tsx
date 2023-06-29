@@ -83,7 +83,7 @@ function FixedOptionsInputInner<T>(
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
-  const [isMenuOpen, { set: openMenu, unset: closeMenu, toggle: toggleMenu }] = useBoolean(false);
+  const [isMenuOpen, { set: openMenu, unset: closeMenu, toggle: toggleMenu, update: setIsMenuOpen }] = useBoolean(false);
   useEffect(() => {
     const isInputFocused = document.activeElement === inputRef.current;
 
@@ -162,17 +162,18 @@ function FixedOptionsInputInner<T>(
           </NoOptions>
         ) : (
           <DropdownMenuPlacer
-            menu={
-              isMenuOpen && suggestions.length ? (
-                <ComboboxOptions
-                  options={suggestions}
-                  renderOption={renderOption}
-                  optionToKey={optionToString}
-                  onOptionHighlight={setHighlightedIndex}
-                  onOptionSelect={handleSelectOption}
-                  highlightedIndex={highlightedIndex}
-                />
-              ) : undefined
+            isMenuOpen={isMenuOpen}
+            onIsMenuOpenChange={setIsMenuOpen}
+            menu={suggestions.length ? (
+              <ComboboxOptions
+                options={suggestions}
+                renderOption={renderOption}
+                optionToKey={optionToString}
+                onOptionHighlight={setHighlightedIndex}
+                onOptionSelect={handleSelectOption}
+                highlightedIndex={highlightedIndex}
+              />
+            ) : undefined
             }
           >
             <TextInputContainer
@@ -196,10 +197,10 @@ function FixedOptionsInputInner<T>(
         <ToggleWrapper>
           <CollapseToggleIconButton
             size="l"
-            as="div"
             isOpen={isMenuOpen}
-            onMouseDown={toggleMenu}
-            onTouchStart={toggleMenu}
+            onClick={() => {
+              toggleMenu();
+            }}
           />
         </ToggleWrapper>
       )}
