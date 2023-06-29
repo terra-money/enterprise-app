@@ -2,8 +2,7 @@
 
 Enterprise is a no-code tool for organizing, creating, and maintaining Decentralized Autonomous Organizations (DAOs) on the Terra blockchain. With Enterprise, you can create multisig wallets, organize communities around NFTs and tokens, and manage the governance of DAOs all in a single interface.
 
-Visit https://enterprise.money/dashboard to view the Enterprise app. 
-
+Visit https://enterprise.money/dashboard to view the Enterprise app.
 
 ## Getting Started
 

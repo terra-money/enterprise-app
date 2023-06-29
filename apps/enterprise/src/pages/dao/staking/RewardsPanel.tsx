@@ -7,48 +7,37 @@ import { TitledContent } from 'lib/ui/Layout/TitledContent';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
-import { useDAOAssetsWhitelist, useGlobalAssetsWhitelist } from 'queries';
 import { useMemo } from 'react';
 import { RewardItem } from './RewardItem';
 import { InfoIcon } from 'lib/ui/icons/InfoIcon';
+import { useCurrentDaoAssetWhitelistQuery } from 'queries/useCurrentDaoAssetWhitelistQuery';
 
 export const RewardsPanel = () => {
-  const { funds_distributor_contract, address, dao_type, dao_membership_contract } = useCurrentDao();
-  const { data: globalWhitelist } = useGlobalAssetsWhitelist();
-  const { data: daoWhitelist } = useDAOAssetsWhitelist(address);
+  const { funds_distributor_contract, dao_type, dao_membership_contract } = useCurrentDao();
+  const { data: whitelist } = useCurrentDaoAssetWhitelistQuery();
 
   const tokensToCheck = useMemo(() => {
-    if (!daoWhitelist || !globalWhitelist) return;
+    if (!whitelist) return;
 
     const result = {
-      native: new Set<string>(),
-      cw20: new Set<string>(),
+      native: new Set<string>(whitelist.filter((asset) => asset.type === 'native').map((asset) => asset.id)),
+      cw20: new Set<string>(whitelist.filter((asset) => asset.type === 'cw20').map((asset) => asset.id)),
     };
-
-    const whitelist = [...globalWhitelist, ...daoWhitelist];
-
-    whitelist.forEach((asset) => {
-      if ('native' in asset) {
-        result.native.add(asset.native);
-      } else if ('cw20' in asset) {
-        result.cw20.add(asset.cw20);
-      }
-    });
 
     if (dao_type === 'token') {
       result.cw20.add(dao_membership_contract);
     }
 
     return result;
-  }, [daoWhitelist, globalWhitelist, dao_membership_contract, dao_type]);
+  }, [dao_membership_contract, dao_type, whitelist]);
 
   const { data: rewards, isLoading: areRewardsLoading } = useMyDaoRewardsQuery(
     tokensToCheck
       ? {
-          fundsDistributorAddress: funds_distributor_contract,
-          nativeDenoms: Array.from(tokensToCheck.native),
-          cw20Assets: Array.from(tokensToCheck.cw20),
-        }
+        fundsDistributorAddress: funds_distributor_contract,
+        nativeDenoms: Array.from(tokensToCheck.native),
+        cw20Assets: Array.from(tokensToCheck.cw20),
+      }
       : undefined
   );
 
@@ -79,9 +68,8 @@ export const RewardsPanel = () => {
               </VStack>
               <PrimaryButton
                 kind="secondary"
-                isDisabled={!areRewardsAvailable}
+                isDisabled={areNoRewards && 'No tokens to claim'}
                 isLoading={txResult.loading}
-                tooltipText={areNoRewards && 'No tokens to claim'}
                 onClick={() => {
                   // try to claim everything just in case
                   const { cw20, native } = assertDefined(tokensToCheck);

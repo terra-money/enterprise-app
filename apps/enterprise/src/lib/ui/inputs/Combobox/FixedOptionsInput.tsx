@@ -196,10 +196,8 @@ function FixedOptionsInputInner<T>(
         <ToggleWrapper>
           <CollapseToggleIconButton
             size="l"
-            as="div"
             isOpen={isMenuOpen}
-            onMouseDown={toggleMenu}
-            onTouchStart={toggleMenu}
+            onClick={toggleMenu}
           />
         </ToggleWrapper>
       )}

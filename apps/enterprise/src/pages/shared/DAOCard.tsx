@@ -10,7 +10,7 @@ import { DAOLogo } from 'components/dao-logo';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { enterprise } from 'types/contracts';
 import { SeparatedBy, dotSeparator } from 'lib/ui/SeparatedBy';
-import { SimpleTooltip } from 'lib/ui/popover/SimpleTooltip';
+import { Tooltip } from 'lib/ui/Tooltip';
 
 interface DAOCardProps {
   className?: string;
@@ -54,11 +54,13 @@ export const DAOCard = (props: DAOCardProps) => {
           {daoTypeName[dao.type]}
         </Text>
         {tvl && tvl > 0 && (
-          <SimpleTooltip text="Total value locked">
-            <Text size={14} weight="semibold" color="supporting">
-              $ {formatAmount(tvl)}
-            </Text>
-          </SimpleTooltip>
+          <Tooltip
+            content="Total value locked"
+            renderOpener={props => (
+              <Text {...props} size={14} weight="semibold" color="supporting">
+                $ {formatAmount(tvl)}
+              </Text>)}
+          />
         )}
       </SeparatedBy>
       <FavouriteToggle className={styles.favourite} dao={dao} />

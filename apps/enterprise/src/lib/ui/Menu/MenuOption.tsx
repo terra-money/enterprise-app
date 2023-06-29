@@ -1,72 +1,78 @@
-import { ReactNode } from 'react';
-import styled, { css } from 'styled-components';
-import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
-import { HStack } from 'lib/ui/Stack';
-import { Text } from 'lib/ui/Text';
-import { UnstyledButton } from '../buttons/UnstyledButton';
+import { ReactNode } from 'react'
+import styled, { css } from 'styled-components'
 
-type MenuOptionKind = 'regular' | 'alert';
 
-type MenuOptionSize = 'm' | 'l';
+import { MenuView } from '.'
+import { HStack } from '../Stack'
+import { defaultTransitionCSS } from '../animations/transitions'
+import { PrimaryButton } from '../buttons/rect/PrimaryButton'
+import { getVerticalPaddingCSS } from '../utils/getVerticalPaddingCSS'
+import { Text } from '../Text'
+import { Hoverable } from '../Hoverable'
+
+type MenuOptionKind = 'regular' | 'alert'
 
 export interface MenuOptionProps {
-  icon?: ReactNode;
-  text: string;
-  onSelect: () => void;
-  kind?: MenuOptionKind;
-  size?: MenuOptionSize;
+  icon?: ReactNode
+  text: string
+  onSelect: () => void
+  kind?: MenuOptionKind
+  view?: MenuView
 }
 
-const Container = styled(UnstyledButton)<{
-  kind: MenuOptionKind;
-  size: MenuOptionSize;
-}>`
-  ${defaultTransitionCSS};
+interface ContentProps {
+  kind: MenuOptionKind
+}
 
+const Content = styled(HStack) <ContentProps>`
+  ${defaultTransitionCSS};
   border-radius: 8px;
   width: 100%;
-
-  ${({ size }) =>
-    ({
-      m: css`
-        padding: 8px 12px;
-      `,
-      l: css`
-        padding: 16px 8px;
-        font-size: 18px;
-      `,
-    }[size])};
+  ${getVerticalPaddingCSS(8)};
+  align-items: center;
+  gap: 12px;
 
   ${({ kind }) =>
-    ({
-      regular: css`
+  ({
+    regular: css`
         color: ${({ theme }) => theme.colors.text.toCssValue()};
       `,
-      alert: css`
+    alert: css`
         color: ${({ theme }) => theme.colors.alert.toCssValue()};
       `,
-    }[kind])};
+  }[kind])};
+`
 
-  :hover {
-    ${({ kind }) =>
-      ({
-        regular: css`
-          background: ${({ theme }) => theme.colors.text.getVariant({ a: () => 0.12 }).toCssValue()};
-        `,
-        alert: css`
-          background: ${({ theme }) => theme.colors.alert.getVariant({ a: () => 0.12 }).toCssValue()};
-        `,
-      }[kind])};
+export const MenuOption = ({
+  text,
+  icon,
+  onSelect,
+  kind = 'regular',
+  view = 'popover',
+}: MenuOptionProps) => {
+  if (view === 'popover') {
+    return (
+      <Hoverable verticalOffset={0} onClick={onSelect}>
+        <Content kind={kind}>
+          <Text style={{ display: 'flex' }}>{icon}</Text>
+          <Text>{text}</Text>
+        </Content>
+      </Hoverable>
+    )
   }
-`;
 
-export const MenuOption = ({ text, icon, onSelect, kind = 'regular', size = 'm' }: MenuOptionProps) => {
   return (
-    <Container size={size} kind={kind} onClick={onSelect}>
-      <HStack alignItems="center" gap={12}>
-        <Text style={{ display: 'flex' }}>{icon}</Text>
-        <Text>{text}</Text>
+    <PrimaryButton
+      style={{ justifyContent: 'flex-start', height: 56 }}
+      kind={kind === 'regular' ? 'secondary' : 'alert'}
+      size="l"
+      isRounded={true}
+      key={text}
+      onClick={onSelect}
+    >
+      <HStack alignItems="center" gap={8}>
+        {icon} <Text>{text}</Text>
       </HStack>
-    </Container>
-  );
-};
+    </PrimaryButton>
+  )
+}

@@ -26,75 +26,23 @@ export const AppRoutes = () => {
       <Route path="/" element={<AppRoutesWrapper />}>
         <Route path={Path.Dashboard} element={<DashboardPage />} />
         <Route path={Path.Daos} element={<DAOsPage />} />
-        <Route
-          path="/dao/:address"
-          element={
-            <DaoPage />
-          }
-        >
-          <Route
-            index={true}
-            element={
-              <Overview />
-            }
-          />
-          <Route
-            path="treasury"
-            element={
-              <TreasuryPage />
-            }
-          />
-          <Route
-            path="proposals"
-            element={
-              <ProposalsPage />
-            }
-          />
-          <Route
-            path="rewards"
-            element={
-              <DistributePage />
-            }
-          />
-          <Route
-            path="staking"
-            element={
-              <Staking />
-            }
-          />
-          <Route
-            path="members"
-            element={
-              <DaoMembersPage />
-            }
-          />
+        <Route path="/dao/:address" element={<DaoPage />}>
+          <Route index={true} element={<Overview />} />
+          <Route path="treasury" element={<TreasuryPage />} />
+          <Route path="proposals" element={<ProposalsPage />} />
+          <Route path="rewards" element={<DistributePage />} />
+          <Route path="staking" element={<Staking />} />
+          <Route path="members" element={<DaoMembersPage />} />
         </Route>
         <Route
           path="/dao/:address/proposals/create"
-          element={
-            <ConditionalWallet connected={() => <SelectProposalTypePage />} />
-          }
+          element={<ConditionalWallet connected={() => <SelectProposalTypePage />} />}
         />
-        <Route
-          path="/dao/:address/proposals/create/:type"
-          element={
-            <CreateProposalPage />
-          }
-        />
-        <Route
-          path="/dao/:address/proposals/:id"
-          element={
-            <ProposalPage />
-          }
-        />
-        <Route
-          path="/dao/create"
-          element={
-            <CreateDAOPage />
-          }
-        />
+        <Route path="/dao/:address/proposals/create/:type" element={<CreateProposalPage />} />
+        <Route path="/dao/:address/proposals/:id" element={<ProposalPage />} />
+        <Route path="/dao/create" element={<CreateDAOPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};

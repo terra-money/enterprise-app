@@ -1,5 +1,6 @@
 import styled, { DefaultTheme, css } from 'styled-components';
 import { gradientColorCSS } from '../gradients';
+import { croppedTextCSS } from '../utils/croppedTextCSS';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
   ({
@@ -81,11 +82,5 @@ export const Text = styled.p<Props>`
       text-align: center;
     `}
 
-  ${({ cropped }) =>
-    cropped &&
-    css`
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    `}
+  ${({ cropped }) => cropped && croppedTextCSS}
 `;

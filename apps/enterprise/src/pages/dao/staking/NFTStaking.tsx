@@ -91,8 +91,7 @@ export const NftStakingConnectedView = () => {
                   renderOpener={({ onOpen }) => (
                     <PrimaryButton
                       isLoading={isLoading}
-                      tooltipText={isStakingDisabled ? `You don't have any DAO NFTs to stake` : undefined}
-                      isDisabled={isStakingDisabled}
+                      isDisabled={isStakingDisabled ? `You don't have any DAO NFTs to stake` : undefined}
                       onClick={onOpen}
                     >
                       Stake
@@ -107,10 +106,9 @@ export const NftStakingConnectedView = () => {
                   renderOpener={({ onOpen }) => (
                     <PrimaryButton
                       kind="secondary"
-                      isDisabled={isUnstakeDisabled}
+                      isDisabled={isUnstakeDisabled ? `Your wallet doesn't have staked NFTs` : undefined}
                       isLoading={isLoading}
                       onClick={onOpen}
-                      tooltipText={isUnstakeDisabled ? `Your wallet doesn't have staked NFTs` : undefined}
                     >
                       Unstake
                     </PrimaryButton>
@@ -139,8 +137,7 @@ export const NftStakingConnectedView = () => {
                 <Container className={styles.actions} direction="row">
                   <PrimaryButton
                     kind="secondary"
-                    isDisabled={isClaimDisabled}
-                    tooltipText={isClaimDisabled ? `You don't have any NFTs to claim` : undefined}
+                    isDisabled={isClaimDisabled ? `You don't have any NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
                     onClick={() => {
                       claimTx({ daoAddress: address });

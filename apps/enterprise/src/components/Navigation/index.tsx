@@ -6,8 +6,16 @@ import { Outlet } from 'react-router';
 export const Navigation = () => {
   return (
     <ResponsiveView
-      small={() => <SmallScreenNavigation><Outlet /></SmallScreenNavigation>}
-      normal={() => <NormalScreenNavigation><Outlet /></NormalScreenNavigation>}
+      small={() => (
+        <SmallScreenNavigation>
+          <Outlet />
+        </SmallScreenNavigation>
+      )}
+      normal={() => (
+        <NormalScreenNavigation>
+          <Outlet />
+        </NormalScreenNavigation>
+      )}
     />
   );
 };

@@ -44,7 +44,7 @@ export const TxItem = (props: TxItemProps) => {
 
   const header = (
     <HStack fullWidth gap={20} wrap="wrap" justifyContent="space-between">
-      <HStack alignItems="center" gap={16}>
+      <HStack wrap="wrap" alignItems="center" gap={16}>
         <ExternalLink to={getFinderUrl(networkName, txhash)}>
           <ShyTextButton as="div" text={truncateAddress(txhash)} />
         </ExternalLink>
@@ -83,5 +83,5 @@ export const TxItem = (props: TxItemProps) => {
     </>
   );
 
-  return <ExpandablePanel header={header} renderContent={() => transactionDetials}><div /></ExpandablePanel>;
+  return <ExpandablePanel header={header} renderContent={() => transactionDetials} />;
 };

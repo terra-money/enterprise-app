@@ -37,7 +37,7 @@ export const fetchCoinGeckoPrices = async (
 
   const response = await fetch(uri);
   if (response.status !== 200) {
-    console.log("An error occurred trying to fetch the prices");
+    console.error("An error occurred trying to fetch the prices");
     return {};
   }
 

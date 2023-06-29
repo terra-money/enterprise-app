@@ -1,4 +1,4 @@
-import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { ScrollableContainer } from '@terra-money/apps/components';
 import { useRef } from 'react';
 import { Header } from './Header';
 import { Outlet } from 'react-router';
@@ -33,11 +33,11 @@ export const DAOPageContent = () => {
             normal={() => (
               <ScrollableContainer
                 stickyRef={ref}
-                header={(visible) => (
-                  <StickyHeader visible={visible}>
-                    <Header compact={true} />
-                  </StickyHeader>
-                )}
+                // header={(visible) => (
+                //   <StickyHeader visible={visible}>
+                //     <Header compact={true} />
+                //   </StickyHeader>
+                // )}
               >
                 <PageLayout header={<Header ref={ref} />}>
                   <Outlet />

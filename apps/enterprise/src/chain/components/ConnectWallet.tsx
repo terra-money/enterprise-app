@@ -1,38 +1,52 @@
-import { PopoverOpener } from 'lib/ui/popover/PopoverOpener';
-import { ResponsiveView } from 'lib/ui/ResponsiveView';
-import { VStack } from 'lib/ui/Stack';
-import { Panel } from 'lib/ui/Panel/Panel';
-import { Text } from 'lib/ui/Text';
 import { ConnectWalletOptions } from './ConnectWalletOptions';
-import { BottomSlideOverOpener } from 'lib/ui/BottomSlideOver/BottomSlideOverOpener';
-import { OpenerComponentProps } from 'lib/shared/props';
+import { PopoverMenuProps } from 'lib/ui/Menu/PopoverMenu';
+import { ResponsiveView } from 'lib/ui/ResponsiveView';
+import { Opener } from 'lib/ui/Opener';
+import { BottomSlideOver } from 'lib/ui/BottomSlideOver';
+import { PopoverPanel } from 'lib/ui/Menu/PopoverPanel';
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
+import styled from 'styled-components';
 
-const title = 'Connect wallet';
+interface ConnectWalletProps extends Pick<PopoverMenuProps, 'renderOpener'> { }
 
-export const ConnectWallet = ({ renderOpener }: OpenerComponentProps) => {
+const title = "Connect wallet"
+
+const Popover = styled(PopoverPanel)`
+  min-width: 280px;
+`
+
+export const ConnectWallet = ({ renderOpener }: ConnectWalletProps) => {
   return (
-    <ResponsiveView
-      small={() => (
-        <BottomSlideOverOpener renderOpener={renderOpener} title={title}>
-          <ConnectWalletOptions />
-        </BottomSlideOverOpener>
-      )}
-      normal={() => (
-        <PopoverOpener
-          placement="bottom-end"
-          renderOpener={renderOpener}
-          renderContent={() => (
-            <Panel width={400}>
+    <>
+      <ResponsiveView
+        small={() => (
+          <Opener
+            renderOpener={({ onOpen }) => renderOpener({
+              onClick: onOpen,
+              ref: () => { },
+            })}
+            renderContent={({ onClose }) => (
+              <BottomSlideOver onClose={onClose} title={title}>
+                <ConnectWalletOptions />
+              </BottomSlideOver>
+            )}
+          />
+        )}
+        normal={() => (
+          <Popover
+            renderOpener={renderOpener}
+            renderContent={() => (
               <VStack gap={20}>
                 <Text size={20} weight="bold">
                   {title}
                 </Text>
                 <ConnectWalletOptions />
               </VStack>
-            </Panel>
-          )}
-        />
-      )}
-    />
-  );
+            )}
+          />
+        )}
+      />
+    </>
+  )
 };

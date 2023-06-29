@@ -1,5 +1,6 @@
 import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { AssetInfo, AssetInfoQueryParams, useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
+import { AssetInfo } from 'chain/Asset';
+import { AssetInfoQueryParams, useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
 import { Throbber } from 'components/primitives';
 
 interface Props extends AssetInfoQueryParams {

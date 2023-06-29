@@ -9,7 +9,9 @@ import { DaoGovConfigInput } from './DaoGovConfigInput';
 import { VetoThresholdInput } from './VetoThresholdInput';
 import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
 import { HStack } from 'lib/ui/Stack';
-import { TextTooltip } from 'components/primitives/text/TextTooltip';
+import { Tooltip } from 'lib/ui/Tooltip';
+import { Text } from 'lib/ui/Text';
+import { HelpCircleIcon } from 'lib/ui/icons/HelpCircleIcon';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;
@@ -45,7 +47,18 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
             value={!!value.allowEarlyProposalExecution}
             onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
           />
-          <TextTooltip content="Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait until the end of the voting period." />
+          <Tooltip
+            content={(
+              <Text style={{ maxWidth: 320 }}>
+                Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait until the end of the voting period.
+              </Text>
+            )}
+            renderOpener={props => (
+              <div {...props}>
+                <HelpCircleIcon />
+              </div>
+            )}
+          />
         </HStack>
       )}
     </>

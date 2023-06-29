@@ -11,7 +11,7 @@ export const InitizalizedWalletOnly = ({ children }: ComponentWithChildrenProps)
       <Center>
         <Spinner />
       </Center>
-    )
+    );
   }
 
   return <>{children}</>;

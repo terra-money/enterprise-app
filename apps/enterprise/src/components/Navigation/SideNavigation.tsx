@@ -3,7 +3,7 @@ import { InternalLink } from 'lib/navigation/Link/InternalLink';
 import { VStack } from 'lib/ui/Stack';
 import { Path } from 'navigation';
 import styled from 'styled-components';
-import { IconButton, Tooltip } from 'components/primitives';
+import { IconButton } from 'components/primitives';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { Favourites } from 'components/layout/Favourites';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
@@ -11,6 +11,7 @@ import { useConnectedWallet } from '@terra-money/use-wallet';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
+import { Tooltip } from 'lib/ui/Tooltip';
 
 const Container = styled(VStack)`
   padding: 32px;
@@ -29,36 +30,43 @@ export const SideNavigation = () => {
           <Logo compact />
         </InternalLink>
         <VStack gap={12}>
-          <Tooltip title="Dashboard" placement="right" arrow={true}>
-            <div>
-              <DashboardButton />
-            </div>
-          </Tooltip>
-          <Tooltip title="Manage your favourite DAOs" placement="right" arrow={true}>
-            <div>
-              <ManageDaosButton />
-            </div>
-          </Tooltip>
+          <Tooltip content="Dashboard" placement="right"
+            renderOpener={props => (
+              <div {...props}>
+                <DashboardButton />
+              </div>
+            )}
+          />
+          <Tooltip content="Manage your favourite DAOs" placement="right"
+            renderOpener={props => (
+              <div {...props}>
+                <ManageDaosButton />
+              </div>
+            )}
+          />
           <Favourites />
         </VStack>
       </VStack>
       <VStack gap={24} alignItems="center">
-        <Tooltip title="Got feedback?" placement="right" arrow={true}>
-          <div>
-            <ExternalLink to="https://terra.sc/enterprisefeedback">
-              <IconButton variant="outline">
-                <ChatIcon />
-              </IconButton>
-            </ExternalLink>
-          </div>
-        </Tooltip>
-        {connectedWallet && (
-          <Tooltip title="Create a DAO" placement="right" arrow={true}>
-            <div>
-              <CreateDaoButton />
+        <Tooltip content="Got feedback?" placement="right"
+          renderOpener={props => (
+            <div {...props}>
+              <ExternalLink to="https://terra.sc/enterprisefeedback">
+                <IconButton variant="outline">
+                  <ChatIcon />
+                </IconButton>
+              </ExternalLink>
             </div>
-          </Tooltip>
-        )}
+          )}
+        />
+        {connectedWallet && (
+          <Tooltip content="Create a DAO" placement="right"
+            renderOpener={props => (
+              <div {...props}>
+                <CreateDaoButton />
+              </div>
+            )}
+          />)}
       </VStack>
     </Container>
   );

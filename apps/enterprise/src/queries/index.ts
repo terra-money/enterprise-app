@@ -15,8 +15,6 @@ export * from './useVotingPowerQuery';
 export * from './useClaimsQuery';
 export * from './useReleasableClaimsQuery';
 export * from './useBlockHeightQuery';
-export * from './useDAOAssetsWhitelist';
-export * from './useGlobalAssetsWhitelist';
 export * from './useCW721NumTokensQuery';
 export * from './useCW721ContractInfoQuery';
 export * from './useCW3ListVotersQuery';

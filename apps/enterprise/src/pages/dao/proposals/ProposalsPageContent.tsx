@@ -94,8 +94,9 @@ export const ProposalsPageContent = () => {
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
           ) : (
             <EmptyStatePlaceholder
-              message={`No proposals have been created for this DAO yet. ${newProposalsDisabled ? '' : ' Click here to create a new proposal.'
-                }`}
+              message={`No proposals have been created for this DAO yet. ${
+                newProposalsDisabled ? '' : ' Click here to create a new proposal.'
+              }`}
               action={
                 newProposalsDisabled ? undefined : (
                   <InternalLink to={`/dao/${address}/proposals/create`}>

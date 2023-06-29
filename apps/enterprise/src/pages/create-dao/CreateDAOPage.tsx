@@ -5,7 +5,7 @@ import { GenericErrorFallback } from 'errors/components/GenericErrorFallback';
 
 export const CreateDAOPage = () => {
   return (
-    <ErrorBoundary fallback={props => <GenericErrorFallback {...props} />}>
+    <ErrorBoundary fallback={(props) => <GenericErrorFallback {...props} />}>
       <DaoWizardFormProvider>
         <DaoWizard />
       </DaoWizardFormProvider>

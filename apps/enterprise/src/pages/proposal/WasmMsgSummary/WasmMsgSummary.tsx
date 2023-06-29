@@ -1,6 +1,5 @@
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { CurrentDAOTokenProvider } from 'dao/components/CurrentDaoTokenProvider';
-import { ExecuteMsgInput } from 'pages/create-proposal/execute/helpers/toExecuteMsg';
 import { MintTokenSummary } from './MintTokenSummary';
 import { CurrentAssetInfoProvider } from 'chain/components/AssetInfoProvider';
 import { SendAssetSummary } from './SendAssetSummary';
@@ -9,9 +8,13 @@ import { DelegateSummary } from './DelegateSummary';
 import { UndelegateSummary } from './UndelegateSummary';
 import { RedelegateSummary } from './RedelegateSummary';
 import { MintNftSummary } from './MintNftSummary';
+import { CosmWasmMsg } from 'chain/CosmWasm';
+import { fromBase64 } from 'chain/utils/fromBase64';
+import { CW20Msg, MintCW20Msg } from 'chain/CW20';
+import { CW721Msg, MintCW721Msg } from 'chain/CW721';
 
 interface WasmMsgSummaryProps {
-  msg: ExecuteMsgInput;
+  msg: CosmWasmMsg;
 }
 
 export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
@@ -19,33 +22,36 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
 
   if ('wasm' in fullMsg) {
     const { wasm } = fullMsg;
-    const msg = wasm?.execute?.msg;
-    const contractAddr = wasm?.execute?.contract_addr;
-    if ('mint' in msg) {
-      const { mint } = msg;
-      if (dao_type === 'token') {
+    if ('execute' in wasm) {
+      const msg: CW20Msg | CW721Msg = fromBase64(wasm.execute.msg)
+      const contractAddr = wasm.execute.contract_addr;
+      if ('mint' in msg) {
+        if (dao_type === 'token') {
+          const { mint } = msg as MintCW20Msg
+          return (
+            <CurrentDAOTokenProvider>
+              <MintTokenSummary {...mint} />
+            </CurrentDAOTokenProvider>
+          );
+        } else if (dao_type === 'nft') {
+          const { mint } = msg as MintCW721Msg
+          return <MintNftSummary owner={mint.owner} />;
+        }
+      } else if ('transfer' in msg && contractAddr) {
+        const { transfer } = msg;
+        return (
+          <CurrentAssetInfoProvider id={contractAddr} type="cw20">
+            <SendAssetSummary recipient={transfer.recipient} amount={transfer.amount} />
+          </CurrentAssetInfoProvider>
+        );
+      } else if ('burn' in msg) {
+        const { burn } = msg;
         return (
           <CurrentDAOTokenProvider>
-            <MintTokenSummary {...mint} />
+            <BurnTokenSummary {...burn} />
           </CurrentDAOTokenProvider>
         );
-      } else if (dao_type === 'nft') {
-        return <MintNftSummary owner={mint.owner} />;
       }
-    } else if ('transfer' in msg && contractAddr) {
-      const { transfer } = msg;
-      return (
-        <CurrentAssetInfoProvider id={contractAddr} type="cw20">
-          <SendAssetSummary recipient={transfer.recipient} amount={transfer.amount} />
-        </CurrentAssetInfoProvider>
-      );
-    } else if ('burn' in msg) {
-      const { burn } = msg;
-      return (
-        <CurrentDAOTokenProvider>
-          <BurnTokenSummary {...burn} />
-        </CurrentDAOTokenProvider>
-      );
     }
   } else if ('bank' in fullMsg) {
     const { bank } = fullMsg;
@@ -63,7 +69,6 @@ export const WasmMsgSummary = ({ msg: fullMsg }: WasmMsgSummaryProps) => {
 
     if ('delegate' in staking) {
       const { delegate } = staking;
-      console.log(delegate);
       if (!delegate) return null;
 
       return (

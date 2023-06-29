@@ -1,12 +1,13 @@
 import { enterprise } from 'types/contracts';
-import { hasAsset } from './areSameAssets';
+import { Asset, areSameAsset } from 'chain/Asset';
+import { fromAsset } from 'dao/utils/whitelist';
 
 export const toUpdateAssetWhitelistMsg = (
-  initialAssets: enterprise.AssetInfoBaseFor_Addr[],
-  newAssets: enterprise.AssetInfoBaseFor_Addr[]
+  initialAssets: Asset[],
+  newAssets: Asset[]
 ): enterprise.UpdateAssetWhitelistMsg => {
   return {
-    add: newAssets.filter((asset) => !hasAsset(initialAssets, asset)),
-    remove: initialAssets.filter((asset) => !hasAsset(newAssets, asset)),
+    add: newAssets.filter((asset) => initialAssets.every((a) => !areSameAsset(a, asset))).map(fromAsset),
+    remove: initialAssets.filter((asset) => newAssets.every((a) => !areSameAsset(a, asset))).map(fromAsset),
   };
 };
