@@ -1,14 +1,14 @@
-import { useFloating, offset, flip, shift, size, autoUpdate, useDismiss } from '@floating-ui/react'
+import { useFloating, offset, flip, shift, size, autoUpdate } from '@floating-ui/react'
 import { getCSSUnit } from 'lib/ui/utils/getCSSUnit'
 import { zIndex } from 'lib/ui/zIndex'
 import React, { useRef } from 'react'
+import { useClickAway } from 'react-use'
 import styled from 'styled-components'
 
 interface Props {
   children: React.ReactNode
   menu?: React.ReactNode
-  isMenuOpen: boolean
-  onIsMenuOpenChange: (isOpen: boolean) => void
+  onClickOutside?: () => void
 }
 
 const Container = styled.div`
@@ -24,15 +24,12 @@ const DropdownMenu = styled.div`
 export const DropdownMenuPlacer = ({
   children,
   menu,
-  isMenuOpen,
-  onIsMenuOpenChange
+  onClickOutside,
 }: Props) => {
   const wrapperElement = useRef<HTMLDivElement>(null)
-  const { refs, strategy, x, y, context } = useFloating({
+  const { refs, strategy, x, y } = useFloating({
     placement: 'bottom-start',
     strategy: 'fixed',
-    open: isMenuOpen,
-    onOpenChange: onIsMenuOpenChange,
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(4),
@@ -48,7 +45,7 @@ export const DropdownMenuPlacer = ({
     ],
   })
 
-  useDismiss(context)
+  useClickAway(wrapperElement, () => onClickOutside?.())
 
   return (
     <Container ref={wrapperElement}>
@@ -61,7 +58,7 @@ export const DropdownMenuPlacer = ({
         }}
         ref={refs.setFloating}
       >
-        {isMenuOpen && menu}
+        {menu}
       </DropdownMenu>
     </Container>
   )
