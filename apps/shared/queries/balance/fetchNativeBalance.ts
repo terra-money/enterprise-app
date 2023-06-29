@@ -7,7 +7,7 @@ export const fetchNativeBalance = async (
   walletAddr: string,
   denom: string
 ): Promise<u<Big>> => {
-  const [coins] = await lcd.bank.balance(walletAddr);
+  const [coins] = await lcd.bank.spendableBalances(walletAddr);
 
   const coin = coins.get(denom);
 

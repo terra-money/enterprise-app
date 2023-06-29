@@ -43,7 +43,7 @@ export async function contractQuery<T>(contractAddress: string, msg: object | st
 }
 
 export const getBankBalance = memoize(async (address: string) => {
-  const promise = getLCDClient().bank.balance(address).then(([coins]) => coins)
+  const promise = getLCDClient().bank.spendableBalances(address).then(([coins]) => coins)
 
   return handleTooManyRequestsError(promise)
 })

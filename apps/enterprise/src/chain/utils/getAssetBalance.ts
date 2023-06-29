@@ -15,7 +15,7 @@ export const getAssetBalance = async ({ asset, address, lcd }: GetAssetBalance) 
   const { id, type } = asset;
 
   if (type === 'native') {
-    const coins = await lcd.bank.balance(address).then(([coins]) => coins);
+    const coins = await lcd.bank.spendableBalances(address).then(([coins]) => coins);
     if (!coins) return '0';
 
     const coin = coins.get(asset.id);
