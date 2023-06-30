@@ -1,26 +1,28 @@
-import { SliderInput } from 'components/primitives';
-import { FormControl } from 'components/form-control';
+import { WithHint } from 'lib/ui/WithHint';
+import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
 export interface ThresholdInputProps {
   value: number;
   onChange: (value: number) => void;
   min?: number;
+  error?: string;
 }
 
-export const ThresholdInput = ({ value, onChange, min = 0 }: ThresholdInputProps) => {
+export const ThresholdInput = ({ value, onChange, error, min = 0 }: ThresholdInputProps) => {
   return (
-    <FormControl
-      label="Threshold"
-      helpText="The minimum proportion of Yes votes needed for the proposal to pass. For example, a 55% threshold means that a proposal needs at least 55% Yes votes to pass."
-    >
-      <SliderInput
-        value={value}
-        step={0.01}
-        min={min}
-        max={1}
-        formatValue={(v) => `${Math.floor(v * 100)}%`}
-        onChange={(_, value) => onChange(value as number)}
-      />
-    </FormControl>
+    <AmountInput
+      error={error}
+      label={
+        <WithHint hint="The minimum proportion of Yes votes needed for the proposal to pass. For example, a 55% threshold means that a proposal needs at least 55% Yes votes to pass.">
+          Threshold
+        </WithHint>
+      }
+      value={value}
+      min={min}
+      max={1}
+      step={0.01}
+      formatValue={(v) => `${Math.floor(v * 100)}%`}
+      onChange={onChange}
+    />
   );
 };

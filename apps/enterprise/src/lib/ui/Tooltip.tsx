@@ -35,6 +35,7 @@ const Container = styled.div`
   color: ${getColor("background")};
   padding: 4px 8px;
   font-size: 14px;
+  max-width: 320px;
 `
 
 const Arrow = styled(FloatingArrow)`

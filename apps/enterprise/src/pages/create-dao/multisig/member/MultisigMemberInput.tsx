@@ -1,4 +1,3 @@
-import { IntegratedSliderInput } from 'components/primitives';
 import { Container } from '@terra-money/apps/components';
 import styles from './MultisigMemberInput.module.sass';
 import { FormState } from '@terra-money/apps/hooks';
@@ -6,6 +5,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { MultisigMember } from 'types/MultisigMember';
+import { IntegratedSliderInput } from 'components/primitives/slider/IntegratedSliderInput';
 
 interface MultisigMemberInputProps extends FormState<MultisigMember> {
   onChange: (member: Partial<MultisigMember>) => void;
