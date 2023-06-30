@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Slider, SliderProps } from '.';
 
 import { InputWrapperWithErrorMessage } from '../InputWrapper';
+import { defaultInputShapeCSS } from '../config';
 
 interface Props extends SliderProps {
   label: ReactNode;
@@ -12,6 +13,13 @@ interface Props extends SliderProps {
   alignValue?: 'start' | 'end';
   error?: string;
 }
+
+const Container = styled(Panel)`
+  ${defaultInputShapeCSS};
+
+  display: flex;
+  align-items: center;
+`;
 
 const Content = styled.div`
   display: grid;
@@ -37,14 +45,14 @@ export const AmountInput = ({
 }: Props) => {
   return (
     <InputWrapperWithErrorMessage error={error} label={label}>
-      <Panel>
+      <Container>
         <Content>
           <Slider step={step} size={size} min={min} max={max} onChange={onChange} value={value} color={color} />
           <Text style={{ textAlign: alignValue }} weight="bold">
             {formatValue(value)}
           </Text>
         </Content>
-      </Panel>
+      </Container>
     </InputWrapperWithErrorMessage>
   );
 };

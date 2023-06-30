@@ -32,7 +32,7 @@ export const validateGovConfig = ({
   formState.unlockingPeriodError = validateUnlockingPeriod(unlockingPeriod, voteDuration);
 
   formState.thresholdError = validateAmount(Math.round(threshold * 100), 50, 100, 'Threshold');
-  formState.vetoThresholdError = validateAmount(Math.round(threshold * 100), 50, 100, 'Veto threshold');
+  formState.vetoThresholdError = validateAmount(Math.round(vetoThreshold * 100), 50, 100, 'Veto threshold');
 
   return formState;
 };
