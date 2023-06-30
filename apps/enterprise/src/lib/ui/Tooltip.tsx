@@ -37,6 +37,7 @@ const Container = styled.div`
   font-size: 14px;
   max-width: 320px;
   font-weight: 500;
+  white-space: initial;
 `;
 
 const Arrow = styled(FloatingArrow)`

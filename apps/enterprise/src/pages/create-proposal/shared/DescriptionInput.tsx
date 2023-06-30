@@ -1,10 +1,11 @@
 import { InputAdornment } from '@mui/material';
-import { Text, Tooltip, useFocusedInput } from 'components/primitives';
+import { Text, useFocusedInput } from 'components/primitives';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormTextInput } from 'components/form-text-input';
 import styles from './DescriptionInput.module.sass';
 import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
+import { Tooltip } from 'lib/ui/Tooltip';
 
 interface DescriptionInputProps {
   className?: string;
@@ -49,9 +50,7 @@ export const DescriptionInput = (props: DescriptionInputProps) => {
           <>
             {error && (
               <InputAdornment className={styles.adornment} position="end">
-                <Tooltip open={focused} title={error} arrow={true} placement="top" variant="error">
-                  <ErrorIcon className={styles.error} />
-                </Tooltip>
+                <Tooltip content={error} renderOpener={(props) => <ErrorIcon {...props} className={styles.error} />} />
               </InputAdornment>
             )}
             {error === undefined && (

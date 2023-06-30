@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { forwardRef, ReactNode } from 'react';
 import { UIElementProps } from '@terra-money/apps/components';
 import styles from './Text.module.sass';
-import { TextTooltip } from './TextTooltip';
 
 type ComponentName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'sub';
 
@@ -29,15 +28,7 @@ export interface TextProps extends UIElementProps {
 }
 
 const Text = forwardRef<any, TextProps>((props, ref) => {
-  const {
-    className,
-    variant,
-    component = DefaultComponent[variant],
-    weight = 'default',
-    onClick,
-    children,
-    tooltip,
-  } = props;
+  const { className, variant, component = DefaultComponent[variant], weight = 'default', onClick, children } = props;
 
   const Component = component;
 
@@ -57,7 +48,6 @@ const Text = forwardRef<any, TextProps>((props, ref) => {
       data-variant={variant}
     >
       {children}
-      {tooltip && <TextTooltip content={tooltip} />}
     </Component>
   );
 });
