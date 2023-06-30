@@ -99,7 +99,7 @@ export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdVa
                 {renderFooterMsg()}
               </Text>
               <Actions childrenWidth={186} gap={16}>
-                {items && itemsToDisplay.length > 4 && (
+                {items && items.length > 4 && (
                   <PrimaryButton kind="secondary" onClick={() => setShouldShowAllItems(!shouldShowAllItems)}>
                     {itemsToDisplay.length < items.length ? 'Show more' : 'Show less'}
                   </PrimaryButton>
