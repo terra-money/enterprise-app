@@ -1,25 +1,28 @@
-import { SliderInput } from 'components/primitives';
-import { FormControl } from 'components/form-control';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { WithHint } from 'lib/ui/WithHint';
+import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
 export interface VetoThresholdInputProps {
   value: number;
   onChange: (value: number) => void;
+  error?: string;
 }
 
-export const VetoThresholdInput = ({ value, onChange }: VetoThresholdInputProps) => {
+export const VetoThresholdInput = ({ value, onChange, error }: VetoThresholdInputProps) => {
   return (
-    <FormControl
-      label="Veto threshold"
-      helpText="The minimum proportion of Veto votes required to reject a proposal. For example, a 30% veto threshold means that a proposal will fail if more than 30% of the votes are Veto."
-    >
-      <SliderInput
-        value={value}
-        step={0.01}
-        min={0}
-        max={1}
-        formatValue={(v) => `${Math.floor(v * 100)}%`}
-        onChange={(_, value) => onChange(value as number)}
-      />
-    </FormControl>
+    <AmountInput
+      error={error}
+      label={
+        <WithHint hint="The minimum proportion of Veto votes required to reject a proposal. For example, a 30% veto threshold means that a proposal will fail if more than 30% of the votes are Veto.">
+          Veto threshold
+        </WithHint>
+      }
+      value={value}
+      step={0.01}
+      min={0}
+      max={1}
+      formatValue={(v) => toPercents(v, 'round')}
+      onChange={onChange}
+    />
   );
 };

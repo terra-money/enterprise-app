@@ -1,26 +1,40 @@
-import { SliderInput } from 'components/primitives';
-import { FormControl } from 'components/form-control';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { Text } from 'lib/ui/Text';
+import { WithHint } from 'lib/ui/WithHint';
+import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
 export interface ThresholdInputProps {
   value: number;
   onChange: (value: number) => void;
   min?: number;
+  error?: string;
 }
 
-export const ThresholdInput = ({ value, onChange, min = 0 }: ThresholdInputProps) => {
+const lowThresholdMessage =
+  'Setting threshold < 50% will allow for proposals with non-majority votes to pass and is not recommended.';
+
+export const ThresholdInput = ({ value, onChange, error, min = 0 }: ThresholdInputProps) => {
   return (
-    <FormControl
-      label="Threshold"
-      helpText="The minimum proportion of Yes votes needed for the proposal to pass. For example, a 55% threshold means that a proposal needs at least 55% Yes votes to pass."
-    >
-      <SliderInput
-        value={value}
-        step={0.01}
-        min={min}
-        max={1}
-        formatValue={(v) => `${Math.floor(v * 100)}%`}
-        onChange={(_, value) => onChange(value as number)}
-      />
-    </FormControl>
+    <AmountInput
+      error={error}
+      label={
+        <WithHint hint="The minimum proportion of Yes votes needed for the proposal to pass. For example, a 55% threshold means that a proposal needs at least 55% Yes votes to pass.">
+          Threshold
+        </WithHint>
+      }
+      message={
+        value < 0.5 ? (
+          <Text as="span" color="idle">
+            {lowThresholdMessage}
+          </Text>
+        ) : undefined
+      }
+      value={value}
+      min={min}
+      max={1}
+      step={0.01}
+      formatValue={(v) => toPercents(v, 'round')}
+      onChange={onChange}
+    />
   );
 };

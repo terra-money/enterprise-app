@@ -1,5 +1,6 @@
-import { SliderInput } from 'components/primitives';
-import { FormControl } from 'components/form-control';
+import { pluralize } from 'lib/shared/utils/pluralize';
+import { WithHint } from 'lib/ui/WithHint';
+import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
 export interface UnlockingPeriodProps {
   value: number;
@@ -9,18 +10,19 @@ export interface UnlockingPeriodProps {
 
 export const UnlockingPeriodInput = ({ value, error, onChange }: UnlockingPeriodProps) => {
   return (
-    <FormControl
-      label="Unlocking period"
-      helpText="The amount of time that must pass before unstaked tokens become claimable."
-    >
-      <SliderInput
-        error={error}
-        value={value}
-        min={1}
-        max={90}
-        formatValue={(v) => `${v} days`}
-        onChange={(_, value) => onChange(value as number)}
-      />
-    </FormControl>
+    <AmountInput
+      label={
+        <WithHint hint="The amount of time that must pass before unstaked tokens become claimable.">
+          Unlocking period
+        </WithHint>
+      }
+      step={1}
+      error={error}
+      value={value}
+      min={1}
+      max={90}
+      formatValue={(v) => pluralize(v, 'day')}
+      onChange={onChange}
+    />
   );
 };

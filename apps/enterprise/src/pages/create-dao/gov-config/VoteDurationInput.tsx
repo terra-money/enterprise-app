@@ -1,21 +1,24 @@
-import { SliderInput } from 'components/primitives';
-import { FormControl } from 'components/form-control';
+import { WithHint } from 'lib/ui/WithHint';
+import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
+import { pluralize } from 'lib/ui/utils/pluralize';
 
 export interface VoteDurationInputProps {
   value: number;
   onChange: (value: number) => void;
+  error?: string;
 }
 
-export const VoteDurationInput = ({ value, onChange }: VoteDurationInputProps) => {
+export const VoteDurationInput = ({ value, onChange, error }: VoteDurationInputProps) => {
   return (
-    <FormControl label="Vote duration" helpText="The amount of time proposals are open for voting.">
-      <SliderInput
-        value={value}
-        min={1}
-        max={60}
-        formatValue={(v) => `${v} days`}
-        onChange={(_, value) => onChange(value as number)}
-      />
-    </FormControl>
+    <AmountInput
+      step={1}
+      label={<WithHint hint="The amount of time proposals are open for voting.">Vote duration</WithHint>}
+      onChange={onChange}
+      formatValue={(v) => pluralize(v, 'day')}
+      value={value}
+      min={1}
+      max={60}
+      error={error}
+    />
   );
 };

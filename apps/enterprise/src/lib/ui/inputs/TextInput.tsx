@@ -3,10 +3,10 @@ import styled, { css } from 'styled-components';
 import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
 import { defaultInputShapeCSS, inputPaddingCSS } from './config';
 
-import { Props as InputWrapperProps, InputWrapperWithErrorMessage } from './InputWrapper';
+import { InputWrapperWithErrorMessageProps, InputWrapperWithErrorMessage } from './InputWrapper';
 import { Spinner } from '../Spinner';
 
-export type SharedTextInputProps = Pick<InputWrapperProps, 'label' | 'error' | 'inputOverlay'> & {
+export type SharedTextInputProps = Pick<InputWrapperWithErrorMessageProps, 'label' | 'error' | 'inputOverlay'> & {
   onValueChange?: (value: string) => void;
   isLoading?: boolean;
 };

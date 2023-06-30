@@ -34,9 +34,14 @@ export function CouncilStep() {
             onChange={(allowedProposalTypes) => formInput({ council: { ...council, allowedProposalTypes } })}
             error={council.allowedProposalTypesError}
           />
-          <QuorumInput value={council.quorum} onChange={(quorum) => formInput({ council: { ...council, quorum } })} />
+          <QuorumInput
+            error={council.quorumError}
+            value={council.quorum}
+            onChange={(quorum) => formInput({ council: { ...council, quorum } })}
+          />
           <ThresholdInput
             value={council.threshold}
+            error={council.thresholdError}
             onChange={(threshold) => formInput({ council: { ...council, threshold } })}
           />
         </VStack>

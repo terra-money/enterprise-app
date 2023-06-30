@@ -1,5 +1,6 @@
-import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
+import { WithHint } from 'lib/ui/WithHint';
+import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
 
 export interface MinimumWeightForRewardsInputProps {
   value: number | undefined;
@@ -9,9 +10,12 @@ export interface MinimumWeightForRewardsInputProps {
 
 export const MinimumWeightForRewardsInput = ({ value, onChange, error }: MinimumWeightForRewardsInputProps) => {
   return (
-    <FormControl
-      label="Minimum weight for rewards"
-      helpText="The minimum weight a DAO member needs in order to qualify for rewards. For example, in a token or NFT DAO, a value of 3 means that a user needs at least 3 staked assets to receive rewards. For multisigs, it is a minimum vote weight. "
+    <InputWrapper
+      label={
+        <WithHint hint="The minimum weight a DAO member needs in order to qualify for rewards. For example, in a token or NFT DAO, a value of 3 means that a user needs at least 3 staked assets to receive rewards. For multisigs, it is a minimum vote weight.">
+          Minimum weight for rewards
+        </WithHint>
+      }
     >
       <FormTextInput
         value={value === undefined ? '' : value}
@@ -32,6 +36,6 @@ export const MinimumWeightForRewardsInput = ({ value, onChange, error }: Minimum
           onChange(newValue);
         }}
       />
-    </FormControl>
+    </InputWrapper>
   );
 };

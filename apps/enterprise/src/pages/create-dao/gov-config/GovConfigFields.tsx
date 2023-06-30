@@ -29,10 +29,22 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
           error={value.minimumDepositError}
         />
       )}
-      <VoteDurationInput value={value.voteDuration} onChange={(voteDuration) => onChange({ voteDuration })} />
-      <QuorumInput value={value.quorum} onChange={(quorum) => onChange({ quorum })} />
-      <ThresholdInput value={value.threshold} onChange={(threshold) => onChange({ threshold })} />
-      <VetoThresholdInput value={value.vetoThreshold} onChange={(vetoThreshold) => onChange({ vetoThreshold })} />
+      <VoteDurationInput
+        value={value.voteDuration}
+        error={value.voteDurationError}
+        onChange={(voteDuration) => onChange({ voteDuration })}
+      />
+      <QuorumInput error={value.quorumError} value={value.quorum} onChange={(quorum) => onChange({ quorum })} />
+      <ThresholdInput
+        error={value.thresholdError}
+        value={value.threshold}
+        onChange={(threshold) => onChange({ threshold })}
+      />
+      <VetoThresholdInput
+        error={value.vetoThresholdError}
+        value={value.vetoThreshold}
+        onChange={(vetoThreshold) => onChange({ vetoThreshold })}
+      />
       {daoType !== 'multisig' && (
         <UnlockingPeriodInput
           value={value.unlockingPeriod}
@@ -48,12 +60,13 @@ export const GovConfigFields = ({ value, onChange, daoType }: ConfigProposalForm
             onChange={(allowEarlyProposalExecution) => onChange({ allowEarlyProposalExecution })}
           />
           <Tooltip
-            content={(
+            content={
               <Text style={{ maxWidth: 320 }}>
-                Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait until the end of the voting period.
+                Allows your DAO to execute proposals as soon as they reach quorum and threshold, without having to wait
+                until the end of the voting period.
               </Text>
-            )}
-            renderOpener={props => (
+            }
+            renderOpener={(props) => (
               <div {...props}>
                 <HelpCircleIcon />
               </div>

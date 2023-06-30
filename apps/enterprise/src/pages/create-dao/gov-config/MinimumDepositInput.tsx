@@ -1,5 +1,6 @@
-import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
+import { WithHint } from 'lib/ui/WithHint';
+import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
 
 export interface MinimumDepositInputProps {
   value: number | undefined;
@@ -9,7 +10,9 @@ export interface MinimumDepositInputProps {
 
 export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositInputProps) => {
   return (
-    <FormControl label="Minimum deposit" helpText="The minimum deposit amount required to create a proposal.">
+    <InputWrapper
+      label={<WithHint hint="The minimum deposit amount required to create a proposal.">Minimum deposit</WithHint>}
+    >
       <FormTextInput
         value={value === undefined ? '' : value}
         type="number"
@@ -29,6 +32,6 @@ export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositIn
           onChange(newValue);
         }}
       />
-    </FormControl>
+    </InputWrapper>
   );
 };

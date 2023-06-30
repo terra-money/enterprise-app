@@ -100,12 +100,16 @@ export const CouncilForm = () => {
           <Controller
             control={control}
             name="quorum"
-            render={({ field: { value, onChange } }) => <QuorumInput value={value} onChange={onChange} />}
+            render={({ field: { value, onChange } }) => (
+              <QuorumInput error={errors.quorum?.message} value={value} onChange={onChange} />
+            )}
           />
           <Controller
             control={control}
             name="threshold"
-            render={({ field: { value, onChange } }) => <ThresholdInput value={value} onChange={onChange} />}
+            render={({ field: { value, onChange } }) => (
+              <ThresholdInput error={errors.threshold?.message} value={value} onChange={onChange} />
+            )}
           />
         </VStack>
         <Line />
