@@ -1,11 +1,10 @@
 import { InputAdornment } from '@mui/material';
-import classNames from 'classnames';
-import { FormControl } from 'components/form-control/FormControl';
 import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { Text, Tooltip, useFocusedInput } from 'components/primitives';
 import React, { useCallback } from 'react';
 import { FormTextInput } from 'components/form-text-input';
 import styles from './TitleInput.module.sass';
+import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
 
 interface TitleInputProps {
   className?: string;
@@ -16,7 +15,7 @@ interface TitleInputProps {
 }
 
 export const TitleInput = (props: TitleInputProps) => {
-  const { className, label, error, value, onChange } = props;
+  const { label, error, value, onChange } = props;
 
   const handleChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     (value) => onChange(value.target.value),
@@ -26,7 +25,7 @@ export const TitleInput = (props: TitleInputProps) => {
   const { focused, ...handlers } = useFocusedInput();
 
   return (
-    <FormControl className={classNames(className, styles.root)} label={label}>
+    <InputWrapper label={label}>
       <FormTextInput
         className={styles.input}
         placeholder="Enter a title"
@@ -52,6 +51,6 @@ export const TitleInput = (props: TitleInputProps) => {
           </>
         }
       />
-    </FormControl>
+    </InputWrapper>
   );
 };

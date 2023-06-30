@@ -1,9 +1,9 @@
-import { FormControl } from 'components/form-control';
 import { FormTextInput } from 'components/form-text-input';
 import { FormInput } from '@terra-money/apps/hooks';
 import { DescriptionInput } from '../shared/DescriptionInput';
 import { MetadataProposalFormInput, MetadataProposalFormState } from '../metadata/useMetadataForm';
 import { useState } from 'react';
+import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
 
 interface MetadataProposalFormProps {
   formInput: FormInput<MetadataProposalFormInput>;
@@ -33,17 +33,17 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
 
   return (
     <>
-      <FormControl label="Name">
+      <InputWrapper label="Name">
         <FormTextInput
           placeholder="Enter a name for your DAO"
           value={name}
           error={nameError}
           onChange={handleNameChange}
         />
-      </FormControl>
-      <FormControl label="Logo">
+      </InputWrapper>
+      <InputWrapper label="Logo">
         <FormTextInput placeholder="Enter a Logo URL" value={logo} error={logoError} onChange={handleLogoChange} />
-      </FormControl>
+      </InputWrapper>
       <DescriptionInput
         label="Description"
         value={description}

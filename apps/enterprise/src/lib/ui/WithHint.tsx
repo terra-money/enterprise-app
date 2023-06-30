@@ -12,15 +12,17 @@ export const WithHint = ({ children, hint }: WithHintProps) => {
   return (
     <HStack alignItems="center" gap={4}>
       {children}
-      <Tooltip
-        placement="top"
-        content={hint}
-        renderOpener={(props) => (
-          <div {...props}>
-            <HelpCircleIcon />
-          </div>
-        )}
-      />
+      {hint && (
+        <Tooltip
+          placement="top"
+          content={hint}
+          renderOpener={(props) => (
+            <div {...props}>
+              <HelpCircleIcon />
+            </div>
+          )}
+        />
+      )}
     </HStack>
   );
 };

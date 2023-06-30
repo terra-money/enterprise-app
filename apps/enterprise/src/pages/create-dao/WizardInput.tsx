@@ -1,5 +1,6 @@
-import { FormControl } from 'components/form-control';
 import { FormTextInput, FormTextInputProps } from 'components/form-text-input';
+import { WithHint } from 'lib/ui/WithHint';
+import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
 
 export interface WizardInputProps extends FormTextInputProps {
   label: string;
@@ -9,8 +10,8 @@ export interface WizardInputProps extends FormTextInputProps {
 export const WizardInput = (props: WizardInputProps) => {
   const { label, helpText, ...rest } = props;
   return (
-    <FormControl label={label} helpText={helpText}>
+    <InputWrapper label={<WithHint hint={helpText}>{label}</WithHint>}>
       <FormTextInput {...rest} />
-    </FormControl>
+    </InputWrapper>
   );
 };

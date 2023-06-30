@@ -7,5 +7,4 @@ export * from './icon-button';
 export * from './throbber';
 export * from './tooltip';
 export * from './divider';
-export * from './input-wrapper';
 export * from './conditional-render';
