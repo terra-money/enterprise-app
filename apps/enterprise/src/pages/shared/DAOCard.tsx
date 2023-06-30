@@ -20,8 +20,8 @@ interface DAOCardProps {
 
 const daoTypeName: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
-  nft: 'NFT DAO',
-  token: 'Token DAO',
+  nft: 'NFT',
+  token: 'Token',
 };
 
 export const DAOCard = (props: DAOCardProps) => {
@@ -58,7 +58,7 @@ export const DAOCard = (props: DAOCardProps) => {
             content="Total value locked"
             renderOpener={props => (
               <Text {...props} size={14} weight="semibold" color="supporting">
-                $ {formatAmount(tvl)}
+                ${formatAmount(tvl)}
               </Text>)}
           />
         )}

@@ -18,7 +18,7 @@ export const LabeledPageSection = ({ children, name }: Props) => {
         <Text size={18} weight="semibold">
           {name}
         </Text>
-        {name === 'Recent DAOs' && (
+        {name === 'Top DAOs' && (
           <NavLink style={navLinkStyle} to={'/daos'}>
             All DAOs
           </NavLink>

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Overview } from './Overview';
 import { RecentProposals } from './RecentProposals';
 import { PageLayout } from 'components/layout';
-import { RecentDAOs } from './RecentDAOs';
+import { RecentDAOs } from './TopDAOs';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
