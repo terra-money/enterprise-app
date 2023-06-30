@@ -1,7 +1,7 @@
 import { ExternalLink, UnstyledAnchor } from 'components/link';
 import { InternalLink } from 'components/link/InternalLink';
 import { Button, Text } from 'components/primitives';
-import { discordUrl, mediumUrl, Path, supportEmail, telegramUrl, twitterUrl } from 'navigation';
+import { discordUrl, mediumUrl, Path, telegramUrl, twitterUrl } from 'navigation';
 import { SliceHeader } from './SliceHeader';
 import { ReactComponent as TwitterIcon } from 'components/assets/TwitterSolidLogo.svg';
 import { ReactComponent as DiscordIcon } from 'components/assets/DiscordSolidLogo.svg';
