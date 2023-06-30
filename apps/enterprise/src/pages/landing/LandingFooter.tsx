@@ -26,14 +26,14 @@ export const LandingFooter = () => {
           <InternalLink to={Path.Dashboard}>
             <Button component="div">Start now</Button>
           </InternalLink>
-          <ExternalLink to={`mailto:${supportEmail}`}>
+          <ExternalLink to={telegramUrl}>
             <Button component="div">Contact us</Button>
           </ExternalLink>
         </div>
       </div>
       <div className={styles.links}>
         <Container className={classNames(styles.items, { [styles.mobile]: isMobile })} direction="row" gap={40}>
-          <ExternalLink to={`mailto:${supportEmail}`}>
+          <ExternalLink to={telegramUrl}>
             <Text variant="text">Contact Us</Text>
           </ExternalLink>
           <UnstyledAnchor
