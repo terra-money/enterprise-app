@@ -48,3 +48,114 @@ export const useCurrentDaoNfts = () => {
     enabled: Boolean(whitelist && liquidAssetsPrices && stakedNfts)
   })
 }
+
+// TODO: try myNfts query to reduce the number of queries
+
+/*
+query getMyNFTsData {
+              myTokens(
+                owner: ["terra1exj6fxvrg6xuukgx4l90ujg3vh6420540mdr6scrj62u2shk33sqnp0stl"],
+                collectionAddr:["terra17z7fpaa8kah698xn5tarrcucvualdy4wsztkfc404g3garucpu6qmxp50g"],
+                precision:2,
+                chain:["terra2"],
+                ,
+                collectionSorting:"lastPrice",
+                tokenAsc:true,
+                limit: 10,
+                offset: 0,
+                tokenSorting:"lastPrice",
+                ,
+                ) {
+                    totalPrices
+                    totalPricesUsd
+                    totalFloorPricesUsd
+                    totalFloorPrice
+                    tokensCount
+                    pageInfo {
+                      hasNextPage
+                      count
+                      hasPreviousPage
+                      offset
+                    }
+                    collections {
+                      bestOffer
+                      bestOfferUsd
+                      denom {
+                        symbol
+                        icon
+                        denom
+                        chain
+                        decimals
+                      }
+                      chain{
+                        chainId
+                        icon
+                        prettyName
+                        value
+                      }
+                      tokens {
+                        tokenId
+                        rarity
+                        rank
+                        owner
+                        name
+                        marketplace{
+                          chain
+                          image
+                          name
+                          url
+                          value
+                        }
+                        lastPrice
+                        lastListing
+                        imageUrlFileserver
+                        dealScore
+                        collectionName
+                        collectionFloorPrice
+                        collectionAddr
+                        chain{
+                          chainId
+                          icon
+                          prettyName
+                          value
+                        }
+                        denom {
+                          symbol
+                          icon
+                          denom
+                          chain
+                          decimals
+                          priceUsd
+                        }
+                      }
+                      bannerSrcFileserver
+                      chain{
+                        chainId
+                        icon
+                        prettyName
+                        value
+                      }
+                      collectionAddr
+                      collectionName
+                      collectionSocial
+                      floorPrice
+                      market
+                      srcFileserver
+                      tokensCount
+                      totalFloorPrice
+                      totalFloorPriceUsd
+                      totalPrices
+                      totalPricesUsd
+                       denom {
+                        chain
+                        symbol
+                        priceUsd
+                        nativeDenomRate
+                        denom
+                        icon
+                        decimals
+                      }
+                    }
+                }
+              }
+*/
