@@ -12,6 +12,7 @@ interface Props extends SliderProps {
   formatValue: (value: number) => string;
   alignValue?: 'start' | 'end';
   error?: string;
+  message?: ReactNode;
 }
 
 const Container = styled(Panel)`
@@ -42,9 +43,10 @@ export const AmountInput = ({
   size = 'l',
   alignValue = 'end',
   error,
+  message,
 }: Props) => {
   return (
-    <InputWrapperWithErrorMessage error={error} label={label}>
+    <InputWrapperWithErrorMessage message={message} error={error} label={label}>
       <Container>
         <Content>
           <Slider step={step} size={size} min={min} max={max} onChange={onChange} value={value} color={color} />

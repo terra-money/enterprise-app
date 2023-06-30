@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 
-import { InputErrorText } from './InputErrorText';
+import { ReactNode } from 'react';
 
 export interface InputWrapperProps {
   label?: React.ReactNode;
@@ -36,6 +36,7 @@ export const InputWrapper = ({ label, children, error, as = 'label' }: InputWrap
 
 export interface InputWrapperWithErrorMessageProps extends InputWrapperProps {
   inputOverlay?: React.ReactNode;
+  message?: ReactNode;
 }
 
 export const InputWrapperWithErrorMessage = ({
@@ -49,7 +50,14 @@ export const InputWrapperWithErrorMessage = ({
         {children}
         {inputOverlay}
       </VStack>
-      <InputErrorText>{props.error}</InputErrorText>
+      <Message color={props.error ? 'alert' : 'supporting'}>{props.error || props.message}</Message>
     </VStack>
   </InputWrapper>
 );
+
+const Message = styled(Text)`
+  --height: 0.86em;
+  line-height: var(--height);
+  font-size: var(--height);
+  min-height: var(--height);
+`;
