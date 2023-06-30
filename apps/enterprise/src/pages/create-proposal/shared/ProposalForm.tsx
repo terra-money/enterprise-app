@@ -6,9 +6,9 @@ import { useCreateProposal } from '../CreateProposalProvider';
 import { DescriptionInput } from './DescriptionInput';
 import { toCreateProposalMsg } from './helpers/toCreateProposalMsg';
 import { ProposalFormContainer } from './ProposalFormContainer';
-import { TitleInput } from './TitleInput';
 import { ProposalFormState, useProposalForm } from './useProposalForm';
 import { toDao } from 'dao/utils/toDao';
+import { TextInput } from 'lib/ui/inputs/TextInput';
 
 interface ProposalFormProps {
   children?: React.ReactNode;
@@ -37,11 +37,11 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
 
   return (
     <ProposalFormContainer disabled={disabled || submitDisabled} loading={txResult.loading} onSubmit={handleSubmit}>
-      <TitleInput
+      <TextInput
         label="Title"
         value={title}
         error={title.length > 0 ? titleError : undefined}
-        onChange={(title) => input({ title })}
+        onValueChange={(title) => input({ title })}
       />
       <DescriptionInput
         label="Description"
