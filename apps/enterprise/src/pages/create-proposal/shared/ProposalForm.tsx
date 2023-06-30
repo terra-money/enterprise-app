@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router';
 import { useCreateProposalTx } from 'tx';
 import { enterprise } from 'types/contracts';
 import { useCreateProposal } from '../CreateProposalProvider';
-import { DescriptionInput } from './DescriptionInput';
 import { toCreateProposalMsg } from './helpers/toCreateProposalMsg';
 import { ProposalFormContainer } from './ProposalFormContainer';
 import { ProposalFormState, useProposalForm } from './useProposalForm';
 import { toDao } from 'dao/utils/toDao';
 import { TextInput } from 'lib/ui/inputs/TextInput';
+import { TextArea } from 'lib/ui/inputs/TextArea';
 
 interface ProposalFormProps {
   children?: React.ReactNode;
@@ -43,11 +43,13 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
         error={title.length > 0 ? titleError : undefined}
         onValueChange={(title) => input({ title })}
       />
-      <DescriptionInput
+      <TextArea
+        rows={6}
         label="Description"
         value={description}
+        maxLength={280}
         error={description.length > 0 ? descriptionError : undefined}
-        onChange={(description) => input({ description })}
+        onValueChange={(description) => input({ description })}
       />
       {children}
     </ProposalFormContainer>

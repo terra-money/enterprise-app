@@ -12,12 +12,12 @@ const TextareaContainer = styled.textarea`
   height: initial;
 `;
 
-const characterCounterHeight = 10;
+const characterCounterHeight = 14;
 const characterCounterMargin = 16;
 
 const CharacterCounterWrapper = styled.div`
   position: absolute;
-  bottom: ${getCSSUnit(characterCounterMargin + characterCounterHeight)};
+  bottom: ${getCSSUnit(characterCounterHeight)};
   right: ${getCSSUnit(characterCounterMargin)};
   user-select: none;
 `;
@@ -47,7 +47,7 @@ export const TextArea = forwardRef(function TextAreaInner(
       />
       {props.maxLength && (
         <CharacterCounterWrapper>
-          <Text color="supporting3" height="small" size={10}>
+          <Text color="supporting3" height="small" size={characterCounterHeight}>
             {charactersCount} / {props.maxLength}
           </Text>
         </CharacterCounterWrapper>

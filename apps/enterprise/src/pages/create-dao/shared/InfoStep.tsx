@@ -1,8 +1,8 @@
 import { Stack } from '@mui/material';
-import { DescriptionInput } from 'pages/create-proposal/shared/DescriptionInput';
 import { DaoInfoInput, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardInput } from '../WizardInput';
 import { WizardStep } from '../WizardStep';
+import { TextArea } from 'lib/ui/inputs/TextArea';
 
 export function InfoStep() {
   const {
@@ -24,11 +24,13 @@ export function InfoStep() {
           error={info.name?.length > 0 ? info.nameError : undefined}
           onChange={({ currentTarget }) => onChange({ name: currentTarget.value })}
         />
-        <DescriptionInput
+        <TextArea
+          rows={6}
+          maxLength={280}
           label="Description"
           value={info.description}
           error={info.descriptionError}
-          onChange={(description) => onChange({ description })}
+          onValueChange={(description) => onChange({ description })}
         />
         <WizardInput
           label="Logo URL"
