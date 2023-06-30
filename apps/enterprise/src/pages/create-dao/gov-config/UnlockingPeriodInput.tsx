@@ -1,3 +1,4 @@
+import { pluralize } from 'lib/shared/utils/pluralize';
 import { WithHint } from 'lib/ui/WithHint';
 import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
@@ -20,7 +21,7 @@ export const UnlockingPeriodInput = ({ value, error, onChange }: UnlockingPeriod
       value={value}
       min={1}
       max={90}
-      formatValue={(v) => `${v} days`}
+      formatValue={(v) => pluralize(v, 'day')}
       onChange={onChange}
     />
   );

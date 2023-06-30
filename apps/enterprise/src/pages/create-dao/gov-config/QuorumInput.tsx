@@ -1,3 +1,4 @@
+import { toPercents } from 'lib/shared/utils/toPercents';
 import { WithHint } from 'lib/ui/WithHint';
 import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
@@ -15,7 +16,7 @@ export const QuorumInput = ({ value, onChange, min = 0, error }: QuorumInputProp
       min={min}
       max={1}
       step={0.01}
-      formatValue={(v) => `${Math.floor(v * 100)}%`}
+      formatValue={(v) => toPercents(v, 'round')}
       onChange={onChange}
       error={error}
       label={

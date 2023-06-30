@@ -1,5 +1,6 @@
 import { WithHint } from 'lib/ui/WithHint';
 import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
+import { pluralize } from 'lib/ui/utils/pluralize';
 
 export interface VoteDurationInputProps {
   value: number;
@@ -13,7 +14,7 @@ export const VoteDurationInput = ({ value, onChange, error }: VoteDurationInputP
       step={1}
       label={<WithHint hint="The amount of time proposals are open for voting.">Vote duration</WithHint>}
       onChange={onChange}
-      formatValue={(v) => `${v} days`}
+      formatValue={(v) => pluralize(v, 'day')}
       value={value}
       min={1}
       max={60}

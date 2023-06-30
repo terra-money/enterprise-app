@@ -1,3 +1,4 @@
+import { toPercents } from 'lib/shared/utils/toPercents';
 import { WithHint } from 'lib/ui/WithHint';
 import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
@@ -21,7 +22,7 @@ export const ThresholdInput = ({ value, onChange, error, min = 0 }: ThresholdInp
       min={min}
       max={1}
       step={0.01}
-      formatValue={(v) => `${Math.floor(v * 100)}%`}
+      formatValue={(v) => toPercents(v, 'round')}
       onChange={onChange}
     />
   );

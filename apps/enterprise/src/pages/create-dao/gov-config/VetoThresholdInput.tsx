@@ -1,3 +1,4 @@
+import { toPercents } from 'lib/shared/utils/toPercents';
 import { WithHint } from 'lib/ui/WithHint';
 import { AmountInput } from 'lib/ui/inputs/Slider/AmountInput';
 
@@ -20,7 +21,7 @@ export const VetoThresholdInput = ({ value, onChange, error }: VetoThresholdInpu
       step={0.01}
       min={0}
       max={1}
-      formatValue={(v) => `${Math.floor(v * 100)}%`}
+      formatValue={(v) => toPercents(v, 'round')}
       onChange={onChange}
     />
   );
