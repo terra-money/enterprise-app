@@ -26,7 +26,7 @@ export const ProposalVotingBar = () => {
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 
-  const quorum = Number(dao.governanceConfig.quorum);
+  const quorum = type === "council" ? Number(dao.council?.quorum) : Number(dao.governanceConfig.quorum);
 
   const yesRatio = enforceRange(getRatio(yesVotes, total).toNumber(), 0, 1);
 

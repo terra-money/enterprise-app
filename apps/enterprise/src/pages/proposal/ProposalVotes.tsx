@@ -61,7 +61,7 @@ export const ProposalVotes = () => {
 
   // TODO: reuse with ProposalVotingBar
   const totalAvailableVotes =
-    dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+    proposal.type === 'council' ? Big(dao.council?.members.length!) : dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
 
   return (
     <LabeledPageSection name="Votes">

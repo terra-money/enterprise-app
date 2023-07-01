@@ -27,7 +27,7 @@ const features: Feature[] = [
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Go interchain (coming soon!)',
+    title: 'Cross-chain functionality (coming soon!)',
     description: 'Create Enterprise DAOs on your favorite chains.',
     imageUrl: 'images/landing-dashboard.png',
   },
