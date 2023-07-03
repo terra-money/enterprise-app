@@ -1,5 +1,4 @@
 import { getRecord } from '@terra-money/apps/utils';
-import { Address } from 'components/address';
 import { Text } from 'components/primitives';
 import { ValueDiff } from 'components/value-diff';
 import { useCurrentDaoMultisigMembers } from 'pages/create-proposal/multisig-members/CurrentDAOMultisigMembersProvider';
@@ -12,6 +11,7 @@ import { Panel } from 'lib/ui/Panel/Panel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { enterprise } from 'types/contracts';
+import { Address } from 'chain/components/Address';
 
 // TODO: highlight what members will be added and removed
 export const UpdateMultisigMembersAction = () => {
@@ -51,7 +51,7 @@ export const UpdateMultisigMembersAction = () => {
           return (
             <Panel>
               <HStack fullWidth justifyContent="space-between" style={{ minHeight: 40 }} alignItems="center" gap={20}>
-                <Address address={address} />
+                <Address value={address} />
                 {renderChange()}
               </HStack>
             </Panel>

@@ -1,4 +1,4 @@
-import { Address } from 'components/address';
+import { Address } from 'chain/components/Address';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { TitledContent } from 'lib/ui/Layout/TitledContent';
@@ -20,17 +20,17 @@ export const AddressesOverview = () => {
       <SameWidthChildrenRow minChildrenWidth={320} gap={16}>
         <Panel>
           <TitledContent title="DAO address">
-            <Address address={address} />
+            <Address value={address} />
           </TitledContent>
         </Panel>
         <Panel>
           <TitledContent title={`${membershipName[dao_type]} address`}>
-            <Address address={dao_membership_contract} />
+            <Address value={dao_membership_contract} />
           </TitledContent>
         </Panel>
         <Panel>
           <TitledContent title={'Funds distributor address'}>
-            <Address address={funds_distributor_contract} />
+            <Address value={funds_distributor_contract} />
           </TitledContent>
         </Panel>
       </SameWidthChildrenRow>

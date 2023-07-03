@@ -23,7 +23,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
 
   const title = (
     <DeprecatedText className={styles.name} variant="heading2">
-      <Text style={{ marginRight: 8 }} as="span" color="supporting3">
+      <Text style={{ marginRight: 8 }} as="span" color="shy">
         #{proposal.id}
       </Text>
       {proposal.title}

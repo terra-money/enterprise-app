@@ -62,7 +62,7 @@ export const Switch = ({ value, onChange, label }: SwitchProps) => {
     <Wrapper onClick={() => onChange(!value)} as="label" alignItems="center" gap={8} id={label}>
       <Container
         style={{
-          background: (value ? colors.textSupporting3 : colors.backgroundGlass2).toCssValue(),
+          background: (value ? colors.textShy : colors.backgroundGlass2).toCssValue(),
         }}
       >
         <Control

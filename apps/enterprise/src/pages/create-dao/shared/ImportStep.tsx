@@ -9,11 +9,11 @@ import { NftAddressInput } from '../nft/NftAddressInput';
 import { MultisigAddressInput } from '../multisig/MultisigAddressInput';
 import { CW20TokenInfoResponse, CW721ContractInfoResponse, MultisigVoter } from 'queries';
 import { Text } from 'components/primitives';
-import { Address } from 'components/address';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import Big from 'big.js';
 import { u } from '@terra-money/apps/types';
 import styles from './ImportStep.module.sass';
+import { Address } from 'chain/components/Address';
 
 const daoNameRecord: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
@@ -29,7 +29,7 @@ const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: 
       <Text variant="label">Symbol</Text>
       <Text variant="heading4">{token.symbol}</Text>
       <Text variant="label">CW20 Address</Text>
-      <Address address={tokenAddr} truncation={[20, 20]} textProps={{ variant: 'heading4' }} />
+      <Address value={tokenAddr} length="l" />
       <Text variant="label">Total supply</Text>
       <Text variant="heading4">
         {formatAmount(demicrofy(Big(token.total_supply) as u<Big>, token.decimals), { decimals: 2 })}
@@ -46,7 +46,7 @@ const NFTTokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: C
       <Text variant="label">Symbol</Text>
       <Text variant="heading4">{token.symbol}</Text>
       <Text variant="label">CW721 Address</Text>
-      <Address address={tokenAddr} truncation={[20, 20]} textProps={{ variant: 'heading4' }} />
+      <Address value={tokenAddr} length="l" />
     </Container>
   );
 };
@@ -57,7 +57,7 @@ const MultisigVotersInformation = ({ multisigAddr, voters }: { multisigAddr: str
       <Text variant="label">Number of members</Text>
       <Text variant="heading4">{voters.length}</Text>
       <Text variant="label">CW3 Address</Text>
-      <Address address={multisigAddr} truncation={[20, 20]} textProps={{ variant: 'heading4' }} />
+      <Address value={multisigAddr} length="l" />
     </Container>
   );
 };

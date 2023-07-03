@@ -10,7 +10,7 @@ interface Props {
 
 export const LabeledValue = ({ name, children }: Props) => (
   <HStack gap={8} alignItems="center">
-    <Text color="supporting2">{name}:</Text>
+    <Text color="supporting">{name}:</Text>
     {children}
   </HStack>
 );

@@ -13,7 +13,7 @@ import { TreasuryPanel } from '../TreasuryPanel';
 const Header = styled(AssetItemFrame)`
   ${getHorizontalMarginCSS(16)}
 
-  color: ${({ theme }) => theme.colors.textSupporting2.toCssValue()};
+  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
   font-weight: 500;
   font-size: 16px;
 `;
@@ -30,18 +30,20 @@ export const CurrentDaoTreasuryAssets = () => {
       isError={isError}
       getTotalUsdValue={(assets) => sum(assets.map(getAssetBalanceInUsd))}
       depositAction={<DepositIntoTreasury />}
-      renderItems={(assets) => <VStack gap={20}>
-        <Header>
-          <Text>Asset</Text>
-          <Text>Amount</Text>
-          <Text>Price</Text>
-        </Header>
-        <VStack gap={16}>
-          {assets.map((asset, index) => (
-            <AssetItem key={index} asset={asset} />
-          ))}
+      renderItems={(assets) => (
+        <VStack gap={20}>
+          <Header>
+            <Text>Asset</Text>
+            <Text>Amount</Text>
+            <Text>Price</Text>
+          </Header>
+          <VStack gap={16}>
+            {assets.map((asset, index) => (
+              <AssetItem key={index} asset={asset} />
+            ))}
+          </VStack>
         </VStack>
-      </VStack>}
+      )}
     />
   );
 };

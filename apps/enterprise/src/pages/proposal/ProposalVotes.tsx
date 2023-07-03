@@ -3,7 +3,6 @@ import { useFetchEveryPage, usePaginatedResultItems } from '@terra-money/apps/qu
 import { CW20Addr, u } from '@terra-money/apps/types';
 import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import Big from 'big.js';
-import { Address } from 'components/address';
 import { Text } from 'components/primitives';
 import { toPercents } from 'lib/shared/utils/toPercents';
 import { useIsSmallScreen } from 'lib/ui/hooks/useIsSmallScreen';
@@ -16,6 +15,7 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import styled from 'styled-components';
 import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
+import { Address } from 'chain/components/Address';
 
 const Content = styled.div`
   display: grid;
@@ -75,7 +75,7 @@ export const ProposalVotes = () => {
             <Panel key={index}>
               <Content>
                 <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
-                <Address truncation={isSmallScreen ? [7, 4] : undefined} address={voter} />
+                <Address length={isSmallScreen ? 's' : undefined} value={voter} />
                 {totalAvailableVotes.gt(0) && (
                   <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
                 )}

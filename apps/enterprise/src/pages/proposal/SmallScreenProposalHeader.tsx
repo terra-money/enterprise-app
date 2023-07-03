@@ -12,7 +12,7 @@ export const SmallScreenProposalHeader = () => {
         <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
       </HStack>
       <Text size={24} weight="bold">
-        <Text style={{ marginRight: 8 }} as="span" color="supporting3">
+        <Text style={{ marginRight: 8 }} as="span" color="shy">
           #{proposal.id}
         </Text>
         {proposal.title}

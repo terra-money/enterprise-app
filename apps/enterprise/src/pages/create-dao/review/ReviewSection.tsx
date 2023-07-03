@@ -15,7 +15,7 @@ const Header = styled(Text)<{ isEditable: boolean }>`
 
   ${defaultTransitionCSS};
 
-  color: ${({ theme }) => theme.colors.textSupporting3.toCssValue()};
+  color: ${({ theme }) => theme.colors.textShy.toCssValue()};
 
   ${({ isEditable }) =>
     isEditable &&

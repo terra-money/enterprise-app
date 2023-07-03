@@ -25,7 +25,7 @@ export const ProposalVoting = () => {
       </HStack>
       {executionTxHash && (
         <HStack alignItems="center" gap={8}>
-          <Text color="supporting3">Transaction:</Text>
+          <Text color="shy">Transaction:</Text>
           <ExternalLink to={getFinderUrl(networkName, executionTxHash)}>
             <ShyTextButton text={executionTxHash} />
           </ExternalLink>

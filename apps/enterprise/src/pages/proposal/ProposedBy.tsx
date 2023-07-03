@@ -1,7 +1,7 @@
 import { Text } from 'lib/ui/Text';
 import { useCurrentProposal } from './CurrentProposalProvider';
-import { Address } from 'components/address';
 import { HStack } from 'lib/ui/Stack';
+import { Address } from 'chain/components/Address';
 
 export const ProposedBy = () => {
   const { proposer } = useCurrentProposal();
@@ -10,8 +10,8 @@ export const ProposedBy = () => {
 
   return (
     <HStack gap={4} alignItems="center">
-      <Text color="supporting3">Proposed by:</Text>
-      <Address address={proposer} />
+      <Text color="shy">Proposed by:</Text>
+      <Address value={proposer} />
     </HStack>
   );
 };

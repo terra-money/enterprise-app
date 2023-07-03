@@ -123,8 +123,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
     dao.type === 'multisig'
       ? proposal.totalVotes
       : proposal.status === 'in_progress'
-        ? totalStaked
-        : proposal.totalVotes;
+      ? totalStaked
+      : proposal.totalVotes;
 
   const daoLinkContent = (
     <DaoLinkWrapper alignItems="center" gap={8}>
@@ -150,7 +150,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               {expiry && <Clock variant={variant} expiry={expiry} />}
             </Container>
             <HStack className={styles.title} alignItems="center" gap={8}>
-              <Text weight="semibold" color="supporting3">
+              <Text weight="semibold" color="shy">
                 #{id}
               </Text>
               <Text cropped weight="semibold">
