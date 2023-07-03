@@ -9,7 +9,7 @@ interface Props {
 export const SimpleNamedList = ({ name, children }: Props) => {
   return (
     <VStack fullWidth gap={8}>
-      <Text color="supporting2">{name}</Text>
+      <Text color="supporting">{name}</Text>
       {children}
     </VStack>
   );

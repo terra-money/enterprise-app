@@ -25,7 +25,7 @@ const ImageIconWr = styled(Center)`
 
   position: absolute;
   font-size: 20px;
-  background: ${({ theme }) => theme.colors.textSupporting3.toCssValue()};
+  background: ${({ theme }) => theme.colors.textShy.toCssValue()};
 `;
 
 export const ImageHolder = forwardRef(function ImageHolderInner(

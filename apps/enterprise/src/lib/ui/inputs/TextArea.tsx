@@ -47,7 +47,7 @@ export const TextArea = forwardRef(function TextAreaInner(
       />
       {props.maxLength && (
         <CharacterCounterWrapper>
-          <Text color="supporting3" height="small" size={characterCounterHeight}>
+          <Text color="shy" height="small" size={characterCounterHeight}>
             {charactersCount} / {props.maxLength}
           </Text>
         </CharacterCounterWrapper>

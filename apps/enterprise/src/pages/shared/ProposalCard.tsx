@@ -152,7 +152,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               {expiry && <Clock variant={variant} expiry={expiry} />}
             </Container>
             <HStack className={styles.title} alignItems="center" gap={8}>
-              <Text weight="semibold" color="supporting3">
+              <Text weight="semibold" color="shy">
                 #{id}
               </Text>
               <Text cropped weight="semibold">

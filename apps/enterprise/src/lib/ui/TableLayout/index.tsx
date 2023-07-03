@@ -23,7 +23,7 @@ export const TableLayout = ({ children, columnNames, gridTemplateColumns }: Prop
   return (
     <Container style={{ gridTemplateColumns }}>
       {columnNames.map((name) => (
-        <Text weight="regular" color="supporting3" key={name}>
+        <Text weight="regular" color="shy" key={name}>
           {name}
         </Text>
       ))}

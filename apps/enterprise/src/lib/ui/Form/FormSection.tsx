@@ -10,7 +10,7 @@ interface Props extends ComponentWithChildrenProps {
 export const FormSection = ({ name, children }: Props) => (
   <VStack fullWidth gap={20}>
     <VStack fullWidth gap={8}>
-      <Text color="supporting3">{name}</Text>
+      <Text color="shy">{name}</Text>
       <Line />
     </VStack>
     {children}

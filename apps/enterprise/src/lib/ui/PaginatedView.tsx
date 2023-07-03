@@ -12,7 +12,7 @@ interface Props {
 }
 
 const LoaderContainer = styled(HStack)`
-  color: ${({ theme }) => theme.colors.textSupporting2.toCssValue()};
+  color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
 `;
 
 const Footer = styled(VStack)`

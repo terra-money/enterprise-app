@@ -1,4 +1,3 @@
-import { Address } from 'components/address';
 import { VStack } from 'lib/ui/Stack';
 import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { LUNA } from '@terra-money/apps/types';
@@ -7,6 +6,7 @@ import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { LabeledValue } from 'lib/ui/LabeledValue';
 import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Spinner } from 'lib/ui/Spinner';
+import { Address } from '../Address';
 
 export const ConnectedWalletSummary = () => {
   const address = useAssertMyAddress();
@@ -15,14 +15,14 @@ export const ConnectedWalletSummary = () => {
 
   return (
     <VStack gap={8}>
-      <Address address={address} />
+      <Address value={address} />
       <LabeledValue name="Balance">
         <QueryDependant
           data={data}
           status={status}
           loading={() => <Spinner />}
-          error={() => "Failed to fetch balance"}
-          success={value => `${formatAmount(demicrofy(value, LUNA.decimals))} LUNA`}
+          error={() => 'Failed to fetch balance'}
+          success={(value) => `${formatAmount(demicrofy(value, LUNA.decimals))} LUNA`}
         />
       </LabeledValue>
     </VStack>

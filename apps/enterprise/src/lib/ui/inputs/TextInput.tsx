@@ -25,7 +25,7 @@ export const commonInputCSS = css<{
   ${defaultTransitionCSS};
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.textSupporting3.toCssValue()};
+    color: ${({ theme }) => theme.colors.textShy.toCssValue()};
   }
 
   outline: 1px solid transparent;
