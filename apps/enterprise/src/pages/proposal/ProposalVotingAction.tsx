@@ -8,7 +8,7 @@ import { ExecuteProposal } from './ExecuteProposal';
 import { CastVote } from './CastVote';
 
 const couldBeExecuted = (
-  { dao, status, totalVotes, yesVotes, noVotes, vetoVotes, abstainVotes }: Proposal,
+  { dao, status, totalVotes, yesVotes, noVotes, vetoVotes, abstainVotes, type }: Proposal,
   hasExpired: boolean
 ) => {
   if (status === 'passed') {
@@ -19,17 +19,17 @@ const couldBeExecuted = (
     return true;
   }
 
-  if (dao.governanceConfig.allowEarlyProposalExecution) {
+  if (dao.governanceConfig.allowEarlyProposalExecution && dao.type === 'multisig' || type === 'council') {
     const allDirectionalVotes = yesVotes.add(noVotes).add(vetoVotes);
     const allCastedVotes = allDirectionalVotes.add(abstainVotes);
-    const isQuorumReached = allCastedVotes.div(totalVotes).gte(dao.governanceConfig.quorum);
+    const isQuorumReached = type === 'council' ? allCastedVotes.div(totalVotes).gte(dao.council?.quorum!) : allCastedVotes.div(totalVotes).gte(dao.governanceConfig.quorum);
     if (!isQuorumReached) {
       return false;
     }
 
-    const hasThresholdReached = yesVotes.div(allDirectionalVotes).gte(dao.governanceConfig.threshold);
+    const hasThresholdReached = type === 'council' ? yesVotes.div(allDirectionalVotes).gte(dao.council?.threshold!) : yesVotes.div(allDirectionalVotes).gte(dao.governanceConfig.threshold);
 
-    const hasVetoThresholdReacted = vetoVotes.div(allDirectionalVotes).gte(dao.governanceConfig.vetoThreshold);
+    const hasVetoThresholdReacted = type === 'council' ? false : vetoVotes.div(allDirectionalVotes).gte(dao.governanceConfig.vetoThreshold);
     return hasThresholdReached || hasVetoThresholdReacted;
   }
 

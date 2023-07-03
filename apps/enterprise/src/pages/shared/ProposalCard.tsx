@@ -122,9 +122,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const totalVotes =
     dao.type === 'multisig'
       ? proposal.totalVotes
-      : proposal.status === 'in_progress'
-      ? totalStaked
-      : proposal.totalVotes;
+      : proposal.type === 'council'
+        ? dao.council?.members.length!
+        : proposal.status === 'in_progress'
+        ? totalStaked
+        : proposal.totalVotes;
 
   const daoLinkContent = (
     <DaoLinkWrapper alignItems="center" gap={8}>
