@@ -10,6 +10,8 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentDaoTreasuryTokens } from '../spend/CurrentDAOTreasuryTokentsProvider';
 import Big from 'big.js';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 interface MintTokensProposalFormSchema {
   amount: number;
@@ -65,7 +67,6 @@ export const BurnTokensProposalForm = () => {
           name="amount"
           render={({ field: { onChange, onBlur, value, name, ref } }) => (
             <AmountTextInput
-              type="number"
               error={errors.amount?.message}
               label="Amount"
               placeholder="Enter an amount"
@@ -73,7 +74,13 @@ export const BurnTokensProposalForm = () => {
               value={value}
               onBlur={onBlur}
               ref={ref}
-              max={demicrofy(token.balance, token.decimals).toNumber()}
+              suggestion={
+                <AmountSuggestion
+                  name="Max"
+                  value={fromChainAmount(token.balance, token.decimals)}
+                  onSelect={onChange}
+                />
+              }
             />
           )}
         />

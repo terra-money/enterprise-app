@@ -25,11 +25,7 @@ const Container = styled(VStack)<{ isValid: boolean }>`
 
 export const InputWrapper = ({ label, children, error, as = 'label' }: InputWrapperProps) => (
   <Container tabIndex="-1" isValid={!error} fullWidth gap={8} as={as}>
-    {label && (
-      <Text style={{ alignSelf: 'start' }} as="div">
-        {label}
-      </Text>
-    )}
+    {label && <Text as="div">{label}</Text>}
     {children}
   </Container>
 );

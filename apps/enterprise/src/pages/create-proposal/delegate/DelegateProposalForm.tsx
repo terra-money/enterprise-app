@@ -12,6 +12,8 @@ import { toDelegateMsg } from './helpers/toDelegateMsg';
 import { VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { zodAddressValidator } from 'chain/utils/validators';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface DelegateProposalFormSchema {
   amount: number;
@@ -73,13 +75,20 @@ export const DelegateProposalForm = () => {
               <AmountTextInput
                 type="number"
                 error={errors.amount?.message}
-                label="LUNA amount"
+                label="Amount"
                 placeholder="Enter an amount"
                 onValueChange={onChange}
                 value={value}
                 onBlur={onBlur}
                 ref={ref}
-                max={demicrofy(token.balance, token.decimals).toNumber()}
+                unit="LUNA"
+                suggestion={
+                  <AmountSuggestion
+                    name="Max"
+                    value={fromChainAmount(token.balance, token.decimals)}
+                    onSelect={onChange}
+                  />
+                }
               />
             )}
           />
