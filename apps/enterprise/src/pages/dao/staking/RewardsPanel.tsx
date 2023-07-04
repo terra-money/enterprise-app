@@ -11,6 +11,7 @@ import { useMemo } from 'react';
 import { RewardItem } from './RewardItem';
 import { InfoIcon } from 'lib/ui/icons/InfoIcon';
 import { useCurrentDaoAssetWhitelistQuery } from 'queries/useCurrentDaoAssetWhitelistQuery';
+import { splitBy } from 'lib/shared/utils/splitBy';
 
 export const RewardsPanel = () => {
   const { funds_distributor_contract, dao_type, dao_membership_contract } = useCurrentDao();
@@ -34,10 +35,10 @@ export const RewardsPanel = () => {
   const { data: rewards, isLoading: areRewardsLoading } = useMyDaoRewardsQuery(
     tokensToCheck
       ? {
-        fundsDistributorAddress: funds_distributor_contract,
-        nativeDenoms: Array.from(tokensToCheck.native),
-        cw20Assets: Array.from(tokensToCheck.cw20),
-      }
+          fundsDistributorAddress: funds_distributor_contract,
+          nativeDenoms: Array.from(tokensToCheck.native),
+          cw20Assets: Array.from(tokensToCheck.cw20),
+        }
       : undefined
   );
 
@@ -71,12 +72,11 @@ export const RewardsPanel = () => {
                 isDisabled={areNoRewards && 'No tokens to claim'}
                 isLoading={txResult.loading}
                 onClick={() => {
-                  // try to claim everything just in case
-                  const { cw20, native } = assertDefined(tokensToCheck);
+                  const [cw20, native] = splitBy(assertDefined(rewards), (reward) => (reward.type === 'cw20' ? 0 : 1));
                   claimRewards({
                     fundsDistributorAddress: funds_distributor_contract,
-                    cw20Assets: Array.from(cw20),
-                    nativeDenoms: Array.from(native),
+                    cw20Assets: cw20.map((reward) => reward.id),
+                    nativeDenoms: native.map((reward) => reward.id),
                   });
                 }}
               >
