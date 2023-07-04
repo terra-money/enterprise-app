@@ -29,22 +29,31 @@ const Identifier = styled.div`
 `;
 
 interface TreasuryPanelProps<T> {
-  title: string
-  icon: ReactNode
-  itemName: string
-  items: T[] | undefined
-  isError?: boolean
-  getTotalUsdValue: (items: T[]) => number
-  depositAction: ReactNode
-  renderItems: (items: T[]) => ReactNode
+  title: string;
+  icon: ReactNode;
+  itemName: string;
+  items: T[] | undefined;
+  isError?: boolean;
+  getTotalUsdValue: (items: T[]) => number;
+  depositAction?: ReactNode;
+  renderItems: (items: T[]) => ReactNode;
 }
 
 const Actions = styled(SameWidthChildrenRow)`
   flex: 1;
   justify-content: flex-end;
-`
+`;
 
-export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdValue, depositAction, renderItems, title }: TreasuryPanelProps<T>) {
+export function TreasuryPanel<T>({
+  icon,
+  itemName,
+  items,
+  isError,
+  getTotalUsdValue,
+  depositAction,
+  renderItems,
+  title,
+}: TreasuryPanelProps<T>) {
   const isLoading = !items && !isError;
   const [shouldShowAllItems, setShouldShowAllItems] = useState(false);
   const itemsToDisplay = useMemo(() => {
@@ -74,9 +83,7 @@ export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdVa
       isExpandedInitially
       header={
         <ContentFrame>
-          <Identifier>
-            {icon}
-          </Identifier>
+          <Identifier>{icon}</Identifier>
           <HStack fullWidth alignItems="center" justifyContent="space-between">
             <Text weight="semibold">{title}</Text>
             {isLoading ? (
@@ -112,4 +119,4 @@ export function TreasuryPanel<T>({ icon, itemName, items, isError, getTotalUsdVa
       )}
     />
   );
-};
+}
