@@ -7,13 +7,14 @@ import { Text } from 'components/primitives/text';
 import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
 import { UserDenied } from '@terra-money/wallet-provider';
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import { LinearProgress } from '@mui/material';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import styles from './TransactionSnackbar.module.sass';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
 import { useNetworkName } from '@terra-money/apps/hooks';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { ExternalLink } from 'components/link';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -45,7 +46,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
 
   const networkName = useNetworkName();
 
-  const onDetailsClick = useCallback(() => {
+  const detailsUrl = useMemo(() => {
     if (!myAddress) {
       return;
     }
@@ -55,8 +56,21 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
       return;
     }
 
-    window.open(getFinderUrl(networkName, transaction.txHash));
+    return getFinderUrl(networkName, transaction.txHash);
   }, [myAddress, networkName, showTransactionErrorDetails, transaction]);
+
+  const detailsContent =
+    transaction.txHash?.length > 0 ? (
+      <Text className={styles.link} variant="link">
+        View details
+      </Text>
+    ) : (
+      <Text className={styles.link} variant="link">
+        {transaction.status === TransactionStatus.Failed && transaction.error
+          ? getErrorText(transaction.error)
+          : 'View details'}
+      </Text>
+    );
 
   return (
     <div className={styles.root} data-variant={variant}>
@@ -67,17 +81,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
       <Text className={styles.text} variant="heading4">
         {message}
       </Text>
-      {transaction.txHash?.length > 0 ? (
-        <Text className={styles.link} variant="link" onClick={onDetailsClick}>
-          View details
-        </Text>
-      ) : (
-        <Text className={styles.link} variant="link" onClick={onDetailsClick}>
-          {transaction.status === TransactionStatus.Failed && transaction.error
-            ? getErrorText(transaction.error)
-            : 'View details'}
-        </Text>
-      )}
+      {detailsUrl ? <ExternalLink to={detailsUrl}>{detailsContent}</ExternalLink> : detailsContent}
       {variant !== 'pending' && <CloseIcon className={styles.close} onClick={() => closeSnackbar(snackbarKey)} />}
     </div>
   );

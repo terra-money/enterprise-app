@@ -1,6 +1,5 @@
-import { ExternalLink, UnstyledAnchor } from 'components/link';
+import { ExternalLink } from 'components/link';
 import { InternalLink } from 'components/link/InternalLink';
-import { Button, Text } from 'components/primitives';
 import { discordUrl, mediumUrl, Path, telegramUrl, twitterUrl } from 'navigation';
 import { SliceHeader } from './SliceHeader';
 import { ReactComponent as TwitterIcon } from 'components/assets/TwitterSolidLogo.svg';
@@ -8,9 +7,11 @@ import { ReactComponent as DiscordIcon } from 'components/assets/DiscordSolidLog
 import { ReactComponent as TelegramIcon } from 'components/assets/TelegramLogo.svg';
 import { ReactComponent as MediumIcon } from 'components/assets/MediumLogo.svg';
 import { useDisplay } from 'hooks';
-import { Container } from '@terra-money/apps/components';
 import classNames from 'classnames';
 import styles from './LandingFooter.module.sass';
+import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Text } from 'lib/ui/Text';
+import { HStack } from 'lib/ui/Stack';
 
 export const LandingFooter = () => {
   const { isDesktop, isMobile } = useDisplay();
@@ -24,41 +25,29 @@ export const LandingFooter = () => {
         />
         <div className={styles.actions}>
           <InternalLink to={Path.Dashboard}>
-            <Button component="div">Start now</Button>
+            <PrimaryButton kind="secondary" as="div">
+              Start now
+            </PrimaryButton>
           </InternalLink>
           <ExternalLink to={telegramUrl}>
-            <Button component="div">Contact us</Button>
+            <PrimaryButton kind="secondary" as="div">
+              Contact us
+            </PrimaryButton>
           </ExternalLink>
         </div>
       </div>
       <div className={styles.links}>
-        <Container className={classNames(styles.items, { [styles.mobile]: isMobile })} direction="row" gap={40}>
+        <HStack wrap="wrap" gap={40}>
           <ExternalLink to={telegramUrl}>
-            <Text variant="text">Contact Us</Text>
+            <Text color="supporting">Contact Us</Text>
           </ExternalLink>
-          <UnstyledAnchor
-            href=""
-            onClick={async (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-
-              window.open(`${document.location.href}docs/terms_of_use.pdf`);
-            }}
-          >
-            <Text variant="text">Terms</Text>
-          </UnstyledAnchor>
-          <UnstyledAnchor
-            href=""
-            onClick={async (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-
-              window.open(`${document.location.href}docs/privacy_policy.pdf`);
-            }}
-          >
-            <Text variant="text">Privacy Policy</Text>
-          </UnstyledAnchor>
-        </Container>
+          <ExternalLink to="docs/terms_of_use.pdf">
+            <Text color="supporting">Terms</Text>
+          </ExternalLink>
+          <ExternalLink to="docs/privacy_policy.pdf">
+            <Text color="supporting">Privacy Policy</Text>
+          </ExternalLink>
+        </HStack>
         {isDesktop && (
           <div className={styles.socials}>
             <ExternalLink to={twitterUrl}>
