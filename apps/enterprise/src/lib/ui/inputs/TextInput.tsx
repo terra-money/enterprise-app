@@ -5,6 +5,7 @@ import { defaultInputShapeCSS, inputPaddingCSS } from './config';
 
 import { InputWrapperWithErrorMessageProps, InputWrapperWithErrorMessage } from './InputWrapper';
 import { Spinner } from '../Spinner';
+import { getColor } from '../theme/getters';
 
 export type SharedTextInputProps = Pick<InputWrapperWithErrorMessageProps, 'label' | 'error' | 'inputOverlay'> & {
   onValueChange?: (value: string) => void;
@@ -18,7 +19,7 @@ export const commonInputCSS = css<{
   max-width: 100%;
   width: 100%;
 
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${getColor('backgroundGlass')};
   ${inputPaddingCSS};
   color: ${({ theme }) => theme.colors.text.toCssValue()};
 
