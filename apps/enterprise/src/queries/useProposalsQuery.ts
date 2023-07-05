@@ -5,6 +5,7 @@ import { useDAOsQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from './queryKey';
 import { ProposalApiResponse, apiResponseToProposal } from 'proposal/ProposalApiResponse';
+import { reportError } from 'errors/errorMonitoring';
 
 interface UseProposalsQueryOptions {
   daoAddress?: string;

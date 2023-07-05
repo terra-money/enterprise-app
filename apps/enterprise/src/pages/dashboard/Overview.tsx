@@ -1,7 +1,9 @@
 import { NumericPanel } from 'components/numeric-panel';
 import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
+import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
+import { sum } from 'lib/shared/utils/sum';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
-import {useProposalsQuery } from 'queries';
+import { useProposalsQuery } from 'queries';
 
 export const Overview = () => {
   // TODO: get this a better way
@@ -10,7 +12,7 @@ export const Overview = () => {
   // TODO: need to fetch just the aggregated analytics value of this
   const { data: polls = [], isLoading: isLoadingPolls } = useProposalsQuery({ limit: 100000 });
 
-  const totalCommunityPools = daos?.map((dao) => dao.tvl!).reduce((prev, curr) => prev + curr);
+  const totalCommunityPools = sum(removeUndefinedItems((daos || []).map((dao) => dao.tvl)));
 
   return (
     <SameWidthChildrenRow minChildrenWidth={320} rowHeight={110} gap={16} fullWidth>

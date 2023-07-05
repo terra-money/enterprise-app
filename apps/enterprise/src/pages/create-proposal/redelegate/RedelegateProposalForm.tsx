@@ -15,6 +15,7 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { toRedelegateMsg } from './toRedelegateMsg';
 import { zodAddressValidator } from 'chain/utils/validators';
 import { TextInput } from 'lib/ui/inputs/TextInput';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface RedelegateProposalFormSchema {
   amount: number;
@@ -94,13 +95,16 @@ export const RedelegateProposalForm = () => {
               <AmountTextInput
                 type="number"
                 error={errors.amount?.message}
-                label="LUNA amount"
+                label="Amount"
                 placeholder="Enter an amount"
                 onValueChange={onChange}
                 value={value}
                 onBlur={onBlur}
                 ref={ref}
-                max={maxAmount}
+                unit="LUNA"
+                suggestion={
+                  maxAmount ? <AmountSuggestion name="Max" value={maxAmount} onSelect={onChange} /> : undefined
+                }
               />
             )}
           />

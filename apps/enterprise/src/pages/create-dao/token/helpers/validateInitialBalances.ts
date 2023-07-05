@@ -14,8 +14,7 @@ export const validateInitialBalances = (initialBalances: InitialBalance[]): Form
       formState.addressError = 'Invalid Terra address';
     }
 
-    formState.amountError =
-      amount?.length === 0 ? 'Enter an amount' : validateAmount(Number(amount), 1, UINT_128_MAX, 'Amount');
+    formState.amountError = !amount ? 'Enter an amount' : validateAmount(amount, 1, UINT_128_MAX, 'Amount');
 
     return formState;
   });

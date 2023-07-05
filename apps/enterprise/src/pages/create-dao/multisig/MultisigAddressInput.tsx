@@ -1,25 +1,19 @@
+import { TextInput } from 'lib/ui/inputs/TextInput';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
-import { WizardInput } from '../WizardInput';
 
 export const MultisigAddressInput = () => {
   const {
-    formState: {
-      existingMultisigAddr,
-      existingMultisigVoters,
-      existingMultisigVotersLoading,
-      existingMultisigVotersError,
-    },
+    formState: { existingMultisigAddr, existingMultisigVotersLoading, existingMultisigVotersError },
     formInput,
   } = useDaoWizardForm();
 
   return (
-    <WizardInput
+    <TextInput
       label="Multisig address"
       placeholder="Enter your existing CW3 Multisig contract address"
       value={existingMultisigAddr}
       error={existingMultisigVotersError}
-      valid={existingMultisigVoters !== undefined}
-      loading={existingMultisigVotersLoading}
+      isLoading={existingMultisigVotersLoading}
       onChange={(addr) => {
         formInput({ existingMultisigAddr: addr.currentTarget.value });
       }}

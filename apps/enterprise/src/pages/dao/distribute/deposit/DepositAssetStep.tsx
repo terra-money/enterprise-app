@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositIntoFundsDistributorTx } from 'dao/tx/useDepositIntoFundsDistributorTx';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
 import { useTokenBalanceQuery } from 'queries';
@@ -71,7 +73,15 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             value={value}
             onBlur={onBlur}
             ref={ref}
-            max={balance ? demicrofy(balance, token.decimals).toNumber() : undefined}
+            suggestion={
+              balance ? (
+                <AmountSuggestion
+                  name="Max"
+                  value={fromChainAmount(balance.toNumber(), token.decimals)}
+                  onSelect={onChange}
+                />
+              ) : undefined
+            }
             unit={token.name}
           />
         )}

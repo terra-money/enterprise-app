@@ -33,6 +33,7 @@ export const CopyText = ({ content, children, ...rest }: CopyTextProps) => {
 
   return (
     <Container
+      as="span"
       onMouseLeave={() => setIconToShow('copy')}
       onTouchEnd={() => setIconToShow('copy')}
       onClick={() => {

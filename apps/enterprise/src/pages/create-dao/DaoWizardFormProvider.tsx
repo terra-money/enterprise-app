@@ -107,7 +107,7 @@ export interface TokenInfo {
 
 export interface InitialBalance {
   address: string;
-  amount: string;
+  amount: number;
 }
 
 export type DaoWizardStep =
@@ -126,7 +126,7 @@ export type DaoWizardStep =
 
 export const EMPTY_MEMBER = { addr: '', weight: 100, error: undefined, valid: undefined };
 
-export const EMPTY_INITIAL_BALANCE = { address: '', amount: '' };
+export const EMPTY_INITIAL_BALANCE = { address: '', amount: 0 };
 
 export interface DaoWizardState extends DaoWizardInput {
   timeConversionFactor: number;

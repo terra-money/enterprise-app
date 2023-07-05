@@ -1,8 +1,8 @@
 import { validateAddress } from '@terra-money/apps/utils';
 import { Text, Throbber } from 'components/primitives';
 import { useEffect, useState } from 'react';
-import { WizardInput } from '../WizardInput';
 import styles from './TerraAddressInput.module.sass';
+import { TextInput } from 'lib/ui/inputs/TextInput';
 
 interface TerraAddressInputProps {
   value: string | undefined;
@@ -24,7 +24,7 @@ export const TerraAddressInput = (props: TerraAddressInputProps) => {
 
   return (
     <div className={styles.root}>
-      <WizardInput
+      <TextInput
         label={label}
         placeholder="Enter a Terra address"
         value={value}

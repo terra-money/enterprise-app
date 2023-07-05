@@ -1,18 +1,17 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
-import { Ref, forwardRef, ReactNode } from 'react';
+import { Ref, forwardRef, ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { ShyTextButton } from '../buttons/ShyTextButton';
 import { HStack } from '../Stack';
 import { Text } from '../Text';
 
 import { TextInput, TextInputProps } from './TextInput';
-import { enforceTextInputIntoNumber } from './utils/enforceTextInputIntoNumber';
 
-type AmountTextInputProps = TextInputProps & {
+type AmountTextInputProps = Omit<TextInputProps, 'value' | 'onValueChange'> & {
   value: number | undefined;
   onValueChange?: (value: number | undefined) => void;
-  max?: number;
   unit?: ReactNode;
+  shouldBePositive?: boolean;
+  shouldBeInteger?: boolean;
+  suggestion?: ReactNode;
 };
 
 const UnitContainer = styled.div`
@@ -25,21 +24,36 @@ const UnitContainer = styled.div`
 `;
 
 export const AmountTextInput = forwardRef(function AmountInputInner(
-  { onValueChange, label, onChange, max, inputOverlay, unit, ...props }: AmountTextInputProps,
+  {
+    onValueChange,
+    label,
+    onChange,
+    max,
+    value,
+    inputOverlay,
+    unit,
+    type = 'number',
+    suggestion,
+    placeholder,
+    shouldBePositive,
+    shouldBeInteger,
+    ...props
+  }: AmountTextInputProps,
   ref: Ref<HTMLInputElement> | null
 ) {
+  const valueAsString = value?.toString() ?? '';
+  const [inputValue, setInputValue] = useState<string>(valueAsString);
+
   return (
     <TextInput
       {...props}
+      type={type}
       label={
-        <HStack fullWidth alignItems="center" gap={8} justifyContent="space-between">
-          <Text>{label}</Text>
-          {max !== undefined && (
-            <ShyTextButton onClick={() => onValueChange?.(max)} text={`Max: ${formatAmount(max)}`} />
-          )}
+        <HStack alignItems="center" justifyContent="space-between" gap={16} fullWidth>
+          {label}
+          {suggestion}
         </HStack>
       }
-      ref={ref}
       inputOverlay={
         unit ? (
           <UnitContainer>
@@ -49,8 +63,28 @@ export const AmountTextInput = forwardRef(function AmountInputInner(
           </UnitContainer>
         ) : undefined
       }
+      placeholder={placeholder ?? 'Enter amount'}
+      value={Number(valueAsString) === Number(inputValue) ? inputValue : valueAsString}
+      ref={ref}
       onValueChange={(value) => {
-        onValueChange?.(enforceTextInputIntoNumber(value));
+        if (shouldBePositive) {
+          value = value.replace(/-/g, '');
+        }
+
+        if (value === '') {
+          setInputValue('');
+          onValueChange?.(undefined);
+          return;
+        }
+
+        const parse = shouldBeInteger ? parseInt : parseFloat;
+        const valueAsNumber = parse(value);
+        if (isNaN(valueAsNumber)) {
+          return;
+        }
+
+        setInputValue(valueAsNumber.toString() !== value ? value : valueAsNumber.toString());
+        onValueChange?.(valueAsNumber);
       }}
     />
   );

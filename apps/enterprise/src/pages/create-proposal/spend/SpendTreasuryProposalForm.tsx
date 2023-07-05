@@ -13,6 +13,8 @@ import { TreasuryTokenInput } from './TreasuryTokenInput';
 import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AssetInfoWithPrice } from 'chain/Asset';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;
@@ -86,7 +88,13 @@ export const SpendTreasuryProposalForm = () => {
                   value={value}
                   onBlur={onBlur}
                   ref={ref}
-                  max={demicrofy(token.balance, token.decimals).toNumber()}
+                  suggestion={
+                    <AmountSuggestion
+                      name="Max"
+                      value={fromChainAmount(token.balance, token.decimals)}
+                      onSelect={onChange}
+                    />
+                  }
                 />
               )}
             />

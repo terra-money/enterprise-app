@@ -1,20 +1,19 @@
+import { TextInput } from 'lib/ui/inputs/TextInput';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
-import { WizardInput } from '../WizardInput';
 
 export const NftAddressInput = () => {
   const {
-    formState: { existingNFTAddr, existingNFT, existingNFTLoading, existingNFTError },
+    formState: { existingNFTAddr, existingNFTLoading, existingNFTError },
     formInput,
   } = useDaoWizardForm();
 
   return (
-    <WizardInput
+    <TextInput
       label="NFT address"
       placeholder="Enter your existing CW721 NFT contract address"
       value={existingNFTAddr}
       error={existingNFTError}
-      valid={existingNFT !== undefined}
-      loading={existingNFTLoading}
+      isLoading={existingNFTLoading}
       onChange={(addr) => {
         formInput({ existingNFTAddr: addr.currentTarget.value });
       }}

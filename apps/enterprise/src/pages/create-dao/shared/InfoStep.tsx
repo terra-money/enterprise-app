@@ -1,8 +1,8 @@
 import { Stack } from '@mui/material';
 import { DaoInfoInput, useDaoWizardForm } from '../DaoWizardFormProvider';
-import { WizardInput } from '../WizardInput';
 import { WizardStep } from '../WizardStep';
 import { TextArea } from 'lib/ui/inputs/TextArea';
+import { TextInput } from 'lib/ui/inputs/TextInput';
 
 export function InfoStep() {
   const {
@@ -17,12 +17,12 @@ export function InfoStep() {
   return (
     <WizardStep title="What is the name of your DAO?" subTitle="Choose a memorable and descriptive name">
       <Stack direction="column" spacing={4}>
-        <WizardInput
+        <TextInput
           label="Name"
           placeholder="Enter a name for your DAO"
           value={info.name}
           error={info.name?.length > 0 ? info.nameError : undefined}
-          onChange={({ currentTarget }) => onChange({ name: currentTarget.value })}
+          onValueChange={(name) => onChange({ name })}
         />
         <TextArea
           rows={6}
@@ -32,12 +32,12 @@ export function InfoStep() {
           error={info.descriptionError}
           onValueChange={(description) => onChange({ description })}
         />
-        <WizardInput
+        <TextInput
           label="Logo URL"
           placeholder="Enter the URL of your DAO's logo"
           value={info.logo}
           error={info.logoError}
-          onChange={({ currentTarget }) => onChange({ logo: currentTarget.value })}
+          onValueChange={(logo) => onChange({ logo })}
         />
       </Stack>
     </WizardStep>

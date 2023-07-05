@@ -13,6 +13,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { toUndelegateMsg } from './toUndelegateMsg';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface UndelegateProposalFormSchema {
   amount: number;
@@ -93,7 +94,7 @@ export const UndelegateProposalForm = () => {
               value={value}
               onBlur={onBlur}
               ref={ref}
-              max={maxAmount}
+              suggestion={maxAmount ? <AmountSuggestion name="Max" value={maxAmount} onSelect={onChange} /> : undefined}
             />
           )}
         />
