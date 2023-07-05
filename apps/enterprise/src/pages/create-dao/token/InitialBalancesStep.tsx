@@ -1,17 +1,16 @@
 import { WizardStep } from '../WizardStep';
-import { Text, useRestrictedNumericInput } from 'components/primitives';
-import { InputBaseProps } from '@mui/material';
+import { Text } from 'components/primitives';
 import { DeleteIconButton } from 'components/delete-icon-button';
-import { FormTextInput } from 'components/form-text-input';
 import { EMPTY_INITIAL_BALANCE, InitialBalance, useDaoWizardForm } from '../DaoWizardFormProvider';
-import Big from 'big.js';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
 import styles from './InitialBalancesStep.module.sass';
 import { AddButton } from 'components/add-button';
 import { VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { enforceTextInputIntoNumber } from 'lib/ui/inputs/utils/enforceTextInputIntoNumber';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
+import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
+import { sum } from 'lib/shared/utils/sum';
 
 const updateInitialBalance = (
   initialBalances: InitialBalance[],
@@ -30,37 +29,6 @@ const updateInitialBalance = (
   });
 };
 
-interface TokenAmountInputProps extends Pick<InputBaseProps, 'onChange'> {
-  amount: string | undefined;
-  error: string | undefined;
-  decimals: number;
-}
-
-const TokenAmountInput = (props: TokenAmountInputProps) => {
-  const { amount, error, decimals, onChange } = props;
-
-  const handlers = useRestrictedNumericInput({
-    type: 'decimal',
-    maxIntegerPoints: 18,
-    maxDecimalPoints: decimals,
-    onChange,
-  });
-
-  return (
-    <FormTextInput
-      value={amount}
-      type="text"
-      placeholder="Amount"
-      error={error}
-      inputProps={{
-        inputMode: 'decimal',
-        pattern: '[0-9.]*',
-      }}
-      {...handlers}
-    />
-  );
-};
-
 export const InitialBalancesStep = () => {
   const {
     formState: { initialBalances, tokenInfo, initialDaoBalance },
@@ -71,11 +39,9 @@ export const InitialBalancesStep = () => {
     formInput({ initialBalances: newBalances });
   };
 
-  const totalSupply = initialBalances
-    .reduce((previous, current) => {
-      return previous.add(current?.amount?.length > 0 ? current.amount : '0');
-    }, Big(0))
-    .add(initialDaoBalance || 0);
+  const totalSupply = sum(
+    removeUndefinedItems([...initialBalances.map((balance) => balance.amount), initialDaoBalance])
+  );
 
   return (
     <WizardStep
@@ -88,7 +54,7 @@ export const InitialBalancesStep = () => {
           <Text variant="label">Symbol</Text>
           <Text variant="heading4">{tokenInfo.symbol}</Text>
           <Text variant="label">Total Supply</Text>
-          <Text variant="heading4">{formatAmount(totalSupply as u<Big>)}</Text>
+          <Text variant="heading4">{formatAmount(totalSupply)}</Text>
         </VStack>
       }
     >
@@ -104,24 +70,21 @@ export const InitialBalancesStep = () => {
           return (
             <div key={index} className={styles.balanceInput}>
               <div className={styles.content}>
-                <FormTextInput
+                <TextInput
                   placeholder="Enter a wallet address"
                   value={address}
                   error={addressError}
-                  onChange={({ currentTarget }) =>
-                    onChange(updateInitialBalance(initialBalances, index, { address: currentTarget.value }))
-                  }
+                  onValueChange={(address) => onChange(updateInitialBalance(initialBalances, index, { address }))}
                 />
                 <DeleteIconButton
                   size="small"
                   onClick={() => onChange(initialBalances.filter((_, i) => i !== index))}
                 />
-                <TokenAmountInput
-                  amount={amount}
+                <AmountTextInput
+                  value={amount}
                   error={amountError}
-                  decimals={tokenInfo.decimals}
-                  onChange={({ currentTarget }) => {
-                    onChange(updateInitialBalance(initialBalances, index, { amount: currentTarget.value }));
+                  onValueChange={(amount) => {
+                    onChange(updateInitialBalance(initialBalances, index, { amount }));
                   }}
                 />
               </div>

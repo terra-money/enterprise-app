@@ -1,6 +1,5 @@
-import { FormTextInput } from 'components/form-text-input';
 import { WithHint } from 'lib/ui/WithHint';
-import { InputWrapper } from 'lib/ui/inputs/InputWrapper';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 
 export interface MinimumDepositInputProps {
   value: number | undefined;
@@ -10,28 +9,12 @@ export interface MinimumDepositInputProps {
 
 export const MinimumDepositInput = ({ value, onChange, error }: MinimumDepositInputProps) => {
   return (
-    <InputWrapper
+    <AmountTextInput
       label={<WithHint hint="The minimum deposit amount required to create a proposal.">Minimum deposit</WithHint>}
-    >
-      <FormTextInput
-        value={value === undefined ? '' : value}
-        type="number"
-        placeholder="Enter a minimum deposit amount"
-        error={error}
-        onChange={({ currentTarget }) => {
-          if (currentTarget.value === '') {
-            onChange(undefined);
-            return;
-          }
-
-          const newValue = Number(currentTarget.value);
-          if (isNaN(newValue) || newValue < 0) {
-            return;
-          }
-
-          onChange(newValue);
-        }}
-      />
-    </InputWrapper>
+      value={value}
+      placeholder="Enter a minimum deposit amount"
+      error={error}
+      onValueChange={onChange}
+    />
   );
 };
