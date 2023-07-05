@@ -81,7 +81,7 @@ export const InitialBalancesStep = () => {
                   onClick={() => onChange(initialBalances.filter((_, i) => i !== index))}
                 />
                 <AmountTextInput
-                  value={amount}
+                  value={amount || undefined}
                   error={amountError}
                   onValueChange={(amount) => {
                     onChange(updateInitialBalance(initialBalances, index, { amount }));

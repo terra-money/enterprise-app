@@ -5,41 +5,39 @@ import {
   useFloating,
   useInteractions,
   autoUpdate,
-  flip, offset, shift
-} from '@floating-ui/react'
-import { ReactNode, useState } from 'react'
-import styled from 'styled-components'
+  flip,
+  offset,
+  shift,
+} from '@floating-ui/react';
+import { ReactNode, useState } from 'react';
+import styled from 'styled-components';
 
-import { Panel } from '../Panel/Panel'
-import FocusTrap from 'focus-trap-react'
+import { Panel } from '../Panel/Panel';
+import FocusTrap from 'focus-trap-react';
 
 export interface RenderOpenerProps extends Record<string, unknown> {
-  ref: (node: ReferenceType | null) => void
+  ref: (node: ReferenceType | null) => void;
 }
 
 interface RenderContentParams {
-  onClose: () => void
+  onClose: () => void;
 }
 
 export interface PopoverPanelProps {
-  renderContent: (params: RenderContentParams) => ReactNode
-  renderOpener: (props: RenderOpenerProps) => ReactNode
-  className?: string
+  renderContent: (params: RenderContentParams) => ReactNode;
+  renderOpener: (props: RenderOpenerProps) => ReactNode;
+  className?: string;
 }
 
-const Container = styled(Panel)`
+export const PopoverContainer = styled(Panel)`
   box-shadow: ${({ theme }) => theme.shadows.medium};
   background: ${({ theme: { colors, name } }) =>
     (name === 'dark' ? colors.foreground : colors.background).toCssValue()};
   overflow: hidden;
-`
+`;
 
-export const PopoverPanel = ({
-  renderContent,
-  renderOpener,
-  className,
-}: PopoverPanelProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const PopoverPanel = ({ renderContent, renderOpener, className }: PopoverPanelProps) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     floatingStyles,
@@ -52,33 +50,29 @@ export const PopoverPanel = ({
     onOpenChange: setIsOpen,
     middleware: [offset(4), shift(), flip()],
     whileElementsMounted: autoUpdate,
-  })
+  });
 
-  useDismiss(context)
+  useDismiss(context);
 
-  const click = useClick(context)
+  const click = useClick(context);
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([click])
+  const { getReferenceProps, getFloatingProps } = useInteractions([click]);
   return (
     <>
       {renderOpener({ ref: setReference, ...getReferenceProps() })}
       {isOpen && (
-        <div
-          ref={setFloating}
-          style={{ ...floatingStyles, zIndex: 1 }}
-          {...getFloatingProps()}
-        >
+        <div ref={setFloating} style={{ ...floatingStyles, zIndex: 1 }} {...getFloatingProps()}>
           <FocusTrap
             focusTrapOptions={{
               clickOutsideDeactivates: true,
             }}
           >
-            <Container padding={12} className={className}>
+            <PopoverContainer padding={12} className={className}>
               {renderContent({ onClose: () => setIsOpen(false) })}
-            </Container>
+            </PopoverContainer>
           </FocusTrap>
         </div>
       )}
     </>
-  )
-}
+  );
+};

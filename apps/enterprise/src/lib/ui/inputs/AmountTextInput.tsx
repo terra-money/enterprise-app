@@ -43,7 +43,6 @@ export const AmountTextInput = forwardRef(function AmountInputInner(
 ) {
   const valueAsString = value?.toString() ?? '';
   const [inputValue, setInputValue] = useState<string>(valueAsString);
-  console.log(valueAsString, inputValue);
 
   return (
     <TextInput
