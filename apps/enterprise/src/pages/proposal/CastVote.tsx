@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import { CW20Addr } from '@terra-money/apps/types';
 import { Button, IconButton, Text } from 'components/primitives';
 import { useProposalVoteQuery, useVotingPowerQuery } from 'queries';
@@ -16,6 +15,7 @@ import classNames from 'classnames';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { Tooltip } from 'lib/ui/Tooltip';
+import { HStack } from 'lib/ui/Stack';
 
 interface VoteOption {
   outcome: enterprise.VoteOutcome;
@@ -74,14 +74,12 @@ export const CastVote = () => {
   }
 
   return (
-    <Stack spacing={2} direction="row">
+    <HStack alignItems="center" gap={16}>
       {VoteOptions.map(({ outcome, icon, tooltip }, index) => (
         <Tooltip
           content={tooltip}
-          renderOpener={props => (
-            <div
-              {...props}
-            >
+          renderOpener={(props) => (
+            <div {...props}>
               <IconButton
                 key={outcome}
                 className={classNames({ [styles.active]: myVote?.outcome === index })}
@@ -108,6 +106,6 @@ export const CastVote = () => {
           )}
         />
       ))}
-    </Stack>
+    </HStack>
   );
 };

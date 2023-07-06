@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { VStack } from 'lib/ui/Stack';
 import { TokenInfo, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardStep } from '../WizardStep';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -31,7 +31,7 @@ export const TokenInfoStep = () => {
 
   return (
     <WizardStep title="Create your token">
-      <Stack direction="column" spacing={4}>
+      <VStack gap={16}>
         <TextInput
           label="Token Name"
           placeholder="Enter a name for your token"
@@ -88,7 +88,7 @@ export const TokenInfoStep = () => {
           error={project !== undefined && project?.length > 0 ? projectError : undefined}
           onValueChange={(project) => onChange({ project })}
         />
-      </Stack>
+      </VStack>
     </WizardStep>
   );
 };
