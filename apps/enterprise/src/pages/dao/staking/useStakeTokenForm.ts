@@ -4,7 +4,7 @@ import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 
 interface StakeTokenFormInput {
-  amount?: string;
+  amount?: number;
 }
 
 interface StakeTokenFormState extends StakeTokenFormInput {
@@ -12,7 +12,7 @@ interface StakeTokenFormState extends StakeTokenFormInput {
 }
 
 const initialState: StakeTokenFormState = {
-  amount: '',
+  amount: undefined,
   submitDisabled: true,
 };
 

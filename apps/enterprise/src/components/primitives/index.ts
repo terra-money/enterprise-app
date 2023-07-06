@@ -1,5 +1,5 @@
-export * from './text';
 export * from './text-input';
+export * from './text';
 export * from './numeric-input';
 export * from './search-input';
 export * from './button';
