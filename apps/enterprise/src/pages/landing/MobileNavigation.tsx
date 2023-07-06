@@ -1,6 +1,5 @@
 import { Drawer } from '@mui/material';
 import { Container } from '@terra-money/apps/components';
-import classNames from 'classnames';
 import { ReactComponent as MenuIcon } from 'components/assets/Menu.svg';
 import { ExternalLink } from 'components/link';
 import { IconButton, Text } from 'components/primitives';
@@ -13,17 +12,11 @@ import { ReactComponent as MediumIcon } from 'components/assets/MediumLogo.svg';
 import styles from './MobileNavigation.module.sass';
 import { NavLink } from 'react-router-dom';
 
-interface MobileNavigationProps {
-  className: string;
-}
-
-export const MobileNavigation = (props: MobileNavigationProps) => {
-  const { className } = props;
-
+export const MobileNavigation = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Container className={classNames(className)}>
+    <Container>
       <IconButton className={styles.menuButton} variant="outline" onClick={() => setOpen(true)}>
         <MenuIcon />
       </IconButton>
