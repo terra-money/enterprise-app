@@ -1,4 +1,3 @@
-import { ConditionalRender } from 'components/primitives';
 import { CurrentProposalActionProvider } from 'dao/components/CurrentProposalActionProvider';
 import { getProposalActionMsg, getProposalActionType } from 'dao/shared/proposal';
 import { VStack } from 'lib/ui/Stack';
@@ -16,6 +15,7 @@ import { UpdateMinimumWeightForRewardsAction } from './UpdateMinimumWeightForRew
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
 import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
+import { Match } from 'lib/ui/Match';
 
 export const ProposalActions = () => {
   const proposal = useCurrentProposal();
@@ -34,7 +34,7 @@ export const ProposalActions = () => {
           const msg = getProposalActionMsg(action);
           return (
             <CurrentProposalActionProvider value={{ type, msg }}>
-              <ConditionalRender
+              <Match
                 value={type}
                 update_gov_config={() => <GovConfigProposalAction />}
                 update_metadata={() => <MetadataProposalAction />}

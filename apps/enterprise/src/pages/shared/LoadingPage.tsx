@@ -1,6 +1,6 @@
-import { Throbber } from 'components/primitives';
 import { ReactNode } from 'react';
 import styles from './LoadingPage.module.sass';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface LoadingPageProps {
   isLoading: boolean;
@@ -12,7 +12,7 @@ export const LoadingPage = (props: LoadingPageProps) => {
 
   return isLoading ? (
     <div className={styles.root}>
-      <Throbber />
+      <Spinner />
     </div>
   ) : (
     <>{children}</>

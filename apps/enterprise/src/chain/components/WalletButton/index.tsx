@@ -1,10 +1,11 @@
 // TODO: migrate from sass to styled-components
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import { IconButton, Throbber } from 'components/primitives';
+import { IconButton } from 'components/primitives';
 import { ReactComponent as WalletIcon } from 'components/assets/Wallet.svg';
 import classNames from 'classnames';
 import styles from './WalletButton.module.sass';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface IndicatorProps {
   connected: boolean;
@@ -34,11 +35,7 @@ export const WalletButton = ({ onClick }: WalletButtonProps) => {
 
   return (
     <IconButton className={styles.button} disabled={isInitializing} onClick={onClick}>
-      {isInitializing ? (
-        <Throbber dotClassName={styles.throbberDot} variant="secondary" size="small" />
-      ) : (
-        <WalletIcon />
-      )}
+      {isInitializing ? <Spinner /> : <WalletIcon />}
       <Indicator connected={!!myAddress} />
     </IconButton>
   );

@@ -1,5 +1,4 @@
 import { getLast } from '@terra-money/apps/utils';
-import { ConditionalRender } from 'components/primitives';
 import { useNavigate } from 'react-router';
 import { useCreateDAOTx } from 'tx';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
@@ -23,6 +22,7 @@ import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { useState } from 'react';
 import { WhitelistStep } from './WhitelistStep';
+import { Match } from 'lib/ui/Match';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ export const DaoWizard = () => {
         </SameWidthChildrenRow>
       }
     >
-      <ConditionalRender
+      <Match
         value={step}
         type={() => <SelectDaoTypeStep />}
         daoImport={() => <ImportStep />}

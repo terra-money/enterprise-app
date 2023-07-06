@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
-import { Throbber } from '../throbber';
 import styles from './Button.module.sass';
+import { Spinner } from 'lib/ui/Spinner';
 
 type Variant = 'primary' | 'secondary' | 'danger';
 
@@ -63,7 +63,7 @@ const Button = forwardRef<any, ButtonProps>((props, ref) => {
           {icon && iconAlignment === 'end' ? icon : null}
         </>
       ) : (
-        <Throbber dotClassName={styles.throbber} variant="secondary" size="small" />
+        <Spinner />
       )}
     </Component>
   );

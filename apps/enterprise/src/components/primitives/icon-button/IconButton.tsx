@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { forwardRef, HTMLAttributes } from 'react';
-import { Throbber } from '../throbber';
 import styles from './IconButton.module.sass';
+import { Spinner } from 'lib/ui/Spinner';
 
 type Variant = 'primary' | 'secondary' | 'outline';
 
@@ -29,7 +29,7 @@ const IconButton = forwardRef<any, IconButtonProps>((props, ref) => {
       )}
       {...rest}
     >
-      {loading === true ? <Throbber dotClassName={styles.throbber} variant="secondary" size="small" /> : children}
+      {loading === true ? <Spinner /> : children}
     </button>
   );
 });

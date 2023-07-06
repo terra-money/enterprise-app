@@ -2,7 +2,6 @@ import { Container } from '@terra-money/apps/components';
 import { WizardStep } from '../WizardStep';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
 import { OptionButton } from 'components/option-button';
-import { ConditionalRender, Divider } from 'components/primitives';
 import { enterprise } from 'types/contracts';
 import { TokenAddressInput } from '../token/TokenAddressInput';
 import { NftAddressInput } from '../nft/NftAddressInput';
@@ -14,6 +13,8 @@ import Big from 'big.js';
 import { u } from '@terra-money/apps/types';
 import styles from './ImportStep.module.sass';
 import { Address } from 'chain/components/Address';
+import { Match } from 'lib/ui/Match';
+import { Line } from 'lib/ui/Line';
 
 const daoNameRecord: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
@@ -109,8 +110,8 @@ export function ImportStep() {
           />
           {shouldImport && (
             <>
-              <Divider />
-              <ConditionalRender
+              <Line />
+              <Match
                 value={type}
                 token={() => <TokenAddressInput />}
                 multisig={() => <MultisigAddressInput />}

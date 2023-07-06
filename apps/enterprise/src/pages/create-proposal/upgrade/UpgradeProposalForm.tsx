@@ -3,7 +3,6 @@ import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
-import { Throbber } from 'components/primitives';
 import { assertDefined } from '@terra-money/apps/utils';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { base64Encode } from 'utils';
@@ -12,6 +11,7 @@ import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface FormatMigrationMsgParams {
   msg: string;
@@ -84,7 +84,7 @@ export const UpgradeProposalForm = () => {
 
         {isUpToDate === true && <Text weight="bold">Your DAO is up-to-date!</Text>}
 
-        {isUpToDate === undefined && <Throbber />}
+        {isUpToDate === undefined && <Spinner />}
       </ProposalForm>
     </LoadingPage>
   );

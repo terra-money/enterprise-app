@@ -1,10 +1,11 @@
 import { AnimateNumber, Container, Formatter } from '@terra-money/apps/components';
-import { Text, Throbber } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { Panel, PanelProps } from 'components/panel';
 import Big, { BigSource } from 'big.js';
 import { ReactNode } from 'react';
 import styles from './NumericPanel.module.sass';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface NumericPanelProps extends PanelProps {
   title?: string;
@@ -42,7 +43,7 @@ export const NumericPanel = (props: NumericPanelProps) => {
     <Panel className={className} title={title}>
       {isLoading ? (
         <Container className={styles.content}>
-          <Throbber className={styles.throbber} variant="secondary" size="small" />
+          <Spinner />
         </Container>
       ) : (
         <>
