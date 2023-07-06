@@ -1,11 +1,14 @@
+import { getCSSUnit } from '@terra-money/apps/utils';
 import { css } from 'styled-components';
 
 export const inputBorderRadiusCSS = css`
   border-radius: 8px;
 `;
 
+export const inputHeight = 86;
+
 export const defaultInputShapeCSS = css`
-  height: 86px;
+  height: ${getCSSUnit(inputHeight)};
   ${inputBorderRadiusCSS};
 `;
 

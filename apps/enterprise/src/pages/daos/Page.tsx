@@ -1,6 +1,6 @@
-import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { Container, ScrollableContainer } from '@terra-money/apps/components';
 import { PageLayout } from 'components/layout';
-import { IconButton, SearchInput } from 'components/primitives';
+import { IconButton } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
@@ -13,6 +13,7 @@ import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
+import { SearchInput } from 'lib/ui/inputs/SearchInput';
 
 export const Page = () => {
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -46,7 +47,8 @@ export const Page = () => {
   const searchInput = (
     <SearchInput
       value={searchText}
-      onChange={setSearchText}
+      style={{ maxWidth: 400 }}
+      onValueChange={setSearchText}
       onClear={() => {
         setSearchText('');
       }}
@@ -78,20 +80,7 @@ export const Page = () => {
         </VStack>
       )}
       normal={() => (
-        <ScrollableContainer
-          stickyRef={stickyRef}
-          header={(visible) => (
-            <StickyHeader visible={visible}>
-              <Header
-                compact={true}
-                isLoading={isLoading}
-                totalCount={items?.length ?? 0}
-                searchInput={searchInput}
-                filters={filters}
-              />
-            </StickyHeader>
-          )}
-        >
+        <ScrollableContainer>
           <PageLayout
             header={
               <Header

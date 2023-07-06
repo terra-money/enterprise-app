@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { SearchTextInput } from 'components/search-text-input';
 import { useTokens } from '@terra-money/apps/hooks';
 import { Token } from '@terra-money/apps/types';
 import { CW20Addr } from '@terra-money/apps/types';
@@ -8,6 +7,7 @@ import { useCW20TokenInfoQuery } from 'queries';
 import { VStack } from 'lib/ui/Stack';
 import styled from 'styled-components';
 import { Spinner } from 'lib/ui/Spinner';
+import { SearchInput } from 'lib/ui/inputs/SearchInput';
 
 const isMatchingToken = (token: Token, searchText: string): boolean => {
   if (searchText?.length === 0) {
@@ -70,11 +70,11 @@ export const TokenInput = ({ onSelect }: TokenInputProps) => {
 
   return (
     <VStack gap={24}>
-      <SearchTextInput
+      <SearchInput
         style={{ width: '100%' }}
         placeholder="Search for a token"
-        searchText={searchText}
-        onChange={onSearchTextChanged}
+        value={searchText}
+        onValueChange={onSearchTextChanged}
       />
 
       <Container gap={8}>
