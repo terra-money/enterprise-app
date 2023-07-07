@@ -78,6 +78,9 @@ export const DaoWizard = () => {
       await createDaoTx(toCreateDaoMsg(formState));
     } catch (error) {
       setIsFinishLoading(false);
+      reportError(error, {
+        message: 'Failed to create DAO transaction',
+      });
     }
   };
 
@@ -101,7 +104,7 @@ export const DaoWizard = () => {
             </Button>
           )}
           {isFinishVisible && (
-            <Button onClick={onFinish} isLoading={isFinishLoading}>
+            <Button isLoading={isFinishLoading} onClick={onFinish}>
               Finish
             </Button>
           )}
