@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router';
 import { Container } from '@terra-money/apps/components';
-import { SearchInput } from 'components/primitives';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useMemo, useState } from 'react';
 import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
 import { InternalLink } from 'components/link';
 import { enterprise } from 'types/contracts';
@@ -15,6 +14,7 @@ import { proposalStatuses } from 'proposal';
 import { ProposalsFilter } from './ProposalsFilter';
 import { useDoIHaveVotingPowerQuery } from 'dao/hooks/useDoIHaveVotingPowerQuery';
 import { useCurrentDaoAddress } from 'dao/navigation';
+import { SearchInput } from 'lib/ui/inputs/SearchInput';
 
 const LIMIT = 100;
 
@@ -23,19 +23,17 @@ export const ProposalsPageContent = () => {
 
   const { data: proposalsQuery, isLoading } = useDaoProposalsQuery({ address });
 
-  const [search, setSearch] = useState({
-    input: '',
-    searchText: '',
-  });
+  const [searchText, setSearchText] = useState('');
+
   const [statusesToDisplay, setStatusesToDisplay] = useState<enterprise.ProposalStatus[]>(proposalStatuses);
 
   const proposals = useMemo(() => {
     return proposalsQuery
       ?.filter((proposal) => {
-        return proposal.title.toLowerCase().includes(search.searchText);
+        return proposal.title.toLowerCase().includes(searchText);
       })
       .filter(({ status }) => statusesToDisplay.includes(status));
-  }, [proposalsQuery, search.searchText, statusesToDisplay]);
+  }, [proposalsQuery, searchText, statusesToDisplay]);
 
   const navigate = useNavigate();
 
@@ -47,36 +45,11 @@ export const ProposalsPageContent = () => {
   return (
     <Container direction="column" gap={32}>
       <HStack justifyContent="space-between" gap={16} fullWidth>
-        <Container direction="row" gap={16}>
-          <SearchInput
-            value={search.input}
-            onChange={(input) =>
-              setSearch((previous) => {
-                return {
-                  ...previous,
-                  input,
-                };
-              })
-            }
-            onClear={() =>
-              setSearch({
-                input: '',
-                searchText: '',
-              })
-            }
-            onSearch={() =>
-              setSearch((previous) => {
-                return {
-                  ...previous,
-                  searchText: previous.input,
-                };
-              })
-            }
-          />
-
+        <HStack alignItems="center" gap={16}>
+          <SearchInput style={{ maxWidth: 400 }} value={searchText} onValueChange={(input) => setSearchText(input)} />
           <ProposalsFilter value={statusesToDisplay} onChange={setStatusesToDisplay} />
-        </Container>
-        <PrimaryButton
+        </HStack>
+        <Button
           as="div"
           isDisabled={newProposalsDisabled && 'Only members of this DAO can create proposals.'}
           onClick={() => {
@@ -86,7 +59,7 @@ export const ProposalsPageContent = () => {
           }}
         >
           <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
-        </PrimaryButton>
+        </Button>
       </HStack>
       <Container direction="column" gap={16}>
         {!proposals || proposals.length < 1 ? (
@@ -100,9 +73,9 @@ export const ProposalsPageContent = () => {
               action={
                 newProposalsDisabled ? undefined : (
                   <InternalLink to={`/dao/${address}/proposals/create`}>
-                    <PrimaryButton as="div" kind="secondary">
+                    <Button as="div" kind="secondary">
                       Create
-                    </PrimaryButton>
+                    </Button>
                   </InternalLink>
                 )
               }

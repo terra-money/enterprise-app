@@ -5,6 +5,7 @@ import { TokenIcon } from 'components/token-icon';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
+import { getColor } from 'lib/ui/theme/getters';
 import { croppedTextCSS } from 'lib/ui/utils/croppedTextCSS';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 import styled from 'styled-components';
@@ -36,7 +37,7 @@ const Icon = styled(TokenIcon)`
 `;
 
 const Container = styled(Panel)`
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${getColor('mist')};
   padding: 16px;
 `;
 

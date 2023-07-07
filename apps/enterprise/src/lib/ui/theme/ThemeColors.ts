@@ -4,36 +4,29 @@ export const regularTextAlpha = 0.9;
 
 export type ThemeColors = {
   primary: HSLA;
-  primaryHover: HSLA;
 
   attention: HSLA;
-  attentionHover: HSLA;
 
   alert: HSLA;
   idle: HSLA;
   success: HSLA;
 
   foreground: HSLA;
-
-  foregroundAlt: HSLA;
-  foregroundAltHover: HSLA;
-
-  gradient: [HSLA, HSLA, HSLA];
-
   background: HSLA;
 
   text: HSLA;
   textSupporting: HSLA;
   textShy: HSLA;
 
-  backgroundGlass: HSLA;
-  backgroundGlass2: HSLA;
+  mist: HSLA;
+  mistExtra: HSLA;
 
   overlay: HSLA;
 
-  outlinedHover: HSLA;
-
   contrast: HSLA;
 
-  getPaletteColor: (index: number) => HSLA;
+  white: HSLA;
+  transparent: HSLA;
+
+  getLabelColor: (index: number) => HSLA;
 };

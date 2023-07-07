@@ -11,12 +11,12 @@ import { ExternalLink } from 'components/link';
 import { Text } from 'lib/ui/Text';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { HStack, VStack } from 'lib/ui/Stack';
-import { ConditionalRender } from 'components/primitives';
 import { PopoverContainer } from 'lib/ui/Menu/PopoverPanel';
 import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
 import { CheckIcon } from 'lib/ui/icons/CheckIcon';
 import { AlertCircleIcon } from 'lib/ui/icons/AlertCircleIcon';
 import { Spinner } from 'lib/ui/Spinner';
+import { Match } from 'lib/ui/Match';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -65,7 +65,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
     <PopoverContainer>
       <HStack gap={20} style={{ minWidth: 300 }} alignItems="center">
         <Text as="div" size={20}>
-          <ConditionalRender
+          <Match
             value={variant}
             completed={() => <CheckIcon />}
             failed={() => <AlertCircleIcon />}

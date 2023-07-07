@@ -1,13 +1,14 @@
 import { Text } from '../../components/primitives';
 import { ReactComponent as TwitterIcon } from 'components/assets/TwitterLogo.svg';
 import { ReactComponent as DiscordIcon } from 'components/assets/DiscordLogo.svg';
-import { GitHub as GitHubIcon, Telegram as TelegramIcon } from '@mui/icons-material';
 import { SocialItem } from './SocialItem';
 import { createDiscordURL, createGithubProfileURL, createTelegramURL, createTwitterProfileURL } from 'utils';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Panel } from 'lib/ui/Panel/Panel';
 import styled from 'styled-components';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { GitHubIcon } from 'lib/ui/icons/GitHubIcon';
+import { TelegramIcon } from 'lib/ui/icons/TelegramIcon';
 
 const Container = styled(HStack)`
   gap: 32px;

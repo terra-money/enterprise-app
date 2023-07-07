@@ -2,7 +2,6 @@ import { CW20Addr } from '@terra-money/apps/types';
 import { assertDefined } from '@terra-money/apps/utils';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { ConnectWalletPrompt } from 'components/not-connected';
-import { ConditionalRender } from 'components/primitives';
 import { useDAOQuery } from 'queries';
 import { useParams } from 'react-router';
 import { BurnTokensProposalPage } from './burn/BurnTokensProposalPage';
@@ -32,6 +31,7 @@ import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
 import { MintNftProposalPage } from './mint/MintNftProposalPage';
 import { enterprise } from 'types/contracts';
 import { MinimumWeightForRewardsProposalPage } from './minWeight/MinimumWeightForRewardsProposalPage';
+import { Match } from 'lib/ui/Match';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -72,7 +72,7 @@ export const CreateProposalPageContent = () => {
                 {dao ? (
                   <CurrentDaoProvider value={dao}>
                     <Header title={proposalTitle[type]} />
-                    <ConditionalRender
+                    <Match
                       value={assertDefined(type)}
                       metadata={() => <MetadataProposalForm />}
                       council={() => <CouncilForm />}

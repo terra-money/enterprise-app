@@ -8,6 +8,8 @@ import { FormState } from '@terra-money/apps/hooks';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import styled from 'styled-components';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getCSSUnit } from '@terra-money/apps/utils';
+import { inputHeight } from 'lib/ui/inputs/config';
 
 const socialDataKeys: Array<keyof DaoSocialDataInput> = [
   'githubUsername',
@@ -43,13 +45,15 @@ interface SocialFieldsProps extends FormState<DaoSocialDataInput> {
 
 const IconOverlay = styled.div`
   position: absolute;
-  left: 20px;
+  pointer-events: none;
+  width: ${getCSSUnit(inputHeight)};
+  left: 0;
   font-size: 28px;
   ${centerContentCSS};
 `;
 
 const Input = styled(TextInput)`
-  padding-left: 68px;
+  padding-left: ${getCSSUnit(inputHeight)};
 `;
 
 export function SocialFields({ onChange, ...socials }: SocialFieldsProps) {

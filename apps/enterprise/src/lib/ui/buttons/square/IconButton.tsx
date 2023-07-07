@@ -1,38 +1,42 @@
-import styled from 'styled-components';
-import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
-import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
-import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
-import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
-import { roundedCSS } from 'lib/ui/utils/roundedCSS';
+import { Ref, forwardRef } from 'react';
+import styled, { css } from 'styled-components';
 
 import { UnstyledButton } from '../UnstyledButton';
+import { getCSSUnit } from '@terra-money/apps/utils';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { HSLA } from 'lib/ui/colors/HSLA';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 
-type IconButtonKind = 'regular' | 'alert';
+export const IconButtonSizes = ['xs', 's', 'm', 'l', 'xl'] as const;
 
-export const stickyIconButtonSizes = ['xs', 's', 'm', 'l'] as const;
+type IconButtonKind = 'regular' | 'secondary' | 'alert' | 'minimalistic' | 'minimalisticSecondary';
 
-type IconButtonSize = (typeof stickyIconButtonSizes)[number];
+type IconButtonSize = (typeof IconButtonSizes)[number];
 
-export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
-  kind?: IconButtonKind;
   size?: IconButtonSize;
-  as?: 'button' | 'div';
+  kind?: IconButtonKind;
+  as?: 'div' | 'button';
 }
 
-export const IconButton = ({ size = 'm', icon, kind = 'regular', ...rest }: Props) => {
-  return (
-    <Container {...rest} kind={kind} size={size}>
-      {icon}
-    </Container>
-  );
-};
+export const IconButton = forwardRef(
+  ({ size = 'm', kind = 'regular', icon, ...rest }: IconButtonProps, ref: Ref<HTMLButtonElement> | null) => {
+    return (
+      <Container kind={kind} ref={ref} size={size} {...rest}>
+        {icon}
+      </Container>
+    );
+  }
+);
 
 const sizeRecord: Record<IconButtonSize, number> = {
-  xs: 16,
-  s: 20,
+  xs: 18,
+  s: 24,
   m: 32,
-  l: 48,
+  l: 40,
+  xl: 48,
 };
 
 interface ContainerProps {
@@ -41,34 +45,49 @@ interface ContainerProps {
 }
 
 const Container = styled(UnstyledButton)<ContainerProps>`
+  position: relative;
   ${centerContentCSS};
-  border-radius: 8px;
-  ${roundedCSS};
   ${({ size }) => getSameDimensionsCSS(sizeRecord[size])};
 
   color: ${({ kind, theme: { colors } }) =>
     ({
-      regular: colors.text,
+      minimalisticSecondary: colors.textSupporting,
+      minimalistic: colors.contrast,
+      regular: colors.contrast,
       alert: colors.alert,
+      secondary: colors.textSupporting,
     }[kind].toCssValue())};
+  font-size: ${({ size }) => `calc(${getCSSUnit(sizeRecord[size] * 0.6)})`};
 
-  font-size: ${({ size }) => `calc(${getCSSUnit(sizeRecord[size] * 0.4)})`};
+  border-radius: 8px;
 
   ${defaultTransitionCSS};
 
   background: ${({ kind, theme: { colors } }) =>
     ({
-      regular: colors.backgroundGlass,
+      minimalisticSecondary: new HSLA(0, 0, 0, 0),
+      minimalistic: new HSLA(0, 0, 0, 0),
+      regular: colors.mist,
+      secondary: colors.mist,
+
       alert: colors.alert.getVariant({ a: (a) => a * 0.2 }),
     }[kind].toCssValue())};
 
   :hover {
     background: ${({ kind, theme: { colors } }) =>
       ({
-        regular: colors.backgroundGlass2,
+        minimalisticSecondary: colors.mist,
+        minimalistic: colors.mist,
+        regular: colors.mistExtra,
+        secondary: colors.mistExtra,
         alert: colors.alert.getVariant({ a: (a) => a * 0.28 }),
-      }[kind]
-        .getVariant({ a: (a) => a * 0.28 })
-        .toCssValue())};
+      }[kind].toCssValue())};
+    ${({ kind, theme }) =>
+      (kind === 'secondary' || kind === 'minimalisticSecondary') &&
+      css`
+         {
+          color: ${theme.colors.contrast.toCssValue()};
+        }
+      `};
   }
 `;

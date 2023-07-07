@@ -2,13 +2,15 @@ import { NumericPanel } from 'components/numeric-panel';
 import { useStakeTokenForm } from './useStakeTokenForm';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
-import { AmountInput } from 'components/amount-input';
 import { demicrofy, microfy } from '@terra-money/apps/libs/formatting';
 import { useStakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
+import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface StakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
@@ -40,19 +42,24 @@ export const StakeTokenOverlay = ({
       renderContent={() => (
         <VStack gap={16}>
           <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
-          <AmountInput
+          <AmountTextInput
             value={amount}
             placeholder="Enter a staking amount"
-            maxAmount={demicrofy(balance, decimals)}
-            symbol={symbol}
-            onChange={(event) => input({ amount: event.target.value })}
-            onMaxClick={() => input({ amount: demicrofy(balance, decimals).toString() })}
+            suggestion={
+              <AmountSuggestion
+                value={fromChainAmount(balance.toString(), decimals)}
+                name="Max"
+                onSelect={(amount) => input({ amount })}
+              />
+            }
+            unit={symbol}
+            onValueChange={(amount) => input({ amount })}
           />
         </VStack>
       )}
       footer={
         <VStack gap={12}>
-          <PrimaryButton
+          <Button
             isDisabled={submitDisabled}
             isLoading={txResult.loading}
             onClick={async () => {
@@ -67,10 +74,10 @@ export const StakeTokenOverlay = ({
             }}
           >
             Stake
-          </PrimaryButton>
-          <PrimaryButton kind="secondary" onClick={onClose}>
+          </Button>
+          <Button kind="secondary" onClick={onClose}>
             Cancel
-          </PrimaryButton>
+          </Button>
         </VStack>
       }
     />

@@ -6,10 +6,10 @@ import { Text } from 'lib/ui/Text';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 import styled from 'styled-components';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
 import { ReactNode, useMemo, useState } from 'react';
 import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { Button } from 'lib/ui/buttons/Button';
 
 const ContentFrame = styled.div`
   display: grid;
@@ -22,7 +22,7 @@ const ContentFrame = styled.div`
 const Identifier = styled.div`
   aspect-ratio: 1/1;
   ${roundedCSS};
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${({ theme }) => theme.colors.mist.toCssValue()};
   ${centerContentCSS};
   font-size: 20px;
   color: ${({ theme }) => theme.colors.contrast.toCssValue()};
@@ -107,9 +107,9 @@ export function TreasuryPanel<T>({
               </Text>
               <Actions childrenWidth={186} gap={16}>
                 {items && items.length > 4 && (
-                  <PrimaryButton kind="secondary" onClick={() => setShouldShowAllItems(!shouldShowAllItems)}>
+                  <Button kind="secondary" onClick={() => setShouldShowAllItems(!shouldShowAllItems)}>
                     {itemsToDisplay.length < items.length ? 'Show more' : 'Show less'}
-                  </PrimaryButton>
+                  </Button>
                 )}
                 {depositAction}
               </Actions>

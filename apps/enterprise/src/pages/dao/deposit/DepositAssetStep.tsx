@@ -4,7 +4,7 @@ import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositTx } from 'dao/tx/useDepositTx';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
@@ -88,7 +88,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
         )}
       />
       <VStack gap={8}>
-        <PrimaryButton
+        <Button
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
@@ -96,10 +96,10 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
           })}
         >
           Deposit
-        </PrimaryButton>
-        <PrimaryButton kind="secondary" onClick={onBack}>
+        </Button>
+        <Button kind="secondary" onClick={onBack}>
           Back
-        </PrimaryButton>
+        </Button>
       </VStack>
     </>
   );

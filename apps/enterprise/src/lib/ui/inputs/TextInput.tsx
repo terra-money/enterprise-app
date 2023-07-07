@@ -19,7 +19,7 @@ export const commonInputCSS = css<{
   max-width: 100%;
   width: 100%;
 
-  background: ${getColor('backgroundGlass')};
+  background: ${getColor('mist')};
   ${inputPaddingCSS};
   color: ${({ theme }) => theme.colors.text.toCssValue()};
 
@@ -32,7 +32,7 @@ export const commonInputCSS = css<{
   outline: 1px solid transparent;
   ${({ isValid, theme }) => {
     const errorColor = theme.colors.alert.toCssValue();
-    const regularColor = isValid ? theme.colors.backgroundGlass.toCssValue() : errorColor;
+    const regularColor = isValid ? theme.colors.mist.toCssValue() : errorColor;
     const activeColor = isValid ? theme.colors.primary.toCssValue() : errorColor;
 
     return css`

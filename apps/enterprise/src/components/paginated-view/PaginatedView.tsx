@@ -1,7 +1,8 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';
 import styles from './PaginatedView.module.sass';
-import { Text, Throbber } from 'components/primitives';
+import { Spinner } from 'lib/ui/Spinner';
+import { Text } from 'lib/ui/Text';
 
 interface Props {
   children: ReactNode;
@@ -31,8 +32,8 @@ export const PaginatedView = ({ children, isLoading, onRequestToLoadMore }: Prop
         <div ref={ref} />
         {isLoading && (
           <div className={styles.loaderContainer}>
-            <Throbber variant="secondary" size="small" />
-            <Text variant="text">Loading</Text>
+            <Spinner />
+            <Text>Loading</Text>
           </div>
         )}
       </div>

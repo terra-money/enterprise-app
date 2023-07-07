@@ -25,7 +25,7 @@ import { VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
@@ -124,13 +124,13 @@ export const TokenStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       isLoading={isLoading}
                       isDisabled={isStakeDisabled ? 'No tokens to stake' : undefined}
                       onClick={onOpen}
                     >
                       Stake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
@@ -147,14 +147,14 @@ export const TokenStakingConnectedView = () => {
                 />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       kind="secondary"
                       isLoading={isLoading}
                       isDisabled={isUnstakeDisabled && `You don't have any staked tokens`}
                       onClick={onOpen}
                     >
                       Unstake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
@@ -188,7 +188,7 @@ export const TokenStakingConnectedView = () => {
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
                 <Container className={styles.actions} direction="row">
-                  <PrimaryButton
+                  <Button
                     kind="secondary"
                     isDisabled={isClaimDisabled && 'No tokens to claim'}
                     isLoading={claimTxResult.loading}
@@ -197,7 +197,7 @@ export const TokenStakingConnectedView = () => {
                     }}
                   >
                     Claim all
-                  </PrimaryButton>
+                  </Button>
                 </Container>
               </VStack>
             }

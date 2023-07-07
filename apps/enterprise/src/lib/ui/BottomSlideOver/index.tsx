@@ -8,7 +8,7 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { getHorizontalPaddingCSS } from 'lib/ui/utils/getHorizontalPaddingCSS';
 import { getVerticalPaddingCSS } from 'lib/ui/utils/getVerticalPaddingCSS';
-import { PrimaryButton } from '../buttons/rect/PrimaryButton';
+import { Button } from '../buttons/Button';
 
 export type BottomSlideOverProps = ComponentWithChildrenProps &
   ClosableComponentProps & {
@@ -49,9 +49,9 @@ export const BottomSlideOver = ({ children, onClose, title }: BottomSlideOverPro
             <Text as="div" weight="bold" size={24}>
               {title}
             </Text>
-            <PrimaryButton kind="secondary" size="l" onClick={onClose} isRounded>
-              <Text color="gradient">Close</Text>
-            </PrimaryButton>
+            <Button kind="secondary" size="l" onClick={onClose} isRounded>
+              <Text>Close</Text>
+            </Button>
           </HStack>
           <Content gap={12}>{children}</Content>
         </Container>

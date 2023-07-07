@@ -1,17 +1,17 @@
 import { useNftMinterQuery } from 'chain/queries/useNftMinterQuery';
-import { Throbber } from 'components/primitives';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { MintNftProposalForm } from './MintNftProposalForm';
 import { Address } from 'chain/components/Address';
+import { Spinner } from 'lib/ui/Spinner';
 
 export const MintNftProposalPage = () => {
   const dao = useCurrentDao();
   const { data: minter } = useNftMinterQuery(dao.dao_membership_contract);
 
   if (!minter) {
-    return <Throbber />;
+    return <Spinner />;
   }
 
   if (minter !== dao.address) {

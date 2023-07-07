@@ -1,5 +1,4 @@
 import styled, { DefaultTheme, css } from 'styled-components';
-import { gradientColorCSS } from '../gradients';
 import { croppedTextCSS } from '../utils/croppedTextCSS';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
@@ -31,7 +30,7 @@ const lineHeight: Record<TextHeight, number> = {
   large: 1.5,
 };
 
-export type TextColor = keyof ReturnType<typeof getTextColorRecord> | 'gradient';
+export type TextColor = keyof ReturnType<typeof getTextColorRecord>;
 
 export interface Props {
   color?: TextColor;
@@ -53,13 +52,9 @@ export const Text = styled.p<Props>`
   margin: 0;
   padding: 0;
 
-  ${({ color, theme }) =>
-    color &&
-    (color === 'gradient'
-      ? gradientColorCSS
-      : css`
-          color: ${getTextColorRecord(theme)[color].toCssValue()};
-        `)}
+  ${({ color = 'regular', theme }) => css`
+    color: ${getTextColorRecord(theme)[color].toCssValue()};
+  `}
   ${({ weight }) =>
     weight &&
     css`

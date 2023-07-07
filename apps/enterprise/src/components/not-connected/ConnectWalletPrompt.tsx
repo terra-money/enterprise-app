@@ -1,7 +1,8 @@
 import { ConnectWallet } from 'chain/components/ConnectWallet';
 import { Panel } from 'components/panel';
-import { Text, Button } from 'components/primitives';
+import { Text } from 'components/primitives';
 import styles from './NotConnected.module.sass';
+import { Button } from 'lib/ui/buttons/Button';
 
 export const ConnectWalletPrompt = () => {
   return (
@@ -10,9 +11,7 @@ export const ConnectWalletPrompt = () => {
       <ConnectWallet
         renderOpener={(props) => (
           <div {...props}>
-            <Button variant="primary">
-              Connect
-            </Button>
+            <Button>Connect</Button>
           </div>
         )}
       />

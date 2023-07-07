@@ -1,6 +1,7 @@
-import { ButtonProps, Text } from 'components/primitives';
+import { Text } from 'components/primitives';
 import classNames from 'classnames';
 import styles from './OptionButton.module.sass';
+import { ButtonProps } from 'lib/ui/buttons/Button';
 
 interface OptionButtonProps extends Pick<ButtonProps, 'onClick'> {
   title: string;

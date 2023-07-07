@@ -6,6 +6,7 @@ import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 import { Text } from 'lib/ui/Text';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { getColor } from 'lib/ui/theme/getters';
 
 export const daoLogoSizes = ['s', 'm', 'l'] as const;
 
@@ -24,7 +25,7 @@ export interface DAOLogoProps {
 }
 
 const Container = styled.div<{ size: DaoLogoSize }>`
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${getColor('mist')};
   ${roundedCSS};
   ${centerContentCSS};
 

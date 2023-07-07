@@ -1,18 +1,21 @@
 import styled, { css } from 'styled-components';
+
 import { defaultBorderRadiusCSS } from '../borderRadius';
 import { getCSSUnit } from '../utils/getCSSUnit';
+import { match } from 'lib/shared/utils/match';
+import { getColor } from '../theme/getters';
+
+type PanelKind = 'regular' | 'secondary';
 
 export interface PanelProps {
   width?: React.CSSProperties['width'];
   padding?: React.CSSProperties['padding'];
+  direction?: React.CSSProperties['flexDirection'];
+
+  kind?: PanelKind;
+
   withSections?: boolean;
 }
-
-export const panelBackgroundCSS = css`
-  background: ${({ theme: { name, colors } }) =>
-    (name === 'light' ? colors.background : colors.backgroundGlass)
-      .toCssValue()};
-`;
 
 const panelPaddingCSS = css<{ padding?: React.CSSProperties['padding'] }>`
   padding: ${({ padding }) => getCSSUnit(padding || 20)};
@@ -23,23 +26,33 @@ export const Panel = styled.div<PanelProps>`
   width: ${({ width }) => (width ? getCSSUnit(width) : undefined)};
   overflow: hidden;
 
-  ${({ withSections }) =>
-    withSections
+  ${({ withSections, direction = 'column', kind = 'regular', theme }) => {
+    const contentBackground = match(kind, {
+      secondary: () => theme.colors.background.toCssValue(),
+      regular: () => theme.colors.mist.toCssValue(),
+    });
+
+    const contentCSS = css`
+      ${panelPaddingCSS}
+      background: ${contentBackground};
+    `;
+
+    return withSections
       ? css`
           display: flex;
-          flex-direction: column;
+          flex-direction: ${direction};
           gap: 1px;
 
-          background: ${({ theme }) =>
-          theme.name === 'light' ? theme.colors.backgroundGlass2.toCssValue() : undefined};
-
           > * {
-            ${panelPaddingCSS}
-            ${panelBackgroundCSS}
+            ${contentCSS}
           }
         `
-      : css`
-          ${panelPaddingCSS}
-          ${panelBackgroundCSS}
-        `}
+      : contentCSS;
+  }}
+
+  ${({ kind }) =>
+    kind === 'secondary' &&
+    css`
+      border: 2px solid ${getColor('mist')};
+    `}
 `;

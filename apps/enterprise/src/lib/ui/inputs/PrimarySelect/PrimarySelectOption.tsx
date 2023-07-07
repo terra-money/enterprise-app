@@ -1,19 +1,25 @@
 import { ReactNode, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 
-import { InvisibleHTMLRadio, Props as InvisibleHTMLRadioProps } from '../InvisibleHTMLRadio';
-import { gradientBackgroundCSS } from 'lib/ui/gradients';
+import { InvisibleHTMLRadio, InvisibleHTMLRadioProps } from '../InvisibleHTMLRadio';
+import { getColor } from 'lib/ui/theme/getters';
 
 const Wrapper = styled.label<{ isSelected: boolean }>`
-  background: ${({ theme }) => theme.colors.foregroundAlt.toCssValue()};
+  background: ${getColor('foreground')};
   padding: 2px;
   border-radius: 12px;
   cursor: pointer;
   width: 100%;
   height: 84px;
 
-  ${({ isSelected }) => isSelected && gradientBackgroundCSS};
+  border: 2px solid transparent;
+
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      border-color: ${getColor('contrast')};
+    `}
 `;
 
 const Container = styled.div`
@@ -25,7 +31,7 @@ const Container = styled.div`
   justify-content: flex-start;
   padding: 0 32px;
 
-  background: ${({ theme }) => theme.colors.foregroundAlt.toCssValue()};
+  background: ${getColor('foreground')};
 `;
 
 interface Props extends InvisibleHTMLRadioProps {

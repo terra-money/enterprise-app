@@ -3,6 +3,7 @@ import { Text } from 'components/primitives';
 import classNames from 'classnames';
 import { forwardRef, ReactNode, Ref } from 'react';
 import styles from './Header.module.sass';
+import { HStack } from 'lib/ui/Stack';
 
 interface HeaderProps {
   className?: string;
@@ -36,10 +37,10 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <Text className={styles.subHeading} variant="label">
           Manage your favourite DAOs
         </Text>
-        <Container ref={ref} direction="row">
+        <HStack ref={ref} alignItems="center" gap={40} justifyContent="space-between">
           {props.searchInput}
           {props.filters}
-        </Container>
+        </HStack>
       </Container>
       <Text className={styles.results} variant="label">
         {searchResultsLabel}

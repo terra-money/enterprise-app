@@ -3,7 +3,6 @@ import { DaoWizardStep, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { WizardStep } from '../WizardStep';
 import { daoTypeName } from 'dao';
 import { ReviewSection } from '../review/ReviewSection';
-import { ConditionalRender } from 'components/primitives';
 import { InfoReview } from '../review/InfoReview';
 import { CouncilReview } from '../review/CouncilReview';
 import { SocialsReview } from '../review/SocialsReview';
@@ -15,6 +14,7 @@ import { WhitelistReview } from '../review/WhitelistReview';
 import { InitialBalancesReview } from '../review/InitialBalancesReview';
 import { Line } from 'lib/ui/Line';
 import { Fragment } from 'react';
+import { Match } from 'lib/ui/Match';
 
 interface ConfirmationStepProps {
   isLoading: boolean;
@@ -52,7 +52,7 @@ export function ConfirmationStep({ isLoading }: ConfirmationStepProps) {
                 name={reviewSectionTitle[step] ?? step}
                 onEdit={isLoading ? undefined : () => goToStep(step)}
               >
-                <ConditionalRender
+                <Match
                   value={step}
                   type={() => null}
                   daoImport={() => null}

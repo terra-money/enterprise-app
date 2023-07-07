@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { FormFooter } from 'components/form-footer';
-import { Button, Divider, Text, Throbber } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
 import { u } from '@terra-money/apps/types';
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
@@ -9,6 +9,9 @@ import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import styles from './CreateProposalFooter.module.sass';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
+import { Line } from 'lib/ui/Line';
+import { Spinner } from 'lib/ui/Spinner';
+import { Button } from 'lib/ui/buttons/Button';
 
 interface DepositOverviewProps {
   minimumDeposit: Big;
@@ -24,7 +27,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
 
   return (
     <>
-      <Divider />
+      <Line />
       <Container className={styles.deposits} direction="row" gap={48}>
         <Container direction="column" gap={8}>
           {token ? (
@@ -39,7 +42,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Text className={styles.heading} variant="text">
                 Deposit required
               </Text>
-              <Throbber />
+              <Spinner />
             </>
           )}
         </Container>
@@ -49,7 +52,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Text className={styles.heading} variant="text">
                 Your balance
               </Text>
-              <Throbber />
+              <Spinner />
             </>
           ) : (
             <>

@@ -1,20 +1,14 @@
-import { Container, useScrollableContext } from '@terra-money/apps/components';
-import classNames from 'classnames';
+import { useScrollableContext } from '@terra-money/apps/components';
 import { Path } from 'navigation';
 import { NavLink } from 'react-router-dom';
 import styles from './DesktopNavigation.module.sass';
+import { HStack } from 'lib/ui/Stack';
 
-interface DesktopNavigationProps {
-  className: string;
-}
-
-export const DesktopNavigation = (props: DesktopNavigationProps) => {
-  const { className } = props;
-
+export const DesktopNavigation = () => {
   const scrollable = useScrollableContext();
 
   return (
-    <Container className={classNames(className, styles.root)}>
+    <HStack gap={16} alignItems="center">
       <span
         className={styles.link}
         onClick={(event) => {
@@ -45,6 +39,6 @@ export const DesktopNavigation = (props: DesktopNavigationProps) => {
       <NavLink className={styles.link} to={Path.Dashboard}>
         <span>App</span>
       </NavLink>
-    </Container>
+    </HStack>
   );
 };

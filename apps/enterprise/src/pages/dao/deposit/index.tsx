@@ -1,5 +1,5 @@
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { DepositIntoTreasuryOverlay } from './DepositIntoTreasuryOverlay';
 
@@ -9,9 +9,9 @@ export const DepositIntoTreasury = () => {
       connected={() => (
         <OverlayOpener
           renderOpener={({ onOpen }) => (
-            <PrimaryButton onClick={onOpen} kind="secondary">
+            <Button onClick={onOpen} kind="secondary">
               Deposit
-            </PrimaryButton>
+            </Button>
           )}
           renderOverlay={({ onClose }) => <DepositIntoTreasuryOverlay onClose={onClose} />}
         />
