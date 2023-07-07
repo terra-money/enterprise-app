@@ -1,5 +1,5 @@
 import { CW20Addr } from '@terra-money/apps/types';
-import { Button, IconButton, Text } from 'components/primitives';
+import { IconButton, Text } from 'components/primitives';
 import { useProposalVoteQuery, useVotingPowerQuery } from 'queries';
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -16,6 +16,7 @@ import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { Tooltip } from 'lib/ui/Tooltip';
 import { HStack } from 'lib/ui/Stack';
+import { Button } from 'lib/ui/buttons/Button';
 
 interface VoteOption {
   outcome: enterprise.VoteOutcome;

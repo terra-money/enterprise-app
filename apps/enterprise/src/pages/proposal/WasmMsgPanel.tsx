@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container } from '@terra-money/apps/components';
 import { Panel } from 'components/panel';
-import { Button, Text } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { useClipboardCopy } from 'hooks';
 import styles from './WasmMsgPanel.module.sass';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -9,6 +9,7 @@ import { WasmMsgSummary } from './WasmMsgSummary/WasmMsgSummary';
 import { ErrorBoundary } from 'errors/components/ErrorBoundary';
 import { CosmWasmMsg } from 'chain/CosmWasm';
 import { fromBase64 } from 'chain/utils/fromBase64';
+import { Button } from 'lib/ui/buttons/Button';
 
 export type WasmMsgPanelProps = {
   msg: string;
@@ -50,7 +51,7 @@ export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
           <Text variant="label">Wasm message</Text>
           <HStack>
             <Button
-              variant="secondary"
+              kind="secondary"
               onClick={() => copy({ value: JSON.stringify(msg, null, 2), message: 'Message copied to clipboard' })}
             >
               Copy

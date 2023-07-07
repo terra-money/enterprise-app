@@ -7,7 +7,7 @@ import { useUnstakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
@@ -50,7 +50,7 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
       )}
       footer={
         <VStack gap={12}>
-          <PrimaryButton
+          <Button
             isDisabled={submitDisabled}
             isLoading={txResult.loading}
             onClick={async () => {
@@ -64,10 +64,10 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
             }}
           >
             Unstake
-          </PrimaryButton>
-          <PrimaryButton kind="secondary" onClick={onClose}>
+          </Button>
+          <Button kind="secondary" onClick={onClose}>
             Cancel
-          </PrimaryButton>
+          </Button>
         </VStack>
       }
     />

@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 
-import { InvisibleHTMLRadio, Props as InvisibleHTMLRadioProps } from '../InvisibleHTMLRadio';
+import { InvisibleHTMLRadio, InvisibleHTMLRadioProps } from '../InvisibleHTMLRadio';
+import { getColor } from 'lib/ui/theme/getters';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
-import { Text } from 'lib/ui/Text';
 
 const Container = styled.label<{ isSelected: boolean }>`
   cursor: pointer;
@@ -17,13 +17,13 @@ const Container = styled.label<{ isSelected: boolean }>`
   height: 48px;
 
   :hover {
-    background: ${({ theme }) => theme.colors.foregroundAltHover.toCssValue()};
+    background: ${getColor('mist')};
   }
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.colors.foregroundAlt.toCssValue()};
+      background: ${getColor('mist')};
     `};
 `;
 
@@ -33,16 +33,9 @@ interface Props extends InvisibleHTMLRadioProps {
 }
 
 export const SelectOption = ({ isSelected, children, className, ...rest }: Props) => {
-  const ref = useRef<HTMLLabelElement>(null);
-  useEffect(() => {
-    if (isSelected) {
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [isSelected]);
-
   return (
-    <Container ref={ref} className={className} tabIndex={-1} isSelected={isSelected}>
-      <Text color={isSelected ? 'gradient' : 'supporting'}>{children}</Text>
+    <Container className={className} tabIndex={-1} isSelected={isSelected}>
+      {children}
       <InvisibleHTMLRadio isSelected={isSelected} {...rest} />
     </Container>
   );

@@ -52,7 +52,7 @@ const ToggleWrapper = styled.div`
 const NoOptions = styled.div`
   ${defaultInputShapeCSS};
   ${inputPaddingCSS};
-  background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
+  background: ${({ theme }) => theme.colors.mistExtra.toCssValue()};
   display: flex;
   align-items: center;
 `;
@@ -194,11 +194,7 @@ function FixedOptionsInputInner<T>(
       </InputWrapperWithErrorMessage>
       {!isLoading && options.length > 0 && (
         <ToggleWrapper>
-          <CollapseToggleIconButton
-            size="l"
-            isOpen={isMenuOpen}
-            onClick={toggleMenu}
-          />
+          <CollapseToggleIconButton size="l" isOpen={isMenuOpen} onClick={toggleMenu} />
         </ToggleWrapper>
       )}
     </Container>

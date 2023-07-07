@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { PropsWithChildren, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../button';
 import styles from './Link.module.sass';
+import { Button } from 'lib/ui/buttons/Button';
 
 type LinkProps = PropsWithChildren & {
   className?: string;

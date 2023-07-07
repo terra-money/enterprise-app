@@ -1,4 +1,4 @@
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
 import { Line } from 'lib/ui/Line';
@@ -37,13 +37,10 @@ export const ProposalsFilter = ({ value, onChange }: ProposalsFilterProps) => {
             </>
           )}
         </VStack>
-      )
-      }
+      )}
       renderOpener={(props) => (
         <div {...props}>
-          <PrimaryButton kind="secondary" >
-            Filter
-          </PrimaryButton>
+          <Button kind="secondary">Filter</Button>
         </div>
       )}
     />

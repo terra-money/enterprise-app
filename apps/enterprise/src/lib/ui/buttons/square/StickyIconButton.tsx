@@ -64,6 +64,6 @@ const InteractiveArea = styled(UnstyledButton)<InteractiveAreaProps>`
   ${defaultTransitionCSS};
 
   :hover {
-    background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+    background: ${({ theme }) => theme.colors.mist.toCssValue()};
   }
 `;

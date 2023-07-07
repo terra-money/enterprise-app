@@ -1,5 +1,5 @@
 import { daoTypeName, daoTypes } from 'dao';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { Checkbox } from 'lib/ui/inputs/Checkbox/Checkbox';
 import { Line } from 'lib/ui/Line';
@@ -26,28 +26,27 @@ export const DaoFilter = ({ value, onChange }: DaoFilterProps) => {
               value={value.includes(daoType)}
               onChange={(shouldInclude) => {
                 onClose();
-                onChange(shouldInclude ? [...value, daoType] : value.filter((v) => v !== daoType))
-              }
-              }
+                onChange(shouldInclude ? [...value, daoType] : value.filter((v) => v !== daoType));
+              }}
             />
           ))}
           {!areAllTypesIncluded && (
             <>
               <Line />
-              <ShyTextButton text="Reset filters" onClick={() => {
-                onChange(daoTypes)
-                onClose()
-              }} />
+              <ShyTextButton
+                text="Reset filters"
+                onClick={() => {
+                  onChange(daoTypes);
+                  onClose();
+                }}
+              />
             </>
           )}
         </VStack>
-      )
-      }
+      )}
       renderOpener={(props) => (
         <div {...props}>
-          <PrimaryButton kind="secondary" >
-            Filter
-          </PrimaryButton>
+          <Button kind="secondary">Filter</Button>
         </div>
       )}
     />

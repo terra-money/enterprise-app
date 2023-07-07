@@ -1,5 +1,5 @@
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { VStack } from 'lib/ui/Stack';
 import { useExecuteProposalTx } from 'tx';
 import { useCurrentProposal } from './CurrentProposalProvider';
@@ -12,7 +12,7 @@ export const ExecuteProposal = () => {
 
   return (
     <VStack gap={4} alignItems="center">
-      <PrimaryButton
+      <Button
         style={{ minWidth: 111 }}
         isLoading={txResult.loading}
         onClick={() => {
@@ -23,7 +23,7 @@ export const ExecuteProposal = () => {
         }}
       >
         Execute
-      </PrimaryButton>
+      </Button>
       <ConditionalWallet connected={() => <ExecuteProposalFee />} />
     </VStack>
   );

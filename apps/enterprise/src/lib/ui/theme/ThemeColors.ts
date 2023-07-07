@@ -14,26 +14,21 @@ export type ThemeColors = {
   success: HSLA;
 
   foreground: HSLA;
-
-  foregroundAlt: HSLA;
-  foregroundAltHover: HSLA;
-
-  gradient: [HSLA, HSLA, HSLA];
-
   background: HSLA;
 
   text: HSLA;
   textSupporting: HSLA;
   textShy: HSLA;
 
-  backgroundGlass: HSLA;
-  backgroundGlass2: HSLA;
+  mist: HSLA;
+  mistExtra: HSLA;
 
   overlay: HSLA;
 
-  outlinedHover: HSLA;
-
   contrast: HSLA;
 
-  getPaletteColor: (index: number) => HSLA;
+  white: HSLA;
+  transparent: HSLA;
+
+  getLabelColor: (index: number) => HSLA;
 };

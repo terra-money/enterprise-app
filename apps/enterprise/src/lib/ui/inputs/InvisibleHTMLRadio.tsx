@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export interface Props {
+export interface InvisibleHTMLRadioProps {
   groupName: string;
   value: string | number;
   isSelected: boolean;
@@ -19,7 +19,7 @@ const RadioInput = styled.input`
   width: 1px;
 `;
 
-export const InvisibleHTMLRadio = ({ groupName, value, isSelected, onSelect }: Props) => (
+export const InvisibleHTMLRadio = ({ groupName, value, isSelected, onSelect }: InvisibleHTMLRadioProps) => (
   <RadioInput
     type="radio"
     name={groupName}

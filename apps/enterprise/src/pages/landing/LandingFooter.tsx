@@ -9,7 +9,7 @@ import { ReactComponent as MediumIcon } from 'components/assets/MediumLogo.svg';
 import { useDisplay } from 'hooks';
 import classNames from 'classnames';
 import styles from './LandingFooter.module.sass';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { Text } from 'lib/ui/Text';
 import { HStack } from 'lib/ui/Stack';
 
@@ -25,14 +25,14 @@ export const LandingFooter = () => {
         />
         <div className={styles.actions}>
           <InternalLink to={Path.Dashboard}>
-            <PrimaryButton kind="secondary" as="div">
+            <Button kind="secondary" as="div">
               Start now
-            </PrimaryButton>
+            </Button>
           </InternalLink>
           <ExternalLink to={telegramUrl}>
-            <PrimaryButton kind="secondary" as="div">
+            <Button kind="secondary" as="div">
               Contact us
-            </PrimaryButton>
+            </Button>
           </ExternalLink>
         </div>
       </div>

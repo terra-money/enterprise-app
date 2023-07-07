@@ -7,7 +7,7 @@ import { useStakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
@@ -59,7 +59,7 @@ export const StakeTokenOverlay = ({
       )}
       footer={
         <VStack gap={12}>
-          <PrimaryButton
+          <Button
             isDisabled={submitDisabled}
             isLoading={txResult.loading}
             onClick={async () => {
@@ -74,10 +74,10 @@ export const StakeTokenOverlay = ({
             }}
           >
             Stake
-          </PrimaryButton>
-          <PrimaryButton kind="secondary" onClick={onClose}>
+          </Button>
+          <Button kind="secondary" onClick={onClose}>
             Cancel
-          </PrimaryButton>
+          </Button>
         </VStack>
       }
     />

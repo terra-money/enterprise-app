@@ -1,5 +1,5 @@
 import { ConnectType, useWallet } from '@terra-money/wallet-provider';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { TerraStationIcon } from 'lib/ui/icons/TerraStationIcon';
 import { WalletConnectIcon } from 'lib/ui/icons/WalletConnectIcon';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -29,18 +29,12 @@ export const ConnectWalletOptions = () => {
   return (
     <VStack gap={12}>
       {connections.map(({ type }) => (
-        <PrimaryButton
-          size="l"
-          isRounded
-          style={{ justifyContent: 'start' }}
-          onClick={() => connect(type)}
-          kind="secondary"
-        >
+        <Button size="l" style={{ justifyContent: 'start' }} onClick={() => connect(type)} kind="secondary">
           <HStack alignItems="center" gap={8}>
             {supportedConnectionIcons[type as SupportedConnection]}
             <Text>{supportedConnectionNames[type as SupportedConnection]}</Text>
           </HStack>
-        </PrimaryButton>
+        </Button>
       ))}
     </VStack>
   );

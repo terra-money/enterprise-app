@@ -20,7 +20,7 @@ const UnitContainer = styled.div`
   font-weight: bold;
   position: absolute;
   right: 16px;
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${({ theme }) => theme.colors.mist.toCssValue()};
 `;
 
 export const AmountTextInput = forwardRef(function AmountInputInner(

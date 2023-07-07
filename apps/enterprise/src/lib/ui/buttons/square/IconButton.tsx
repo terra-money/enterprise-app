@@ -67,8 +67,8 @@ const Container = styled(UnstyledButton)<ContainerProps>`
     ({
       minimalisticSecondary: new HSLA(0, 0, 0, 0),
       minimalistic: new HSLA(0, 0, 0, 0),
-      regular: colors.backgroundGlass,
-      secondary: colors.backgroundGlass,
+      regular: colors.mist,
+      secondary: colors.mist,
 
       alert: colors.alert.getVariant({ a: (a) => a * 0.2 }),
     }[kind].toCssValue())};
@@ -76,10 +76,10 @@ const Container = styled(UnstyledButton)<ContainerProps>`
   :hover {
     background: ${({ kind, theme: { colors } }) =>
       ({
-        minimalisticSecondary: colors.backgroundGlass,
-        minimalistic: colors.backgroundGlass,
-        regular: colors.backgroundGlass2,
-        secondary: colors.backgroundGlass2,
+        minimalisticSecondary: colors.mist,
+        minimalistic: colors.mist,
+        regular: colors.mistExtra,
+        secondary: colors.mistExtra,
         alert: colors.alert.getVariant({ a: (a) => a * 0.28 }),
       }[kind].toCssValue())};
     ${({ kind, theme }) =>

@@ -1,30 +1,29 @@
-import { ReactNode } from 'react'
-import styled, { css } from 'styled-components'
+import { ReactNode } from 'react';
+import styled, { css } from 'styled-components';
 
+import { MenuView } from '.';
+import { HStack } from '../Stack';
+import { defaultTransitionCSS } from '../animations/transitions';
+import { getVerticalPaddingCSS } from '../utils/getVerticalPaddingCSS';
+import { Text } from '../Text';
+import { Hoverable } from '../Hoverable';
+import { Button } from '../buttons/Button';
 
-import { MenuView } from '.'
-import { HStack } from '../Stack'
-import { defaultTransitionCSS } from '../animations/transitions'
-import { PrimaryButton } from '../buttons/rect/PrimaryButton'
-import { getVerticalPaddingCSS } from '../utils/getVerticalPaddingCSS'
-import { Text } from '../Text'
-import { Hoverable } from '../Hoverable'
-
-type MenuOptionKind = 'regular' | 'alert'
+type MenuOptionKind = 'regular' | 'alert';
 
 export interface MenuOptionProps {
-  icon?: ReactNode
-  text: string
-  onSelect: () => void
-  kind?: MenuOptionKind
-  view?: MenuView
+  icon?: ReactNode;
+  text: string;
+  onSelect: () => void;
+  kind?: MenuOptionKind;
+  view?: MenuView;
 }
 
 interface ContentProps {
-  kind: MenuOptionKind
+  kind: MenuOptionKind;
 }
 
-const Content = styled(HStack) <ContentProps>`
+const Content = styled(HStack)<ContentProps>`
   ${defaultTransitionCSS};
   border-radius: 8px;
   width: 100%;
@@ -33,23 +32,17 @@ const Content = styled(HStack) <ContentProps>`
   gap: 12px;
 
   ${({ kind }) =>
-  ({
-    regular: css`
+    ({
+      regular: css`
         color: ${({ theme }) => theme.colors.text.toCssValue()};
       `,
-    alert: css`
+      alert: css`
         color: ${({ theme }) => theme.colors.alert.toCssValue()};
       `,
-  }[kind])};
-`
+    }[kind])};
+`;
 
-export const MenuOption = ({
-  text,
-  icon,
-  onSelect,
-  kind = 'regular',
-  view = 'popover',
-}: MenuOptionProps) => {
+export const MenuOption = ({ text, icon, onSelect, kind = 'regular', view = 'popover' }: MenuOptionProps) => {
   if (view === 'popover') {
     return (
       <Hoverable verticalOffset={0} onClick={onSelect}>
@@ -58,21 +51,20 @@ export const MenuOption = ({
           <Text>{text}</Text>
         </Content>
       </Hoverable>
-    )
+    );
   }
 
   return (
-    <PrimaryButton
+    <Button
       style={{ justifyContent: 'flex-start', height: 56 }}
       kind={kind === 'regular' ? 'secondary' : 'alert'}
       size="l"
-      isRounded={true}
       key={text}
       onClick={onSelect}
     >
       <HStack alignItems="center" gap={8}>
         {icon} <Text>{text}</Text>
       </HStack>
-    </PrimaryButton>
-  )
-}
+    </Button>
+  );
+};

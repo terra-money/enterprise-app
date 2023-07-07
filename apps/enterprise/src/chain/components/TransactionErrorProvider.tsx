@@ -1,6 +1,6 @@
 import { ComponentWithChildrenProps } from 'lib/shared/props';
 import { createContextHook } from 'lib/shared/utils/createContextHook';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { Modal } from 'lib/ui/Modal';
 import { Text } from 'lib/ui/Text';
 import { createContext, useState } from 'react';
@@ -21,9 +21,9 @@ export const TransactionErrorProvider = ({ children }: ComponentWithChildrenProp
         <Modal
           onClose={() => setDetails(null)}
           footer={
-            <PrimaryButton onClick={() => setDetails(null)} kind="secondary">
+            <Button onClick={() => setDetails(null)} kind="secondary">
               Close
-            </PrimaryButton>
+            </Button>
           }
           title="Error details"
           renderContent={() => <Text color="supporting">{details}</Text>}

@@ -2,7 +2,7 @@ import { AnimatedPage } from '@terra-money/apps/components';
 import { ReactNode, useRef, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
-import { Button } from 'components/primitives';
+import { Button } from 'lib/ui/buttons/Button';
 import { FormFooter } from 'components/form-footer';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';

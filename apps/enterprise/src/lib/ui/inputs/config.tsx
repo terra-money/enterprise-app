@@ -13,7 +13,7 @@ export const defaultInputShapeCSS = css`
 `;
 
 export const inputBackgroundCSS = css`
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${({ theme }) => theme.colors.mist.toCssValue()};
 `;
 
 export const inputPaddingCSS = css`

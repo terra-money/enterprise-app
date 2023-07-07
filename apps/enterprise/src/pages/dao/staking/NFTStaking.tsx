@@ -21,7 +21,7 @@ import { VStack } from 'lib/ui/Stack';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
@@ -89,13 +89,13 @@ export const NftStakingConnectedView = () => {
               <Container className={styles.actions} direction="row">
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       isLoading={isLoading}
                       isDisabled={isStakingDisabled ? `You don't have any DAO NFTs to stake` : undefined}
                       onClick={onOpen}
                     >
                       Stake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
@@ -104,14 +104,14 @@ export const NftStakingConnectedView = () => {
 
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       kind="secondary"
                       isDisabled={isUnstakeDisabled ? `Your wallet doesn't have staked NFTs` : undefined}
                       isLoading={isLoading}
                       onClick={onOpen}
                     >
                       Unstake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
@@ -135,7 +135,7 @@ export const NftStakingConnectedView = () => {
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
                 <Container className={styles.actions} direction="row">
-                  <PrimaryButton
+                  <Button
                     kind="secondary"
                     isDisabled={isClaimDisabled ? `You don't have any NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
@@ -144,7 +144,7 @@ export const NftStakingConnectedView = () => {
                     }}
                   >
                     Claim all
-                  </PrimaryButton>
+                  </Button>
                 </Container>
               </VStack>
             }

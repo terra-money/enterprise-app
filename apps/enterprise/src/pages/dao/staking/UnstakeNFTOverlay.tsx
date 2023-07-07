@@ -2,7 +2,7 @@ import { NumericPanel } from 'components/numeric-panel';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
 import { VStack } from 'lib/ui/Stack';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { useUnstakeNftsTx } from 'dao/tx/useUnstakeNftsTx';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { NftIdsInput } from 'chain/components/NftIdInput';
@@ -34,7 +34,7 @@ export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlay
       )}
       footer={
         <VStack gap={12}>
-          <PrimaryButton
+          <Button
             isDisabled={tokenIds.length < 1}
             isLoading={txResult.loading}
             onClick={async () => {
@@ -46,10 +46,10 @@ export const UnstakeNFTOverlay = ({ staked, symbol, onClose }: UnstakeNFTOverlay
             }}
           >
             Unstake
-          </PrimaryButton>
-          <PrimaryButton kind="secondary" onClick={onClose}>
+          </Button>
+          <Button kind="secondary" onClick={onClose}>
             Cancel
-          </PrimaryButton>
+          </Button>
         </VStack>
       }
     />

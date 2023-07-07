@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { FormFooter } from 'components/form-footer';
-import { Button, Text } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
 import { u } from '@terra-money/apps/types';
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
@@ -11,6 +11,7 @@ import styles from './CreateProposalFooter.module.sass';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { Line } from 'lib/ui/Line';
 import { Spinner } from 'lib/ui/Spinner';
+import { Button } from 'lib/ui/buttons/Button';
 
 interface DepositOverviewProps {
   minimumDeposit: Big;

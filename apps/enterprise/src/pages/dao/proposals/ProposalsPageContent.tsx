@@ -6,7 +6,7 @@ import { HStack } from 'lib/ui/Stack';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useDaoProposalsQuery } from 'queries/useDaoProposalsQuery';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { EmptyStatePlaceholder } from 'lib/ui/EmptyStatePlaceholder';
 import { InternalLink } from 'components/link';
 import { enterprise } from 'types/contracts';
@@ -49,7 +49,7 @@ export const ProposalsPageContent = () => {
           <SearchInput style={{ maxWidth: 400 }} value={searchText} onValueChange={(input) => setSearchText(input)} />
           <ProposalsFilter value={statusesToDisplay} onChange={setStatusesToDisplay} />
         </HStack>
-        <PrimaryButton
+        <Button
           as="div"
           isDisabled={newProposalsDisabled && 'Only members of this DAO can create proposals.'}
           onClick={() => {
@@ -59,7 +59,7 @@ export const ProposalsPageContent = () => {
           }}
         >
           <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
-        </PrimaryButton>
+        </Button>
       </HStack>
       <Container direction="column" gap={16}>
         {!proposals || proposals.length < 1 ? (
@@ -73,9 +73,9 @@ export const ProposalsPageContent = () => {
               action={
                 newProposalsDisabled ? undefined : (
                   <InternalLink to={`/dao/${address}/proposals/create`}>
-                    <PrimaryButton as="div" kind="secondary">
+                    <Button as="div" kind="secondary">
                       Create
-                    </PrimaryButton>
+                    </Button>
                   </InternalLink>
                 )
               }

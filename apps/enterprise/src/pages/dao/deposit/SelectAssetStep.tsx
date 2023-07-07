@@ -1,5 +1,5 @@
 import { TokenInput } from 'components/token-input';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { VStack } from 'lib/ui/Stack';
 import { Token } from 'types/Token';
 
@@ -13,9 +13,9 @@ export const SelectAssetStep = ({ onSelect, onCancel }: SelectAssetStepProps) =>
     <>
       <TokenInput onSelect={onSelect} />
       <VStack gap={8}>
-        <PrimaryButton kind="secondary" onClick={onCancel}>
+        <Button kind="secondary" onClick={onCancel}>
           Cancel
-        </PrimaryButton>
+        </Button>
       </VStack>
     </>
   );
