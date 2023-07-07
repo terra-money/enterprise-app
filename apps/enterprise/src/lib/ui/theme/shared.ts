@@ -2,10 +2,8 @@ import { HSLA } from '../colors/HSLA';
 
 export const sharedColors = {
   primary: new HSLA(210, 77, 51),
-  primaryHover: new HSLA(207, 100, 41),
 
   attention: new HSLA(4, 69, 62),
-  attentionHover: new HSLA(4, 58, 55),
 
   alert: new HSLA(0, 79, 63),
   idle: new HSLA(32, 79, 63),
