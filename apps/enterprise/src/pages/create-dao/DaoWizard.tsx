@@ -16,7 +16,7 @@ import { TokenInfoStep } from './token/TokenInfoStep';
 import { WizardLayout } from './WizardLayout';
 import { CouncilStep } from './shared/CouncilStep';
 import { useRefCallback } from '@terra-money/apps/hooks';
-import { CompletedTransaction, useTransactionSubscribers } from '@terra-money/apps/libs/transactions';
+import { CompletedTransaction, useTransactionSubscribers } from 'chain/transactions';
 import { reportError } from 'errors/errorMonitoring';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { Button } from 'lib/ui/buttons/Button';

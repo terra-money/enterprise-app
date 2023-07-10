@@ -1,7 +1,7 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { toBurnTokensMsg } from './helpers/toBurnTokensMsg';
 import { Text } from 'lib/ui/Text';

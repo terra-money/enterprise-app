@@ -7,7 +7,7 @@ import { useMemo, useState } from 'react';
 import { FixedOptionsInput } from 'lib/ui/inputs/Combobox/FixedOptionsInput';
 import * as z from 'zod';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { lunaDecimals } from 'chain/constants';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

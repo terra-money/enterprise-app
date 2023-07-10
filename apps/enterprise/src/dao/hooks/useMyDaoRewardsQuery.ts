@@ -1,4 +1,4 @@
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { AssetType } from 'chain';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { useContract } from 'chain/hooks/useContract';

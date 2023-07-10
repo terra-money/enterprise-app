@@ -1,7 +1,7 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { Text } from 'lib/ui/Text';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';

@@ -1,9 +1,9 @@
-import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
+import { useTx, TxBuilder } from 'chain/transactions';
 import { Proposal } from 'dao/shared/proposal';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useChainID } from '@terra-money/apps/hooks';
 
 interface ExecuteProposalTxOptions {

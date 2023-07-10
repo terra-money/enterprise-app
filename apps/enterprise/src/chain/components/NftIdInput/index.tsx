@@ -1,4 +1,4 @@
-import { getRecord } from '@terra-money/apps/utils';
+import { getRecord } from 'lib/shared/utils/getRecord';
 import { NftInfo } from 'chain/queries/useNftInfoQuery';
 import { FixedOptionsInput } from 'lib/ui/inputs/Combobox/FixedOptionsInput';
 import { SelectedOption } from 'lib/ui/inputs/Select/SelectedOption';

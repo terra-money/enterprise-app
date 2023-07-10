@@ -1,4 +1,4 @@
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useMyDaoRewardsQuery } from 'dao/hooks/useMyDaoRewardsQuery';
 import { useClaimRewardsTx } from 'dao/tx/useClaimRewardsTx';

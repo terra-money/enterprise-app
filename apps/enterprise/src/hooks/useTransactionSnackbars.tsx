@@ -3,7 +3,7 @@ import {
   FailedTransaction,
   PendingTransaction,
   useTransactionSubscribers,
-} from '@terra-money/apps/libs/transactions';
+} from 'chain/transactions';
 import { useSnackbar } from 'notistack';
 import { useRefetchQueries } from 'queries';
 import { TX_KEY } from 'tx';

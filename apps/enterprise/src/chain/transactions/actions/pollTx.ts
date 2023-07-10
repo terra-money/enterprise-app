@@ -1,11 +1,11 @@
-import { LCDClient, TxInfo } from "@terra-money/feather.js";
-import { sleep } from "../../../utils";
-import { CancellationToken, None } from "../../cancellation";
+import { LCDClient, TxInfo } from '@terra-money/feather.js';
+import { sleep } from '@terra-money/apps/utils';
+import { CancellationToken, None } from '@terra-money/apps/libs/cancellation';
 
 export class TxTimeoutError extends Error {
   constructor(message: string, readonly txhash: string) {
     super(message);
-    this.name = "PollingTimeout";
+    this.name = 'PollingTimeout';
   }
 
   toString = () => {

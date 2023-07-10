@@ -9,8 +9,8 @@ import { createTxStoreMiddleware } from './storage';
 import { pendingSubject, completedSubject, cancelledSubject, failedSubject } from './rx';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { CompletedTransaction, FailedTransaction, PendingTransaction, TransactionStatus } from './types';
-import { UIElementProps } from '../../components';
-import { useChainID } from '../../hooks';
+import { UIElementProps } from '@terra-money/apps/components';
+import { useChainID } from '@terra-money/apps/hooks';
 
 const storage = new LocalStorageTxStore('__tx_store');
 
@@ -50,7 +50,7 @@ const useTransactionsContext = (): [TxState, TxDispatch, TxHelpers] => {
   return context;
 };
 
-interface TransactionsProviderProps extends UIElementProps { }
+interface TransactionsProviderProps extends UIElementProps {}
 
 const TransactionsProvider = (props: TransactionsProviderProps) => {
   const { children } = props;
@@ -59,14 +59,14 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
 
   const lcd = useLCDClient();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   const value = useThunkReducer(transactionsReducer, initialState, (state) => {
     return {
       ...state,
       initialized: true,
       // TODO: temporary fix for the issue with undefined trasnsactions
-      transactions: storage.read().filter(tx => tx),
+      transactions: storage.read().filter((tx) => tx),
     };
   });
 
@@ -80,7 +80,7 @@ const TransactionsProvider = (props: TransactionsProviderProps) => {
         }
       });
     }
-  }, [value[0].initialized]);
+  }, [chainID, lcd, value]);
 
   useEffect(() => {
     const pending = pendingSubject.subscribe((transaction) => {
