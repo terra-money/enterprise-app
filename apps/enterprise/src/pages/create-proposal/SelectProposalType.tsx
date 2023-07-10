@@ -181,7 +181,6 @@ export const SelectProposalType = () => {
             onClick={() =>
               navigate(`/dao/${address}/proposals/create/${proposalType}?votingType=${proposalVotingType}`)
             }
-            variant="primary"
           >
             Next
           </Button>

@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
 import { OptionButton } from 'components/option-button';
@@ -24,7 +24,7 @@ const daoNameRecord: Record<enterprise.DaoType, string> = {
 
 const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: CW20TokenInfoResponse }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Name</Text>
       <Text variant="heading4">{token.name}</Text>
       <Text variant="label">Symbol</Text>
@@ -35,31 +35,31 @@ const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: 
       <Text variant="heading4">
         {formatAmount(fromChainAmount(Big(token.total_supply).toNumber(), token.decimals), { decimals: 2 })}
       </Text>
-    </Container>
+    </Stack>
   );
 };
 
 const NFTTokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: CW721ContractInfoResponse }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Name</Text>
       <Text variant="heading4">{token.name}</Text>
       <Text variant="label">Symbol</Text>
       <Text variant="heading4">{token.symbol}</Text>
       <Text variant="label">CW721 Address</Text>
       <Address value={tokenAddr} length="l" />
-    </Container>
+    </Stack>
   );
 };
 
 const MultisigVotersInformation = ({ multisigAddr, voters }: { multisigAddr: string; voters: MultisigVoter[] }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Number of members</Text>
       <Text variant="heading4">{voters.length}</Text>
       <Text variant="label">CW3 Address</Text>
       <Address value={multisigAddr} length="l" />
-    </Container>
+    </Stack>
   );
 };
 
@@ -83,7 +83,7 @@ export function ImportStep() {
   const daoName = daoNameRecord[type];
 
   const helpContent = shouldImport && (
-    <Container className={styles.helpContent}>
+    <Stack direction="row" className={styles.helpContent}>
       {type === 'token' && existingToken && (
         <CW20TokenInformation tokenAddr={existingTokenAddr} token={existingToken} />
       )}
@@ -91,13 +91,13 @@ export function ImportStep() {
       {type === 'multisig' && existingMultisigVoters && (
         <MultisigVotersInformation multisigAddr={existingMultisigAddr} voters={existingMultisigVoters} />
       )}
-    </Container>
+    </Stack>
   );
 
   return (
     <WizardStep title={`Do you have an existing ${daoName}?`} helpContent={helpContent}>
-      <Container direction="column" gap={24}>
-        <Container gap={24} direction="column">
+      <Stack direction="column" gap={24}>
+        <Stack gap={24} direction="column">
           <OptionButton
             title={`No, create a new ${daoName}`}
             active={!shouldImport}
@@ -119,8 +119,8 @@ export function ImportStep() {
               />
             </>
           )}
-        </Container>
-      </Container>
+        </Stack>
+      </Stack>
     </WizardStep>
   );
 }

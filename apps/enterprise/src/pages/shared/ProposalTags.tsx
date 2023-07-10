@@ -1,6 +1,6 @@
 import { Tag } from 'components/tag';
 import classNames from 'classnames';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { useBlockHeightQuery } from 'queries';
 import styles from './ProposalTags.module.sass';
 import { getProposalStatusName, getProposalTypeName } from 'dao/shared/proposal';
@@ -21,10 +21,10 @@ export const ProposalTags = (props: ProposalStatusProps) => {
   const proposalTypeName = getProposalTypeName(proposal);
 
   return (
-    <Container className={classNames(className, styles.root)}>
+    <Stack direction="row" className={classNames(className, styles.root)}>
       <Tag className={classNames(styles.status, styles[status.toLowerCase()])}>{status}</Tag>
       <Tag className={classNames(styles.type, styles[proposalTypeName.toLowerCase()])}>{proposalTypeName}</Tag>
       {proposal.type === 'council' && <Tag className={styles.emergency}>Emergency</Tag>}
-    </Container>
+    </Stack>
   );
 };

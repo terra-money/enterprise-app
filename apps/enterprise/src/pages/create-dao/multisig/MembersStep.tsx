@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import styles from './MembersStep.module.sass';
 import { MultisigMemberInput } from './member/MultisigMemberInput';
@@ -38,7 +38,7 @@ export function MembersStep() {
       title="Add members to the multisig"
       subTitle="You need at least two members to create a multisig DAO. Weights are the number of votes given to an address."
     >
-      <Container gap={24} className={styles.membersList} direction="column" component="section">
+      <Stack gap={24} className={styles.membersList} direction="column" as="section">
         {members.map((formState, index) => {
           return (
             <MultisigMemberInput
@@ -52,7 +52,7 @@ export function MembersStep() {
           );
         })}
         {areAllMembersValid && <AddButton onClick={() => formInput({ members: [...members, EMPTY_MEMBER] })} />}
-      </Container>
+      </Stack>
     </WizardStep>
   );
 }

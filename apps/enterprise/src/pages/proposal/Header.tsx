@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import classNames from 'classnames';
 import { Text as DeprecatedText } from 'components/primitives';
 import { ProposalTags } from 'pages/shared/ProposalTags';
@@ -32,19 +32,19 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
 
   if (compact) {
     return (
-      <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
+      <Stack direction="row" ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo}>
           <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
         </div>
         {title}
         <ProposalTags className={styles.tags} proposal={proposal} />
-      </Container>
+      </Stack>
     );
   }
 
   return (
-    <Container ref={ref} className={classNames(className, styles.root)} direction="column">
-      <Container className={styles.container}>
+    <Stack ref={ref} className={classNames(className, styles.root)} direction="column">
+      <Stack direction="row" className={styles.container}>
         <DeprecatedText className={styles.back} variant="link" onClick={() => navigate(-1)}>
           Back
         </DeprecatedText>
@@ -53,7 +53,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         </div>
         {title}
         <ProposalTags className={styles.tags} proposal={proposal} />
-      </Container>
-    </Container>
+      </Stack>
+    </Stack>
   );
 });

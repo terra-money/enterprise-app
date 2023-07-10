@@ -1,5 +1,5 @@
 import { DAO } from 'types';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
 
 import { MultisigMemberItem } from './MultisigMemberItem';
@@ -15,7 +15,7 @@ export const MultisigMembers = (props: MultisigMembersProps) => {
   const { data: members = [], isLoading } = useMultisigMembersQuery(dao.membershipContractAddress);
 
   return (
-    <Container gap={16} direction="column">
+    <Stack gap={16} direction="column">
       {isLoading ? (
         <Spinner />
       ) : (
@@ -25,6 +25,6 @@ export const MultisigMembers = (props: MultisigMembersProps) => {
           ))}
         </>
       )}
-    </Container>
+    </Stack>
   );
 };

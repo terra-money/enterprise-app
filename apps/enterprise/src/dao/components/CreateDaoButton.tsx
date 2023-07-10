@@ -11,7 +11,7 @@ const Button = styled(IconButton)`
 export const CreateDaoButton = () => {
   return (
     <InternalLink to={Path.CreateDao}>
-      <Button variant="primary">
+      <Button>
         <PlusIcon />
       </Button>
     </InternalLink>

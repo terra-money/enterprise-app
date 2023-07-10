@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import classNames from 'classnames';
 import { DAOLogo } from 'components/dao-logo';
 import { FavouriteToggle } from 'components/favourite-toggle';
@@ -25,7 +25,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
 
   if (compact) {
     return (
-      <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
+      <Stack direction="row" ref={ref} className={classNames(className, styles.root, styles.compact)}>
         <div className={styles.logo}>
           nbwaro
           <DAOLogo size="m" logo={getDaoLogo(dao)} />
@@ -34,17 +34,17 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <Text className={styles.name} variant="heading2">
           {dao.metadata.name}
         </Text>
-        <Container className={styles.tabs}>
+        <Stack direction="row" className={styles.tabs}>
           <DaoNavigation />
-        </Container>
-      </Container>
+        </Stack>
+      </Stack>
     );
   }
 
   return (
-    <Container className={classNames(className, styles.root)} direction="column">
+    <Stack className={classNames(className, styles.root)} direction="column">
       <VStack gap={16}>
-        <Container className={styles.container}>
+        <Stack direction="row" className={styles.container}>
           <InternalLink to={Path.Daos}>
             <Text className={styles.back} variant="link">
               Back
@@ -57,13 +57,13 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           <Text className={styles.name} variant="heading2">
             {dao.metadata.name}
           </Text>
-        </Container>
+        </Stack>
         {dao.metadata.description && <Text variant="text">{dao.metadata.description}</Text>}
         <Line />
       </VStack>
-      <Container ref={ref} className={styles.tabs}>
+      <Stack direction="row" ref={ref} className={styles.tabs}>
         <DaoNavigation />
-      </Container>
-    </Container>
+      </Stack>
+    </Stack>
   );
 });

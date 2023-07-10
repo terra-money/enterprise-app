@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import styles from './MultisigMemberInput.module.sass';
 import { FormState } from '@terra-money/apps/hooks';
 import { useState } from 'react';
@@ -38,7 +38,7 @@ export const MultisigMemberInput = ({ addr, addrError, weight, onChange, onRemov
         }}
         className={classNames(styles.root, { [styles.error]: addrError && !editing })}
       >
-        <Container className={styles.row}>
+        <Stack alignItems="center" direction="row" className={styles.row}>
           <input
             autoFocus
             placeholder="Enter a wallet address"
@@ -48,9 +48,9 @@ export const MultisigMemberInput = ({ addr, addrError, weight, onChange, onRemov
           />
 
           <DeleteIconButton size="small" onClick={onRemove} />
-        </Container>
+        </Stack>
         {!addrError && (
-          <Container className={styles.row}>
+          <Stack direction="row" className={styles.row}>
             <HStack gap={20} fullWidth alignItems="center">
               <Text color="supporting">Weight</Text>
               <Content>
@@ -67,7 +67,7 @@ export const MultisigMemberInput = ({ addr, addrError, weight, onChange, onRemov
                 </Text>
               </Content>
             </HStack>
-          </Container>
+          </Stack>
         )}
       </div>
     </>

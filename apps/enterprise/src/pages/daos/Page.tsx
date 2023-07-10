@@ -66,7 +66,7 @@ export const Page = () => {
     </Container>
   );
 
-  const content = isLoading || data.length > 0 ? <List items={items} isLoading={isLoading} /> : noResults;
+  const content = isLoading || data.length > 0 ? <List items={items} /> : noResults;
 
   return (
     <ResponsiveView

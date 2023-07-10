@@ -1,18 +1,22 @@
-import { Text } from 'components/primitives';
-import { Container } from '@terra-money/apps/components';
+import { HStack } from 'lib/ui/Stack';
 import { MultisigMember } from 'types/MultisigMember';
-import styles from './MultisigMemberItem.module.sass';
 import { useIsSmallScreen } from 'lib/ui/hooks/useIsSmallScreen';
 import { Address } from 'chain/components/Address';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { Text } from 'lib/ui/Text';
 
 interface MultisigMemberItemProps extends MultisigMember {}
 
 export const MultisigMemberItem = ({ addr, weight }: MultisigMemberItemProps) => {
   const isSmallScreen = useIsSmallScreen();
   return (
-    <Container className={styles.root} direction="row">
-      <Address value={addr} length={isSmallScreen ? 's' : 'm'} />
-      <Text variant="text">{weight}</Text>
-    </Container>
+    <Panel>
+      <HStack alignItems="center" fullWidth justifyContent="space-between">
+        <Address value={addr} length={isSmallScreen ? 's' : 'm'} />
+        <Text weight="bold" color="regular">
+          {weight}
+        </Text>
+      </HStack>
+    </Panel>
   );
 };
