@@ -1,6 +1,6 @@
 import { assertDefined, getFinderUrl, getLast } from '@terra-money/apps/utils';
 import { TxEvent, TxResponse } from '@terra-money/apps/types';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { ExpandablePanel } from 'lib/ui/Panel/ExpandablePanel';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { Text } from 'lib/ui/Text';
@@ -76,10 +76,10 @@ export const TxItem = (props: TxItemProps) => {
   const transactionDetials = (
     <>
       {attributes.map((attribute, attributeIndex) => (
-        <Container key={`${attribute.key}-${attributeIndex}`} direction="row" gap={16}>
+        <Stack key={`${attribute.key}-${attributeIndex}`} direction="row" gap={16}>
           <Text>Message: {attribute.key}</Text>
           <Text>Value: {attribute.value}</Text>
-        </Container>
+        </Stack>
       ))}
     </>
   );

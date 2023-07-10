@@ -4,7 +4,7 @@ import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
 import { u } from '@terra-money/apps/types';
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -29,8 +29,8 @@ const DepositOverview = (props: DepositOverviewProps) => {
   return (
     <>
       <Line />
-      <Container className={styles.deposits} direction="row" gap={48}>
-        <Container direction="column" gap={8}>
+      <Stack className={styles.deposits} direction="row" gap={48}>
+        <Stack direction="column" gap={8}>
           {token ? (
             <>
               <Text className={styles.heading} variant="text">{`Deposit required (${token.symbol})`}</Text>
@@ -46,8 +46,8 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Spinner />
             </>
           )}
-        </Container>
-        <Container direction="column" gap={8}>
+        </Stack>
+        <Stack direction="column" gap={8}>
           {isBalanceLoading || !token ? (
             <>
               <Text className={styles.heading} variant="text">
@@ -70,8 +70,8 @@ const DepositOverview = (props: DepositOverviewProps) => {
               </Text>
             </>
           )}
-        </Container>
-      </Container>
+        </Stack>
+      </Stack>
     </>
   );
 };
@@ -106,7 +106,7 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
   const isSubmitDisabled = disabled || (isDepositRequired && balance.lt(minimumDeposit));
 
   return (
-    <Container className={styles.root} direction="column">
+    <Stack className={styles.root} direction="column">
       {isDepositRequired && (
         <DepositOverview
           minimumDeposit={minimumDeposit}
@@ -117,21 +117,16 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
       )}
       <FormFooter
         primary={
-          <Button
-            variant="primary"
-            disabled={isSubmitDisabled}
-            loading={loading || isBalanceLoading}
-            onClick={onSubmit}
-          >
+          <Button disabled={isSubmitDisabled} loading={loading || isBalanceLoading} onClick={onSubmit}>
             Create
           </Button>
         }
         secondary={
-          <Button variant="secondary" onClick={() => navigate(`/dao/${dao.address}/proposals`)}>
+          <Button kind="secondary" onClick={() => navigate(`/dao/${dao.address}/proposals`)}>
             Cancel
           </Button>
         }
       />
-    </Container>
+    </Stack>
   );
 };

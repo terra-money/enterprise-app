@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { ProposalCard } from '../../shared/ProposalCard';
 import { useMemo, useState } from 'react';
 import { HStack } from 'lib/ui/Stack';
@@ -43,7 +43,7 @@ export const ProposalsPageContent = () => {
   const newProposalsDisabled = !doIHaveVotingPower && !amICouncilMember;
 
   return (
-    <Container direction="column" gap={32}>
+    <Stack direction="column" gap={32}>
       <HStack justifyContent="space-between" gap={16} fullWidth>
         <HStack alignItems="center" gap={16}>
           <SearchInput style={{ maxWidth: 400 }} value={searchText} onValueChange={(input) => setSearchText(input)} />
@@ -61,7 +61,7 @@ export const ProposalsPageContent = () => {
           <ResponsiveView small={() => 'New'} normal={() => 'New Proposal'} />
         </Button>
       </HStack>
-      <Container direction="column" gap={16}>
+      <Stack direction="column" gap={16}>
         {!proposals || proposals.length < 1 ? (
           isLoading ? (
             [...Array(LIMIT)].map((_, index) => <ProposalCard key={index} variant="extended" />)
@@ -84,7 +84,7 @@ export const ProposalsPageContent = () => {
         ) : (
           proposals?.map((proposal, index) => <ProposalCard key={index} variant="extended" proposal={proposal} />)
         )}
-      </Container>
-    </Container>
+      </Stack>
+    </Stack>
   );
 };

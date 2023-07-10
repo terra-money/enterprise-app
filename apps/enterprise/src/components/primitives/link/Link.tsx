@@ -22,7 +22,7 @@ export const Link = ({ to, children, className, onClick }: LinkProps) => {
   }, [navigate, to, onClick]);
 
   return (
-    <Button className={classNames(styles.root, className)} variant="primary" onClick={handleClick}>
+    <Button className={classNames(styles.root, className)} onClick={handleClick}>
       {children}
     </Button>
   );

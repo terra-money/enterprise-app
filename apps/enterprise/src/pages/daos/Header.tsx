@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { Text } from 'components/primitives';
 import classNames from 'classnames';
 import { forwardRef, ReactNode, Ref } from 'react';
@@ -21,16 +21,16 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
 
   if (compact) {
     return (
-      <Container ref={ref} className={classNames(className, styles.root, styles.compact)} direction="row">
+      <Stack ref={ref} className={classNames(className, styles.root, styles.compact)} direction="row">
         {props.searchInput}
         {props.filters}
-      </Container>
+      </Stack>
     );
   }
 
   return (
-    <Container className={classNames(className, styles.root)} direction="column">
-      <Container className={styles.container} direction="column">
+    <Stack className={classNames(className, styles.root)} direction="column">
+      <Stack className={styles.container} direction="column">
         <Text className={styles.heading} variant="heading2">
           DAOs
         </Text>
@@ -41,10 +41,10 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           {props.searchInput}
           {props.filters}
         </HStack>
-      </Container>
+      </Stack>
       <Text className={styles.results} variant="label">
         {searchResultsLabel}
       </Text>
-    </Container>
+    </Stack>
   );
 });

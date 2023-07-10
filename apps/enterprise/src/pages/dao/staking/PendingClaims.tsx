@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import Big from 'big.js';
 import { Text } from 'components/primitives';
 import { format } from 'date-fns';
@@ -21,10 +21,10 @@ export const PendingClaims = (props: PendingClaimsProps) => {
   const { claims, formatter } = props;
 
   return claims?.length === 0 ? null : (
-    <Container className={styles.root} direction="column">
+    <Stack className={styles.root} direction="column">
       <Text variant="heading4">Pending Claims</Text>
       {claims.map((claim, index) => (
-        <Container key={index} className={styles.claim} direction="row">
+        <Stack key={index} className={styles.claim} direction="row">
           <Text variant="text">
             {'cw20' in claim.asset
               ? formatter(Big(claim.asset.cw20.amount))
@@ -35,8 +35,8 @@ export const PendingClaims = (props: PendingClaimsProps) => {
               ? `at block ${claim.release_at.height}`
               : `on ${formatTimestamp(new Date(Big(claim.release_at.timestamp).div(1000000).toNumber()))}`}
           </Text>
-        </Container>
+        </Stack>
       ))}
-    </Container>
+    </Stack>
   );
 };

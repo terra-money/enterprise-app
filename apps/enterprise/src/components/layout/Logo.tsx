@@ -1,8 +1,8 @@
-import { Container } from '@terra-money/apps/components';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
 import { ReactComponent as LogoIcon } from 'components/assets/LogoSmall.svg';
 import styles from './Logo.module.sass';
+import { Stack } from 'lib/ui/Stack';
 
 interface LogoProps {
   className?: string;
@@ -14,7 +14,7 @@ export const Logo = (props: LogoProps) => {
   const { className, compact = false, onClick } = props;
 
   return (
-    <Container className={classNames(className, styles.root)}>
+    <Stack direction="row" className={classNames(className, styles.root)}>
       <div
         className={classNames(styles.icon, {
           [styles.clickable]: onClick,
@@ -29,6 +29,6 @@ export const Logo = (props: LogoProps) => {
           Enterprise
         </Text>
       )}
-    </Container>
+    </Stack>
   );
 };

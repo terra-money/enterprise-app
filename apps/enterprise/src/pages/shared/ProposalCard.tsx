@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { Text as DeprecatedText } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { Proposal } from 'dao/shared/proposal';
@@ -106,12 +106,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   if (proposal === undefined) {
     return (
-      <Container className={classNames(styles.root, styles.skeleton)} direction="column">
+      <Stack className={classNames(styles.root, styles.skeleton)} direction="column">
         <Skeleton className={styles.tags} />
         <Skeleton className={styles.title} />
         <Skeleton className={styles.description} />
         <Skeleton className={styles.footer} />
-      </Container>
+      </Stack>
     );
   }
 
@@ -123,10 +123,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
     dao.type === 'multisig'
       ? proposal.totalVotes
       : proposal.type === 'council'
-        ? dao.council?.members.length!
-        : proposal.status === 'in_progress'
-        ? totalStaked
-        : proposal.totalVotes;
+      ? dao.council?.members.length!
+      : proposal.status === 'in_progress'
+      ? totalStaked
+      : proposal.totalVotes;
 
   const daoLinkContent = (
     <DaoLinkWrapper alignItems="center" gap={8}>
@@ -140,17 +140,17 @@ export const ProposalCard = (props: ProposalCardProps) => {
   return (
     <Wrapper className={styles.wrapper}>
       <InternalLink to={`/dao/${dao.address}/proposals/${proposal.id}`}>
-        <Container
+        <Stack
           className={classNames(styles.root, {
             [styles.compact]: variant === 'compact',
           })}
           direction="column"
         >
-          <Container className={styles.container} component="div" direction="column">
-            <Container className={styles.tags} component="div" direction="row">
+          <Stack className={styles.container} as="div" direction="column">
+            <Stack className={styles.tags} as="div" direction="row">
               <ProposalTags proposal={proposal} />
               {expiry && <Clock variant={variant} expiry={expiry} />}
-            </Container>
+            </Stack>
             <HStack className={styles.title} alignItems="center" gap={8}>
               <Text weight="semibold" color="shy">
                 #{id}
@@ -164,13 +164,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
               {description}
             </DeprecatedText>
             {isDashboard && (
-              <Container className={styles.footer}>
+              <Stack direction="row" className={styles.footer}>
                 <div style={{ opacity: 0 }}>{daoLinkContent}</div>
-              </Container>
+              </Stack>
             )}
-          </Container>
+          </Stack>
           <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
-        </Container>
+        </Stack>
       </InternalLink>
       {isDashboard && (
         <DaoLinkOverlay>

@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
 import { GovConfigFields } from './GovConfigFields';
@@ -12,7 +12,7 @@ export function GovConfigStep() {
 
   return (
     <WizardStep title="DAO governance parameters">
-      <Container direction="column" gap={24}>
+      <Stack direction="column" gap={24}>
         <GovConfigFields
           daoType={type}
           value={govConfig}
@@ -23,7 +23,7 @@ export function GovConfigStep() {
           onChange={(minimumWeightForRewards) => formInput({ govConfig: { ...govConfig, minimumWeightForRewards } })}
           error={govConfig.minimumWeightForRewardsError}
         />
-      </Container>
+      </Stack>
     </WizardStep>
   );
 }
