@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
@@ -15,7 +14,7 @@ export const useProposalVoteQuery = (
   return useQuery(
     [QUERY_KEY.PROPOSAL_VOTE, contract, proposalId, member],
     async () => {
-      const response = await lcd.wasm.contractQuery<enterprise.PollVoterResponse>(contract as CW20Addr, {
+      const response = await lcd.wasm.contractQuery<enterprise.PollVoterResponse>(contract, {
         member_vote: {
           member,
           proposal_id: proposalId,

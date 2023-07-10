@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { assertDefined } from '@terra-money/apps/utils';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { ConnectWalletPrompt } from 'components/not-connected';
@@ -35,7 +34,7 @@ import { Match } from 'lib/ui/Match';
 
 type CreateProposalPageParams = {
   type: ProposalType;
-  address: CW20Addr;
+  address: string;
 };
 
 const Container = styled(VStack)`
@@ -59,7 +58,7 @@ export const CreateProposalPageContent = () => {
 
   const proposalVotingType = (searchParams.get('votingType') || 'general') as enterprise.ProposalType;
 
-  const { data: dao, isLoading } = useDAOQuery(address as CW20Addr);
+  const { data: dao, isLoading } = useDAOQuery(address);
 
   return (
     <CreateProposalProvider value={{ proposalVotingType }}>

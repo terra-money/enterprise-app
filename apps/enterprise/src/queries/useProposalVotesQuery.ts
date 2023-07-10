@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { getLast } from '@terra-money/apps/utils';
 import { useInfiniteQuery } from 'react-query';
 import { Vote } from 'types';
@@ -7,7 +6,7 @@ import { QUERY_KEY } from './queryKey';
 import { useContract } from 'chain/hooks/useContract';
 
 interface UseProposalVotesQueryOptions {
-  contract: CW20Addr;
+  contract: string;
   proposalId: number;
   limit?: number;
 }

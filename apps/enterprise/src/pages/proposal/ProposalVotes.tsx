@@ -1,6 +1,6 @@
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useFetchEveryPage, usePaginatedResultItems } from '@terra-money/apps/queries';
-import { CW20Addr, u } from '@terra-money/apps/types';
+import { u } from '@terra-money/apps/types';
 import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import { Text } from 'components/primitives';
@@ -46,7 +46,7 @@ export const ProposalVotes = () => {
 
   const proposalVotesQuery = useProposalVotesQuery({
     proposalId: proposal.id,
-    contract: proposal.dao.address as CW20Addr,
+    contract: proposal.dao.address,
   });
   useFetchEveryPage(proposalVotesQuery);
   const { data: proposalVotesPages, hasNextPage } = proposalVotesQuery;

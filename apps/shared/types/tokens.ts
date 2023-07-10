@@ -1,5 +1,3 @@
-import { CW20Addr } from "./index";
-
 export type TokenBase = {
   key: string;
   name: string;
@@ -10,19 +8,19 @@ export type TokenBase = {
 };
 
 export type NativeToken = TokenBase & {
-  type: "native";
+  type: 'native';
   denom: string;
 };
 
 export const LUNA: NativeToken = {
-  key: "uluna",
-  type: "native",
-  denom: "uluna",
-  name: "LUNA",
-  symbol: "LUNA",
+  key: 'uluna',
+  type: 'native',
+  denom: 'uluna',
+  name: 'LUNA',
+  symbol: 'LUNA',
   decimals: 6,
-  icon: "https://assets.terra.money/icon/svg/LUNA.png",
-  coinGeckoId: "terra-luna-2",
+  icon: 'https://assets.terra.money/icon/svg/LUNA.png',
+  coinGeckoId: 'terra-luna-2',
 };
 
 export interface NativeTokensResponse {
@@ -30,9 +28,9 @@ export interface NativeTokensResponse {
 }
 
 export type CW20Token = TokenBase & {
-  type: "cw20";
+  type: 'cw20';
   protocol: string;
-  token: CW20Addr;
+  token: string;
 };
 
 export interface CW20TokensResponse {
@@ -44,7 +42,7 @@ export interface TokensResponse {
 }
 
 export type IBCToken = TokenBase & {
-  type: "ibc";
+  type: 'ibc';
   path: string;
   base_denom: string;
   denom: string;

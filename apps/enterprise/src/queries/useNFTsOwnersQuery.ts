@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { LCDClient } from '@terra-money/feather.js';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { useQuery, UseQueryResult } from 'react-query';
@@ -10,11 +9,11 @@ export interface NFTPairs {
 
 const fetchDAONFTsWhitelist = async (
   lcd: LCDClient,
-  whitelistAddrCollection: CW20Addr[],
+  whitelistAddrCollection: string[],
   daoAddress: string
 ): Promise<NFTPairs[]> => {
   const nftpairs = await Promise.all(
-    whitelistAddrCollection.map(async (addr: CW20Addr) => {
+    whitelistAddrCollection.map(async (addr: string) => {
       const tokenIds: string[] = await lcd.wasm.contractQuery(addr, {
         tokens: { owner: daoAddress },
       });
@@ -25,7 +24,7 @@ const fetchDAONFTsWhitelist = async (
 };
 
 export const useNFTsOwnersQuery = (
-  whitelistAddrCollection: CW20Addr[],
+  whitelistAddrCollection: string[],
   daoAddress: string
 ): UseQueryResult<NFTPairs[]> => {
   const lcd = useLCDClient();

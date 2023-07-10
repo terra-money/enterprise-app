@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { LCDClient } from '@terra-money/feather.js';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { useQuery, UseQueryResult } from 'react-query';
@@ -42,7 +41,7 @@ const createCollectionQuery = (vars: Variables) => {
 `;
 };
 
-const nftQuery = async (collectionAddr: CW20Addr, tokenid: string, lcd: LCDClient) => {
+const nftQuery = async (collectionAddr: string, tokenid: string, lcd: LCDClient) => {
   const queryData: any = await lcd.wasm.contractQuery(collectionAddr, {
     nft_info: { token_id: tokenid },
   });
@@ -67,7 +66,7 @@ const fetchNFTData = async (collectionAddr: string, tokenId: string, lcd: LCDCli
   const json = await response.json();
 
   if (!json.data) {
-    const queryData = await nftQuery(collectionAddr as CW20Addr, tokenId, lcd);
+    const queryData = await nftQuery(collectionAddr, tokenId, lcd);
     return queryData.extension;
   }
 

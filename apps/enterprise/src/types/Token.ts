@@ -1,5 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
-
 export type TokenBase = {
   key: string;
   name: string;
@@ -32,7 +30,7 @@ export interface NativeTokensResponse {
 export type CW20Token = TokenBase & {
   type: 'cw20';
   protocol: string;
-  token: CW20Addr;
+  token: string;
 };
 
 export interface CW20TokensResponse {

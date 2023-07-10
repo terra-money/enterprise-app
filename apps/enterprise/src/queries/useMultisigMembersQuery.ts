@@ -1,11 +1,11 @@
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { enterprise } from 'types/contracts';
-import { CW20Addr } from '@terra-money/apps/types';
+
 import { MultisigMember } from 'types/MultisigMember';
 import { useLCDClient } from '@terra-money/wallet-provider';
 
-export const useMultisigMembersQuery = (contractAddress: CW20Addr) => {
+export const useMultisigMembersQuery = (contractAddress: string) => {
   const lcd = useLCDClient();
 
   return useQuery(
