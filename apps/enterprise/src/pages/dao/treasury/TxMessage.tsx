@@ -7,7 +7,7 @@ import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 import { TxAsset } from './TxAsset';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { truncateAddress } from 'chain/utils/truncateAddress';
 
 interface TxMessageProps {

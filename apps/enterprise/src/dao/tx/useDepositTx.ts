@@ -3,7 +3,7 @@ import { MsgExecuteContract, MsgSend } from '@terra-money/feather.js';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TX_KEY } from 'tx';
 import { isDenom, toAmount } from '@terra.kitchen/utils';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 
 interface DepositTxParams {
   address: string;

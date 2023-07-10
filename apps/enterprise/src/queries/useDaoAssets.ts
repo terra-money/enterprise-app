@@ -9,7 +9,7 @@ import Big from 'big.js';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
 import { usePricesOfLiquidAssets } from 'chain/queries/usePricesOfLiquidAssets';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useCurrentDaoAssetWhitelistQuery } from './useCurrentDaoAssetWhitelistQuery';
 
 export const useDaoAssets = () => {

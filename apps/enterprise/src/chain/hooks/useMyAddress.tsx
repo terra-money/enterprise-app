@@ -1,4 +1,4 @@
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 
 export const useMyAddress = () => {

@@ -9,8 +9,8 @@ import { createTxStoreMiddleware } from './storage';
 import { pendingSubject, completedSubject, cancelledSubject, failedSubject } from './rx';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { CompletedTransaction, FailedTransaction, PendingTransaction, TransactionStatus } from './types';
-import { UIElementProps } from '@terra-money/apps/components';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
 
 const storage = new LocalStorageTxStore('__tx_store');
 
@@ -50,9 +50,7 @@ const useTransactionsContext = (): [TxState, TxDispatch, TxHelpers] => {
   return context;
 };
 
-interface TransactionsProviderProps extends UIElementProps {}
-
-const TransactionsProvider = (props: TransactionsProviderProps) => {
+const TransactionsProvider = (props: ComponentWithChildrenProps) => {
   const { children } = props;
 
   const [{ onPending, onCancelled, onCompleted, onFailed }, setEventHandlers] = useState<TxEventHandlers>({});

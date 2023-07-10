@@ -14,7 +14,7 @@ import { Tag } from 'lib/ui/Tag';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { TxMessage } from './TxMessage';
 import { useCurrentDaoAddress } from 'dao/navigation';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { truncateAddress } from 'chain/utils/truncateAddress';
 
 interface TxItemProps {

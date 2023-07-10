@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { RefCallback } from '@terra-money/apps/hooks';
 import { pendingSubject, completedSubject, cancelledSubject, failedSubject } from './rx';
 import { CompletedTransaction, FailedTransaction, PendingTransaction, Transaction, TransactionStatus } from './types';
+import { RefCallback } from './utils/useRefCallback';
 
 type Callback<T extends Transaction> = (transaction: T) => void;
 

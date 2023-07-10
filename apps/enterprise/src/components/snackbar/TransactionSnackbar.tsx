@@ -5,7 +5,7 @@ import { UserDenied } from '@terra-money/wallet-provider';
 import { useMemo } from 'react';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { ExternalLink } from 'components/link';
 import { Text } from 'lib/ui/Text';

@@ -1,6 +1,6 @@
 import { LCDClient, TxInfo } from '@terra-money/feather.js';
-import { sleep } from '@terra-money/apps/utils';
-import { CancellationToken, None } from '@terra-money/apps/libs/cancellation';
+import { CancellationToken, None } from 'chain/transactions/cancellation';
+import { sleep } from '../utils/sleep';
 
 export class TxTimeoutError extends Error {
   constructor(message: string, readonly txhash: string) {

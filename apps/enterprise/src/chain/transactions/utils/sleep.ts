@@ -1,4 +1,4 @@
-import { None } from '../../enterprise/src/chain/transactions/cancellation';
+import { None } from '../cancellation';
 
 export function sleep(ms: number, token = None) {
   return new Promise<void>((resolve, reject) => {

@@ -8,7 +8,7 @@ import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { getFinderUrl } from '@terra-money/apps/utils';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { Text } from 'lib/ui/Text';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 
 export const ProposalVoting = () => {
   const { executionTxHash } = useCurrentProposal();

@@ -5,7 +5,8 @@ import { useTransactionsContext } from '.';
 import { addTxAction } from './actions';
 import { FailedTransaction, TransactionPayload, TransactionStatus } from './types';
 import { failedSubject } from './rx';
-import { useChainID, useRefCallback } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
+import { useRefCallback } from './utils/useRefCallback';
 
 type TxOrFactory<Options> =
   | CreateTxOptions

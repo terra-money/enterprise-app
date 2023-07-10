@@ -1,4 +1,3 @@
-import { getLast } from '@terra-money/apps/utils';
 import { useNavigate } from 'react-router';
 import { useCreateDAOTx } from 'tx';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
@@ -23,6 +22,7 @@ import { Button } from 'lib/ui/buttons/Button';
 import { useState } from 'react';
 import { WhitelistStep } from './WhitelistStep';
 import { Match } from 'lib/ui/Match';
+import { getLast } from 'lib/shared/utils/getlast';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();

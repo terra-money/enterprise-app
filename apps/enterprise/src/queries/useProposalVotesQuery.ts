@@ -1,9 +1,9 @@
-import { getLast } from '@terra-money/apps/utils';
 import { useInfiniteQuery } from 'react-query';
 import { Vote } from 'types';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
 import { useContract } from 'chain/hooks/useContract';
+import { getLast } from 'lib/shared/utils/getlast';
 
 interface UseProposalVotesQueryOptions {
   contract: string;

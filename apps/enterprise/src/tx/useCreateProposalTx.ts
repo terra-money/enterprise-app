@@ -3,7 +3,7 @@ import Big from 'big.js';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 

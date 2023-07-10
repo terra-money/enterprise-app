@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useAssertMyAddress } from './useAssertMyAddress';
 import { Msg } from '@terra-money/feather.js';
 import { lunaDecimals } from 'chain/constants';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 export const useEstimatedFeeQuery = (msgs: Msg[]) => {

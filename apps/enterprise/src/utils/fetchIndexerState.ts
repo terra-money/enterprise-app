@@ -1,4 +1,4 @@
-import { NetworkName } from '@terra-money/apps/hooks';
+import { NetworkName } from 'chain/hooks/useNetworkName';
 import { createApiEndpoint } from 'hooks';
 
 interface StateEntry {

@@ -1,4 +1,4 @@
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { Frequency } from 'utils';
 
 const API_ENDPOINTS: Record<string, string> = {
