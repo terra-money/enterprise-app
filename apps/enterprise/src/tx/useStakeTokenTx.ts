@@ -4,7 +4,7 @@ import { TX_KEY } from './txKey';
 import { useTxOverrides } from './useFeeOverrides';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 
 interface StakeTokenTxOptions {
   daoAddress: string;

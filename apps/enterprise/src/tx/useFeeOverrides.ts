@@ -1,4 +1,4 @@
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { CreateTxOptions, Fee } from '@terra-money/feather.js';
 
 export const useTxOverrides = (): Partial<CreateTxOptions> => {

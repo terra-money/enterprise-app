@@ -10,7 +10,7 @@ import { Text } from 'lib/ui/Text';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { Spinner } from 'lib/ui/Spinner';
 
 interface FormatMigrationMsgParams {

@@ -2,7 +2,7 @@ import { LCDClient } from '@terra-money/feather.js';
 import { TxState } from '../TxState';
 import { find } from '../utils/find';
 import { ActionType, TxDispatch, TxThunkArgument } from './types';
-import { CancellationTokenSource } from '@terra-money/apps/libs/cancellation';
+import { CancellationTokenSource } from 'chain/transactions/cancellation';
 import { BehaviorSubject } from 'rxjs';
 import { Transaction } from '../types';
 import { pollTx } from './pollTx';

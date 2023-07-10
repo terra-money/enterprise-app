@@ -1,7 +1,7 @@
 import { LCDClient } from '@terra-money/feather.js';
 import { Asset, AssetInfo } from 'chain/Asset';
 import { getAssetsInfo } from './getAssetsInfo';
-import { NetworkName } from '@terra-money/apps/hooks';
+import { NetworkName } from 'chain/hooks/useNetworkName';
 
 interface CW20TokenInfoResponse {
   name: string;

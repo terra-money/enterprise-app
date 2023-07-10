@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { useLCDClient } from '@terra-money/wallet-provider';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 
 export const fetchBlockHeight = async (lcdBaseUrl: string): Promise<number> => {
   const response = await fetch(`${lcdBaseUrl}/blocks/latest`);

@@ -1,4 +1,4 @@
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 import { TxBuilder, useTx } from 'chain/transactions';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TX_KEY } from 'tx';

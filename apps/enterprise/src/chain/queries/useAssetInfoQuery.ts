@@ -1,4 +1,4 @@
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { AssetType } from 'chain';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
@@ -19,6 +19,6 @@ export const useAssetInfoQuery = (asset: AssetInfoQueryParams) => {
       asset,
       lcd: lcdClient,
       networkName,
-    })
+    });
   });
 };
