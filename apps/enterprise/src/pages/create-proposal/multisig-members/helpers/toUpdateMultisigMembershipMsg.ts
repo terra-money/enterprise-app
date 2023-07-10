@@ -1,4 +1,4 @@
-import { getRecord } from '@terra-money/apps/utils';
+import { getRecord } from 'lib/shared/utils/getRecord';
 import { enterprise } from 'types/contracts';
 import { MultisigMember } from 'types/MultisigMember';
 

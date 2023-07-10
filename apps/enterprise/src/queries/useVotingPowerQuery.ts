@@ -5,7 +5,7 @@ import Big from 'big.js';
 import { enterprise } from 'types/contracts';
 
 import { useLCDClient } from '@terra-money/wallet-provider';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const fetchVotingPower = async (lcd: LCDClient, daoAddress: string, walletAddress: string): Promise<Big> => {
   const response = await lcd.wasm.contractQuery<enterprise.MemberInfoResponse>(daoAddress, {

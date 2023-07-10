@@ -5,7 +5,7 @@ import { useTransactionsContext } from '.';
 import { addTxAction } from './actions';
 import { FailedTransaction, TransactionPayload, TransactionStatus } from './types';
 import { failedSubject } from './rx';
-import { useChainID, useRefCallback } from '../../hooks';
+import { useChainID, useRefCallback } from '@terra-money/apps/hooks';
 
 type TxOrFactory<Options> =
   | CreateTxOptions
@@ -28,7 +28,7 @@ const useTx = <Options>(
 
   const lcd = useLCDClient();
 
-  const chainID = useChainID()
+  const chainID = useChainID();
 
   const wallet = useConnectedWallet();
 
@@ -45,13 +45,13 @@ const useTx = <Options>(
       let txResult: TxResult;
       try {
         txResult = await wallet.post(tx);
-      } catch (error: TxError) {
+      } catch (error) {
         // if the tx fails here it means it didn't make it to the mempool
         failedSubject.next({
           txHash: '',
           status: TransactionStatus.Failed,
           payload,
-          error,
+          error: error as TxError,
         });
         throw error;
       }
@@ -61,7 +61,7 @@ const useTx = <Options>(
       // however we are displaying a pending operation status so
       // we really want the response to complete when the tx has been
       // submitted to the mempool
-      console.log('useTx(): dispatching addTxAction:', txResult.result)
+      console.log('useTx(): dispatching addTxAction:', txResult.result);
       const completion = dispatch(addTxAction(txResult.result.txhash, payload, lcd, chainID));
 
       if (useTxOptions.waitForCompletion) {

@@ -8,7 +8,7 @@ import { getDaoTotalStakedAmount } from 'dao/utils/getDaoTotalStakedAmount';
 import Big from 'big.js';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
 import { usePricesOfLiquidAssets } from 'chain/queries/usePricesOfLiquidAssets';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useNetworkName } from '@terra-money/apps/hooks';
 import { useCurrentDaoAssetWhitelistQuery } from './useCurrentDaoAssetWhitelistQuery';
 

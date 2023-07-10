@@ -6,7 +6,7 @@ import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { MyVotingPowerProvider } from 'dao/components/MyVotingPowerProvider';
 import { SelectProposalType } from './SelectProposalType';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const SelectProposalTypePageContent = () => {
   const { address } = useParams();

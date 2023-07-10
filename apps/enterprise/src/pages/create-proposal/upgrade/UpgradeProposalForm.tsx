@@ -3,7 +3,7 @@ import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { base64Encode } from 'utils';
 import { Text } from 'lib/ui/Text';

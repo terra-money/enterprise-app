@@ -4,7 +4,7 @@ import { enterprise } from 'types/contracts';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCW20TokenInfoQuery } from 'queries';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const UpdateMinimumWeightForRewardsAction = () => {
   const { msg } = useCurrentProposalAction();

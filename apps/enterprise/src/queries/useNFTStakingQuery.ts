@@ -4,7 +4,7 @@ import { QUERY_KEY } from 'queries';
 import { enterprise } from 'types/contracts';
 import { LCDClient } from '@terra-money/feather.js';
 import { useLCDClient } from '@terra-money/wallet-provider';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const fetchNFTStaking = async (
   lcd: LCDClient,

@@ -1,4 +1,4 @@
-import { getCSSUnit } from '@terra-money/apps/utils';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 import { css } from 'styled-components';
 
 export const inputBorderRadiusCSS = css`

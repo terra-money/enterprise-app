@@ -1,10 +1,10 @@
 import { useChainID, useContractAddress } from '@terra-money/apps/hooks';
-import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
+import { useTx, TxBuilder } from 'chain/transactions';
 import { enterprise_factory } from 'types/contracts';
 import { TX_KEY } from './txKey';
 import { useTxOverrides } from './useFeeOverrides';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export type CreateDaoMsgType = Extract<enterprise_factory.ExecuteMsg, { create_dao: {} }>;
 

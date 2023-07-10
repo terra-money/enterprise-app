@@ -2,7 +2,7 @@ import { Ref, forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import { UnstyledButton } from '../UnstyledButton';
-import { getCSSUnit } from '@terra-money/apps/utils';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
 import { HSLA } from 'lib/ui/colors/HSLA';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';

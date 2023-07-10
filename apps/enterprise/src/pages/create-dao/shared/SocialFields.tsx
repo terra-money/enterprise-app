@@ -8,7 +8,7 @@ import { FormState } from '@terra-money/apps/hooks';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import styled from 'styled-components';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
-import { getCSSUnit } from '@terra-money/apps/utils';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 import { inputHeight } from 'lib/ui/inputs/config';
 
 const socialDataKeys: Array<keyof DaoSocialDataInput> = [

@@ -16,7 +16,7 @@ import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { SmallScreenProposalHeader } from './SmallScreenProposalHeader';
 import { ProposedBy } from './ProposedBy';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const ProposalPageContent = () => {
   const { id, address } = useParams();

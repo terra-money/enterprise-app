@@ -1,4 +1,4 @@
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useContract } from 'chain/hooks/useContract';
 import { toProposal } from 'dao/utils/toProposal';
 import { useDAOQuery } from 'queries';

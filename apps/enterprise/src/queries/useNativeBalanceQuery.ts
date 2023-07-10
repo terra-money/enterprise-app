@@ -5,7 +5,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from './queryKey';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { useLCDClient } from '@terra-money/wallet-provider';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const useNativeBalanceQuery = (): UseQueryResult<u<Big> | undefined> => {
   const myAddress = useMyAddress();

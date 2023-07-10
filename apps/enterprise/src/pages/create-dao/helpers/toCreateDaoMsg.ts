@@ -2,7 +2,7 @@ import { CreateDaoMsgType } from 'tx/useCreateDaoTx';
 import { toChainAmount } from 'chain/utils/toChainAmount';
 import { DaoWizardInput, DaoWizardState } from '../DaoWizardFormProvider';
 import { enterprise_factory } from 'types/contracts';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 const getDaoMembership = (input: DaoWizardInput) => {
   const {

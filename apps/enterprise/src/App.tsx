@@ -1,4 +1,3 @@
-import { TransactionsProvider } from '@terra-money/apps/libs/transactions';
 import { WalletProvider, useChainOptions } from '@terra-money/wallet-provider';
 import { NetworkGuard } from 'components/network-guard';
 import { SnackbarContainer } from 'components/snackbar';
@@ -13,6 +12,7 @@ import { PersonalizationProvider } from 'libs/personalization/PersonalizationPro
 import { setupErrorMonitoring } from 'errors/errorMonitoring';
 import { AppRoutes } from 'navigation/AppRoutes';
 import { GlobalErrorBoundary } from 'errors/components/GlobalErrorBoundary';
+import { TransactionsProvider } from 'chain/transactions';
 
 const queryClient = new QueryClient();
 

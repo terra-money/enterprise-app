@@ -1,4 +1,4 @@
-import { FailedTransaction, Transaction, TransactionStatus } from '@terra-money/apps/libs/transactions';
+import { FailedTransaction, Transaction, TransactionStatus } from 'chain/transactions';
 import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
 import { UserDenied } from '@terra-money/wallet-provider';
