@@ -4,7 +4,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { toBurnTokensMsg } from './helpers/toBurnTokensMsg';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { Text } from 'lib/ui/Text';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +26,7 @@ export const BurnTokensProposalForm = () => {
       .number()
       .positive()
       .gt(0)
-      .max(token ? demicrofy(token.balance, token.decimals).toNumber() : 0),
+      .max(token ? fromChainAmount(token.balance, token.decimals) : 0),
   });
 
   const {

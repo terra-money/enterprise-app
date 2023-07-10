@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { DelegateMsg } from 'chain/CosmWasm';
 
 interface DelegateMsgParams {
@@ -13,11 +13,11 @@ export const toDelegateMsg = ({ amount, address, tokenDecimals }: DelegateMsgPar
       delegate: {
         amount: {
           denom: 'uluna',
-          amount: microfy(amount, tokenDecimals).toString(),
+          amount: toChainAmount(amount, tokenDecimals).toString(),
         },
         validator: address,
-      }
+      },
     },
-  }
+  };
   return JSON.stringify(msg);
 };

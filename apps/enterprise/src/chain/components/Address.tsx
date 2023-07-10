@@ -1,4 +1,4 @@
-import { truncateAddress } from '@terra-money/apps/utils';
+import { truncateAddress } from 'chain/utils/truncateAddress';
 import { CopyText } from 'lib/ui/CopyText';
 
 type AddressLength = 's' | 'm' | 'l' | 'full';

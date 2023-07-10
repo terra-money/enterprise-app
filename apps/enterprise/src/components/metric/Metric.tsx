@@ -1,5 +1,4 @@
 import { Container, UIElementProps } from '@terra-money/apps/components';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import Big from 'big.js';
 import classNames from 'classnames';
 import { AnimateNumber } from 'components/animate-number/AnimateNumber';
@@ -7,6 +6,7 @@ import { Text } from 'components/primitives/text';
 import { ReactNode } from 'react';
 
 import styles from './Metric.module.sass';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 type MetricProps = UIElementProps & {
   label: string;
@@ -46,7 +46,7 @@ export const Metric = (props: MetricProps) => {
             format={(v) =>
               isSmallAmount && smallAmountDisplay
                 ? smallAmountDisplay
-                : formatAmount(v, {
+                : formatAmount(v.toNumber(), {
                     decimals,
                   })
             }

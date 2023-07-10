@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { base64Encode } from 'utils';
 
 interface ToMintTokensMsgParams {
@@ -16,7 +16,7 @@ export interface MintTokenMsg {
 export const toMintTokenMsg = ({ tokenAddress, recepientAddress, amount, tokenDecimals }: ToMintTokensMsgParams) => {
   const mint: MintTokenMsg = {
     recipient: recepientAddress,
-    amount: microfy(amount, tokenDecimals).toString(),
+    amount: toChainAmount(amount, tokenDecimals).toString(),
   };
   return JSON.stringify({
     wasm: {

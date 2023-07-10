@@ -10,7 +10,6 @@ import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
-import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AssetInfoWithPrice } from 'chain/Asset';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
@@ -27,7 +26,7 @@ export const SpendTreasuryProposalForm = () => {
   const formSchema: z.ZodType<SpendTreasuryProposalFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (token) {
-      amount = amount.lte(demicrofy(token.balance, token.decimals).toNumber());
+      amount = amount.lte(fromChainAmount(token.balance, token.decimals));
     }
     return z.object({
       destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid Terra address' }),

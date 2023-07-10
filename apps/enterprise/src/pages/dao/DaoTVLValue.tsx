@@ -1,4 +1,4 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDaoTVLQuery } from 'dao/hooks/useDaoTVLQuery';
 import { Spinner } from 'lib/ui/Spinner';

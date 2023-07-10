@@ -1,4 +1,4 @@
-import { assertDefined, getFinderUrl, getLast, truncateAddress } from '@terra-money/apps/utils';
+import { assertDefined, getFinderUrl, getLast } from '@terra-money/apps/utils';
 import { TxEvent, TxResponse } from '@terra-money/apps/types';
 import { Container } from '@terra-money/apps/components';
 import { ExpandablePanel } from 'lib/ui/Panel/ExpandablePanel';
@@ -15,6 +15,7 @@ import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { TxMessage } from './TxMessage';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { truncateAddress } from 'chain/utils/truncateAddress';
 
 interface TxItemProps {
   tx: TxResponse;

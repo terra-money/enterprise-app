@@ -1,6 +1,6 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { AssetInfo } from 'chain/Asset';
 import { AssetInfoQueryParams, useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { Spinner } from 'lib/ui/Spinner';
 
 interface Props extends AssetInfoQueryParams {

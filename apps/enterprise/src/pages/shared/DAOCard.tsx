@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router';
 import { FavouriteToggle } from 'components/favourite-toggle';
 import styles from './DAOCard.module.sass';
 import { DAOLogo } from 'components/dao-logo';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { enterprise } from 'types/contracts';
 import { SeparatedBy, dotSeparator } from 'lib/ui/SeparatedBy';
 import { Tooltip } from 'lib/ui/Tooltip';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 interface DAOCardProps {
   className?: string;
@@ -56,10 +56,11 @@ export const DAOCard = (props: DAOCardProps) => {
         {tvl && tvl > 0 && (
           <Tooltip
             content="Total value locked"
-            renderOpener={props => (
+            renderOpener={(props) => (
               <Text {...props} size={14} weight="semibold" color="supporting">
                 ${formatAmount(tvl)}
-              </Text>)}
+              </Text>
+            )}
           />
         )}
       </SeparatedBy>

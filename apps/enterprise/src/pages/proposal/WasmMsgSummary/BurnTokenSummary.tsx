@@ -1,6 +1,7 @@
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { BurnCW20Msg } from 'chain/CW20';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDaoToken } from 'dao/components/CurrentDaoTokenProvider';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { Text } from 'lib/ui/Text';
 
 export const BurnTokenSummary = ({ amount }: BurnCW20Msg['burn']) => {
@@ -10,7 +11,7 @@ export const BurnTokenSummary = ({ amount }: BurnCW20Msg['burn']) => {
     <Text size={14} color="supporting">
       Burn{' '}
       <Text weight="bold" as="span">
-        {formatAmount(demicrofy(amount, token.decimals))} {token.symbol}
+        {formatAmount(fromChainAmount(amount, token.decimals))} {token.symbol}
       </Text>
     </Text>
   );

@@ -1,8 +1,9 @@
 import { NumericPanel } from 'components/numeric-panel';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { AnimateNumber } from '@terra-money/apps/components';
 import { useNftDaoStakingInfo } from 'dao/hooks/useNftDaoStakingInfo';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import Big from 'big.js';
 
 export const NftDaoTotalStakedPanel = () => {
   const { address, dao_membership_contract } = useCurrentDao();
@@ -14,7 +15,9 @@ export const NftDaoTotalStakedPanel = () => {
       value={totalStaked}
       decimals={2}
       suffix={
-        <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>{totalStakedPercent}</AnimateNumber>
+        <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}>
+          {totalStakedPercent}
+        </AnimateNumber>
       }
     />
   );

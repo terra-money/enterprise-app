@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { UndelegateMsg } from 'chain/CosmWasm';
 import { lunaDecimals } from 'chain/constants';
 
@@ -14,11 +14,11 @@ export const toUndelegateMsg = ({ amount, address }: DelegateMsgParams) => {
         validator: address,
         amount: {
           denom: 'uluna',
-          amount: microfy(amount, lunaDecimals).toString(),
+          amount: toChainAmount(amount, lunaDecimals).toString(),
         },
       },
     },
-  }
+  };
 
   return JSON.stringify(msg);
 };

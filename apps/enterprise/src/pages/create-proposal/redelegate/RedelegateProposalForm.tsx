@@ -6,7 +6,7 @@ import { useDelegationsQuery } from 'chain/queries/useDelegationsQuery';
 import { useMemo, useState } from 'react';
 import { FixedOptionsInput } from 'lib/ui/inputs/Combobox/FixedOptionsInput';
 import * as z from 'zod';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { assertDefined } from '@terra-money/apps/utils';
 import { lunaDecimals } from 'chain/constants';
 import { Controller, useForm } from 'react-hook-form';
@@ -32,7 +32,7 @@ export const RedelegateProposalForm = () => {
     if (!validator) return undefined;
 
     const delegation = assertDefined(delegations.find((d) => d.validator_address === validator));
-    return demicrofy(delegation.balance.amount.toNumber(), lunaDecimals).toNumber();
+    return fromChainAmount(delegation.balance.amount.toNumber(), lunaDecimals);
   }, [delegations, validator]);
 
   const formSchema: z.ZodType<RedelegateProposalFormSchema> = z.object({

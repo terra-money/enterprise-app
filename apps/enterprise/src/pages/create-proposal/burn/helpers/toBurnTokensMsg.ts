@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { BurnCW20Msg } from 'chain/CW20';
 import { base64Encode } from 'utils';
 
@@ -11,9 +11,9 @@ interface ToSpendTreasuryMsgParams {
 export const toBurnTokensMsg = ({ amount, tokenDecimals, tokenAddress }: ToSpendTreasuryMsgParams) => {
   const msg: BurnCW20Msg = {
     burn: {
-      amount: microfy(amount, tokenDecimals).toString(),
-    }
-  }
+      amount: toChainAmount(amount, tokenDecimals).toString(),
+    },
+  };
 
   return JSON.stringify({
     wasm: {

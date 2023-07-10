@@ -1,4 +1,4 @@
-import { demicrofy } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useFetchEveryPage, usePaginatedResultItems } from '@terra-money/apps/queries';
 import { CW20Addr, u } from '@terra-money/apps/types';
 import { capitalizeFirstLetter } from '@terra-money/apps/utils';
@@ -61,7 +61,13 @@ export const ProposalVotes = () => {
 
   // TODO: reuse with ProposalVotingBar
   const totalAvailableVotes =
-    proposal.type === 'council' ? Big(dao.council?.members.length!) : dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+    proposal.type === 'council'
+      ? Big(dao.council?.members.length!)
+      : dao.type === 'multisig'
+      ? totalVotes
+      : status === 'in_progress'
+      ? totalStaked
+      : totalVotes;
 
   return (
     <LabeledPageSection name="Votes">
@@ -80,7 +86,9 @@ export const ProposalVotes = () => {
                   <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
                 )}
                 {proposal.type !== 'council' && token && (
-                  <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>
+                  <Text variant="text">{`${fromChainAmount(amount.toString(), token.decimals ?? 6)} ${
+                    token.symbol
+                  }`}</Text>
                 )}
               </Content>
             </Panel>

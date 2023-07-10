@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { AssetType } from 'chain';
 import { TransferCW20Msg } from 'chain/CW20';
 import { BankSendMsg } from 'chain/CosmWasm';
@@ -28,12 +28,12 @@ export const toSpendTreasuryMsg = ({
           amount: [
             {
               denom: assetId,
-              amount: microfy(amount, assetDecimals).toString(),
+              amount: toChainAmount(amount, assetDecimals).toString(),
             },
           ],
         },
-      }
-    }
+      },
+    };
 
     return JSON.stringify(msg);
   }
@@ -41,9 +41,9 @@ export const toSpendTreasuryMsg = ({
   const msg: TransferCW20Msg = {
     transfer: {
       recipient: destinationAddress,
-      amount: microfy(amount, assetDecimals).toString(),
-    }
-  }
+      amount: toChainAmount(amount, assetDecimals).toString(),
+    },
+  };
 
   return JSON.stringify({
     wasm: {

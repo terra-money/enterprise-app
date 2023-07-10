@@ -7,7 +7,7 @@ import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
 import { roundedCSS } from 'lib/ui/utils/roundedCSS';
 import styled from 'styled-components';
 import { ReactNode, useMemo, useState } from 'react';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { Button } from 'lib/ui/buttons/Button';
 

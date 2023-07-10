@@ -1,5 +1,5 @@
 import { CreateDaoMsgType } from 'tx/useCreateDaoTx';
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { DaoWizardInput, DaoWizardState } from '../DaoWizardFormProvider';
 import { enterprise_factory } from 'types/contracts';
 import { assertDefined } from '@terra-money/apps/utils';
@@ -55,9 +55,9 @@ const getDaoMembership = (input: DaoWizardInput) => {
         new_token: {
           initial_token_balances: initialBalances.map(({ address, amount }) => ({
             address,
-            amount: microfy(amount, decimals).toString(),
+            amount: toChainAmount(amount, decimals).toString(),
           })),
-          initial_dao_balance: initialDaoBalance ? microfy(initialDaoBalance, decimals).toString() : null,
+          initial_dao_balance: initialDaoBalance ? toChainAmount(initialDaoBalance, decimals).toString() : null,
           token_decimals: decimals,
           token_marketing: {
             description,
@@ -77,7 +77,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
 
 export const getDaoRatio = (ratio: number) => ratio.toFixed(2);
 
-const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardState) => {
+const getDaoGovConfig = ({ govConfig, type, timeConversionFactor, tokenInfo }: DaoWizardState) => {
   const config: enterprise_factory.DaoGovConfig = {
     quorum: getDaoRatio(govConfig.quorum),
     threshold: getDaoRatio(govConfig.threshold),
@@ -91,7 +91,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor }: DaoWizardSta
   };
 
   if (type === 'token') {
-    config.minimum_deposit = microfy(govConfig.minimumDeposit || 0).toString();
+    config.minimum_deposit = toChainAmount(govConfig.minimumDeposit || 0, tokenInfo.decimals).toString();
   }
 
   return config;
@@ -103,7 +103,7 @@ const getMinimumWeightForRewards = ({ govConfig, type, tokenInfo }: DaoWizardSta
   if (minimumWeightForRewards === undefined) return undefined;
 
   if (type === 'token') {
-    return microfy(minimumWeightForRewards, tokenInfo.decimals).toString();
+    return toChainAmount(minimumWeightForRewards, tokenInfo.decimals).toString();
   }
 
   return minimumWeightForRewards.toString();

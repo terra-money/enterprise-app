@@ -1,4 +1,4 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { MsgExecuteContract } from '@terra-money/feather.js';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { useEstimatedFeeQuery } from 'chain/hooks/useEstimatedFee';

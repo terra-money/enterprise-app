@@ -1,7 +1,8 @@
 import { AnimateNumber } from '@terra-money/apps/components';
 import { NumericPanel } from 'components/numeric-panel';
 import { useCW20TokenInfoQuery, useTokenStakingAmountQuery } from 'queries';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
 import { u } from '@terra-money/apps/types';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -22,10 +23,12 @@ export const TokenDaoTotalStakedPanel = () => {
     <NumericPanel
       isLoading={isLoadingTotalStaked}
       title="Total staked"
-      value={demicrofy(totalStaked, token?.decimals ?? 6)}
+      value={fromChainAmount(totalStaked.toString(), token?.decimals ?? 6)}
       decimals={2}
       suffix={
-        <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>{totalStakedPercent}</AnimateNumber>
+        <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}>
+          {totalStakedPercent}
+        </AnimateNumber>
       }
     />
   );

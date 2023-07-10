@@ -1,5 +1,5 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
@@ -81,7 +81,7 @@ export const NftStakingConnectedView = () => {
                   Voting power
                 </Text>
                 <Text variant="heading3">
-                  <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
+                  <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
                     {walletVotingPower.mul(100)}
                   </AnimateNumber>
                 </Text>
@@ -155,7 +155,7 @@ export const NftStakingConnectedView = () => {
               title="Your total staked"
               value={walletStaked.tokens.length}
               suffix={
-                <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>
+                <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}>
                   {walletStakedPercent}
                 </AnimateNumber>
               }

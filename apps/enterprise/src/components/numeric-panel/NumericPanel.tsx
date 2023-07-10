@@ -1,11 +1,11 @@
 import { AnimateNumber, Container, Formatter } from '@terra-money/apps/components';
 import { Text } from 'components/primitives';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { Panel, PanelProps } from 'components/panel';
 import Big, { BigSource } from 'big.js';
 import { ReactNode } from 'react';
 import styles from './NumericPanel.module.sass';
 import { Spinner } from 'lib/ui/Spinner';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 interface NumericPanelProps extends PanelProps {
   title?: string;
@@ -19,12 +19,12 @@ interface NumericPanelProps extends PanelProps {
 
 export const FriendlyFormatter = (amount: BigSource, decimals: number): string => {
   if (Big(amount).gte(1000000000)) {
-    return `${formatAmount(Big(amount).div(1000000000), { decimals: 2 })}B`;
+    return `${formatAmount(Big(amount).div(1000000000).toNumber(), { decimals: 2 })}B`;
   }
   if (Big(amount).gte(1000000)) {
-    return `${formatAmount(Big(amount).div(1000000), { decimals: 2 })}M`;
+    return `${formatAmount(Big(amount).div(1000000).toNumber(), { decimals: 2 })}M`;
   }
-  return formatAmount(amount, { decimals });
+  return formatAmount(Big(amount).toNumber(), { decimals });
 };
 
 export const NumericPanel = (props: NumericPanelProps) => {

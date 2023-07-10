@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, truncateAddress } from '@terra-money/apps/utils';
+import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import { AccAddress, Coin, Coins } from '@terra-money/feather.js';
 import { isDenom } from '@terra.kitchen/utils';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
@@ -8,6 +8,7 @@ import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 import { TxAsset } from './TxAsset';
 import { useNetworkName } from '@terra-money/apps/hooks';
+import { truncateAddress } from 'chain/utils/truncateAddress';
 
 interface TxMessageProps {
   text: string;
