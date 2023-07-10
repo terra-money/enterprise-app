@@ -1,12 +1,13 @@
 import { Text, TextProps } from 'components/primitives';
 import Big, { BigSource } from 'big.js';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
 import { u, Token } from '@terra-money/apps/types';
 import classNames from 'classnames';
 import { TokenIcon } from 'components/token-icon';
 import { Container } from '@terra-money/apps/components';
 import { usePrice } from '@terra-money/apps/hooks';
 import styles from './TokenAmount.module.sass';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 interface TokenAmountProps extends Pick<TextProps, 'variant' | 'component'> {
   className?: string;
@@ -35,13 +36,16 @@ export const TokenAmount = (props: TokenAmountProps) => {
     decimals: decimals ?? token.decimals ?? 2,
   };
 
-  const formattedAmount = formatAmount(demicrofy(amount, token.decimals ?? 6), formattingOptions);
+  const formattedAmount = formatAmount(fromChainAmount(Big(amount).toNumber(), token.decimals ?? 6), formattingOptions);
 
   const priceUsd = usePrice(token);
 
-  const formattedUsdAmount = formatAmount(priceUsd ? demicrofy(amount, token.decimals ?? 6).mul(priceUsd) : Big(0), {
-    decimals: 2,
-  });
+  const formattedUsdAmount = formatAmount(
+    priceUsd ? fromChainAmount(Big(amount).toNumber(), token.decimals ?? 6) * priceUsd.toNumber() : 0,
+    {
+      decimals: 2,
+    }
+  );
 
   return (
     <Container className={styles.container} direction="row">

@@ -1,6 +1,4 @@
 import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
-import { u } from '@terra-money/apps/types';
-import { BigSource } from 'big.js';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
 import { useTxOverrides } from './useFeeOverrides';
@@ -11,7 +9,7 @@ import { useChainID } from '@terra-money/apps/hooks';
 interface StakeTokenTxOptions {
   daoAddress: string;
   tokenAddress: string;
-  amount: u<BigSource>;
+  amount: string;
 }
 
 export const useStakeTokenTx = () => {

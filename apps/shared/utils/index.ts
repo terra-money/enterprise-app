@@ -1,5 +1,4 @@
 export * from './sleep';
-export * from './truncateAddress';
 export * from './pluralize';
 export * from './getContractAddress';
 export * from './getFinderUrl';
@@ -11,7 +10,6 @@ export * from './validateLength';
 export * from './validateAmount';
 export * from './validatePattern';
 export * from './compareAddress';
-export * from './getValueProviderSetup';
 export * from './capitalizeFirstLetter';
 export * from './getlast';
 export * from './groupBy';

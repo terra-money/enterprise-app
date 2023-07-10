@@ -1,5 +1,5 @@
 import { useForm } from '@terra-money/apps/hooks';
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 
@@ -30,9 +30,9 @@ export const useUnstakeTokenForm = (options: UseUnstakeTokenFormOptions) => {
       ...input,
     };
 
-    const uAmount = input.amount ? microfy(input.amount, decimals) : Big(0);
+    const uAmount = input.amount ? toChainAmount(input.amount, decimals) : Big(0);
 
-    const submitDisabled = uAmount.lte(0) || uAmount.gt(staked);
+    const submitDisabled = Big(uAmount).lte(0) || Big(uAmount).gt(staked);
 
     dispatch({ ...state, submitDisabled });
   }, initialState);

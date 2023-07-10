@@ -1,4 +1,4 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { Spinner } from 'lib/ui/Spinner';
 import { CW20TokenInfoResponse, useCW20TokenInfoQuery } from 'queries';

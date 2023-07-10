@@ -2,7 +2,6 @@ import { NumericPanel } from 'components/numeric-panel';
 import { useStakeTokenForm } from './useStakeTokenForm';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
-import { demicrofy, microfy } from '@terra-money/apps/libs/formatting';
 import { useStakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
@@ -11,6 +10,7 @@ import { Button } from 'lib/ui/buttons/Button';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 
 interface StakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
@@ -41,7 +41,12 @@ export const StakeTokenOverlay = ({
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
-          <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
+          <NumericPanel
+            title="Currently staking"
+            value={fromChainAmount(Big(staked).toNumber(), decimals)}
+            decimals={2}
+            suffix={symbol}
+          />
           <AmountTextInput
             value={amount}
             placeholder="Enter a staking amount"
@@ -67,7 +72,7 @@ export const StakeTokenOverlay = ({
                 await stakeTokenTx({
                   daoAddress,
                   tokenAddress,
-                  amount: microfy(Big(amount), decimals),
+                  amount: toChainAmount(amount, decimals),
                 });
                 onClose();
               }

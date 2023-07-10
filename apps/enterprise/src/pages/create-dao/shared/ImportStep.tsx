@@ -8,9 +8,9 @@ import { NftAddressInput } from '../nft/NftAddressInput';
 import { MultisigAddressInput } from '../multisig/MultisigAddressInput';
 import { CW20TokenInfoResponse, CW721ContractInfoResponse, MultisigVoter } from 'queries';
 import { Text } from 'components/primitives';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
-import { u } from '@terra-money/apps/types';
 import styles from './ImportStep.module.sass';
 import { Address } from 'chain/components/Address';
 import { Match } from 'lib/ui/Match';
@@ -33,7 +33,7 @@ const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: 
       <Address value={tokenAddr} length="l" />
       <Text variant="label">Total supply</Text>
       <Text variant="heading4">
-        {formatAmount(demicrofy(Big(token.total_supply) as u<Big>, token.decimals), { decimals: 2 })}
+        {formatAmount(fromChainAmount(Big(token.total_supply).toNumber(), token.decimals), { decimals: 2 })}
       </Text>
     </Container>
   );

@@ -2,7 +2,7 @@ import { WizardStep } from '../WizardStep';
 import { Text } from 'components/primitives';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { EMPTY_INITIAL_BALANCE, InitialBalance, useDaoWizardForm } from '../DaoWizardFormProvider';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import styles from './InitialBalancesStep.module.sass';
 import { AddButton } from 'components/add-button';
 import { VStack } from 'lib/ui/Stack';

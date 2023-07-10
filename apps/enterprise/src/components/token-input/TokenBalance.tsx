@@ -1,9 +1,10 @@
-import { formatAmount, demicrofy } from '@terra-money/apps/libs/formatting';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
 import styles from './TokenBalance.module.sass';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 interface TokenBalanceProps {
   className: string;
@@ -17,7 +18,7 @@ export const TokenBalance = (props: TokenBalanceProps) => {
   const formattedAmount =
     balance === undefined || balance.lte(0)
       ? ''
-      : formatAmount(demicrofy(balance, decimals), {
+      : formatAmount(fromChainAmount(Big(balance).toNumber(), decimals), {
           decimals: 4,
         });
 

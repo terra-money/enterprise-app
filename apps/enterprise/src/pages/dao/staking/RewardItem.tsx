@@ -1,4 +1,5 @@
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
 import { TokenIcon } from 'components/token-icon';
 import { DaoReward } from 'dao/hooks/useMyDaoRewardsQuery';
@@ -20,7 +21,7 @@ export const RewardItem = ({ amount, id, type }: DaoReward) => {
 
   return (
     <HStack alignItems="center" gap={16}>
-      <Text weight="bold">{formatAmount(demicrofy(amount, decimals))}</Text>
+      <Text weight="bold">{formatAmount(fromChainAmount(amount, decimals))}</Text>
 
       <HStack alignItems="center" gap={8}>
         <Text color="supporting">{data.symbol}</Text>

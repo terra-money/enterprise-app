@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router';
 import { u } from '@terra-money/apps/types';
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
 import { Container } from '@terra-money/apps/components';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import styles from './CreateProposalFooter.module.sass';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
@@ -34,7 +35,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
             <>
               <Text className={styles.heading} variant="text">{`Deposit required (${token.symbol})`}</Text>
               <Text variant="heading4">
-                {formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, token.decimals), { decimals: 2 })}
+                {formatAmount(fromChainAmount(Big(minimumDeposit).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
           ) : (
@@ -65,7 +66,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
                 }}
                 variant="heading4"
               >
-                {formatAmount(demicrofy(balance, token.decimals), { decimals: 2 })}
+                {formatAmount(fromChainAmount(Big(balance).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
           )}

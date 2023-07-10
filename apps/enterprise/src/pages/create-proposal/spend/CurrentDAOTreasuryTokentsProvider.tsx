@@ -1,4 +1,4 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { AssetInfoWithPrice } from 'chain/Asset';
 import { Spinner } from 'lib/ui/Spinner';
 import { useDaoAssets } from 'queries/useDaoAssets';

@@ -2,7 +2,6 @@ import { NumericPanel } from 'components/numeric-panel';
 import { useUnstakeTokenForm } from './useUnstakeTokenForm';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
-import { demicrofy, microfy } from '@terra-money/apps/libs/formatting';
 import { useUnstakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
 import { Modal } from 'lib/ui/Modal';
@@ -11,6 +10,7 @@ import { Button } from 'lib/ui/buttons/Button';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 
 interface UnstakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
@@ -32,7 +32,12 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
-          <NumericPanel title="Currently staking" value={demicrofy(staked, decimals)} decimals={2} suffix={symbol} />
+          <NumericPanel
+            title="Currently staking"
+            value={fromChainAmount(staked.toString(), decimals)}
+            decimals={2}
+            suffix={symbol}
+          />
           <AmountTextInput
             value={amount}
             placeholder="Enter an amount to unstake"
@@ -57,7 +62,7 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
               if (submitDisabled === false && amount) {
                 await unstakeTokenTx({
                   daoAddress,
-                  amount: microfy(Big(amount), decimals),
+                  amount: toChainAmount(amount, decimals),
                 });
                 onClose();
               }

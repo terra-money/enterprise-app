@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
+import Big from 'big.js';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -33,7 +33,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
   const formSchema: z.ZodType<DepositFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (balance) {
-      amount = amount.lte(demicrofy(balance, token.decimals).toNumber());
+      amount = amount.lte(fromChainAmount(Big(balance).toNumber(), token.decimals));
     }
     return z.object({
       amount,
@@ -73,7 +73,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             value={value}
             onBlur={onBlur}
             ref={ref}
-            max={balance ? demicrofy(balance, token.decimals).toNumber() : undefined}
+            max={balance ? fromChainAmount(Big(balance).toNumber(), token.decimals) : undefined}
             unit={token.name}
             suggestion={
               balance ? (

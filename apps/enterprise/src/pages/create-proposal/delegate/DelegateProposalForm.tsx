@@ -2,7 +2,7 @@ import { ProposalForm } from '../shared/ProposalForm';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { assertDefined } from '@terra-money/apps/utils';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { Text } from 'lib/ui/Text';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,6 @@ import { toDelegateMsg } from './helpers/toDelegateMsg';
 import { VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { zodAddressValidator } from 'chain/utils/validators';
-import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface DelegateProposalFormSchema {
@@ -30,7 +29,7 @@ export const DelegateProposalForm = () => {
       .number()
       .positive()
       .gt(0)
-      .max(token ? demicrofy(token.balance, token.decimals).toNumber() : 0),
+      .max(token ? fromChainAmount(token.balance, token.decimals) : 0),
   });
 
   const {

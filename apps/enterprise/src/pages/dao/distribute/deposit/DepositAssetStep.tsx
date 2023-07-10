@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
-import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositIntoFundsDistributorTx } from 'dao/tx/useDepositIntoFundsDistributorTx';
 import { Button } from 'lib/ui/buttons/Button';
@@ -13,6 +12,7 @@ import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Token } from 'types';
 import * as z from 'zod';
+import Big from 'big.js';
 
 interface DepositAssetStepProps {
   token: Token;
@@ -33,7 +33,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
   const formSchema: z.ZodType<DepositFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (balance) {
-      amount = amount.lte(demicrofy(balance, token.decimals).toNumber());
+      amount = amount.lte(fromChainAmount(Big(balance).toNumber(), token.decimals));
     }
     return z.object({
       amount,

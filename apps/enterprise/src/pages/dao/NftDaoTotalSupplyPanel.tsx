@@ -1,4 +1,4 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCW721NumTokensQuery } from 'queries/useCW721NumTokensQuery';
@@ -15,7 +15,7 @@ export const NftDaoTotalSupplyPanel = () => {
       value={numTokens}
       isLoading={isLoadingNumTokens}
       formatter={(v) =>
-        formatAmount(v, {
+        formatAmount(Big(v).toNumber(), {
           decimals: 0,
         })
       }

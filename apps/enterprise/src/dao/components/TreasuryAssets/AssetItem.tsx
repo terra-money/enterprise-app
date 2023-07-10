@@ -1,7 +1,7 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { TokenIcon } from 'components/token-icon';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';

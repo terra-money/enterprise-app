@@ -1,6 +1,5 @@
 import { useForm, FormState } from '@terra-money/apps/hooks';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { isFormStateValid } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import { useEnv } from 'hooks';
@@ -69,10 +68,7 @@ export const useCreateConfigProposalForm = () => {
     };
 
     if (governanceConfig.minimumDeposit && token) {
-      initialInput.minimumDeposit = demicrofy(
-        Big(governanceConfig.minimumDeposit) as u<Big>,
-        token.decimals
-      ).toNumber();
+      initialInput.minimumDeposit = fromChainAmount(Big(governanceConfig.minimumDeposit).toNumber(), token.decimals);
     }
 
     const state = {

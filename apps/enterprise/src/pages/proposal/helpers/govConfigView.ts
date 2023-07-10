@@ -1,7 +1,6 @@
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { pluralize, toPercents } from '@terra-money/apps/utils';
-import Big, { BigSource } from 'big.js';
 import { secondsInDay } from 'date-fns';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
@@ -55,9 +54,7 @@ export const getUpdatedFields = (
 
   if (msg.minimum_deposit !== 'no_change') {
     const minimumDeposit = msg.minimum_deposit.change;
-    view.minimumDeposit = minimumDeposit
-      ? formatAmount(demicrofy(Big(minimumDeposit) as u<BigSource>, tokenDecimals))
-      : noValue;
+    view.minimumDeposit = minimumDeposit ? formatAmount(fromChainAmount(minimumDeposit, tokenDecimals)) : noValue;
   }
 
   if (msg.quorum !== 'no_change') {
@@ -102,7 +99,7 @@ export const fromDao = (dao: DAO, tokenDecimals: number = 6): GovConfigView => {
     vetoThreshold: toPercents(governanceConfig.vetoThreshold),
     unlockingPeriod: formatDuration(governanceConfig.unlockingPeriod),
     votingDuration: toDays(Number(governanceConfig.voteDuration)),
-    minimumDeposit: minimumDeposit ? formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, tokenDecimals)) : noValue,
+    minimumDeposit: minimumDeposit ? formatAmount(fromChainAmount(minimumDeposit, tokenDecimals)) : noValue,
   };
 
   if (dao.type === 'multisig') {

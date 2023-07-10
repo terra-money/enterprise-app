@@ -1,5 +1,6 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
@@ -33,7 +34,7 @@ const useTokenData = (daoAddress: string, tokenAddress: string) => {
 
   const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(daoAddress);
 
-  const totalSupply = token === undefined ? Big(0) : demicrofy(Big(token.total_supply) as u<Big>, token.decimals);
+  const totalSupply = token === undefined ? Big(0) : fromChainAmount(token.total_supply, token.decimals);
 
   const totalStakedPercent =
     token === undefined || Big(token.total_supply ?? 0).eq(0)
@@ -112,10 +113,10 @@ export const TokenStakingConnectedView = () => {
                 </Text>
                 <NumericPanel
                   className={styles.stakedVotingPanel}
-                  value={demicrofy(walletStaked, tokenDecimals)}
+                  value={fromChainAmount(walletStaked.toString(), tokenDecimals)}
                   decimals={2}
                   suffix={
-                    <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
+                    <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
                       {walletVotingPower.mul(100)}
                     </AnimateNumber>
                   }
@@ -181,7 +182,7 @@ export const TokenStakingConnectedView = () => {
           <NumericPanel
             className={styles.claim}
             title="Claim Unstaked Tokens"
-            value={demicrofy(claimableAmount, tokenDecimals)}
+            value={fromChainAmount(claimableAmount.toString(), tokenDecimals)}
             decimals={2}
             suffix={tokenSymbol}
             footnote={
@@ -204,10 +205,14 @@ export const TokenStakingConnectedView = () => {
           />
 
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel title="Your wallet" value={demicrofy(balance, tokenDecimals)} suffix={tokenSymbol} />
+            <NumericPanel
+              title="Your wallet"
+              value={fromChainAmount(Big(balance).toNumber(), tokenDecimals)}
+              suffix={tokenSymbol}
+            />
             <NumericPanel
               title="Your total staked"
-              formatter={(v) => `${formatAmount(v, { decimals: 1 })}%`}
+              formatter={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}
               decimals={2}
               value={walletStakedPercent}
             />
@@ -217,7 +222,7 @@ export const TokenStakingConnectedView = () => {
       {token && (
         <PendingClaims
           claims={pendingClaims}
-          formatter={(amount) => formatAmount(demicrofy(amount as u<Big>, token.decimals), { decimals: 4 })}
+          formatter={(amount) => formatAmount(fromChainAmount(amount.toNumber(), token.decimals), { decimals: 4 })}
         />
       )}
     </>

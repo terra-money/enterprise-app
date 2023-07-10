@@ -1,5 +1,4 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
-import { NftWithPrice } from 'chain/Nft';
+import { formatAmount } from 'lib/shared/utils/formatAmount';import { NftWithPrice } from 'chain/Nft';
 import { getNftInfo } from 'chain/utils/getNftInfo';
 import { retry } from 'lib/shared/utils/retry';
 import { Panel } from 'lib/ui/Panel/Panel';

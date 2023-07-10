@@ -1,4 +1,4 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { Proposal } from 'dao/shared/proposal';
 
 export const { useValue: useCurrentProposal, provider: CurrentProposalProvider } =

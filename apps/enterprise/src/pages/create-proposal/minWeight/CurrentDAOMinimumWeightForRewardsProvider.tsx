@@ -1,5 +1,5 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { useMinimumEligibleWeightQuery } from 'dao/hooks/useMinimumEligibleWeightQuery';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { Spinner } from 'lib/ui/Spinner';
 
 interface Props {
