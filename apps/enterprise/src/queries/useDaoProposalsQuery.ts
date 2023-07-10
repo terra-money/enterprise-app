@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { assertDefined } from '@terra-money/apps/utils';
 import { useContract } from 'chain/hooks/useContract';
 import { toProposal } from 'dao/utils/toProposal';
@@ -21,7 +20,7 @@ export const useDaoProposalsQuery = ({
   enabled = true,
 }: UseProposalsQueryOptions): UseQueryResult<Array<Proposal> | undefined> => {
   const { query } = useContract();
-  const { data: dao } = useDAOQuery(address as CW20Addr);
+  const { data: dao } = useDAOQuery(address);
 
   return useQuery(
     [QUERY_KEY.PROPOSALS, address],

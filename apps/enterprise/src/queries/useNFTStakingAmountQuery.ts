@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import Big from 'big.js';
-import { CW20Addr, u } from '@terra-money/apps/types';
+import { u } from '@terra-money/apps/types';
 import { fetchStakingAmount } from './fetchStakingAmount';
 import { useLCDClient } from '@terra-money/wallet-provider';
 
@@ -14,7 +14,7 @@ export const useNFTStakingAmountQuery = (
 
   return useQuery(
     [QUERY_KEY.NFT_STAKING_AMOUNT, daoAddress, walletAddress],
-    () => fetchStakingAmount(lcd, daoAddress as CW20Addr, walletAddress as CW20Addr),
+    () => fetchStakingAmount(lcd, daoAddress, walletAddress),
     {
       refetchOnMount: false,
       ...options,

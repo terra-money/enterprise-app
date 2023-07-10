@@ -1,4 +1,3 @@
-import { CW20Addr } from '@terra-money/apps/types';
 import { IconButton, Text } from 'components/primitives';
 import { useProposalVoteQuery, useVotingPowerQuery } from 'queries';
 import { ReactNode, useState } from 'react';
@@ -44,10 +43,7 @@ export const CastVote = () => {
 
   const [vote, setVote] = useState<enterprise.VoteOutcome | undefined>();
 
-  const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(
-    proposal.dao.address as CW20Addr,
-    myAddress
-  );
+  const { data: votingPower, isLoading: isVotingPowerLoading } = useVotingPowerQuery(proposal.dao.address, myAddress);
 
   const { data: myVote } = useProposalVoteQuery(proposal.dao.address, myAddress ?? '', proposal.id, {
     enabled: Boolean(myAddress),

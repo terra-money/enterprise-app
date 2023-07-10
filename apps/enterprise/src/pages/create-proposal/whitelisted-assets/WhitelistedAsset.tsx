@@ -1,5 +1,5 @@
 import { useTokens } from '@terra-money/apps/hooks';
-import { CW20Addr } from '@terra-money/apps/types';
+
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { Text } from 'components/primitives';
 import { TokenIcon } from 'components/token-icon';
@@ -21,7 +21,7 @@ export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => 
   const assetType = asset.type;
   const isCW20 = assetType === 'cw20';
 
-  const { data: cw20Token } = useCW20TokenInfoQuery(assetKey as CW20Addr, {
+  const { data: cw20Token } = useCW20TokenInfoQuery(assetKey, {
     enabled: isCW20,
   });
 

@@ -1,12 +1,12 @@
 import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
 import { enterprise } from 'types/contracts';
-import { CW20Addr, u } from '@terra-money/apps/types';
+import { u } from '@terra-money/apps/types';
 
 export const fetchStakingAmount = async (
   lcd: LCDClient,
-  daoAddress: CW20Addr,
-  walletAddress?: CW20Addr
+  daoAddress: string,
+  walletAddress?: string
 ): Promise<u<Big>> => {
   if (walletAddress === undefined) {
     const response = await lcd.wasm.contractQuery<{ total_staked_amount: string }>(daoAddress, {

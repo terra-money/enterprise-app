@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTokens } from '@terra-money/apps/hooks';
 import { Token } from '@terra-money/apps/types';
-import { CW20Addr } from '@terra-money/apps/types';
 import { ListItem } from './ListItem';
 import { useCW20TokenInfoQuery } from 'queries';
 import { VStack } from 'lib/ui/Stack';
@@ -34,7 +33,7 @@ const Container = styled(VStack)`
 export const TokenInput = ({ onSelect }: TokenInputProps) => {
   const [searchText, setSearchText] = useState('');
 
-  const { data: cw20Token, isLoading: cw20TokenLoading } = useCW20TokenInfoQuery(searchText as CW20Addr);
+  const { data: cw20Token, isLoading: cw20TokenLoading } = useCW20TokenInfoQuery(searchText);
 
   const { tokens, isLoading: areTokensLoading } = useTokens();
 
@@ -54,7 +53,7 @@ export const TokenInput = ({ onSelect }: TokenInputProps) => {
       result.push({
         type: 'cw20',
         key: searchText,
-        token: searchText as CW20Addr,
+        token: searchText,
         name: cw20Token.name,
         symbol: cw20Token.symbol,
         decimals: cw20Token.decimals,

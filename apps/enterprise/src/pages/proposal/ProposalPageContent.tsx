@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { LoadingPage } from 'pages/shared/LoadingPage';
 import { useParams } from 'react-router-dom';
 import { useDAOQuery, useProposalQuery } from 'queries';
-import { CW20Addr } from '@terra-money/apps/types';
+
 import { Header } from './Header';
 import { ProposalVoting } from './ProposalVoting';
 import { ProposalVotes } from './ProposalVotes';
@@ -16,15 +16,16 @@ import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { SmallScreenProposalHeader } from './SmallScreenProposalHeader';
 import { ProposedBy } from './ProposedBy';
+import { assertDefined } from '@terra-money/apps/utils';
 
 export const ProposalPageContent = () => {
   const { id, address } = useParams();
   const proposalId = Number(id);
 
-  const { data: dao } = useDAOQuery(address as CW20Addr);
+  const { data: dao } = useDAOQuery(assertDefined(address));
 
   const { data: proposal, isLoading } = useProposalQuery({
-    daoAddress: address as CW20Addr,
+    daoAddress: assertDefined(address),
     id: proposalId,
   });
 
