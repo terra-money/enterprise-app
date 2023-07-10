@@ -4,7 +4,6 @@ import { NftStakingConnectedView } from './NFTStaking';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
-import { ConnectWalletPrompt } from 'components/not-connected';
 import { VStack } from 'lib/ui/Stack';
 import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
 import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
@@ -12,6 +11,7 @@ import { NftDaoTotalSupplyPanel } from '../NftDaoTotalSupplyPanel';
 import { NftDaoTotalStakedPanel } from '../NftDaoTotalStakedPanel';
 import { DaoErrorBoundary } from '../DaoErrorBoundary';
 import { Match } from 'lib/ui/Match';
+import { ConnectWalletPrompt } from 'chain/components/ConnectWalletPrompt';
 
 export const Staking = () => {
   const dao = useCurrentDao();

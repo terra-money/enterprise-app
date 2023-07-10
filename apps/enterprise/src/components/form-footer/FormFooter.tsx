@@ -1,18 +1,17 @@
-import { Container, UIElementProps } from '@terra-money/apps/components';
-import classNames from 'classnames';
 import { ReactNode } from 'react';
 import styles from './FormFooter.module.sass';
+import { HStack } from 'lib/ui/Stack';
 
-interface FormFooterProps extends UIElementProps {
+interface FormFooterProps {
   primary: ReactNode;
   secondary: ReactNode;
 }
 
-export const FormFooter = ({ primary, secondary, className }: FormFooterProps) => {
+export const FormFooter = ({ primary, secondary }: FormFooterProps) => {
   return (
-    <Container className={classNames(className, styles.root)} gap={16} direction="row">
+    <HStack className={styles.root} gap={16} alignItems="center">
       {secondary}
       {primary}
-    </Container>
+    </HStack>
   );
 };

@@ -1,6 +1,5 @@
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { ConditionalWallet } from 'components/conditional-wallet';
-import { ConnectWalletPrompt } from 'components/not-connected';
 import { useDAOQuery } from 'queries';
 import { useParams } from 'react-router';
 import { BurnTokensProposalPage } from './burn/BurnTokensProposalPage';
@@ -31,6 +30,7 @@ import { MintNftProposalPage } from './mint/MintNftProposalPage';
 import { enterprise } from 'types/contracts';
 import { MinimumWeightForRewardsProposalPage } from './minWeight/MinimumWeightForRewardsProposalPage';
 import { Match } from 'lib/ui/Match';
+import { ConnectWalletPrompt } from 'chain/components/ConnectWalletPrompt';
 
 type CreateProposalPageParams = {
   type: ProposalType;
