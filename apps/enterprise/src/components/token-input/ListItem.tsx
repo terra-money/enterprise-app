@@ -1,10 +1,10 @@
 import { Text } from 'components/primitives';
 import { TokenIcon } from 'components/token-icon';
-import { useTokenBalanceQuery } from 'queries';
 import { TokenBalance } from './TokenBalance';
 import styles from './ListItem.module.sass';
 import { Token } from 'types';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
+import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
 
 interface Props {
   token: Token;
@@ -14,7 +14,13 @@ interface Props {
 export const ListItem = ({ token, onSelect }: Props) => {
   const address = useAssertMyAddress();
 
-  const { data: balance } = useTokenBalanceQuery(address, token);
+  const { data: balance } = useAssetBalanceQury({
+    address,
+    asset: {
+      type: token.type === 'cw20' ? 'cw20' : 'native',
+      id: token.key,
+    },
+  });
 
   return (
     <div key={token.symbol} className={styles.listItem} onClick={onSelect}>

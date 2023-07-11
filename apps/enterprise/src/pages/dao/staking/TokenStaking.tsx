@@ -1,11 +1,10 @@
-import { AnimateNumber, Container } from '@terra-money/apps/components';
+import { AnimateNumber } from '@terra-money/apps/components';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 import Big from 'big.js';
 import { FriendlyFormatter, NumericPanel } from 'components/numeric-panel';
 import {
-  useCW20BalanceQuery,
   useCW20TokenInfoQuery,
   useReleasableClaimsQuery,
   useTokenStakingAmountQuery,
@@ -21,13 +20,15 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
 import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
-import { VStack } from 'lib/ui/Stack';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { Text } from 'lib/ui/Text';
+import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -92,11 +93,17 @@ export const TokenStakingConnectedView = () => {
     totalStaked
   );
 
-  const { data: balance = Big(0) as Big } = useCW20BalanceQuery(walletAddress, tokenAddress);
+  const { data: balance } = useAssetBalanceQury({
+    address: walletAddress,
+    asset: {
+      type: 'cw20',
+      id: tokenAddress,
+    },
+  });
 
   const [claimTxResult, claimTx] = useClaimTx();
 
-  const isStakeDisabled = balance.lte(0);
+  const isStakeDisabled = !balance;
   const isUnstakeDisabled = walletStaked.lte(0);
   const isClaimDisabled = claimableAmount.lte(0);
 
@@ -104,9 +111,9 @@ export const TokenStakingConnectedView = () => {
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
         <VStack gap={16}>
-          <Container className={styles.staking} component="section" direction="column">
+          <VStack className={styles.staking} as="section">
             <VStack gap={40}>
-              <Container className={styles.header}>
+              <HStack alignItems="center" className={styles.header}>
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
                 <Text className={styles.title}>Voting power</Text>
                 <Text size={20} weight="bold">
@@ -119,8 +126,8 @@ export const TokenStakingConnectedView = () => {
                     </AnimateNumber>
                   </Text>
                 </Text>
-              </Container>
-              <Container className={styles.actions} direction="row">
+              </HStack>
+              <HStack alignItems="center" className={styles.actions}>
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
                     <Button
@@ -133,7 +140,7 @@ export const TokenStakingConnectedView = () => {
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
-                      balance={balance}
+                      balance={assertDefined(balance)}
                       daoAddress={dao.address}
                       staked={walletStaked}
                       symbol={tokenSymbol}
@@ -167,9 +174,9 @@ export const TokenStakingConnectedView = () => {
                     />
                   )}
                 />
-              </Container>
+              </HStack>
             </VStack>
-          </Container>
+          </VStack>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <TokenDaoTotalSupplyPanel />
             <TokenDaoTotalStakedPanel />
@@ -186,7 +193,7 @@ export const TokenStakingConnectedView = () => {
             footnote={
               <VStack alignItems="stretch" fullWidth gap={40}>
                 <div />
-                <Container className={styles.actions} direction="row">
+                <HStack className={styles.actions} alignItems="center">
                   <Button
                     kind="secondary"
                     isDisabled={isClaimDisabled && 'No tokens to claim'}
@@ -197,7 +204,7 @@ export const TokenStakingConnectedView = () => {
                   >
                     Claim all
                   </Button>
-                </Container>
+                </HStack>
               </VStack>
             }
           />
@@ -205,7 +212,7 @@ export const TokenStakingConnectedView = () => {
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NumericPanel
               title="Your wallet"
-              value={fromChainAmount(Big(balance).toNumber(), tokenDecimals)}
+              value={fromChainAmount(balance || '0', tokenDecimals)}
               suffix={tokenSymbol}
             />
             <NumericPanel

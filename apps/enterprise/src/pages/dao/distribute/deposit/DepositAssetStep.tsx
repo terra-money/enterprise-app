@@ -7,12 +7,12 @@ import { Button } from 'lib/ui/buttons/Button';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
-import { useTokenBalanceQuery } from 'queries';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Token } from 'types';
 import * as z from 'zod';
 import Big from 'big.js';
+import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
 
 interface DepositAssetStepProps {
   token: Token;
@@ -26,7 +26,13 @@ interface DepositFormSchema {
 
 export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepProps) => {
   const walletAddress = useAssertMyAddress();
-  const { data: balance } = useTokenBalanceQuery(walletAddress, token);
+  const { data: balance } = useAssetBalanceQury({
+    address: walletAddress,
+    asset: {
+      type: token.type === 'cw20' ? 'cw20' : 'native',
+      id: token.key,
+    },
+  });
 
   const dao = useCurrentDao();
 
@@ -75,11 +81,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             ref={ref}
             suggestion={
               balance ? (
-                <AmountSuggestion
-                  name="Max"
-                  value={fromChainAmount(balance.toNumber(), token.decimals)}
-                  onSelect={onChange}
-                />
+                <AmountSuggestion name="Max" value={fromChainAmount(balance, token.decimals)} onSelect={onChange} />
               ) : undefined
             }
             unit={token.name}

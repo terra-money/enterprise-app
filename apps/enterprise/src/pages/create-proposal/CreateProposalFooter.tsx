@@ -3,7 +3,7 @@ import { FormFooter } from 'components/form-footer';
 import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
 
-import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
+import { useCW20TokenInfoQuery } from 'queries';
 import { Stack } from 'lib/ui/Stack';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
@@ -13,11 +13,12 @@ import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { Line } from 'lib/ui/Line';
 import { Spinner } from 'lib/ui/Spinner';
 import { Button } from 'lib/ui/buttons/Button';
+import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
 
 interface DepositOverviewProps {
   minimumDeposit: Big;
   tokenAddress: string;
-  balance: Big;
+  balance: string;
   isBalanceLoading: boolean;
 }
 
@@ -62,7 +63,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
               </Text>
               <Text
                 style={{
-                  color: balance.gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
+                  color: Big(balance).gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
                 }}
                 variant="heading4"
               >
@@ -95,11 +96,15 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
 
   const myAddress = useAssertMyAddress();
 
-  const { data: balance = Big(0) as Big, isLoading: isBalanceLoading } = useCW20BalanceQuery(myAddress, tokenAddress, {
-    enabled: isDepositRequired,
+  const { data: balance = '0', isLoading: isBalanceLoading } = useAssetBalanceQury({
+    address: myAddress,
+    asset: {
+      type: 'cw20',
+      id: tokenAddress,
+    },
   });
 
-  const isSubmitDisabled = disabled || (isDepositRequired && balance.lt(minimumDeposit));
+  const isSubmitDisabled = disabled || (isDepositRequired && (!balance || Big(balance).lt(minimumDeposit)));
 
   return (
     <Stack className={styles.root} direction="column">

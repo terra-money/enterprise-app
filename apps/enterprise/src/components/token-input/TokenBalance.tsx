@@ -7,7 +7,7 @@ import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 interface TokenBalanceProps {
   className: string;
-  balance: Big;
+  balance: string;
   decimals: number;
 }
 
@@ -15,7 +15,7 @@ export const TokenBalance = (props: TokenBalanceProps) => {
   const { className, balance, decimals } = props;
 
   const formattedAmount =
-    balance === undefined || balance.lte(0)
+    balance === undefined || Big(balance).lte(0)
       ? ''
       : formatAmount(fromChainAmount(Big(balance).toNumber(), decimals), {
           decimals: 4,

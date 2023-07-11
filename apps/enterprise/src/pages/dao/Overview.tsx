@@ -5,7 +5,6 @@ import { TokenDaoTotalSupplyPanel } from './TokenDaoTotalSupplyPanel';
 import { NftDaoTotalSupplyPanel } from './NftDaoTotalSupplyPanel';
 import { NftDaoTotalStakedPanel } from './NftDaoTotalStakedPanel';
 import { TokenDaoTotalStakedPanel } from './TokenDaoTotalStakedPanel';
-import { TokenDaoPricePanel } from './TokenDaoPricePanel';
 import { VStack } from 'lib/ui/Stack';
 import { MultisigDaoMembersPanel } from './MultisigDaoMembersPanel';
 import { DaoCouncilOverview } from './DaoCouncilOverview';
@@ -36,7 +35,6 @@ export const Overview = () => {
                 <>
                   <TokenDaoTotalSupplyPanel />
                   <TokenDaoTotalStakedPanel />
-                  <TokenDaoPricePanel />
                 </>
               )}
               nft={() => (

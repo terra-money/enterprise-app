@@ -16,7 +16,7 @@ interface StakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
   daoAddress: string;
   tokenAddress: string;
-  balance: Big;
+  balance: string;
   staked: Big;
   symbol: string;
   decimals: number;

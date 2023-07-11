@@ -1,5 +1,4 @@
 import { VStack } from 'lib/ui/Stack';
-import { useNativeBalanceQuery } from 'queries/useNativeBalanceQuery';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { LabeledValue } from 'lib/ui/LabeledValue';
 import { QueryDependant } from 'lib/query/components/QueryDependant';
@@ -8,11 +7,18 @@ import { Address } from '../Address';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { lunaInfo } from 'chain/utils/getAssetsInfo';
+import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
 
 export const ConnectedWalletSummary = () => {
   const address = useAssertMyAddress();
 
-  const { data, status } = useNativeBalanceQuery();
+  const { data, status } = useAssetBalanceQury({
+    address,
+    asset: {
+      id: 'uluna',
+      type: 'native',
+    },
+  });
 
   return (
     <VStack gap={8}>

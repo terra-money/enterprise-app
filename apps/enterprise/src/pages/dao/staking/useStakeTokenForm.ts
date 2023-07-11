@@ -1,7 +1,7 @@
-import { useForm } from '@terra-money/apps/hooks';
 import { toChainAmount } from 'chain/utils/toChainAmount';
 
 import Big from 'big.js';
+import { useForm } from 'lib/shared/hooks/useForm';
 
 interface StakeTokenFormInput {
   amount?: number;
@@ -17,7 +17,7 @@ const initialState: StakeTokenFormState = {
 };
 
 interface UseStakeTokenFormOptions {
-  balance: Big;
+  balance: string;
   decimals: number;
 }
 

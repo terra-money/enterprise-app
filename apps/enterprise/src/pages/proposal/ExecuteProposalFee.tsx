@@ -21,7 +21,7 @@ export const ExecuteProposalFee = () => {
   return (
     <Text color="supporting" as="div" size={14}>
       <HStack alignItems="center" gap={4}>
-        <Text>Fee:</Text> {isLoading ? <Spinner size={14} /> : <Text>~{formatAmount(data)} LUNA</Text>}
+        <Text>Fee:</Text> {isLoading ? <Spinner /> : <Text>~{formatAmount(data)} LUNA</Text>}
       </HStack>
     </Text>
   );

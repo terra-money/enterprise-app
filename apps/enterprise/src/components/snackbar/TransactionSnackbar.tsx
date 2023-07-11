@@ -69,7 +69,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
             value={variant}
             completed={() => <CheckIcon />}
             failed={() => <AlertCircleIcon />}
-            pending={() => <Spinner size={20} />}
+            pending={() => <Spinner />}
           />
         </Text>
         <VStack gap={4}>
