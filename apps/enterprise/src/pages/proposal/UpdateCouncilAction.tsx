@@ -1,4 +1,3 @@
-import { Panel } from 'components/panel';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
@@ -9,6 +8,7 @@ import * as councilConfigView from './helpers/councilConfigView';
 import { ProposalActionDiff } from './ProposalActionDiff';
 import { TitledCard } from 'components/titled-card';
 import { Address } from 'chain/components/Address';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 export const UpdateCouncilAction = () => {
   const { dao } = useCurrentProposal();

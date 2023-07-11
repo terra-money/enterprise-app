@@ -3,7 +3,7 @@ import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
-import { NumericPanel } from 'components/numeric-panel';
+import { FriendlyFormatter, NumericPanel } from 'components/numeric-panel';
 import {
   useCW20BalanceQuery,
   useCW20TokenInfoQuery,
@@ -13,7 +13,6 @@ import {
 } from 'queries';
 import { UnstakeTokenOverlay } from './UnstakeTokenOverlay';
 import { useClaimTx } from 'tx';
-import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { usePendingClaims } from 'hooks';
 import { PendingClaims } from './PendingClaims';
@@ -28,6 +27,7 @@ import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { Text } from 'lib/ui/Text';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -108,19 +108,17 @@ export const TokenStakingConnectedView = () => {
             <VStack gap={40}>
               <Container className={styles.header}>
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text variant="label" className={styles.title}>
-                  Voting power
-                </Text>
-                <NumericPanel
-                  className={styles.stakedVotingPanel}
-                  value={fromChainAmount(walletStaked.toString(), tokenDecimals)}
-                  decimals={2}
-                  suffix={
+                <Text className={styles.title}>Voting power</Text>
+                <Text size={20} weight="bold">
+                  <AnimateNumber format={(v) => FriendlyFormatter(v, 2)}>
+                    {fromChainAmount(walletStaked.toString(), tokenDecimals)}
+                  </AnimateNumber>{' '}
+                  <Text as="span" color="shy">
                     <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
                       {walletVotingPower.mul(100)}
                     </AnimateNumber>
-                  }
-                />
+                  </Text>
+                </Text>
               </Container>
               <Container className={styles.actions} direction="row">
                 <OverlayOpener

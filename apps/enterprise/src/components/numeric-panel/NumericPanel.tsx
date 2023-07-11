@@ -1,20 +1,21 @@
-import { AnimateNumber, Container, Formatter } from '@terra-money/apps/components';
-import { Text } from 'components/primitives';
-import { Panel, PanelProps } from 'components/panel';
+import { AnimateNumber, Formatter } from '@terra-money/apps/components';
 import Big, { BigSource } from 'big.js';
 import { ReactNode } from 'react';
-import styles from './NumericPanel.module.sass';
 import { Spinner } from 'lib/ui/Spinner';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { VStack } from 'lib/ui/Stack';
+import { Text } from 'lib/ui/Text';
 
-interface NumericPanelProps extends PanelProps {
-  title?: string;
+interface NumericPanelProps {
+  title: string;
   value?: BigSource;
   formatter?: Formatter<BigSource>;
   decimals?: number;
   footnote?: ReactNode;
   suffix?: ReactNode;
   isLoading?: boolean;
+  className?: string;
 }
 
 export const FriendlyFormatter = (amount: BigSource, decimals: number): string => {
@@ -29,7 +30,6 @@ export const FriendlyFormatter = (amount: BigSource, decimals: number): string =
 
 export const NumericPanel = (props: NumericPanelProps) => {
   const {
-    className,
     title,
     value,
     suffix,
@@ -40,24 +40,28 @@ export const NumericPanel = (props: NumericPanelProps) => {
   } = props;
 
   return (
-    <Panel className={className} title={title}>
-      {isLoading ? (
-        <Container className={styles.content}>
+    <Panel>
+      <VStack gap={8}>
+        <Text>{title}</Text>
+
+        {isLoading ? (
           <Spinner />
-        </Container>
-      ) : (
-        <>
-          <Container className={styles.content}>
+        ) : (
+          <>
             {value !== undefined && (
-              <Text variant="heading3">
-                <AnimateNumber format={formatter}>{value}</AnimateNumber>
-                {suffix && <sub>{suffix}</sub>}
+              <Text size={20} weight="bold">
+                <AnimateNumber format={formatter}>{value}</AnimateNumber>{' '}
+                {suffix && (
+                  <Text as="span" color="shy">
+                    {suffix}
+                  </Text>
+                )}
               </Text>
             )}
-          </Container>
-          {footnote && <Text variant="label">{footnote}</Text>}
-        </>
-      )}
+            {footnote && <Text>{footnote}</Text>}
+          </>
+        )}
+      </VStack>
     </Panel>
   );
 };

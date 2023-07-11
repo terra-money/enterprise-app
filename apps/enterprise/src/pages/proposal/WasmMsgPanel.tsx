@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Stack } from 'lib/ui/Stack';
-import { Panel } from 'components/panel';
 import { Text } from 'components/primitives';
 import { useClipboardCopy } from 'hooks';
 import styles from './WasmMsgPanel.module.sass';
@@ -10,6 +9,7 @@ import { ErrorBoundary } from 'errors/components/ErrorBoundary';
 import { CosmWasmMsg } from 'chain/CosmWasm';
 import { fromBase64 } from 'chain/utils/fromBase64';
 import { Button } from 'lib/ui/buttons/Button';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 export type WasmMsgPanelProps = {
   msg: string;
