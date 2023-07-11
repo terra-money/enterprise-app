@@ -1,2 +1,2 @@
 export const getFinderUrl = (network: string, txHash: string) =>
-  `https://finder.terra.money/${network}/tx/${txHash}`;
+  `https://terrasco.pe/${network}/tx/${txHash}`;
