@@ -4,24 +4,39 @@ import { Header } from './Header';
 import { Outlet } from 'react-router';
 import { useDAOQuery } from 'queries/useDAOQuery';
 
-import { LoadingPage } from 'pages/shared/LoadingPage';
 import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { MobileDaoHeader } from './MobileDaoHeader';
 import { useCurrentDaoAddress } from 'dao/navigation';
+import { QueryDependant } from 'lib/query/components/QueryDependant';
+import { Center } from 'lib/ui/Center';
+import { Spinner } from 'lib/ui/Spinner';
+import { Text } from 'lib/ui/Text';
 
 export const DAOPageContent = () => {
   const address = useCurrentDaoAddress();
 
-  const { data: dao, isLoading } = useDAOQuery(address);
+  const { data: dao, status } = useDAOQuery(address);
 
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <LoadingPage isLoading={isLoading}>
-      {dao && (
+    <QueryDependant
+      data={dao}
+      status={status}
+      loading={() => (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
+      error={() => (
+        <Center>
+          <Text>Failed to load DAO {address}</Text>
+        </Center>
+      )}
+      success={(dao) => (
         <CurrentDaoProvider value={dao}>
           <ResponsiveView
             small={() => (
@@ -47,6 +62,6 @@ export const DAOPageContent = () => {
           />
         </CurrentDaoProvider>
       )}
-    </LoadingPage>
+    />
   );
 };

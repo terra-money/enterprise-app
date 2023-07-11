@@ -10,7 +10,6 @@ import { proposalTitle, ProposalType } from 'dao/shared/proposal';
 import { SpendTreasuryProposalPage } from './spend/SpendTreasuryProposalPage';
 import { UpdateWhitelistedAssetsProposalPage } from './whitelisted-assets/UpdateWhitelistedAssetsProposalPage';
 import { UpdateWhitelistedNFTsProposalPage } from './whitelisted-nfts/UpdateWhitelistedNFTsProposalPage';
-import { LoadingPage } from 'pages/shared/LoadingPage';
 import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { TextProposalForm } from './text/TextProposalForm';
 import { UpgradeProposalForm } from './upgrade/UpgradeProposalForm';
@@ -21,7 +20,6 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { Header } from './Header';
-import { CreateProposalProvider } from './CreateProposalProvider';
 import { MetadataProposalForm } from './metadata/MetadataProposalForm';
 import { UndelegateProposalForm } from './undelegate/UndelegateProposalForm';
 import { RedelegateProposalForm } from './redelegate/RedelegateProposalForm';
@@ -30,6 +28,11 @@ import { enterprise } from 'types/contracts';
 import { MinimumWeightForRewardsProposalPage } from './minWeight/MinimumWeightForRewardsProposalPage';
 import { Match } from 'lib/ui/Match';
 import { ConnectWalletPrompt } from 'chain/components/ConnectWalletPrompt';
+import { QueryDependant } from 'lib/query/components/QueryDependant';
+import { Center } from 'lib/ui/Center';
+import { Spinner } from 'lib/ui/Spinner';
+import { Text } from 'lib/ui/Text';
+import { CreateProposalProvider } from './CreateProposalProvider';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -57,16 +60,28 @@ export const CreateProposalPageContent = () => {
 
   const proposalVotingType = (searchParams.get('votingType') || 'general') as enterprise.ProposalType;
 
-  const { data: dao, isLoading } = useDAOQuery(address);
+  const { data, status } = useDAOQuery(address);
 
   return (
-    <CreateProposalProvider value={{ proposalVotingType }}>
-      <LoadingPage isLoading={isLoading}>
-        <ConditionalWallet
-          notConnected={() => <ConnectWalletPrompt />}
-          connected={() => (
-            <Container>
-              {dao ? (
+    <QueryDependant
+      status={status}
+      data={data}
+      loading={() => (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
+      error={() => (
+        <Center>
+          <Text>Failed to load DAO {address}</Text>
+        </Center>
+      )}
+      success={(dao) => (
+        <CreateProposalProvider value={{ proposalVotingType }}>
+          <ConditionalWallet
+            notConnected={() => <ConnectWalletPrompt />}
+            connected={() => (
+              <Container>
                 <CurrentDaoProvider value={dao}>
                   <Header title={proposalTitle[type]} />
                   <Match
@@ -90,11 +105,11 @@ export const CreateProposalPageContent = () => {
                     minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
                   />
                 </CurrentDaoProvider>
-              ) : null}
-            </Container>
-          )}
-        />
-      </LoadingPage>
-    </CreateProposalProvider>
+              </Container>
+            )}
+          />
+        </CreateProposalProvider>
+      )}
+    />
   );
 };
