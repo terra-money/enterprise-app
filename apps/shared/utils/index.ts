@@ -1,6 +1,6 @@
 export * from './sleep';
 export * from './pluralize';
-export * from './getContractAddress';
+export * from '../../enterprise/src/chain/utils/getContractAddress';
 export * from './getFinderUrl';
 export * from './validateAddress';
 export * from './validateUrl';

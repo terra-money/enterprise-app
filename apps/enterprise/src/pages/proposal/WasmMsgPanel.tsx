@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Stack } from 'lib/ui/Stack';
 import { Text } from 'components/primitives';
-import { useClipboardCopy } from 'hooks';
 import styles from './WasmMsgPanel.module.sass';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { WasmMsgSummary } from './WasmMsgSummary/WasmMsgSummary';
@@ -10,6 +9,7 @@ import { CosmWasmMsg } from 'chain/CosmWasm';
 import { fromBase64 } from 'chain/utils/fromBase64';
 import { Button } from 'lib/ui/buttons/Button';
 import { Panel } from 'lib/ui/Panel/Panel';
+import { CopyButton } from 'lib/ui/buttons/CopyButton';
 
 export type WasmMsgPanelProps = {
   msg: string;
@@ -34,7 +34,6 @@ const formatMsg = (value: string, showDecoded: boolean) => {
 };
 
 export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
-  const copy = useClipboardCopy();
   const [showDecoded, setShowDecoded] = useState(false);
 
   const toggleDecoded = () => {
@@ -49,13 +48,8 @@ export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
       <Panel className={styles.root}>
         <Stack className={styles.top} direction="row">
           <Text variant="label">Wasm message</Text>
-          <HStack>
-            <Button
-              kind="secondary"
-              onClick={() => copy({ value: JSON.stringify(msg, null, 2), message: 'Message copied to clipboard' })}
-            >
-              Copy
-            </Button>
+          <HStack alignItems="center" gap={16}>
+            <CopyButton kind="secondary" content={JSON.stringify(msg, null, 2)} />
             <Button kind="secondary" onClick={toggleDecoded} className={styles.showDecoded}>
               {showDecoded ? 'Show Base64' : 'Show Decoded'}
             </Button>

@@ -1,4 +1,4 @@
-import contracts from '../../../refs.json';
+import contracts from 'chain/refs.json';
 
 type NetworkName = 'mainnet' | 'testnet' | 'localterra';
 
@@ -8,19 +8,8 @@ interface ContractDefinition {
 }
 
 export interface ContractAddresses {
-  'fountain-streams': ContractDefinition;
-  'story-manager': ContractDefinition;
-  'story-root-dao': ContractDefinition;
-  'story-protocol-token': ContractDefinition;
-  'prediction-markets': ContractDefinition;
   'enterprise-factory': ContractDefinition;
   enterprise: ContractDefinition;
-  'proxy-wallet-core': ContractDefinition;
-  'improv-hub': ContractDefinition;
-  'warp-keeper': ContractDefinition;
-  'warp-controller': ContractDefinition;
-  'warp-account': ContractDefinition;
-  'warp-token': ContractDefinition;
 }
 
 export const CONTRACT_ADDRESSES = contracts as unknown as Record<Partial<NetworkName>, Partial<ContractAddresses>>;

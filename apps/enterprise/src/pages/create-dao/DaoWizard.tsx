@@ -14,7 +14,6 @@ import { InitialBalancesStep } from './token/InitialBalancesStep';
 import { TokenInfoStep } from './token/TokenInfoStep';
 import { WizardLayout } from './WizardLayout';
 import { CouncilStep } from './shared/CouncilStep';
-import { useRefCallback } from '@terra-money/apps/hooks';
 import { CompletedTransaction, useTransactionSubscribers } from 'chain/transactions';
 import { reportError } from 'errors/errorMonitoring';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
@@ -23,6 +22,7 @@ import { useState } from 'react';
 import { WhitelistStep } from './WhitelistStep';
 import { Match } from 'lib/ui/Match';
 import { getLast } from 'lib/shared/utils/getlast';
+import { useRefCallback } from 'chain/transactions/utils/useRefCallback';
 
 export const DaoWizard = () => {
   const navigate = useNavigate();

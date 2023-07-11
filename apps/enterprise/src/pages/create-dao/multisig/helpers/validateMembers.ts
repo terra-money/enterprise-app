@@ -1,5 +1,5 @@
-import { FormState } from '@terra-money/apps/hooks';
-import { validateAddress } from '@terra-money/apps/utils';
+import { validateAddress } from 'chain/utils/validators';
+import { FormState } from 'lib/shared/hooks/useForm';
 import { MultisigMember } from 'types/MultisigMember';
 
 export const validateMembers = (members: MultisigMember[]): FormState<MultisigMember>[] => {

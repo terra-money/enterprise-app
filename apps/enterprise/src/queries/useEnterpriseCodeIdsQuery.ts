@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { enterprise_factory } from 'types/contracts';
-import { useContractAddress } from '@terra-money/apps/hooks';
 import { useLCDClient } from '@terra-money/wallet-provider';
+import { useContractAddress } from 'chain/hooks/useContractAddress';
 
 export const useEnterpriseCodeIdsQuery = () => {
   const lcd = useLCDClient();

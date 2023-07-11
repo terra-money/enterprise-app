@@ -1,9 +1,9 @@
-import { validateAddress } from '@terra-money/apps/utils';
 import { Text } from 'components/primitives';
 import { useEffect, useState } from 'react';
 import styles from './TerraAddressInput.module.sass';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Spinner } from 'lib/ui/Spinner';
+import { validateAddress } from 'chain/utils/validators';
 
 interface TerraAddressInputProps {
   value: string | undefined;

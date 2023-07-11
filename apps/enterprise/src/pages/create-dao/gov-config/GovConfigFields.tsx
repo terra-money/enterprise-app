@@ -1,4 +1,3 @@
-import { FormState } from '@terra-money/apps/hooks';
 import { ThresholdInput } from 'pages/create-dao/gov-config/ThresholdInput';
 import { QuorumInput } from 'pages/create-dao/gov-config/QuorumInput';
 import { UnlockingPeriodInput } from 'pages/create-dao/gov-config/UnlockingPeriodInput';
@@ -12,6 +11,7 @@ import { HStack } from 'lib/ui/Stack';
 import { Tooltip } from 'lib/ui/Tooltip';
 import { Text } from 'lib/ui/Text';
 import { HelpCircleIcon } from 'lib/ui/icons/HelpCircleIcon';
+import { FormState } from 'lib/shared/hooks/useForm';
 
 interface ConfigProposalFormProps {
   onChange: (params: Partial<DaoGovConfigInput>) => void;

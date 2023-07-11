@@ -1,7 +1,7 @@
-import { useForm } from '@terra-money/apps/hooks';
 import { toChainAmount } from 'chain/utils/toChainAmount';
 import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
+import { useForm } from 'lib/shared/hooks/useForm';
 
 interface UnstakeTokenFormInput {
   amount?: number;

@@ -1,9 +1,10 @@
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
-import { pluralize, toPercents } from '@terra-money/apps/utils';
 import { secondsInDay } from 'date-fns';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { pluralize } from 'lib/shared/utils/pluralize';
 
 export interface GovConfigView extends Record<string, string | undefined> {
   quorum: string;
@@ -29,7 +30,7 @@ const noValue = 'null';
 
 const toDays = (seconds: number) => {
   const days = Math.round(Number(seconds) / secondsInDay);
-  return `${days} ${pluralize('day', days)}`;
+  return pluralize(days, 'day');
 };
 
 const formatDuration = (value: enterprise.Duration | null | undefined) => {
@@ -41,7 +42,7 @@ const formatDuration = (value: enterprise.Duration | null | undefined) => {
     return toDays(value.time);
   }
 
-  return `${value.height} ${pluralize('block', value.height)}`;
+  return pluralize(value.height, 'block');
 };
 
 const formatBoolean = (value: boolean | null | undefined) => (value ? 'Yes' : 'No');

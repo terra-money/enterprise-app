@@ -1,8 +1,8 @@
-import { UIElementProps } from '@terra-money/apps/components';
 import { Text } from 'components/primitives';
 import styles from './TitledCard.module.sass';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
 
-interface Props extends UIElementProps {
+interface Props extends ComponentWithChildrenProps {
   title: string;
 }
 

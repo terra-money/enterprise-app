@@ -5,9 +5,9 @@ import { AddTokenButton } from './shared/AddTokenButton';
 import { toWhitelistedAsset } from './helpers/toWhitelistedAsset';
 import { hasAsset } from 'pages/create-proposal/whitelisted-assets/helpers/areSameAssets';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
-import { removeByIndex } from '@terra-money/apps/utils';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 import { fromAsset, toAsset } from 'dao/utils/whitelist';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 
 export const WhitelistStep = () => {
   const {
@@ -26,7 +26,7 @@ export const WhitelistStep = () => {
             <WhitelistedAsset
               asset={asset}
               key={index}
-              onRemove={() => formInput({ whitelistedAssets: removeByIndex(whitelistedAssets, index) })}
+              onRemove={() => formInput({ whitelistedAssets: removeAtIndex(whitelistedAssets, index) })}
             />
           ))}
         </HStack>

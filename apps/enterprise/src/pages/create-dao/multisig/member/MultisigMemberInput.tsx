@@ -1,6 +1,5 @@
 import { Stack } from 'lib/ui/Stack';
 import styles from './MultisigMemberInput.module.sass';
-import { FormState } from '@terra-money/apps/hooks';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { DeleteIconButton } from 'components/delete-icon-button';
@@ -9,6 +8,7 @@ import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import styled from 'styled-components';
 import { Slider } from 'lib/ui/inputs/Slider';
+import { FormState } from 'lib/shared/hooks/useForm';
 
 interface MultisigMemberInputProps extends FormState<MultisigMember> {
   onChange: (member: Partial<MultisigMember>) => void;

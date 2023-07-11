@@ -5,10 +5,10 @@ import { Panel } from 'lib/ui/Panel/Panel';
 import { ProposalVotingAction } from './ProposalVotingAction';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
-import { getFinderUrl } from '@terra-money/apps/utils';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { Text } from 'lib/ui/Text';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
+import { getFinderUrl } from 'chain/utils/getFinderUrl';
 
 export const ProposalVoting = () => {
   const { executionTxHash } = useCurrentProposal();

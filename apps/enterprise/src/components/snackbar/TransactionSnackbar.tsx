@@ -3,7 +3,6 @@ import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
 import { UserDenied } from '@terra-money/wallet-provider';
 import { useMemo } from 'react';
-import { getFinderUrl } from '@terra-money/apps/utils';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
@@ -17,6 +16,7 @@ import { CheckIcon } from 'lib/ui/icons/CheckIcon';
 import { AlertCircleIcon } from 'lib/ui/icons/AlertCircleIcon';
 import { Spinner } from 'lib/ui/Spinner';
 import { Match } from 'lib/ui/Match';
+import { getFinderUrl } from 'chain/utils/getFinderUrl';
 
 type Variant = 'pending' | 'completed' | 'failed';
 

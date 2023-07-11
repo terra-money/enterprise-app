@@ -2,10 +2,10 @@ import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import styles from './MembersStep.module.sass';
 import { MultisigMemberInput } from './member/MultisigMemberInput';
-import { isFormStateValid } from '@terra-money/apps/utils';
 import { EMPTY_MEMBER, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { AddButton } from 'components/add-button';
 import { MultisigMember } from 'types/MultisigMember';
+import { isFormStateValid } from 'lib/shared/hooks/useForm';
 
 const updateMember = (members: MultisigMember[], index: number, params: Partial<MultisigMember>): MultisigMember[] => {
   return members.map((member, i) => {

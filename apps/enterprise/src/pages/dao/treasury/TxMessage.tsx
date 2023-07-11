@@ -1,4 +1,3 @@
-import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import { AccAddress, Coin, Coins } from '@terra-money/feather.js';
 import { isDenom } from '@terra.kitchen/utils';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
@@ -9,6 +8,7 @@ import { ReactNode } from 'react';
 import { TxAsset } from './TxAsset';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { truncateAddress } from 'chain/utils/truncateAddress';
+import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 
 interface TxMessageProps {
   text: string;

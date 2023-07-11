@@ -1,4 +1,4 @@
-import { FormState } from '@terra-money/apps/hooks';
+import { FormState } from 'lib/shared/hooks/useForm';
 import { DaoGovConfigInput } from '../DaoGovConfigInput';
 
 export const validateUnlockingPeriod = (unlockingPeriod: number, voteDuration: number) => {

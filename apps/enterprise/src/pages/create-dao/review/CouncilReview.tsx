@@ -1,10 +1,10 @@
 import { VStack } from 'lib/ui/Stack';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
 import { Text } from 'lib/ui/Text';
-import { toPercents } from '@terra-money/apps/utils';
 import { Address } from 'chain/components/Address';
 import { councilProposalActionTypeName, CouncilProposalActionType } from '../shared/ProposalTypesInput';
 import { LabeledValue } from 'lib/ui/LabeledValue';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
 export const CouncilReview = () => {
   const {

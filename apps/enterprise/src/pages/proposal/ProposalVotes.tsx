@@ -1,7 +1,5 @@
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { useFetchEveryPage, usePaginatedResultItems } from '@terra-money/apps/queries';
 import { u } from '@terra-money/apps/types';
-import { capitalizeFirstLetter } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import { Text } from 'components/primitives';
 import { toPercents } from 'lib/shared/utils/toPercents';
@@ -16,6 +14,9 @@ import styled from 'styled-components';
 import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
 import { Address } from 'chain/components/Address';
+import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
+import { usePaginatedResultItems } from 'lib/query/hooks/usePaginatedResultItems';
+import { useFetchEveryPage } from 'lib/query/hooks/useFetchEveryPage';
 
 const Content = styled.div`
   display: grid;

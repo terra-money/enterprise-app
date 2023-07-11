@@ -1,4 +1,3 @@
-import { removeByIndex, updateAtIndex, validateAddress } from '@terra-money/apps/utils';
 import { AddButton } from 'components/add-button';
 import { FormSection } from 'components/form-section';
 import { fetchCW721ContractInfo } from 'queries';
@@ -9,6 +8,9 @@ import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
 import { WhitelistedNFTInput } from './WhitelistedNFTInput';
 import styles from './WhitelistedNFTsProposalForm.module.sass';
 import { useLCDClient } from '@terra-money/wallet-provider';
+import { validateAddress } from 'chain/utils/validators';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 
 interface NFTInputState {
   value: string;
@@ -35,7 +37,7 @@ export const WhitelistedNFTsProposalForm = () => {
     const inputState: NFTInputState = { value };
     inputState.error = validateAddress(value);
 
-    const otherNFTs = removeByIndex(nfts, index);
+    const otherNFTs = removeAtIndex(nfts, index);
     if (otherNFTs.some((nft) => nft.value === value)) {
       inputState.error = 'NFT collection already added';
     }
@@ -48,7 +50,7 @@ export const WhitelistedNFTsProposalForm = () => {
           setNfts((nfts) => {
             const nft = nfts[index];
             if (nft.value === value) {
-              return updateAtIndex(nfts, index, { ...nft, loading: false });
+              return updateAtIndex(nfts, index, (value) => ({ ...value, loading: false }));
             }
 
             return nfts;
@@ -58,7 +60,11 @@ export const WhitelistedNFTsProposalForm = () => {
           setNfts((nfts) => {
             const nft = nfts[index];
             if (nft.value === value) {
-              return updateAtIndex(nfts, index, { ...nft, loading: false, error: 'NFT collection does not exist' });
+              return updateAtIndex(nfts, index, (value) => ({
+                ...value,
+                loading: false,
+                error: 'NFT collection does not exist',
+              }));
             }
 
             return nfts;
@@ -66,7 +72,7 @@ export const WhitelistedNFTsProposalForm = () => {
         });
     }
 
-    setNfts(updateAtIndex(nfts, index, inputState));
+    setNfts(updateAtIndex(nfts, index, () => inputState));
   };
 
   return (
@@ -80,7 +86,7 @@ export const WhitelistedNFTsProposalForm = () => {
                 key={index}
                 error={error}
                 loading={loading}
-                onRemove={() => setNfts(removeByIndex(nfts, index))}
+                onRemove={() => setNfts(removeAtIndex(nfts, index))}
                 onChange={(value) => handleNFTChange(index, value)}
               />
             ))}

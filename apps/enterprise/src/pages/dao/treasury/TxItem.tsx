@@ -1,5 +1,3 @@
-import { assertDefined, getFinderUrl, getLast } from '@terra-money/apps/utils';
-import { TxEvent, TxResponse } from '@terra-money/apps/types';
 import { Stack } from 'lib/ui/Stack';
 import { ExpandablePanel } from 'lib/ui/Panel/ExpandablePanel';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
@@ -16,6 +14,10 @@ import { TxMessage } from './TxMessage';
 import { useCurrentDaoAddress } from 'dao/navigation';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { truncateAddress } from 'chain/utils/truncateAddress';
+import { TxEvent, TxResponse } from 'chain/transactions/types';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { getLast } from 'lib/shared/utils/getlast';
+import { getFinderUrl } from 'chain/utils/getFinderUrl';
 
 interface TxItemProps {
   tx: TxResponse;

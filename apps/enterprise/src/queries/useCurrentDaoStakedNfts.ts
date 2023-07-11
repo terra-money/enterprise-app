@@ -1,11 +1,11 @@
-import { useCurrentDao } from "dao/components/CurrentDaoProvider";
-import { useQuery } from "react-query";
-import { QUERY_KEY } from "./queryKey";
-import { booleanMatch } from "lib/shared/utils/match";
-import { fetchAll } from "lib/shared/utils/fetchAll";
-import { useContract } from "chain/hooks/useContract";
-import { enterprise } from "types/contracts";
-import { getLast } from "@terra-money/apps/utils";
+import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { useQuery } from 'react-query';
+import { QUERY_KEY } from './queryKey';
+import { booleanMatch } from 'lib/shared/utils/match';
+import { fetchAll } from 'lib/shared/utils/fetchAll';
+import { useContract } from 'chain/hooks/useContract';
+import { enterprise } from 'types/contracts';
+import { getLast } from 'lib/shared/utils/getlast';
 
 const limit = 30;
 
@@ -14,7 +14,7 @@ export const useCurrentDaoStakedNfts = () => {
   const { query } = useContract();
 
   return useQuery([QUERY_KEY.STAKED_NFTS, address], async () => {
-    if (dao_type !== 'nft') return []
+    if (dao_type !== 'nft') return [];
 
     const hasPagination = Number(dao_code_version) >= 5;
 
@@ -32,12 +32,12 @@ export const useCurrentDaoStakedNfts = () => {
             return nfts;
           },
           (lastPage) => (lastPage.length < limit ? null : getLast(lastPage))
-        )
+        );
       },
       false: async () => {
         // no staked nfts support for dao versions < 5
-        return []
-      }
-    })
-  })
-}
+        return [];
+      },
+    });
+  });
+};
