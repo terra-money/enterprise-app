@@ -23,3 +23,7 @@ export type ComponentWithClassNameProps = {
 export type OpenerComponentProps = {
   renderOpener: (props: { onClick: () => void }) => React.ReactNode;
 };
+
+export interface TitledComponentProps {
+  title: string;
+}

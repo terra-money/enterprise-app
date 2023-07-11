@@ -1,4 +1,4 @@
-import { AnimateNumber, Formatter } from '@terra-money/apps/components';
+import { Formatter } from '@terra-money/apps/components';
 import Big, { BigSource } from 'big.js';
 import { ReactNode } from 'react';
 import { Spinner } from 'lib/ui/Spinner';
@@ -50,7 +50,7 @@ export const NumericPanel = (props: NumericPanelProps) => {
           <>
             {value !== undefined && (
               <Text size={20} weight="bold">
-                <AnimateNumber format={formatter}>{value}</AnimateNumber>{' '}
+                {formatter(value)}{' '}
                 {suffix && (
                   <Text as="span" color="shy">
                     {suffix}

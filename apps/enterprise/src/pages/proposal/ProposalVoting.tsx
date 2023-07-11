@@ -18,7 +18,7 @@ export const ProposalVoting = () => {
   return (
     <VStack gap={16}>
       <HStack justifyContent="space-between" alignItems="center" gap={8} wrap="wrap">
-        <Text weight="semibold" color="white" size={18}>
+        <Text weight="semibold" color="contrast" size={18}>
           Progress
         </Text>
         <ProposalExpiration />
