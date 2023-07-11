@@ -1,6 +1,5 @@
 import { NumericPanel } from 'components/numeric-panel';
 import { useUnstakeTokenForm } from './useUnstakeTokenForm';
-import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { useUnstakeTokenTx } from 'tx';
 import { ClosableComponentProps } from 'lib/shared/props';
@@ -16,7 +15,7 @@ interface UnstakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
   daoAddress: string;
   tokenAddress: string;
-  staked: u<Big>;
+  staked: Big;
   symbol: string;
   decimals: number;
 }

@@ -1,6 +1,6 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
-import { u } from '@terra-money/apps/types';
+
 import Big from 'big.js';
 import { NumericPanel } from 'components/numeric-panel';
 import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
@@ -24,7 +24,7 @@ import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 
-const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
+const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
 
   const { data: walletVotingPower = Big(0) } = useVotingPowerQuery(daoAddress, walletAddress);

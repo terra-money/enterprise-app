@@ -2,7 +2,7 @@ import Big from 'big.js';
 import { FormFooter } from 'components/form-footer';
 import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
-import { u } from '@terra-money/apps/types';
+
 import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
 import { Stack } from 'lib/ui/Stack';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
@@ -17,7 +17,7 @@ import { Button } from 'lib/ui/buttons/Button';
 interface DepositOverviewProps {
   minimumDeposit: Big;
   tokenAddress: string;
-  balance: u<Big>;
+  balance: Big;
   isBalanceLoading: boolean;
 }
 
@@ -95,13 +95,9 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
 
   const myAddress = useAssertMyAddress();
 
-  const { data: balance = Big(0) as u<Big>, isLoading: isBalanceLoading } = useCW20BalanceQuery(
-    myAddress,
-    tokenAddress,
-    {
-      enabled: isDepositRequired,
-    }
-  );
+  const { data: balance = Big(0) as Big, isLoading: isBalanceLoading } = useCW20BalanceQuery(myAddress, tokenAddress, {
+    enabled: isDepositRequired,
+  });
 
   const isSubmitDisabled = disabled || (isDepositRequired && balance.lt(minimumDeposit));
 

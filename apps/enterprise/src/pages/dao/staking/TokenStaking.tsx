@@ -1,7 +1,7 @@
 import { AnimateNumber, Container } from '@terra-money/apps/components';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
-import { u } from '@terra-money/apps/types';
+
 import Big from 'big.js';
 import { FriendlyFormatter, NumericPanel } from 'components/numeric-panel';
 import {
@@ -32,7 +32,7 @@ import { Text } from 'lib/ui/Text';
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
 
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(daoAddress);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(daoAddress);
 
   const totalSupply = token === undefined ? Big(0) : fromChainAmount(token.total_supply, token.decimals);
 
@@ -51,8 +51,8 @@ const useTokenData = (daoAddress: string, tokenAddress: string) => {
   };
 };
 
-const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
-  const { data: walletStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(daoAddress, walletAddress);
+const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
+  const { data: walletStaked = Big(0) as Big } = useTokenStakingAmountQuery(daoAddress, walletAddress);
 
   const { data: walletVotingPower = Big(0) } = useVotingPowerQuery(daoAddress, walletAddress);
 
@@ -64,8 +64,8 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 
   const claimableAmount =
     releasableClaims.length > 0 && 'cw20' in releasableClaims[0].asset
-      ? (Big(releasableClaims[0].asset.cw20.amount) as u<Big>)
-      : (Big(0) as u<Big>);
+      ? (Big(releasableClaims[0].asset.cw20.amount) as Big)
+      : (Big(0) as Big);
 
   return {
     walletStaked,
@@ -92,7 +92,7 @@ export const TokenStakingConnectedView = () => {
     totalStaked
   );
 
-  const { data: balance = Big(0) as u<Big> } = useCW20BalanceQuery(walletAddress, tokenAddress);
+  const { data: balance = Big(0) as Big } = useCW20BalanceQuery(walletAddress, tokenAddress);
 
   const [claimTxResult, claimTx] = useClaimTx();
 

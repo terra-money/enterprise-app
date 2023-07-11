@@ -1,5 +1,5 @@
 import { toChainAmount } from 'chain/utils/toChainAmount';
-import { u } from '@terra-money/apps/types';
+
 import Big from 'big.js';
 import { useForm } from 'lib/shared/hooks/useForm';
 
@@ -17,7 +17,7 @@ const initialState: UnstakeTokenFormState = {
 };
 
 interface UseUnstakeTokenFormOptions {
-  staked: u<Big>;
+  staked: Big;
   decimals: number;
 }
 

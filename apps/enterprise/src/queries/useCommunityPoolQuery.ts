@@ -1,4 +1,3 @@
-import { u } from '@terra-money/apps/types';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import Big from 'big.js';
 import { useQuery, UseQueryResult } from 'react-query';
@@ -6,7 +5,7 @@ import { QUERY_KEY } from './queryKey';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useChainID } from 'chain/hooks/useChainID';
 
-export const useCommunityPoolQuery = (): UseQueryResult<u<Big> | undefined> => {
+export const useCommunityPoolQuery = (): UseQueryResult<Big | undefined> => {
   const lcd = useLCDClient();
   const ntworkName = useNetworkName();
   const chainID = useChainID();
@@ -18,7 +17,7 @@ export const useCommunityPoolQuery = (): UseQueryResult<u<Big> | undefined> => {
 
       const uLuna = coins.get('uluna');
 
-      return Big(uLuna !== undefined ? uLuna.amount.toString() : '0') as u<Big>;
+      return Big(uLuna !== undefined ? uLuna.amount.toString() : '0') as Big;
     },
     {
       refetchOnMount: false,

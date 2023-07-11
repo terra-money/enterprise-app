@@ -4,7 +4,7 @@ import { useCW20TokenInfoQuery, useTokenStakingAmountQuery } from 'queries';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
-import { u } from '@terra-money/apps/types';
+
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 
 export const TokenDaoTotalStakedPanel = () => {
@@ -12,7 +12,7 @@ export const TokenDaoTotalStakedPanel = () => {
 
   const { data: token } = useCW20TokenInfoQuery(dao_membership_contract);
 
-  const { data: totalStaked = Big(0) as u<Big>, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(address);
+  const { data: totalStaked = Big(0) as Big, isLoading: isLoadingTotalStaked } = useTokenStakingAmountQuery(address);
 
   const totalStakedPercent =
     token === undefined || Big(token.total_supply ?? 0).eq(0)

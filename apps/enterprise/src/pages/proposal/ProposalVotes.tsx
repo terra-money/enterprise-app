@@ -1,5 +1,5 @@
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { u } from '@terra-money/apps/types';
+
 import Big from 'big.js';
 import { Text } from 'components/primitives';
 import { toPercents } from 'lib/shared/utils/toPercents';
@@ -43,7 +43,7 @@ const Content = styled.div`
 export const ProposalVotes = () => {
   const proposal = useCurrentProposal();
   const { totalVotes, status, dao } = useCurrentProposal();
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(dao.address);
 
   const proposalVotesQuery = useProposalVotesQuery({
     proposalId: proposal.id,

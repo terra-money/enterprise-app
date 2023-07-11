@@ -1,4 +1,3 @@
-import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
@@ -8,7 +7,7 @@ import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 interface TokenBalanceProps {
   className: string;
-  balance: u<Big>;
+  balance: Big;
   decimals: number;
 }
 

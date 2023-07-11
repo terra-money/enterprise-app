@@ -1,4 +1,3 @@
-import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
@@ -14,7 +13,7 @@ import { toPercents } from 'lib/shared/utils/toPercents';
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
 
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
     if (type === 'council') return totalVotes;
