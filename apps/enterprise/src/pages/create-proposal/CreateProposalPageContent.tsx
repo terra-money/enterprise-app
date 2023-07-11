@@ -18,7 +18,6 @@ import { ExecuteMessageProposalForm } from './execute/ExecuteMessageProposalForm
 import { MintTokensProposalForm } from './mint/MintTokensProposalForm';
 import { CouncilForm } from './council/CouncilForm';
 import { useSearchParams } from 'react-router-dom';
-import { AnimatedPage } from '@terra-money/apps/components';
 import styled from 'styled-components';
 import { VStack } from 'lib/ui/Stack';
 import { Header } from './Header';
@@ -66,35 +65,33 @@ export const CreateProposalPageContent = () => {
         <ConditionalWallet
           notConnected={() => <ConnectWalletPrompt />}
           connected={() => (
-            <AnimatedPage>
-              <Container>
-                {dao ? (
-                  <CurrentDaoProvider value={dao}>
-                    <Header title={proposalTitle[type]} />
-                    <Match
-                      value={assertDefined(type)}
-                      metadata={() => <MetadataProposalForm />}
-                      council={() => <CouncilForm />}
-                      text={() => <TextProposalForm />}
-                      config={() => <CreateConfigProposalPage />}
-                      upgrade={() => <UpgradeProposalForm />}
-                      assets={() => <UpdateWhitelistedAssetsProposalPage />}
-                      nfts={() => <UpdateWhitelistedNFTsProposalPage />}
-                      execute={() => <ExecuteMessageProposalForm />}
-                      members={() => <MultisigMembersProposalPage />}
-                      mint={() => <MintTokensProposalForm />}
-                      mintNft={() => <MintNftProposalPage />}
-                      spend={() => <SpendTreasuryProposalPage />}
-                      burn={() => <BurnTokensProposalPage />}
-                      delegate={() => <DelegateProposalPage />}
-                      undelegate={() => <UndelegateProposalForm />}
-                      redelegate={() => <RedelegateProposalForm />}
-                      minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
-                    />
-                  </CurrentDaoProvider>
-                ) : null}
-              </Container>
-            </AnimatedPage>
+            <Container>
+              {dao ? (
+                <CurrentDaoProvider value={dao}>
+                  <Header title={proposalTitle[type]} />
+                  <Match
+                    value={assertDefined(type)}
+                    metadata={() => <MetadataProposalForm />}
+                    council={() => <CouncilForm />}
+                    text={() => <TextProposalForm />}
+                    config={() => <CreateConfigProposalPage />}
+                    upgrade={() => <UpgradeProposalForm />}
+                    assets={() => <UpdateWhitelistedAssetsProposalPage />}
+                    nfts={() => <UpdateWhitelistedNFTsProposalPage />}
+                    execute={() => <ExecuteMessageProposalForm />}
+                    members={() => <MultisigMembersProposalPage />}
+                    mint={() => <MintTokensProposalForm />}
+                    mintNft={() => <MintNftProposalPage />}
+                    spend={() => <SpendTreasuryProposalPage />}
+                    burn={() => <BurnTokensProposalPage />}
+                    delegate={() => <DelegateProposalPage />}
+                    undelegate={() => <UndelegateProposalForm />}
+                    redelegate={() => <RedelegateProposalForm />}
+                    minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
+                  />
+                </CurrentDaoProvider>
+              ) : null}
+            </Container>
           )}
         />
       </LoadingPage>

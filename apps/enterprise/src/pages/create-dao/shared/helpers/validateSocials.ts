@@ -1,4 +1,4 @@
-import { FormState } from '@terra-money/apps/hooks';
+import { FormState } from 'lib/shared/hooks/useForm';
 import { DaoSocialDataInput } from 'pages/create-dao/DaoWizardFormProvider';
 
 // accepts anything

@@ -1,5 +1,6 @@
-import { FormState } from '@terra-money/apps/hooks';
-import { validateAddress, validateAmount } from '@terra-money/apps/utils';
+import { validateAddress } from 'chain/utils/validators';
+import { FormState } from 'lib/shared/hooks/useForm';
+import { validateAmount } from 'lib/shared/utils/validateAmount';
 import { InitialBalance } from 'pages/create-dao/DaoWizardFormProvider';
 
 export const UINT_128_MAX = 340282366920938463463374607431768211455;

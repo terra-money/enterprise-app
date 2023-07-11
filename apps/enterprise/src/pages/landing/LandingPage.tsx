@@ -1,4 +1,4 @@
-import { AnimatedPage, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
+import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { useRef } from 'react';
 import { FeaturesSlice } from './FeaturesSlice';
 import { LandingFooter } from './LandingFooter';
@@ -32,11 +32,11 @@ export const LandingPage = () => {
       )}
     >
       <LandingTopbar ref={headerRef} />
-      <AnimatedPage className={styles.container}>
+      <div className={styles.container}>
         <PrimarySlice />
         <FeaturesSlice />
         <LandingFooter />
-      </AnimatedPage>
+      </div>
     </ScrollableContainer>
   );
 };

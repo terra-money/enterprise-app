@@ -1,6 +1,4 @@
-import { useForm, FormState } from '@terra-money/apps/hooks';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { isFormStateValid } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import { useEnv } from 'hooks';
 import { DaoGovConfigInput } from 'pages/create-dao/gov-config/DaoGovConfigInput';
@@ -12,6 +10,7 @@ import { useCallback, useMemo } from 'react';
 import { hasChangedFields } from '../metadata/toUpdateMetadataMsg';
 import { toUpdateGovConfigMsg } from './helpers/toUpdateGovConfigMsg';
 import { toDao } from 'dao/utils/toDao';
+import { FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
 
 export interface ConfigProposalFormState extends FormState<DaoGovConfigInput> {
   timeConversionFactor: number;

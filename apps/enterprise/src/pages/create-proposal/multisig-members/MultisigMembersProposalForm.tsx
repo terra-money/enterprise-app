@@ -1,12 +1,15 @@
 import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoMultisigMembers } from './CurrentDAOMultisigMembersProvider';
 import { useMemo, useState } from 'react';
-import { getRecord, isFormStateValid, removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { validateMembers } from 'pages/create-dao/multisig/helpers/validateMembers';
 import { MultisigMemberInput } from 'pages/create-dao/multisig/member/MultisigMemberInput';
 import { AddButton } from 'components/add-button';
 import { EMPTY_MEMBER } from 'pages/create-dao/DaoWizardFormProvider';
 import { toUpdateMultisigMembershipMsg } from './helpers/toUpdateMultisigMembershipMsg';
+import { isFormStateValid } from 'lib/shared/hooks/useForm';
+import { getRecord } from 'lib/shared/utils/getRecord';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 
 export const MultisigMembersProposalForm = () => {
   const initialMembers = useCurrentDaoMultisigMembers();
@@ -38,10 +41,10 @@ export const MultisigMembersProposalForm = () => {
         return (
           <MultisigMemberInput
             key={index}
-            onRemove={() => setMembers(removeByIndex(members, index))}
+            onRemove={() => setMembers(removeAtIndex(members, index))}
             {...validatedMembers[index]}
             onChange={(params) => {
-              setMembers(updateAtIndex(members, index, { ...member, ...params }));
+              setMembers(updateAtIndex(members, index, (value) => ({ ...value, ...params })));
             }}
           />
         );

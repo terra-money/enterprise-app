@@ -1,5 +1,3 @@
-import { useForm, FormState } from '@terra-money/apps/hooks';
-import { isFormStateValid, validateLength, validateUrl } from '@terra-money/apps/utils';
 import { useEnv } from 'hooks';
 import { DaoInfoInput, DaoSocialDataInput } from 'pages/create-dao/DaoWizardFormProvider';
 import {
@@ -12,6 +10,9 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useCallback, useMemo } from 'react';
 import { hasChangedFields, toUpdateMetadataMsg } from './toUpdateMetadataMsg';
 import { toDao } from 'dao/utils/toDao';
+import { validateUrl } from 'lib/ui/utils/validateUrl';
+import { FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
+import { validateLength } from 'lib/shared/utils/validateLength';
 
 export type MetadataProposalFormInput = DaoSocialDataInput & DaoInfoInput;
 

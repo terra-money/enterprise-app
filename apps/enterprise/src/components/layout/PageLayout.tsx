@@ -1,9 +1,9 @@
 import { PropsWithChildren, ReactNode } from 'react';
-import { AnimatedPage, Container } from '@terra-money/apps/components';
 import styles from './PageLayout.module.sass';
 import { ManageWallet } from 'chain/components/ManageWallet';
 import { ErrorBoundary } from 'errors/components/ErrorBoundary';
 import { GenericErrorFallback } from 'errors/components/GenericErrorFallback';
+import { HStack } from 'lib/ui/Stack';
 
 interface PageLayoutProps extends PropsWithChildren {
   header: ReactNode;
@@ -12,18 +12,18 @@ interface PageLayoutProps extends PropsWithChildren {
 export const PageLayout = (props: PageLayoutProps) => {
   const { header, children } = props;
   return (
-    <AnimatedPage className={styles.root}>
+    <div className={styles.root}>
       <ErrorBoundary fallback={(params) => <GenericErrorFallback {...params} />}>
-        <Container className={styles.header} direction="row">
-          <Container className={styles.content} direction="row">
+        <HStack fullWidth alignItems="center" className={styles.header}>
+          <HStack fullWidth alignItems="center" className={styles.content}>
             {header}
-          </Container>
+          </HStack>
           <div className={styles.wallet}>
             <ManageWallet />
           </div>
-        </Container>
+        </HStack>
         {children}
       </ErrorBoundary>
-    </AnimatedPage>
+    </div>
   );
 };

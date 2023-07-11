@@ -1,5 +1,4 @@
-import { useForm, FormState } from '@terra-money/apps/hooks';
-import { isFormStateValid } from '@terra-money/apps/utils';
+import { FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
 import { useMemo } from 'react';
 
 export type UpgradeProposalFormInput = {

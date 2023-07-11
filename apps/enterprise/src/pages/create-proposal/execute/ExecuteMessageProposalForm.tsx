@@ -1,4 +1,3 @@
-import { removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { ProposalForm } from '../shared/ProposalForm';
@@ -6,6 +5,8 @@ import { validateWasmMsg } from './helpers/validateWasmMsg';
 import styles from './ExecuteMessageProposalForm.module.sass';
 import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 
 export const ExecuteMessageProposalForm = () => {
   const [messages, setMessages] = useState<string[]>(['']);
@@ -29,9 +30,9 @@ export const ExecuteMessageProposalForm = () => {
               valid
               placeholder="Enter your message here"
               value={message}
-              onChange={(value) => setMessages(updateAtIndex(messages, index, value || ''))}
+              onChange={(value) => setMessages(updateAtIndex(messages, index, () => value || ''))}
             />
-            <DeleteIconButton className={styles.button} onClick={() => setMessages(removeByIndex(messages, index))} />
+            <DeleteIconButton className={styles.button} onClick={() => setMessages(removeAtIndex(messages, index))} />
           </div>
         ))}
         {areMessagesValid && <AddButton onClick={() => setMessages([...messages, ''])} />}

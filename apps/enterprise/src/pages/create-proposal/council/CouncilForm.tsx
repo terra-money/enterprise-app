@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -15,6 +14,8 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { toUpdateCouncilMsg } from './toUpdateCouncilMsg';
 import { QuorumInput } from 'pages/create-dao/gov-config/QuorumInput';
 import { ThresholdInput } from 'pages/create-dao/gov-config/ThresholdInput';
+import { terraAddressRegex } from 'chain/utils/validators';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface CouncilFormSchema {
   members: CouncilMember[];

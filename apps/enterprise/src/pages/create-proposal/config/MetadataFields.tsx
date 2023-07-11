@@ -1,8 +1,8 @@
-import { FormInput } from '@terra-money/apps/hooks';
 import { MetadataProposalFormInput, MetadataProposalFormState } from '../metadata/useMetadataForm';
 import { useState } from 'react';
 import { TextArea } from 'lib/ui/inputs/TextArea';
 import { TextInput } from 'lib/ui/inputs/TextInput';
+import { FormInput } from 'lib/shared/hooks/useForm';
 
 interface MetadataProposalFormProps {
   formInput: FormInput<MetadataProposalFormInput>;

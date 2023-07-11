@@ -2,7 +2,6 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
-import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { useState } from 'react';
@@ -14,6 +13,8 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AssetInfoWithPrice } from 'chain/Asset';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
+import { terraAddressRegex } from 'chain/utils/validators';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;

@@ -1,5 +1,5 @@
-import { useForm, FormState } from '@terra-money/apps/hooks';
-import { isFormStateValid, validateLength } from '@terra-money/apps/utils';
+import { FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
+import { validateLength } from 'lib/shared/utils/validateLength';
 import { useMemo } from 'react';
 
 export type ProposalFormInput = {

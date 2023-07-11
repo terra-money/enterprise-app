@@ -1,4 +1,3 @@
-import { AnimatedPage } from '@terra-money/apps/components';
 import { ReactNode, useRef, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
@@ -201,22 +200,20 @@ export const SelectProposalType = () => {
         </VStack>
       )}
       normal={() => (
-        <AnimatedPage>
-          <NormalScreenContainer>
-            <Header ref={ref} title={title} />
-            {renderVotingTypePicker()}
-            <ProposalsContainer>
-              <NormalScreenContent>{renderOptions()}</NormalScreenContent>
-              <ProposalDescriptionContainer>
-                <Text className={styles.proposalDescriptionTitle}>
-                  What are {capitalizeFirstLetter(proposalType)} proposals?
-                </Text>
-                <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
-              </ProposalDescriptionContainer>
-            </ProposalsContainer>
-            {renderFooter()}
-          </NormalScreenContainer>
-        </AnimatedPage>
+        <NormalScreenContainer>
+          <Header ref={ref} title={title} />
+          {renderVotingTypePicker()}
+          <ProposalsContainer>
+            <NormalScreenContent>{renderOptions()}</NormalScreenContent>
+            <ProposalDescriptionContainer>
+              <Text className={styles.proposalDescriptionTitle}>
+                What are {capitalizeFirstLetter(proposalType)} proposals?
+              </Text>
+              <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
+            </ProposalDescriptionContainer>
+          </ProposalsContainer>
+          {renderFooter()}
+        </NormalScreenContainer>
       )}
     />
   );

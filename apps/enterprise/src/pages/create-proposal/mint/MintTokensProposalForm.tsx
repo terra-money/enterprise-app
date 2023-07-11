@@ -2,7 +2,6 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { useCW20TokenInfoQuery } from 'queries';
 import { toMintTokenMsg } from './helpers/toMintTokensMsg';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
@@ -10,6 +9,8 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { AddButton } from 'components/add-button';
+import { terraAddressRegex } from 'chain/utils/validators';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface MintMember {
   address: string;
