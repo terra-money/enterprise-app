@@ -2,10 +2,8 @@ import { AnimateNumber } from '@terra-money/apps/components';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 import Big from 'big.js';
-import { NumericPanel } from 'components/numeric-panel';
 import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
 import { useClaimTx } from 'tx';
-import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { StakeNFTOverlay } from './StakeNFTOverlay';
 import { PendingClaims } from './PendingClaims';
@@ -23,6 +21,10 @@ import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
 import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { Text } from 'lib/ui/Text';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -77,10 +79,8 @@ export const NftStakingConnectedView = () => {
             <VStack gap={40}>
               <HStack alignItems="center" className={styles.header}>
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text variant="label" className={styles.title}>
-                  Voting power
-                </Text>
-                <Text variant="heading3">
+                <Text className={styles.title}>Voting power</Text>
+                <Text>
                   <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
                     {walletVotingPower.mul(100)}
                   </AnimateNumber>
@@ -126,14 +126,10 @@ export const NftStakingConnectedView = () => {
           </SameWidthChildrenRow>
         </VStack>
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claim Unstaked NFTs"
-            value={claimableTokens.length}
-            suffix={symbol}
-            footnote={
+          <Panel>
+            <TitledSection title="Claim Unstaked NFTs">
+              <NumericStatistic value={claimableTokens.length} suffix={symbol} />
               <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
                 <HStack className={styles.actions} alignItems="center">
                   <Button
                     kind="secondary"
@@ -147,19 +143,19 @@ export const NftStakingConnectedView = () => {
                   </Button>
                 </HStack>
               </VStack>
-            }
-          />
+            </TitledSection>
+          </Panel>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel title="Your wallet" value={myNfts?.length} suffix={symbol} />
-            <NumericPanel
-              title="Your total staked"
-              value={walletStaked.tokens.length}
-              suffix={
-                <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}>
-                  {walletStakedPercent}
-                </AnimateNumber>
-              }
-            />
+            <Panel>
+              <TitledSection title="Your wallet">
+                <NumericStatistic value={myNfts?.length} />
+              </TitledSection>
+            </Panel>
+            <Panel>
+              <TitledSection title="Your total staked">
+                <NumericStatistic value={walletStaked.tokens.length} suffix={`${walletStakedPercent.toNumber()}%`} />
+              </TitledSection>
+            </Panel>
           </SameWidthChildrenRow>
         </VStack>
       </SameWidthChildrenRow>

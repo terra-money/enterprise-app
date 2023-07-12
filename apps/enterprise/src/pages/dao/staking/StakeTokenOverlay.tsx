@@ -1,4 +1,3 @@
-import { NumericPanel } from 'components/numeric-panel';
 import { useStakeTokenForm } from './useStakeTokenForm';
 
 import Big from 'big.js';
@@ -11,6 +10,9 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { toChainAmount } from 'chain/utils/toChainAmount';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
 
 interface StakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
@@ -41,12 +43,11 @@ export const StakeTokenOverlay = ({
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
-          <NumericPanel
-            title="Currently staking"
-            value={fromChainAmount(Big(staked).toNumber(), decimals)}
-            decimals={2}
-            suffix={symbol}
-          />
+          <Panel>
+            <TitledSection title="Currently staking">
+              <NumericStatistic value={fromChainAmount(Big(staked).toNumber(), decimals)} suffix={symbol} />
+            </TitledSection>
+          </Panel>
           <AmountTextInput
             value={amount}
             placeholder="Enter a staking amount"

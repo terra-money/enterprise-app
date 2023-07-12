@@ -1,4 +1,3 @@
-import { NumericPanel } from 'components/numeric-panel';
 import { useUnstakeTokenForm } from './useUnstakeTokenForm';
 import Big from 'big.js';
 import { useUnstakeTokenTx } from 'tx';
@@ -10,6 +9,9 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { toChainAmount } from 'chain/utils/toChainAmount';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
 
 interface UnstakeTokenOverlayProps extends ClosableComponentProps {
   walletAddress: string;
@@ -31,12 +33,11 @@ export const UnstakeTokenOverlay = ({ daoAddress, staked, symbol, decimals, onCl
       onClose={onClose}
       renderContent={() => (
         <VStack gap={16}>
-          <NumericPanel
-            title="Currently staking"
-            value={fromChainAmount(staked.toString(), decimals)}
-            decimals={2}
-            suffix={symbol}
-          />
+          <Panel>
+            <TitledSection title="Currently staking">
+              <NumericStatistic value={fromChainAmount(staked.toString(), decimals)} suffix={symbol} />
+            </TitledSection>
+          </Panel>
           <AmountTextInput
             value={amount}
             placeholder="Enter an amount to unstake"

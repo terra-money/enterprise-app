@@ -3,7 +3,6 @@ import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 import Big from 'big.js';
-import { FriendlyFormatter, NumericPanel } from 'components/numeric-panel';
 import {
   useCW20TokenInfoQuery,
   useReleasableClaimsQuery,
@@ -29,6 +28,11 @@ import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { Text } from 'lib/ui/Text';
 import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
+import { QueryDependant } from 'lib/query/components/QueryDependant';
+import { Spinner } from 'lib/ui/Spinner';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -93,7 +97,7 @@ export const TokenStakingConnectedView = () => {
     totalStaked
   );
 
-  const { data: balance } = useAssetBalanceQury({
+  const { data: balance, status: balanceStatus } = useAssetBalanceQury({
     address: walletAddress,
     asset: {
       type: 'cw20',
@@ -117,7 +121,7 @@ export const TokenStakingConnectedView = () => {
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
                 <Text className={styles.title}>Voting power</Text>
                 <Text size={20} weight="bold">
-                  <AnimateNumber format={(v) => FriendlyFormatter(v, 2)}>
+                  <AnimateNumber format={(v) => formatAmount(v, { decimals: 2 })}>
                     {fromChainAmount(walletStaked.toString(), tokenDecimals)}
                   </AnimateNumber>{' '}
                   <Text as="span" color="shy">
@@ -184,43 +188,49 @@ export const TokenStakingConnectedView = () => {
         </VStack>
 
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claim Unstaked Tokens"
-            value={fromChainAmount(claimableAmount.toString(), tokenDecimals)}
-            decimals={2}
-            suffix={tokenSymbol}
-            footnote={
-              <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
-                <HStack className={styles.actions} alignItems="center">
-                  <Button
-                    kind="secondary"
-                    isDisabled={isClaimDisabled && 'No tokens to claim'}
-                    isLoading={claimTxResult.loading}
-                    onClick={() => {
-                      claimTx({ daoAddress: address });
-                    }}
-                  >
-                    Claim all
-                  </Button>
-                </HStack>
-              </VStack>
-            }
-          />
+          <Panel>
+            <TitledSection title="Claim Unstaked Tokens">
+              <NumericStatistic
+                suffix={tokenSymbol}
+                value={fromChainAmount(claimableAmount.toString(), tokenDecimals)}
+              />
+            </TitledSection>
+            <VStack alignItems="stretch" fullWidth gap={40}>
+              <div />
+              <HStack className={styles.actions} alignItems="center">
+                <Button
+                  kind="secondary"
+                  isDisabled={isClaimDisabled && 'No tokens to claim'}
+                  isLoading={claimTxResult.loading}
+                  onClick={() => {
+                    claimTx({ daoAddress: address });
+                  }}
+                >
+                  Claim all
+                </Button>
+              </HStack>
+            </VStack>
+          </Panel>
 
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel
-              title="Your wallet"
-              value={fromChainAmount(balance || '0', tokenDecimals)}
-              suffix={tokenSymbol}
-            />
-            <NumericPanel
-              title="Your total staked"
-              formatter={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 1 })}%`}
-              decimals={2}
-              value={walletStakedPercent}
-            />
+            <Panel>
+              <TitledSection title="Your wallet">
+                <QueryDependant
+                  data={balance}
+                  status={balanceStatus}
+                  error={() => <Text>failed to load</Text>}
+                  loading={() => <Spinner />}
+                  success={(balance) => (
+                    <NumericStatistic suffix={tokenSymbol} value={fromChainAmount(balance, tokenDecimals)} />
+                  )}
+                />
+              </TitledSection>
+            </Panel>
+            <Panel>
+              <TitledSection title="Your total staked">
+                <NumericStatistic value={`${formatAmount(Big(walletStakedPercent).toNumber(), { decimals: 1 })}%`} />
+              </TitledSection>
+            </Panel>
           </SameWidthChildrenRow>
         </VStack>
       </SameWidthChildrenRow>
