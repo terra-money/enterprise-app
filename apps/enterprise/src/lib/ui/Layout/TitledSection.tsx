@@ -8,7 +8,7 @@ interface Props extends ComponentWithChildrenProps {
 }
 
 export const TitledSection = ({ title, children }: Props) => (
-  <VStack gap={20}>
+  <VStack gap={16}>
     <Text as="div" weight="semibold">
       {title}
     </Text>

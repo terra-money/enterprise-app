@@ -1,4 +1,3 @@
-import { AnimateNumber } from '@terra-money/apps/components';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 
@@ -14,7 +13,6 @@ import { useClaimTx } from 'tx';
 import { DAOLogo } from 'components/dao-logo';
 import { usePendingClaims } from 'hooks';
 import { PendingClaims } from './PendingClaims';
-import styles from './TokenStaking.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
@@ -33,6 +31,7 @@ import { TitledSection } from 'lib/ui/Layout/TitledSection';
 import { NumericStatistic } from 'lib/ui/NumericStatistic';
 import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Spinner } from 'lib/ui/Spinner';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
@@ -115,23 +114,18 @@ export const TokenStakingConnectedView = () => {
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
         <VStack gap={16}>
-          <VStack className={styles.staking} as="section">
-            <VStack gap={40}>
-              <HStack alignItems="center" className={styles.header}>
+          <Panel>
+            <VStack gap={16}>
+              <HStack gap={20} alignItems="center">
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text className={styles.title}>Voting power</Text>
-                <Text size={20} weight="bold">
-                  <AnimateNumber format={(v) => formatAmount(v, { decimals: 2 })}>
-                    {fromChainAmount(walletStaked.toString(), tokenDecimals)}
-                  </AnimateNumber>{' '}
-                  <Text as="span" color="shy">
-                    <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
-                      {walletVotingPower.mul(100)}
-                    </AnimateNumber>
-                  </Text>
-                </Text>
+                <TitledSection title="Voting power">
+                  <NumericStatistic
+                    value={formatAmount(fromChainAmount(walletStaked.toString(), tokenDecimals))}
+                    suffix={toPercents(walletVotingPower.toNumber(), 'round')}
+                  />
+                </TitledSection>
               </HStack>
-              <HStack alignItems="center" className={styles.actions}>
+              <SameWidthChildrenRow gap={16}>
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
                     <Button
@@ -178,9 +172,9 @@ export const TokenStakingConnectedView = () => {
                     />
                   )}
                 />
-              </HStack>
+              </SameWidthChildrenRow>
             </VStack>
-          </VStack>
+          </Panel>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <TokenDaoTotalSupplyPanel />
             <TokenDaoTotalStakedPanel />
@@ -194,10 +188,7 @@ export const TokenStakingConnectedView = () => {
                 suffix={tokenSymbol}
                 value={fromChainAmount(claimableAmount.toString(), tokenDecimals)}
               />
-            </TitledSection>
-            <VStack alignItems="stretch" fullWidth gap={40}>
-              <div />
-              <HStack className={styles.actions} alignItems="center">
+              <VStack alignItems="stretch" fullWidth gap={40}>
                 <Button
                   kind="secondary"
                   isDisabled={isClaimDisabled && 'No tokens to claim'}
@@ -208,8 +199,8 @@ export const TokenStakingConnectedView = () => {
                 >
                   Claim all
                 </Button>
-              </HStack>
-            </VStack>
+              </VStack>
+            </TitledSection>
           </Panel>
 
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
