@@ -1,6 +1,6 @@
 import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
+import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { TokenIcon } from 'components/token-icon';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -32,7 +32,7 @@ export const AssetItemFrame = styled.div`
   }
 `;
 
-const Icon = styled(TokenIcon)`
+const Icon = styled(AssetIcon)`
   ${getSameDimensionsCSS(32)}
 `;
 
@@ -46,7 +46,7 @@ export const AssetItem = ({ asset }: AssetItemProps) => {
     <Container>
       <AssetItemFrame>
         <HStack alignItems="center" gap={24}>
-          <Icon symbol={asset.symbol} path={asset.icon} />
+          <Icon icon={asset.icon} />
           <VStack gap={4}>
             <Text weight="semibold">{asset.symbol}</Text>
             <Text color="supporting" weight="semibold">

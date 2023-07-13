@@ -1,5 +1,4 @@
 import { FormSection } from 'components/form-section';
-import { toWhitelistedAsset } from 'pages/create-dao/helpers/toWhitelistedAsset';
 import { AddTokenButton } from 'pages/create-dao/shared/AddTokenButton';
 import { useMemo, useState } from 'react';
 import { ProposalForm } from '../shared/ProposalForm';
@@ -52,8 +51,7 @@ export const WhitelistedAssetsProposalForm = () => {
             })}
           </div>
           <AddTokenButton
-            onSelect={(token) => {
-              const asset = toWhitelistedAsset(token);
+            onSelect={(asset) => {
               if (!whitelistedAssets.some((a) => areSameAsset(asset, a))) {
                 setWhitelistedAssets([...whitelistedAssets, asset]);
               }

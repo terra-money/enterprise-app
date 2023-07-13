@@ -1,6 +1,3 @@
-import { AnimateNumber } from '@terra-money/apps/components';
-import { formatAmount } from 'lib/shared/utils/formatAmount';
-
 import Big from 'big.js';
 import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
 import { useClaimTx } from 'tx';
@@ -23,8 +20,8 @@ import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { TitledSection } from 'lib/ui/Layout/TitledSection';
 import { Panel } from 'lib/ui/Panel/Panel';
-import { Text } from 'lib/ui/Text';
 import { NumericStatistic } from 'lib/ui/NumericStatistic';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
 const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
@@ -79,12 +76,9 @@ export const NftStakingConnectedView = () => {
             <VStack gap={40}>
               <HStack alignItems="center" className={styles.header}>
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text className={styles.title}>Voting power</Text>
-                <Text>
-                  <AnimateNumber format={(v) => `${formatAmount(Big(v).toNumber(), { decimals: 2 })}%`}>
-                    {walletVotingPower.mul(100)}
-                  </AnimateNumber>
-                </Text>
+                <TitledSection title="Voting power">
+                  <NumericStatistic value={toPercents(walletVotingPower.toNumber(), 'round')} />
+                </TitledSection>
               </HStack>
               <HStack className={styles.actions}>
                 <OverlayOpener

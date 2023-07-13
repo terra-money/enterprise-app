@@ -7,7 +7,7 @@ import { Address } from '../Address';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { lunaInfo } from 'chain/utils/getAssetsInfo';
-import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 
 export const ConnectedWalletSummary = () => {
   const address = useAssertMyAddress();

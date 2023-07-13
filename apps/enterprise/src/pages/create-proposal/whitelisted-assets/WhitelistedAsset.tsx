@@ -1,4 +1,3 @@
-import { TokenIcon } from 'components/token-icon';
 import { Asset } from 'chain/Asset';
 import { useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
 import { Text } from 'lib/ui/Text';
@@ -7,13 +6,14 @@ import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack } from 'lib/ui/Stack';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 import { DeleteIconButton } from 'components/delete-icon-button';
+import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
 
 interface WhitelistedAssetProps {
   asset: Asset;
   onRemove?: () => void;
 }
 
-const Icon = styled(TokenIcon)`
+const Icon = styled(AssetIcon)`
   ${getSameDimensionsCSS(28)};
 `;
 
@@ -25,7 +25,7 @@ export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => 
     <Panel>
       <HStack alignItems="center" gap={20}>
         <HStack alignItems="center" gap={8}>
-          <Icon symbol={assetInfo?.symbol} path={assetInfo?.icon} />
+          <Icon icon={assetInfo?.icon} />
         </HStack>
         <Text cropped>{assetInfo?.name || assetInfo?.symbol || asset.id}</Text>
         {onRemove && <DeleteIconButton onClick={onRemove} />}

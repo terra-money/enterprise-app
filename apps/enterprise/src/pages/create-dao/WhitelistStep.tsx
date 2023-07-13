@@ -2,7 +2,6 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
 import { WizardStep } from './WizardStep';
 import { AddTokenButton } from './shared/AddTokenButton';
-import { toWhitelistedAsset } from './helpers/toWhitelistedAsset';
 import { hasAsset } from 'pages/create-proposal/whitelisted-assets/helpers/areSameAssets';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
@@ -31,10 +30,9 @@ export const WhitelistStep = () => {
           ))}
         </HStack>
         <AddTokenButton
-          onSelect={(token) => {
-            const whitelistedAsset = toWhitelistedAsset(token);
-            if (!hasAsset(whitelistedAssets, fromAsset(whitelistedAsset))) {
-              formInput({ whitelistedAssets: [...whitelistedAssets, fromAsset(whitelistedAsset)] });
+          onSelect={(asset) => {
+            if (!hasAsset(whitelistedAssets, fromAsset(asset))) {
+              formInput({ whitelistedAssets: [...whitelistedAssets, fromAsset(asset)] });
             }
           }}
         />

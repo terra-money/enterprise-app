@@ -13,7 +13,7 @@ import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { Line } from 'lib/ui/Line';
 import { Spinner } from 'lib/ui/Spinner';
 import { Button } from 'lib/ui/buttons/Button';
-import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 
 interface DepositOverviewProps {
   minimumDeposit: Big;

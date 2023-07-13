@@ -9,13 +9,13 @@ import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Token } from 'types';
 import * as z from 'zod';
 import Big from 'big.js';
-import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
+import { Asset, AssetInfo } from 'chain/Asset';
 
 interface DepositAssetStepProps {
-  token: Token;
+  asset: Asset & AssetInfo;
   onSuccess: () => void;
   onBack: () => void;
 }
@@ -24,14 +24,11 @@ interface DepositFormSchema {
   amount: number;
 }
 
-export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepProps) => {
+export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepProps) => {
   const walletAddress = useAssertMyAddress();
   const { data: balance } = useAssetBalanceQury({
     address: walletAddress,
-    asset: {
-      type: token.type === 'cw20' ? 'cw20' : 'native',
-      id: token.key,
-    },
+    asset: asset,
   });
 
   const dao = useCurrentDao();
@@ -39,7 +36,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
   const formSchema: z.ZodType<DepositFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (balance) {
-      amount = amount.lte(fromChainAmount(Big(balance).toNumber(), token.decimals));
+      amount = amount.lte(fromChainAmount(Big(balance).toNumber(), asset.decimals));
     }
     return z.object({
       amount,
@@ -81,10 +78,10 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             ref={ref}
             suggestion={
               balance ? (
-                <AmountSuggestion name="Max" value={fromChainAmount(balance, token.decimals)} onSelect={onChange} />
+                <AmountSuggestion name="Max" value={fromChainAmount(balance, asset.decimals)} onSelect={onChange} />
               ) : undefined
             }
-            unit={token.name}
+            unit={asset.name}
           />
         )}
       />
@@ -93,7 +90,7 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
-            depositTx({ address: dao.funds_distributor_contract, amount, decimals: token.decimals, denom: token.key });
+            depositTx({ address: dao.funds_distributor_contract, amount, decimals: asset.decimals, denom: asset.id });
           })}
         >
           Deposit

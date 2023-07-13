@@ -24,7 +24,7 @@ import { StakeTokenOverlay } from './StakeTokenOverlay';
 import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { Text } from 'lib/ui/Text';
-import { useAssetBalanceQury } from 'chain/hooks/useAssetBalanceQuery';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { TitledSection } from 'lib/ui/Layout/TitledSection';

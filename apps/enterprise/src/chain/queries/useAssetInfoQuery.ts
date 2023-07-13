@@ -10,15 +10,23 @@ export interface AssetInfoQueryParams {
   type: AssetType;
 }
 
-export const useAssetInfoQuery = (asset: AssetInfoQueryParams) => {
+interface AssetInfoQueryOptions {
+  enabled?: boolean;
+}
+
+export const useAssetInfoQuery = (asset: AssetInfoQueryParams, options?: AssetInfoQueryOptions) => {
   const lcdClient = useLCDClient();
   const networkName = useNetworkName();
 
-  return useQuery([QUERY_KEY.ASSET_INFO, asset], () => {
-    return getAssetInfo({
-      asset,
-      lcd: lcdClient,
-      networkName,
-    });
-  });
+  return useQuery(
+    [QUERY_KEY.ASSET_INFO, asset],
+    () => {
+      return getAssetInfo({
+        asset,
+        lcd: lcdClient,
+        networkName,
+      });
+    },
+    options
+  );
 };
