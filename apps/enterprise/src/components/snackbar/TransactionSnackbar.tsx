@@ -11,12 +11,12 @@ import { Text } from 'lib/ui/Text';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { PopoverContainer } from 'lib/ui/Menu/PopoverPanel';
-import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
 import { CheckIcon } from 'lib/ui/icons/CheckIcon';
 import { AlertCircleIcon } from 'lib/ui/icons/AlertCircleIcon';
 import { Spinner } from 'lib/ui/Spinner';
 import { Match } from 'lib/ui/Match';
 import { getFinderUrl } from 'chain/utils/getFinderUrl';
+import { CloseButton } from 'lib/ui/buttons/CloseButton';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -84,7 +84,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
             <Text>{getErrorText(transaction.error)}</Text>
           ) : null}
         </VStack>
-        {variant !== 'pending' && <CloseIconButton onClick={() => closeSnackbar(snackbarKey)} />}
+        {variant !== 'pending' && <CloseButton onClick={() => closeSnackbar(snackbarKey)} />}
       </HStack>
     </PopoverContainer>
   );

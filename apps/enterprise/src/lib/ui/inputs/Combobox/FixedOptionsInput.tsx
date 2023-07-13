@@ -11,7 +11,6 @@ import {
 import { usePrevious } from 'react-use';
 import { useBoolean } from 'lib/shared/hooks/useBoolean';
 import styled from 'styled-components';
-import { CollapseToggleIconButton } from 'lib/ui/buttons/square/CollapseToggleIconButton';
 import { useKeyPress } from 'lib/shared/hooks/useKeyPress';
 
 import { InputWrapperWithErrorMessage } from '../InputWrapper';
@@ -20,6 +19,7 @@ import { ComboboxOptions } from './ComboboxOptions';
 import { DropdownMenuPlacer } from './DropdownMenuPlacer';
 import { Text } from 'lib/ui/Text';
 import { defaultInputShapeCSS, inputPaddingCSS } from '../config';
+import { CollapseToggleButton } from 'lib/ui/buttons/CollapseToggleButton';
 
 interface Props<T> {
   label: React.ReactNode;
@@ -194,7 +194,7 @@ function FixedOptionsInputInner<T>(
       </InputWrapperWithErrorMessage>
       {!isLoading && options.length > 0 && (
         <ToggleWrapper>
-          <CollapseToggleIconButton size="l" isOpen={isMenuOpen} onClick={toggleMenu} />
+          <CollapseToggleButton size="l" isOpen={isMenuOpen} onClick={toggleMenu} />
         </ToggleWrapper>
       )}
     </Container>

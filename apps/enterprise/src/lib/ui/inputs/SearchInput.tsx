@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { TextInputContainer } from './TextInput';
 import { centerContentCSS } from '../utils/centerContentCSS';
 import { SearchIcon } from '../icons/SearchIcon';
-import { CloseIconButton } from '../buttons/square/CloseIconButton';
 import { InputWrapper } from './InputWrapper';
 import { VStack } from '../Stack';
 import { ChangeEvent } from 'react';
+import { CloseButton } from '../buttons/CloseButton';
 
 const searchInputHeight = `60px`;
 
@@ -52,7 +52,7 @@ export const SearchInput = ({ onClear, onValueChange, ...props }: SearchTextInpu
         </SearchIconWrapper>
         {props.value && (
           <CloseIconWr>
-            <CloseIconButton as="div" onClick={() => onValueChange('')} />
+            <CloseButton as="div" onClick={() => onValueChange('')} />
           </CloseIconWr>
         )}
       </VStack>

@@ -4,7 +4,6 @@ import { useKey } from 'react-use';
 import { handleWithStopPropagation } from 'lib/shared/events';
 import styled, { css } from 'styled-components';
 import { BodyPortal } from 'lib/ui/BodyPortal';
-import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
 import { useIsScreenWidthLessThan } from 'lib/ui/hooks/useIsScreenWidthLessThan';
 import { ScreenCover } from 'lib/ui/ScreenCover';
 import { Spacer } from 'lib/ui/Spacer';
@@ -13,6 +12,7 @@ import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 
 import { ModalTitleText } from './ModalTitleText';
+import { CloseButton } from '../buttons/CloseButton';
 
 interface RenderContentParams {
   isFullScreen: boolean;
@@ -136,7 +136,7 @@ export const Modal = ({
             <HStack style={{ padding: headerPadding }} alignItems="center" justifyContent="space-between">
               {(titlePlacement === 'center' || !title) && (hasCloseButton ? <Spacer width={32} /> : <div />)}
               {title && <ModalTitleText>{title}</ModalTitleText>}
-              {hasCloseButton && <CloseIconButton size="l" onClick={() => onClose?.()} />}
+              {hasCloseButton && <CloseButton size="l" onClick={() => onClose?.()} />}
             </HStack>
             {(title || hasCloseButton) && <Spacer height={20} />}
             <Content style={{ padding: contentPadding }}>{renderContent({ isFullScreen })}</Content>
