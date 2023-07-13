@@ -1,4 +1,3 @@
-import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDAOQuery, useProposalQuery } from 'queries';
@@ -8,7 +7,6 @@ import { ProposalVoting } from './ProposalVoting';
 import { ProposalVotes } from './ProposalVotes';
 import { CurrentProposalProvider } from './CurrentProposalProvider';
 import { ProposalActions } from './ProposalActions';
-import { PageLayout } from 'components/layout';
 import { ProposalSummaryText } from './ProposalSummaryText';
 import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
@@ -20,6 +18,8 @@ import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
 import { Text } from 'lib/ui/Text';
+import { PageLayout } from 'components/PageLayout';
+import { StickyWalletManager } from 'chain/components/StickyWalletManager';
 
 export const ProposalPageContent = () => {
   const { id, address } = useParams();
@@ -77,17 +77,11 @@ export const ProposalPageContent = () => {
               <CurrentProposalProvider value={proposal}>
                 <ResponsiveView
                   normal={() => (
-                    <ScrollableContainer
-                      stickyRef={ref}
-                      threshold={0.5}
-                      header={(visible) => (
-                        <StickyHeader visible={visible}>
-                          <Header compact={true} />
-                        </StickyHeader>
-                      )}
-                    >
-                      <PageLayout header={<Header ref={ref} />}>{content}</PageLayout>
-                    </ScrollableContainer>
+                    <PageLayout>
+                      <Header />
+                      <StickyWalletManager />
+                      {content}
+                    </PageLayout>
                   )}
                   small={() => (
                     <VStack gap={24}>

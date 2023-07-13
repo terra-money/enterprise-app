@@ -7,7 +7,6 @@ import { HStack } from 'lib/ui/Stack';
 
 interface HeaderProps {
   className?: string;
-  compact?: boolean;
   isLoading: boolean;
   totalCount: number;
   searchInput: ReactNode;
@@ -15,18 +14,9 @@ interface HeaderProps {
 }
 
 export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
-  const { className, compact = false, isLoading, totalCount } = props;
+  const { className, isLoading, totalCount } = props;
 
   const searchResultsLabel = isLoading ? 'Searching...' : `Displaying ${totalCount} results`;
-
-  if (compact) {
-    return (
-      <Stack ref={ref} className={classNames(className, styles.root, styles.compact)} direction="row">
-        {props.searchInput}
-        {props.filters}
-      </Stack>
-    );
-  }
 
   return (
     <Stack className={classNames(className, styles.root)} direction="column">

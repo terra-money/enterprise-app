@@ -8,7 +8,7 @@ import { Spinner } from 'lib/ui/Spinner';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { SearchInput } from 'lib/ui/inputs/SearchInput';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { AssetItem } from './AssetItem';
 
 export interface AssetFinderProps {

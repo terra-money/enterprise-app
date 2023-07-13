@@ -1,5 +1,4 @@
-import { Container, ScrollableContainer } from '@terra-money/apps/components';
-import { PageLayout } from 'components/layout';
+import { Container } from '@terra-money/apps/components';
 import { IconButton } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -14,9 +13,10 @@ import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
 import { SearchInput } from 'lib/ui/inputs/SearchInput';
+import { PageLayout } from 'components/PageLayout';
+import { StickyWalletManager } from 'chain/components/StickyWalletManager';
 
 export const Page = () => {
-  const stickyRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [daoTypesToDisplay, setDaoTypesToDisplay] = useState<enterprise.DaoType[]>(daoTypes);
@@ -80,21 +80,11 @@ export const Page = () => {
         </VStack>
       )}
       normal={() => (
-        <ScrollableContainer>
-          <PageLayout
-            header={
-              <Header
-                ref={stickyRef}
-                isLoading={isLoading}
-                totalCount={items?.length ?? 0}
-                searchInput={searchInput}
-                filters={filters}
-              />
-            }
-          >
-            {content}
-          </PageLayout>
-        </ScrollableContainer>
+        <PageLayout>
+          <Header isLoading={isLoading} totalCount={items?.length ?? 0} searchInput={searchInput} filters={filters} />
+          <StickyWalletManager />
+          {content}
+        </PageLayout>
       )}
     />
   );

@@ -1,10 +1,7 @@
-import { ScrollableContainer } from '@terra-money/apps/components';
-import { useRef } from 'react';
 import { Header } from './Header';
 import { Outlet } from 'react-router';
 import { useDAOQuery } from 'queries/useDAOQuery';
 
-import { PageLayout } from 'components/layout';
 import { CurrentDaoProvider } from 'dao/components/CurrentDaoProvider';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -14,13 +11,13 @@ import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
 import { Text } from 'lib/ui/Text';
+import { PageLayout } from 'components/PageLayout';
+import { StickyWalletManager } from 'chain/components/StickyWalletManager';
 
 export const DAOPageContent = () => {
   const address = useCurrentDaoAddress();
 
   const { data: dao, status } = useDAOQuery(address);
-
-  const ref = useRef<HTMLDivElement>(null);
 
   return (
     <QueryDependant
@@ -46,18 +43,11 @@ export const DAOPageContent = () => {
               </VStack>
             )}
             normal={() => (
-              <ScrollableContainer
-                stickyRef={ref}
-                // header={(visible) => (
-                //   <StickyHeader visible={visible}>
-                //     <Header compact={true} />
-                //   </StickyHeader>
-                // )}
-              >
-                <PageLayout header={<Header ref={ref} />}>
-                  <Outlet />
-                </PageLayout>
-              </ScrollableContainer>
+              <PageLayout>
+                <Header />
+                <StickyWalletManager />
+                <Outlet />
+              </PageLayout>
             )}
           />
         </CurrentDaoProvider>
