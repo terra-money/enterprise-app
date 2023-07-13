@@ -13,6 +13,7 @@ export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
     <OverlayOpener
       renderOverlay={({ onClose }) => (
         <Modal
+          placement="top"
           title="Select a token"
           onClose={onClose}
           renderContent={() => (

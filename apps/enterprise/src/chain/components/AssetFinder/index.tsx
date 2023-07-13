@@ -29,26 +29,8 @@ export const AssetFinder = ({ onSelect }: AssetFinderProps) => {
       enabled: isSearchingForCW20,
     }
   );
-  console.log(cw20AssetStatus);
 
   const { data: assets, status: assetsStatus } = useAssetsInfoQuery();
-
-  const assetsToDisplay: (Asset & AssetInfo)[] = useMemo(() => {
-    if (isSearchingForCW20) {
-      return cw20Asset ? [cw20Asset] : [];
-    }
-
-    if (!assets) return [];
-
-    const items = Object.values(assets);
-    if (!searchText) return items;
-
-    return items.filter((asset) => {
-      const keys = removeUndefinedItems([asset.id, asset.name, asset.symbol]);
-
-      return keys.some((key) => key.toLowerCase().includes(searchText.toLowerCase()));
-    });
-  }, [assets, cw20Asset, isSearchingForCW20, searchText]);
 
   return (
     <VStack gap={24}>
@@ -63,10 +45,34 @@ export const AssetFinder = ({ onSelect }: AssetFinderProps) => {
         data={assets}
         error={() => <Text>Failed to load assets</Text>}
         loading={() => <Spinner />}
-        success={() => {
-          return assetsToDisplay.map((asset) => (
-            <AssetItem key={asset.id} asset={asset} onSelect={() => onSelect(asset)} />
-          ));
+        success={(assets) => {
+          if (isSearchingForCW20) {
+            return (
+              <QueryDependant
+                data={cw20Asset}
+                status={cw20AssetStatus}
+                error={() => <Text>Failed to find cw20</Text>}
+                loading={() => (
+                  <Text>
+                    <Spinner style={{ marginRight: 8 }} />
+                    Searching for cw20
+                  </Text>
+                )}
+                success={(asset) => <AssetItem key={asset.id} asset={asset} onSelect={() => onSelect(asset)} />}
+              />
+            );
+          }
+
+          let items = Object.values(assets);
+          if (searchText) {
+            items = items.filter((asset) => {
+              const keys = removeUndefinedItems([asset.id, asset.name, asset.symbol]);
+
+              return keys.some((key) => key.toLowerCase().includes(searchText.toLowerCase()));
+            });
+          }
+
+          return items.map((asset) => <AssetItem key={asset.id} asset={asset} onSelect={() => onSelect(asset)} />);
         }}
       />
     </VStack>
