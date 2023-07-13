@@ -1,24 +1,28 @@
 import { WalletButton } from 'chain/components/WalletButton';
 import { ConnectedWalletSummary } from './ConnectedWallet/ConnectedWalletSummary';
-import { DisconnectWallet } from './ConnectedWallet/DisconnectWallet';
 import { VStack } from 'lib/ui/Stack';
 import { Menu } from 'lib/ui/Menu';
+import { MenuOption } from 'lib/ui/Menu/MenuOption';
+import { useWallet } from '@terra-money/wallet-provider';
+import { LogOutIcon } from 'lib/ui/icons/LogOutIcon';
 
 export const ManageConnectedWallet = () => {
+  const { disconnect } = useWallet();
+
   return (
     <Menu
       title="Manage wallet"
-      renderOpener={props => (
+      renderOpener={(props) => (
         <div {...props}>
           <WalletButton />
         </div>
       )}
-      renderContent={() => (
-        <VStack gap={32}>
+      renderContent={({ view }) => (
+        <VStack gap={8}>
           <ConnectedWalletSummary />
-          <DisconnectWallet />
+          <MenuOption view={view} icon={<LogOutIcon />} onSelect={disconnect} text="Disconnect wallet" />
         </VStack>
       )}
     />
-  )
+  );
 };

@@ -34,6 +34,7 @@ export const PopoverContainer = styled(Panel)`
   background: ${({ theme: { colors, name } }) =>
     (name === 'dark' ? colors.foreground : colors.background).toCssValue()};
   overflow: hidden;
+  padding: 16px;
 `;
 
 export const PopoverPanel = ({ renderContent, renderOpener, className }: PopoverPanelProps) => {
@@ -67,7 +68,7 @@ export const PopoverPanel = ({ renderContent, renderOpener, className }: Popover
               clickOutsideDeactivates: true,
             }}
           >
-            <PopoverContainer padding={12} className={className}>
+            <PopoverContainer className={className}>
               {renderContent({ onClose: () => setIsOpen(false) })}
             </PopoverContainer>
           </FocusTrap>

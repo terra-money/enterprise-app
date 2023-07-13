@@ -1,4 +1,3 @@
-import { VStack } from 'lib/ui/Stack';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { LabeledValue } from 'lib/ui/LabeledValue';
 import { QueryDependant } from 'lib/query/components/QueryDependant';
@@ -21,7 +20,7 @@ export const ConnectedWalletSummary = () => {
   });
 
   return (
-    <VStack gap={8}>
+    <>
       <Address value={address} />
       <LabeledValue name="Balance">
         <QueryDependant
@@ -32,6 +31,6 @@ export const ConnectedWalletSummary = () => {
           success={(value) => `${formatAmount(fromChainAmount(value.toString(), lunaInfo.decimals))} LUNA`}
         />
       </LabeledValue>
-    </VStack>
+    </>
   );
 };
