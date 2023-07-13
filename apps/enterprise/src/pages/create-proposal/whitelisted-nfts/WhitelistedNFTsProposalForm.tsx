@@ -1,4 +1,3 @@
-import { AddButton } from 'components/add-button';
 import { FormSection } from 'components/form-section';
 import { fetchCW721ContractInfo } from 'queries';
 import { useState } from 'react';
@@ -11,6 +10,7 @@ import { useLCDClient } from '@terra-money/wallet-provider';
 import { validateAddress } from 'chain/utils/validators';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 interface NFTInputState {
   value: string;
@@ -93,6 +93,7 @@ export const WhitelistedNFTsProposalForm = () => {
           </div>
           {areNftsValid && (
             <AddButton
+              size="l"
               onClick={() => {
                 setNfts([...nfts, { value: '' }]);
                 handleNFTChange(nfts.length, '');

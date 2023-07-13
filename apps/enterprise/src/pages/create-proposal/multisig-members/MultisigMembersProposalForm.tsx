@@ -3,13 +3,13 @@ import { useCurrentDaoMultisigMembers } from './CurrentDAOMultisigMembersProvide
 import { useMemo, useState } from 'react';
 import { validateMembers } from 'pages/create-dao/multisig/helpers/validateMembers';
 import { MultisigMemberInput } from 'pages/create-dao/multisig/member/MultisigMemberInput';
-import { AddButton } from 'components/add-button';
 import { EMPTY_MEMBER } from 'pages/create-dao/DaoWizardFormProvider';
 import { toUpdateMultisigMembershipMsg } from './helpers/toUpdateMultisigMembershipMsg';
 import { isFormStateValid } from 'lib/shared/hooks/useForm';
 import { getRecord } from 'lib/shared/utils/getRecord';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 export const MultisigMembersProposalForm = () => {
   const initialMembers = useCurrentDaoMultisigMembers();
@@ -49,7 +49,7 @@ export const MultisigMembersProposalForm = () => {
           />
         );
       })}
-      {!hasInvalidMember && <AddButton onClick={() => setMembers([...members, EMPTY_MEMBER])} />}
+      {!hasInvalidMember && <AddButton size="l" onClick={() => setMembers([...members, EMPTY_MEMBER])} />}
     </ProposalForm>
   );
 };

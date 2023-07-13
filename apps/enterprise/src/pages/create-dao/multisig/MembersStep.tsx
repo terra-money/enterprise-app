@@ -3,9 +3,9 @@ import { WizardStep } from '../WizardStep';
 import styles from './MembersStep.module.sass';
 import { MultisigMemberInput } from './member/MultisigMemberInput';
 import { EMPTY_MEMBER, useDaoWizardForm } from '../DaoWizardFormProvider';
-import { AddButton } from 'components/add-button';
 import { MultisigMember } from 'types/MultisigMember';
 import { isFormStateValid } from 'lib/shared/hooks/useForm';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 const updateMember = (members: MultisigMember[], index: number, params: Partial<MultisigMember>): MultisigMember[] => {
   return members.map((member, i) => {
@@ -51,7 +51,9 @@ export function MembersStep() {
             />
           );
         })}
-        {areAllMembersValid && <AddButton onClick={() => formInput({ members: [...members, EMPTY_MEMBER] })} />}
+        {areAllMembersValid && (
+          <AddButton size="l" onClick={() => formInput({ members: [...members, EMPTY_MEMBER] })} />
+        )}
       </Stack>
     </WizardStep>
   );

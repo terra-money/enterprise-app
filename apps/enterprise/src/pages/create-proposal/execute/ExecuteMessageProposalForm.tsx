@@ -3,10 +3,10 @@ import { useMemo, useState } from 'react';
 import { ProposalForm } from '../shared/ProposalForm';
 import { validateWasmMsg } from './helpers/validateWasmMsg';
 import styles from './ExecuteMessageProposalForm.module.sass';
-import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 export const ExecuteMessageProposalForm = () => {
   const [messages, setMessages] = useState<string[]>(['']);
@@ -35,7 +35,7 @@ export const ExecuteMessageProposalForm = () => {
             <DeleteIconButton className={styles.button} onClick={() => setMessages(removeAtIndex(messages, index))} />
           </div>
         ))}
-        {areMessagesValid && <AddButton onClick={() => setMessages([...messages, ''])} />}
+        {areMessagesValid && <AddButton size="l" onClick={() => setMessages([...messages, ''])} />}
       </div>
     </ProposalForm>
   );

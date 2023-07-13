@@ -4,13 +4,13 @@ import { DeleteIconButton } from 'components/delete-icon-button';
 import { EMPTY_INITIAL_BALANCE, InitialBalance, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import styles from './InitialBalancesStep.module.sass';
-import { AddButton } from 'components/add-button';
 import { VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { enforceTextInputIntoNumber } from 'lib/ui/inputs/utils/enforceTextInputIntoNumber';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { removeUndefinedItems } from 'lib/shared/utils/removeUndefinedItems';
 import { sum } from 'lib/shared/utils/sum';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 const updateInitialBalance = (
   initialBalances: InitialBalance[],
@@ -91,7 +91,7 @@ export const InitialBalancesStep = () => {
             </div>
           );
         })}
-        <AddButton onClick={() => onChange([...initialBalances, EMPTY_INITIAL_BALANCE])} />
+        <AddButton size="l" onClick={() => onChange([...initialBalances, EMPTY_INITIAL_BALANCE])} />
       </VStack>
     </WizardStep>
   );

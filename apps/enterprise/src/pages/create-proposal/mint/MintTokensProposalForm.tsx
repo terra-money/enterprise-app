@@ -8,9 +8,9 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { DeleteIconButton } from 'components/delete-icon-button';
-import { AddButton } from 'components/add-button';
 import { terraAddressRegex } from 'chain/utils/validators';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 interface MintMember {
   address: string;
@@ -105,7 +105,7 @@ export const MintTokensProposalForm = () => {
             <DeleteIconButton style={{ marginTop: 48 }} size="small" onClick={() => remove(index)} />
           </HStack>
         ))}
-        {(isValid || !fields.length) && <AddButton onClick={() => append({ address: '', amount: 0 })} />}
+        {(isValid || !fields.length) && <AddButton size="l" onClick={() => append({ address: '', amount: 0 })} />}
       </VStack>
     </ProposalForm>
   );

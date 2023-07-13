@@ -1,8 +1,8 @@
 import { Asset } from 'chain/Asset';
 import { AssetFinder } from 'chain/components/AssetFinder';
-import { AddButton } from 'components/add-button';
 import { Modal } from 'lib/ui/Modal';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 interface AddTokenButtonProps {
   onSelect: (asset: Asset) => void;
@@ -26,7 +26,7 @@ export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
           )}
         />
       )}
-      renderOpener={({ onOpen }) => <AddButton onClick={onOpen} />}
+      renderOpener={({ onOpen }) => <AddButton size="l" onClick={onOpen} />}
     />
   );
 };

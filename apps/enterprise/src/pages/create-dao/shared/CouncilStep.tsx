@@ -1,4 +1,3 @@
-import { AddButton } from 'components/add-button';
 import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Line } from 'lib/ui/Line';
@@ -11,6 +10,7 @@ import { CouncilProposalActionType, ProposalTypesInput } from './ProposalTypesIn
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 export function CouncilStep() {
   const {
@@ -63,7 +63,7 @@ export function CouncilStep() {
               <DeleteIconButton onClick={() => updateMembers(removeAtIndex(council.members, index))} />
             </HStack>
           ))}
-          {isValid && <AddButton onClick={() => updateMembers([...council.members, { address: '' }])} />}
+          {isValid && <AddButton size="l" onClick={() => updateMembers([...council.members, { address: '' }])} />}
         </VStack>
       </VStack>
     </WizardStep>
