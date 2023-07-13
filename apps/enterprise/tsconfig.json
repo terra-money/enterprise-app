@@ -18,8 +18,5 @@
     "jsx": "react-jsx",
     "baseUrl": "src"
   },
-  "paths": {
-    "@terra-money/apps/*": ["../../shared/*"]
-  },
   "include": ["src"]
 }

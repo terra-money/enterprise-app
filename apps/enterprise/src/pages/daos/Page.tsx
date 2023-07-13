@@ -1,4 +1,3 @@
-import { Container } from '@terra-money/apps/components';
 import { IconButton } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
@@ -58,12 +57,12 @@ export const Page = () => {
   const filters = <DaoFilter value={daoTypesToDisplay} onChange={setDaoTypesToDisplay} />;
 
   const noResults = (
-    <Container className={styles.noResultsContainer}>
+    <VStack className={styles.noResultsContainer}>
       <IconButton className={styles.Icon} onClick={() => setSearchText('')}>
         <ErrorIcon />
       </IconButton>
       <Text className={styles.noResultsLabel}>We couldn’t find any DAOs matching your criteria. Please try again.</Text>
-    </Container>
+    </VStack>
   );
 
   const content = isLoading || data.length > 0 ? <List items={items} /> : noResults;
