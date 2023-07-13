@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack } from 'lib/ui/Stack';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
-import { DeleteIconButton } from 'components/delete-icon-button';
 import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 interface WhitelistedAssetProps {
   asset: Asset;
@@ -28,7 +28,7 @@ export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => 
           <Icon icon={assetInfo?.icon} />
         </HStack>
         <Text cropped>{assetInfo?.name || assetInfo?.symbol || asset.id}</Text>
-        {onRemove && <DeleteIconButton onClick={onRemove} />}
+        {onRemove && <DeleteButton size="l" onClick={onRemove} />}
       </HStack>
     </Panel>
   );

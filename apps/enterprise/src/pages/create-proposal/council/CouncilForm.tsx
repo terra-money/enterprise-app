@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -16,6 +15,7 @@ import { ThresholdInput } from 'pages/create-dao/gov-config/ThresholdInput';
 import { terraAddressRegex } from 'chain/utils/validators';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { AddButton } from 'lib/ui/buttons/AddButton';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 interface CouncilFormSchema {
   members: CouncilMember[];
@@ -123,7 +123,7 @@ export const CouncilForm = () => {
                 {...register(`members.${index}.address`)}
                 error={errors.members?.[index]?.address?.message}
               />
-              <DeleteIconButton onClick={() => remove(index)} />
+              <DeleteButton size="l" onClick={() => remove(index)} />
             </HStack>
           ))}
           {isValid && <AddButton size="l" onClick={() => append({ address: '' })} />}

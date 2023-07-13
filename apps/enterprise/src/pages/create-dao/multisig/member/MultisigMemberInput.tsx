@@ -2,13 +2,13 @@ import { Stack } from 'lib/ui/Stack';
 import styles from './MultisigMemberInput.module.sass';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { DeleteIconButton } from 'components/delete-icon-button';
 import { MultisigMember } from 'types/MultisigMember';
 import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import styled from 'styled-components';
 import { Slider } from 'lib/ui/inputs/Slider';
 import { FormState } from 'lib/shared/hooks/useForm';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 interface MultisigMemberInputProps extends FormState<MultisigMember> {
   onChange: (member: Partial<MultisigMember>) => void;
@@ -47,7 +47,7 @@ export const MultisigMemberInput = ({ addr, addrError, weight, onChange, onRemov
             onChange={({ currentTarget }) => onChange({ addr: currentTarget.value })}
           />
 
-          <DeleteIconButton size="small" onClick={onRemove} />
+          <DeleteButton onClick={onRemove} />
         </Stack>
         {!addrError && (
           <Stack direction="row" className={styles.row}>
