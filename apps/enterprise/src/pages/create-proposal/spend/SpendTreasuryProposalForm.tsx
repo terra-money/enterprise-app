@@ -18,7 +18,7 @@ import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;
-  amount: number;
+  amount: number | undefined;
 }
 
 export const SpendTreasuryProposalForm = () => {
@@ -54,7 +54,7 @@ export const SpendTreasuryProposalForm = () => {
               action_type: 'spend',
               msgs: [
                 toSpendTreasuryMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   destinationAddress,
                   assetId: id,
                   assetDecimals: decimals,

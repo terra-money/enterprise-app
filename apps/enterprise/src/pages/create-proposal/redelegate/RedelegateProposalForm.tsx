@@ -18,7 +18,7 @@ import { TextInput } from 'lib/ui/inputs/TextInput';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface RedelegateProposalFormSchema {
-  amount: number;
+  amount: number | undefined;
   newAddress: string;
 }
 
@@ -65,7 +65,7 @@ export const RedelegateProposalForm = () => {
               action_type: 'redelegate',
               msgs: [
                 toRedelegateMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   oldAddress: assertDefined(validator),
                   newAddress,
                 }),

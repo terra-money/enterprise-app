@@ -16,7 +16,7 @@ import { toUndelegateMsg } from './toUndelegateMsg';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface UndelegateProposalFormSchema {
-  amount: number;
+  amount: number | undefined;
 }
 
 export const UndelegateProposalForm = () => {
@@ -60,7 +60,7 @@ export const UndelegateProposalForm = () => {
               action_type: 'undelegate',
               msgs: [
                 toUndelegateMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   address: assertDefined(validator),
                 }),
               ],

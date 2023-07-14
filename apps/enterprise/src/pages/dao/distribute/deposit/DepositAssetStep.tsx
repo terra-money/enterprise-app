@@ -13,6 +13,7 @@ import * as z from 'zod';
 import Big from 'big.js';
 import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 import { Asset, AssetInfo } from 'chain/Asset';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface DepositAssetStepProps {
   asset: Asset & AssetInfo;
@@ -21,7 +22,7 @@ interface DepositAssetStepProps {
 }
 
 interface DepositFormSchema {
-  amount: number;
+  amount: number | undefined;
 }
 
 export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepProps) => {
@@ -90,7 +91,12 @@ export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepP
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
-            depositTx({ address: dao.funds_distributor_contract, amount, decimals: asset.decimals, denom: asset.id });
+            depositTx({
+              address: dao.funds_distributor_contract,
+              amount: assertDefined(amount),
+              decimals: asset.decimals,
+              denom: asset.id,
+            });
           })}
         >
           Deposit

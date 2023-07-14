@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDAOQuery, useProposalQuery } from 'queries';
 
@@ -31,8 +30,6 @@ export const ProposalPageContent = () => {
     daoAddress: assertDefined(address),
     id: proposalId,
   });
-
-  const ref = useRef<HTMLDivElement>(null);
 
   const content = (
     <>

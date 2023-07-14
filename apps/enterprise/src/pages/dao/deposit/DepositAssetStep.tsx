@@ -6,6 +6,7 @@ import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositTx } from 'dao/tx/useDepositTx';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { Button } from 'lib/ui/buttons/Button';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
@@ -21,7 +22,7 @@ interface DepositAssetStepProps {
 }
 
 interface DepositFormSchema {
-  amount: number;
+  amount: number | undefined;
 }
 
 export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepProps) => {
@@ -91,7 +92,12 @@ export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepP
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
-            depositTx({ address: dao.address, amount, decimals: asset.decimals, denom: asset.id });
+            depositTx({
+              address: dao.address,
+              amount: assertDefined(amount),
+              decimals: asset.decimals,
+              denom: asset.id,
+            });
           })}
         >
           Deposit

@@ -28,7 +28,6 @@ export const AmountTextInput = forwardRef(function AmountInputInner(
     onValueChange,
     label,
     onChange,
-    max,
     value,
     inputOverlay,
     unit,

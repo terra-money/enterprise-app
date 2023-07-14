@@ -15,7 +15,7 @@ import { zodAddressValidator } from 'chain/utils/validators';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 
 interface DelegateProposalFormSchema {
-  amount: number;
+  amount: number | undefined;
   address: string;
 }
 
@@ -54,7 +54,7 @@ export const DelegateProposalForm = () => {
               action_type: 'delegate',
               msgs: [
                 toDelegateMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   address,
                   tokenDecimals: decimals,
                 }),

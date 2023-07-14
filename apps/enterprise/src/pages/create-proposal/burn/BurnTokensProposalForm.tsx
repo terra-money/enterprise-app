@@ -13,7 +13,7 @@ import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 interface MintTokensProposalFormSchema {
-  amount: number;
+  amount: number | undefined;
 }
 
 export const BurnTokensProposalForm = () => {
@@ -50,7 +50,7 @@ export const BurnTokensProposalForm = () => {
               action_type: 'burn',
               msgs: [
                 toBurnTokensMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   tokenDecimals: decimals,
                   tokenAddress: dao.dao_membership_contract,
                 }),
@@ -64,7 +64,7 @@ export const BurnTokensProposalForm = () => {
         <Controller
           control={control}
           name="amount"
-          render={({ field: { onChange, onBlur, value, name, ref } }) => (
+          render={({ field: { onChange, onBlur, value, ref } }) => (
             <AmountTextInput
               error={errors.amount?.message}
               label="Amount"
