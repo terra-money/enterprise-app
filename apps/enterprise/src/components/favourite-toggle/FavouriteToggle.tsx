@@ -1,35 +1,43 @@
-import { IconButton } from 'components/primitives';
-import { ReactComponent as StarIcon } from 'components/assets/Star.svg';
-import classNames from 'classnames';
 import { DAO } from 'types';
-import styles from './FavouriteToggle.module.sass';
 import { usePersonalization } from 'libs/personalization/PersonalizationProvider';
-
-type FavouriteToggleSize = 'small' | 'medium';
+import { IconButton } from 'lib/ui/buttons/IconButton';
+import { StarIcon } from 'lib/ui/icons/StarIcon';
+import styled from 'styled-components';
+import { matchColor } from 'lib/ui/theme/getters';
 
 interface FavouriteToggleProps {
   className?: string;
   dao: DAO;
-  size?: FavouriteToggleSize;
 }
 
+const Button = styled(IconButton)<{ isFavourite: boolean }>`
+  color: ${matchColor('isFavourite', {
+    true: 'idle',
+    false: 'text',
+  })};
+
+  :hover {
+    color: ${matchColor('isFavourite', {
+      true: 'idle',
+      false: 'contrast',
+    })};
+  }
+`;
+
 export const FavouriteToggle = (props: FavouriteToggleProps) => {
-  const { className, dao, size = 'medium' } = props;
+  const { dao } = props;
 
   const [{ favourites }, dispatch] = usePersonalization();
 
   const isFavourite = favourites.filter((f) => f.address === dao.address).length > 0;
 
   return (
-    <IconButton
-      className={classNames(className, styles.root, {
-        [styles.active]: isFavourite,
-        [styles.small]: size === 'small',
-      })}
-      onClick={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
+    <Button
+      isFavourite={isFavourite}
+      icon={<StarIcon />}
+      title={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+      size="l"
+      onClick={() => {
         isFavourite
           ? dispatch({
               type: 'REMOVE_FAVOURITE',
@@ -44,8 +52,6 @@ export const FavouriteToggle = (props: FavouriteToggleProps) => {
               },
             });
       }}
-    >
-      <StarIcon />
-    </IconButton>
+    />
   );
 };

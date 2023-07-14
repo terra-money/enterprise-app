@@ -41,7 +41,7 @@ const Container = styled.button<ContainerProps>`
     alert: 'alert',
   })};
 
-  font-size: ${({ size }) => `calc(${getCSSUnit(sizeRecord[size] * 0.52)})`};
+  font-size: ${({ size }) => `calc(${getCSSUnit(sizeRecord[size] * 0.42)})`};
 
   ${roundedCSS};
 
@@ -60,20 +60,24 @@ const Container = styled.button<ContainerProps>`
       alert: () => colors.alert.getVariant({ a: (a) => a * 0.12 }),
     }).toCssValue()};
 
-  :hover {
-    background: ${({ kind, theme: { colors } }) =>
-      match(kind, {
-        regular: () => colors.mist,
-        secondary: () => colors.mist,
-        alert: () => colors.alert.getVariant({ a: (a) => a * 0.24 }),
-      }).toCssValue()};
+  ${({ isDisabled, isLoading, kind, theme: { colors } }) =>
+    !isDisabled &&
+    !isLoading &&
+    css`
+      :hover {
+        background: ${match(kind, {
+          regular: () => colors.mist,
+          secondary: () => colors.mist,
+          alert: () => colors.alert.getVariant({ a: (a) => a * 0.24 }),
+        }).toCssValue()};
 
-    color: ${matchColor('kind', {
-      regular: 'contrast',
-      secondary: 'contrast',
-      alert: 'alert',
-    })};
-  }
+        color: ${match(kind, {
+          regular: () => colors.contrast,
+          secondary: () => colors.contrast,
+          alert: () => colors.alert,
+        }).toCssValue()};
+      }
+    `};
 `;
 
 export interface IconButtonProps extends ComponentProps<typeof Container> {

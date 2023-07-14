@@ -14,7 +14,7 @@ export const MobileDaoHeader = () => {
   return (
     <VStack gap={24}>
       <HStack gap={8}>
-        <FavouriteToggle size="small" dao={toDao(dao)} />
+        <FavouriteToggle dao={toDao(dao)} />
         <DAOLogo size="s" logo={getDaoLogo(dao)} />
       </HStack>
       <Text size={24} weight="bold">

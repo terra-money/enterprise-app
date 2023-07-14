@@ -1,4 +1,3 @@
-import { IconButton, Text } from 'components/primitives';
 import { useProposalVoteQuery, useVotingPowerQuery } from 'queries';
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -9,13 +8,14 @@ import { ReactComponent as VoteYes } from 'components/assets/VoteYes.svg';
 import { ReactComponent as VoteNo } from 'components/assets/VoteNo.svg';
 import { ReactComponent as VoteAbstain } from 'components/assets/VoteAbstain.svg';
 import { ReactComponent as VoteVeto } from 'components/assets/VoteVeto.svg';
-import styles from './CastVote.module.sass';
-import classNames from 'classnames';
 import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { Tooltip } from 'lib/ui/Tooltip';
 import { HStack } from 'lib/ui/Stack';
 import { Button } from 'lib/ui/buttons/Button';
+import { Text } from 'lib/ui/Text';
+import { Spinner } from 'lib/ui/Spinner';
+import { IconButton } from 'lib/ui/buttons/IconButton';
 
 interface VoteOption {
   outcome: enterprise.VoteOutcome;
@@ -24,10 +24,10 @@ interface VoteOption {
 }
 
 export const VoteOptions: Array<VoteOption> = [
-  { outcome: 'yes', icon: <VoteYes className={styles.icon} />, tooltip: 'Yes' },
-  { outcome: 'no', icon: <VoteNo className={styles.icon} />, tooltip: 'No' },
-  { outcome: 'abstain', icon: <VoteAbstain className={styles.icon} />, tooltip: 'Abstain' },
-  { outcome: 'veto', icon: <VoteVeto className={styles.icon} />, tooltip: 'Veto' },
+  { outcome: 'yes', icon: <VoteYes />, tooltip: 'Yes' },
+  { outcome: 'no', icon: <VoteNo />, tooltip: 'No' },
+  { outcome: 'abstain', icon: <VoteAbstain />, tooltip: 'Abstain' },
+  { outcome: 'veto', icon: <VoteVeto />, tooltip: 'Veto' },
 ];
 
 export const CastVote = () => {
@@ -51,16 +51,16 @@ export const CastVote = () => {
 
   if (!myAddress) {
     // TODO: show a button to connect a wallet
-    return <Text variant="text">Connect your wallet to vote</Text>;
+    return <Text>Connect your wallet to vote</Text>;
   }
 
   if (isVotingPowerLoading) {
     // TODO: show a spinner
-    return <Text variant="text">Loading voting power ...</Text>;
+    return <Text>Loading voting power ...</Text>;
   }
 
   if (proposal.type === 'council' && !amICouncilMember) {
-    return <Text variant="text">Only council members can vote</Text>;
+    return <Text>Only council members can vote</Text>;
   }
 
   if (proposal.type === 'general' && votingPower && votingPower.eq(0)) {
@@ -68,6 +68,14 @@ export const CastVote = () => {
       return null;
     }
     return <Button onClick={() => navigate(`/dao/${proposal.dao.address}/staking`)}>Stake to vote</Button>;
+  }
+
+  if (txResult.loading) {
+    return (
+      <Text>
+        <Spinner style={{ marginRight: 8 }} /> Waiting for transaction
+      </Text>
+    );
   }
 
   return (
@@ -78,12 +86,11 @@ export const CastVote = () => {
           renderOpener={(props) => (
             <div {...props}>
               <IconButton
+                title={tooltip}
+                icon={icon}
                 key={outcome}
-                className={classNames({ [styles.active]: myVote?.outcome === index })}
-                size="small"
-                variant="secondary"
-                loading={txResult.loading && outcome === vote}
-                disabled={txResult.loading && outcome !== vote}
+                kind={myVote?.outcome === index ? 'regular' : 'secondary'}
+                isDisabled={txResult.loading && outcome !== vote}
                 onClick={async () => {
                   setVote(outcome);
                   try {
@@ -96,9 +103,7 @@ export const CastVote = () => {
                     setVote(undefined);
                   }
                 }}
-              >
-                {icon}
-              </IconButton>
+              />
             </div>
           )}
         />

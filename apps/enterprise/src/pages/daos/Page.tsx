@@ -1,12 +1,8 @@
-import { IconButton } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
-import { List } from './List';
-import styles from './Page.module.sass';
-import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
@@ -14,6 +10,8 @@ import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
 import { SearchInput } from 'lib/ui/inputs/SearchInput';
 import { PageLayout } from 'components/PageLayout';
 import { StickyWalletManager } from 'chain/components/StickyWalletManager';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { DAOCard } from 'pages/shared/DAOCard';
 
 export const Page = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -46,7 +44,6 @@ export const Page = () => {
   const searchInput = (
     <SearchInput
       value={searchText}
-      style={{ maxWidth: 400 }}
       onValueChange={setSearchText}
       onClear={() => {
         setSearchText('');
@@ -56,16 +53,13 @@ export const Page = () => {
 
   const filters = <DaoFilter value={daoTypesToDisplay} onChange={setDaoTypesToDisplay} />;
 
-  const noResults = (
-    <VStack className={styles.noResultsContainer}>
-      <IconButton className={styles.Icon} onClick={() => setSearchText('')}>
-        <ErrorIcon />
-      </IconButton>
-      <Text className={styles.noResultsLabel}>We couldn’t find any DAOs matching your criteria. Please try again.</Text>
-    </VStack>
+  const content = (
+    <SameWidthChildrenRow gap={16} maxColumns={3} fullWidth minChildrenWidth={320}>
+      {items?.map((dao, index) => (
+        <DAOCard key={index} dao={dao} />
+      ))}
+    </SameWidthChildrenRow>
   );
-
-  const content = isLoading || data.length > 0 ? <List items={items} /> : noResults;
 
   return (
     <ResponsiveView
