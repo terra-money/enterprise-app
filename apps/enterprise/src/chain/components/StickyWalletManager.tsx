@@ -3,8 +3,8 @@ import { ManageWallet } from './ManageWallet';
 
 const Container = styled.div`
   position: absolute;
-  right: 48px;
-  top: 48px;
+  right: 0;
+  top: 0;
 `;
 
 export const StickyWalletManager = () => (
