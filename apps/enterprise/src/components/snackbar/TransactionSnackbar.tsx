@@ -1,7 +1,6 @@
-import { FailedTransaction, Transaction, TransactionStatus } from 'chain/transactions';
+import { Transaction, TransactionStatus } from 'chain/transactions';
 import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
-import { UserDenied } from '@terra-money/wallet-provider';
 import { useMemo } from 'react';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
 import { useNetworkName } from 'chain/hooks/useNetworkName';
