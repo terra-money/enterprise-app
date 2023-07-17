@@ -1,8 +1,8 @@
-import { UIElementProps } from '@terra-money/apps/components';
 import { createContext, Dispatch, useContext, useEffect, useReducer } from 'react';
 import { Favourite } from './types';
-import { NetworkName, useNetworkName } from '@terra-money/apps/hooks';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
+import { NetworkName, useNetworkName } from 'chain/hooks/useNetworkName';
 
 interface PersonalizationState {
   favourites: Array<Favourite>;
@@ -58,7 +58,7 @@ export const usePersonalization = () => {
   return context;
 };
 
-interface PersonalizationProviderProps extends UIElementProps {}
+interface PersonalizationProviderProps extends ComponentWithChildrenProps {}
 
 const createStorageKey = (networkName: NetworkName, address?: string) => {
   const parts = ['__personalization', networkName];

@@ -1,21 +1,19 @@
-import { Container, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { PageLayout } from 'components/layout';
-import { IconButton, SearchInput } from 'components/primitives';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
-import { List } from './List';
-import styles from './Page.module.sass';
-import { ReactComponent as ErrorIcon } from 'components/assets/Error.svg';
 import { enterprise } from 'types/contracts';
 import { daoTypes } from 'dao';
 import { DaoFilter } from './DaoFilter';
 import { useAllDaosQuery } from 'dao/hooks/useAllDaosQuery';
+import { SearchInput } from 'lib/ui/inputs/SearchInput';
+import { PageLayout } from 'components/PageLayout';
+import { StickyWalletManager } from 'chain/components/StickyWalletManager';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
+import { DAOCard } from 'pages/shared/DAOCard';
 
 export const Page = () => {
-  const stickyRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [daoTypesToDisplay, setDaoTypesToDisplay] = useState<enterprise.DaoType[]>(daoTypes);
@@ -46,7 +44,7 @@ export const Page = () => {
   const searchInput = (
     <SearchInput
       value={searchText}
-      onChange={setSearchText}
+      onValueChange={setSearchText}
       onClear={() => {
         setSearchText('');
       }}
@@ -55,16 +53,13 @@ export const Page = () => {
 
   const filters = <DaoFilter value={daoTypesToDisplay} onChange={setDaoTypesToDisplay} />;
 
-  const noResults = (
-    <Container className={styles.noResultsContainer}>
-      <IconButton className={styles.Icon} onClick={() => setSearchText('')}>
-        <ErrorIcon />
-      </IconButton>
-      <Text className={styles.noResultsLabel}>We couldn’t find any DAOs matching your criteria. Please try again.</Text>
-    </Container>
+  const content = (
+    <SameWidthChildrenRow gap={16} maxColumns={3} fullWidth minChildrenWidth={320}>
+      {items?.map((dao, index) => (
+        <DAOCard key={index} dao={dao} />
+      ))}
+    </SameWidthChildrenRow>
   );
-
-  const content = isLoading || data.length > 0 ? <List items={items} isLoading={isLoading} /> : noResults;
 
   return (
     <ResponsiveView
@@ -78,34 +73,11 @@ export const Page = () => {
         </VStack>
       )}
       normal={() => (
-        <ScrollableContainer
-          stickyRef={stickyRef}
-          header={(visible) => (
-            <StickyHeader visible={visible}>
-              <Header
-                compact={true}
-                isLoading={isLoading}
-                totalCount={items?.length ?? 0}
-                searchInput={searchInput}
-                filters={filters}
-              />
-            </StickyHeader>
-          )}
-        >
-          <PageLayout
-            header={
-              <Header
-                ref={stickyRef}
-                isLoading={isLoading}
-                totalCount={items?.length ?? 0}
-                searchInput={searchInput}
-                filters={filters}
-              />
-            }
-          >
-            {content}
-          </PageLayout>
-        </ScrollableContainer>
+        <PageLayout>
+          <Header isLoading={isLoading} totalCount={items?.length ?? 0} searchInput={searchInput} filters={filters} />
+          <StickyWalletManager />
+          {content}
+        </PageLayout>
       )}
     />
   );

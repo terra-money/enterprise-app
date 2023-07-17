@@ -1,19 +1,24 @@
 import Big from 'big.js';
 import { FormFooter } from 'components/form-footer';
-import { Button, Divider, Text, Throbber } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { useNavigate } from 'react-router';
-import { u } from '@terra-money/apps/types';
-import { useCW20BalanceQuery, useCW20TokenInfoQuery } from 'queries';
-import { Container } from '@terra-money/apps/components';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+
+import { useCW20TokenInfoQuery } from 'queries';
+import { Stack } from 'lib/ui/Stack';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import styles from './CreateProposalFooter.module.sass';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
+import { Line } from 'lib/ui/Line';
+import { Spinner } from 'lib/ui/Spinner';
+import { Button } from 'lib/ui/buttons/Button';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 
 interface DepositOverviewProps {
   minimumDeposit: Big;
   tokenAddress: string;
-  balance: u<Big>;
+  balance: string;
   isBalanceLoading: boolean;
 }
 
@@ -24,14 +29,14 @@ const DepositOverview = (props: DepositOverviewProps) => {
 
   return (
     <>
-      <Divider />
-      <Container className={styles.deposits} direction="row" gap={48}>
-        <Container direction="column" gap={8}>
+      <Line />
+      <Stack className={styles.deposits} direction="row" gap={48}>
+        <Stack direction="column" gap={8}>
           {token ? (
             <>
               <Text className={styles.heading} variant="text">{`Deposit required (${token.symbol})`}</Text>
               <Text variant="heading4">
-                {formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, token.decimals), { decimals: 2 })}
+                {formatAmount(fromChainAmount(Big(minimumDeposit).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
           ) : (
@@ -39,17 +44,17 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Text className={styles.heading} variant="text">
                 Deposit required
               </Text>
-              <Throbber />
+              <Spinner />
             </>
           )}
-        </Container>
-        <Container direction="column" gap={8}>
+        </Stack>
+        <Stack direction="column" gap={8}>
           {isBalanceLoading || !token ? (
             <>
               <Text className={styles.heading} variant="text">
                 Your balance
               </Text>
-              <Throbber />
+              <Spinner />
             </>
           ) : (
             <>
@@ -58,16 +63,16 @@ const DepositOverview = (props: DepositOverviewProps) => {
               </Text>
               <Text
                 style={{
-                  color: balance.gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
+                  color: Big(balance).gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
                 }}
                 variant="heading4"
               >
-                {formatAmount(demicrofy(balance, token.decimals), { decimals: 2 })}
+                {formatAmount(fromChainAmount(Big(balance).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
           )}
-        </Container>
-      </Container>
+        </Stack>
+      </Stack>
     </>
   );
 };
@@ -91,18 +96,18 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
 
   const myAddress = useAssertMyAddress();
 
-  const { data: balance = Big(0) as u<Big>, isLoading: isBalanceLoading } = useCW20BalanceQuery(
-    myAddress,
-    tokenAddress,
-    {
-      enabled: isDepositRequired,
-    }
-  );
+  const { data: balance = '0', isLoading: isBalanceLoading } = useAssetBalanceQury({
+    address: myAddress,
+    asset: {
+      type: 'cw20',
+      id: tokenAddress,
+    },
+  });
 
-  const isSubmitDisabled = disabled || (isDepositRequired && balance.lt(minimumDeposit));
+  const isSubmitDisabled = disabled || (isDepositRequired && (!balance || Big(balance).lt(minimumDeposit)));
 
   return (
-    <Container className={styles.root} direction="column">
+    <Stack className={styles.root} direction="column">
       {isDepositRequired && (
         <DepositOverview
           minimumDeposit={minimumDeposit}
@@ -113,21 +118,16 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
       )}
       <FormFooter
         primary={
-          <Button
-            variant="primary"
-            disabled={isSubmitDisabled}
-            loading={loading || isBalanceLoading}
-            onClick={onSubmit}
-          >
+          <Button disabled={isSubmitDisabled} loading={loading || isBalanceLoading} onClick={onSubmit}>
             Create
           </Button>
         }
         secondary={
-          <Button variant="secondary" onClick={() => navigate(`/dao/${dao.address}/proposals`)}>
+          <Button kind="secondary" onClick={() => navigate(`/dao/${dao.address}/proposals`)}>
             Cancel
           </Button>
         }
       />
-    </Container>
+    </Stack>
   );
 };

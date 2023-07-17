@@ -1,5 +1,9 @@
-import { FormState } from '@terra-money/apps/hooks';
-import { validateAddress, validateAmount, validateLength, validatePattern, validateUrl } from '@terra-money/apps/utils';
+import { validateAddress } from 'chain/utils/validators';
+import { FormState } from 'lib/shared/hooks/useForm';
+import { validateAmount } from 'lib/shared/utils/validateAmount';
+import { validateLength } from 'lib/shared/utils/validateLength';
+import { validatePattern } from 'lib/shared/utils/validatePattern';
+import { validateUrl } from 'lib/ui/utils/validateUrl';
 import { TokenInfo } from 'pages/create-dao/DaoWizardFormProvider';
 
 export const validateTokenInfo = ({

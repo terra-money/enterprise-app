@@ -1,9 +1,9 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
 import { useLCDClient } from '@terra-money/wallet-provider';
-import { TxResponse } from '@terra-money/apps/types';
 import { getRecord } from 'lib/shared/utils/getRecord';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
+import { TxResponse } from 'chain/transactions';
 
 const transactionsInOnePage = 100;
 

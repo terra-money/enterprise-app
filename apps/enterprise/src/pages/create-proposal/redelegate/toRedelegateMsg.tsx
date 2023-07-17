@@ -1,4 +1,4 @@
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { RedelegateMsg } from 'chain/CosmWasm';
 import { lunaDecimals } from 'chain/constants';
 
@@ -13,13 +13,13 @@ export const toRedelegateMsg = ({ amount, oldAddress, newAddress }: UndelegateMs
     staking: {
       redelegate: {
         amount: {
-          amount: microfy(amount, lunaDecimals).toString(),
+          amount: toChainAmount(amount, lunaDecimals).toString(),
           denom: 'uluna',
         },
         src_validator: oldAddress,
         dst_validator: newAddress,
-      }
-    }
+      },
+    },
   };
 
   return JSON.stringify(msg);

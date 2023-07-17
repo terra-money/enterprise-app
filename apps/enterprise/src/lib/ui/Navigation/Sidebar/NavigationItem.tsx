@@ -20,12 +20,12 @@ export const Container = styled.div<{ isActive?: boolean }>`
   ${defaultTransitionCSS};
   border-radius: 8px;
   :hover {
-    background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+    background: ${({ theme }) => theme.colors.mist.toCssValue()};
   }
   ${({ isActive, theme }) =>
     isActive &&
     css`
-      background: ${theme.colors.backgroundGlass.toCssValue()};
+      background: ${theme.colors.mist.toCssValue()};
     `}
 `;
 

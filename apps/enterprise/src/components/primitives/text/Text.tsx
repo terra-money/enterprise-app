@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { forwardRef, ReactNode } from 'react';
-import { UIElementProps } from '@terra-money/apps/components';
 import styles from './Text.module.sass';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
 
 type ComponentName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'sub';
 
@@ -18,13 +18,15 @@ const DefaultComponent: Record<TextVariant, ComponentName> = {
   button: 'span',
 };
 
-export interface TextProps extends UIElementProps {
+export interface TextProps extends ComponentWithChildrenProps {
   variant: TextVariant;
   component?: ComponentName;
   weight?: 'normal' | 'bold' | 'default';
   children: ReactNode;
   tooltip?: string | ReactNode;
   onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const Text = forwardRef<any, TextProps>((props, ref) => {

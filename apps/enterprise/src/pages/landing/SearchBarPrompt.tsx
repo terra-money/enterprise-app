@@ -1,8 +1,9 @@
 import { InternalLink } from 'components/link/InternalLink';
-import { Button, Text } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { Path } from 'navigation';
 import styles from './SearchBarPrompt.module.sass';
 import { ReactComponent as SearchIcon } from 'components/assets/Search.svg';
+import { Button } from 'lib/ui/buttons/Button';
 
 export const SearchBarPrompt = () => {
   return (
@@ -11,7 +12,7 @@ export const SearchBarPrompt = () => {
         <SearchIcon />
         <Text variant="text">Search for DAO...</Text>
       </div>
-      <Button variant="primary">Create new</Button>
+      <Button>Create new</Button>
     </InternalLink>
   );
 };

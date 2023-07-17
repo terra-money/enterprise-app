@@ -1,11 +1,6 @@
-import { AnimateNumber, Container } from '@terra-money/apps/components';
-import { formatAmount } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
-import { NumericPanel } from 'components/numeric-panel';
 import { useVotingPowerQuery, useNFTStakingQuery, useReleasableClaimsQuery } from 'queries';
 import { useClaimTx } from 'tx';
-import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { StakeNFTOverlay } from './StakeNFTOverlay';
 import { PendingClaims } from './PendingClaims';
@@ -17,14 +12,18 @@ import { useNftDaoStakingInfo } from 'dao/hooks/useNftDaoStakingInfo';
 import { NftDaoTotalSupplyPanel } from '../NftDaoTotalSupplyPanel';
 import { NftDaoTotalStakedPanel } from '../NftDaoTotalStakedPanel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
-import { VStack } from 'lib/ui/Stack';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { UnstakeNFTOverlay } from './UnstakeNFTOverlay';
 import { useMyNftsQuery } from 'chain/queries/useMyNftsQuery';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
-const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
+const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
   const { data: walletStaked = { amount: 0, tokens: [] } } = useNFTStakingQuery(daoAddress, walletAddress);
 
   const { data: walletVotingPower = Big(0) } = useVotingPowerQuery(daoAddress, walletAddress);
@@ -73,29 +72,24 @@ export const NftStakingConnectedView = () => {
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
         <VStack gap={16}>
-          <Container className={styles.staking} component="section" direction="column">
+          <VStack className={styles.staking} as="section">
             <VStack gap={40}>
-              <Container className={styles.header}>
+              <HStack alignItems="center" className={styles.header}>
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text variant="label" className={styles.title}>
-                  Voting power
-                </Text>
-                <Text variant="heading3">
-                  <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
-                    {walletVotingPower.mul(100)}
-                  </AnimateNumber>
-                </Text>
-              </Container>
-              <Container className={styles.actions} direction="row">
+                <TitledSection title="Voting power">
+                  <NumericStatistic value={toPercents(walletVotingPower.toNumber(), 'round')} />
+                </TitledSection>
+              </HStack>
+              <HStack className={styles.actions}>
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       isLoading={isLoading}
                       isDisabled={isStakingDisabled ? `You don't have any DAO NFTs to stake` : undefined}
                       onClick={onOpen}
                     >
                       Stake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
@@ -104,38 +98,34 @@ export const NftStakingConnectedView = () => {
 
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       kind="secondary"
                       isDisabled={isUnstakeDisabled ? `Your wallet doesn't have staked NFTs` : undefined}
                       isLoading={isLoading}
                       onClick={onOpen}
                     >
                       Unstake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeNFTOverlay symbol={symbol} onClose={onClose} staked={walletStaked.tokens} />
                   )}
                 />
-              </Container>
+              </HStack>
             </VStack>
-          </Container>
+          </VStack>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NftDaoTotalSupplyPanel />
             <NftDaoTotalStakedPanel />
           </SameWidthChildrenRow>
         </VStack>
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claim Unstaked NFTs"
-            value={claimableTokens.length}
-            suffix={symbol}
-            footnote={
+          <Panel>
+            <TitledSection title="Claim Unstaked NFTs">
+              <NumericStatistic value={claimableTokens.length} suffix={symbol} />
               <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
-                <Container className={styles.actions} direction="row">
-                  <PrimaryButton
+                <HStack className={styles.actions} alignItems="center">
+                  <Button
                     kind="secondary"
                     isDisabled={isClaimDisabled ? `You don't have any NFTs to claim` : undefined}
                     isLoading={claimTxResult.loading}
@@ -144,22 +134,22 @@ export const NftStakingConnectedView = () => {
                     }}
                   >
                     Claim all
-                  </PrimaryButton>
-                </Container>
+                  </Button>
+                </HStack>
               </VStack>
-            }
-          />
+            </TitledSection>
+          </Panel>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel title="Your wallet" value={myNfts?.length} suffix={symbol} />
-            <NumericPanel
-              title="Your total staked"
-              value={walletStaked.tokens.length}
-              suffix={
-                <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 1 })}%`}>
-                  {walletStakedPercent}
-                </AnimateNumber>
-              }
-            />
+            <Panel>
+              <TitledSection title="Your wallet">
+                <NumericStatistic value={myNfts?.length} />
+              </TitledSection>
+            </Panel>
+            <Panel>
+              <TitledSection title="Your total staked">
+                <NumericStatistic value={walletStaked.tokens.length} suffix={`${walletStakedPercent.toNumber()}%`} />
+              </TitledSection>
+            </Panel>
           </SameWidthChildrenRow>
         </VStack>
       </SameWidthChildrenRow>

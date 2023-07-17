@@ -1,4 +1,4 @@
-import { getRecord } from '@terra-money/apps/utils';
+import { getRecord } from 'lib/shared/utils/getRecord';
 import { Text } from 'components/primitives';
 import { ValueDiff } from 'components/value-diff';
 import { useCurrentDaoMultisigMembers } from 'pages/create-proposal/multisig-members/CurrentDAOMultisigMembersProvider';

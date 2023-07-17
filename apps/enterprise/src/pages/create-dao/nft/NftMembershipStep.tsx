@@ -1,7 +1,7 @@
 import { WizardStep } from '../WizardStep';
-import { Stack } from '@mui/material';
 import { NftMembershipInfo, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { TextInput } from 'lib/ui/inputs/TextInput';
+import { VStack } from 'lib/ui/Stack';
 
 export function NftMembershipStep() {
   const {
@@ -15,7 +15,7 @@ export function NftMembershipStep() {
 
   return (
     <WizardStep title="Provide NFT details">
-      <Stack direction="column" spacing={4}>
+      <VStack gap={16}>
         <TextInput
           label="NFT Name"
           placeholder="Enter the name of your NFT"
@@ -37,7 +37,7 @@ export function NftMembershipStep() {
           error={nftMembership.minterError}
           onValueChange={(minter) => onChange({ minter })}
         />
-      </Stack>
+      </VStack>
     </WizardStep>
   );
 }

@@ -3,15 +3,15 @@ import { toUpgradeDaoMsg } from './helpers/toUpgradeDaoMsg';
 import { useContractInfoQuery } from 'queries/useContractInfoQuery';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useEnterpriseLatestCodeIdQuery } from 'queries/useEnterpriseCodeIdsQuery';
-import { Throbber } from 'components/primitives';
-import { assertDefined } from '@terra-money/apps/utils';
-import { LoadingPage } from 'pages/shared/LoadingPage';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { base64Encode } from 'utils';
 import { Text } from 'lib/ui/Text';
 import { WasmMsgInput } from 'components/wasm-msg-input';
 import { useMemo, useState } from 'react';
 import { VStack } from 'lib/ui/Stack';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
+import { Spinner } from 'lib/ui/Spinner';
+import { Center } from 'lib/ui/Center';
 
 interface FormatMigrationMsgParams {
   msg: string;
@@ -53,39 +53,45 @@ export const UpgradeProposalForm = () => {
 
   const isDisabled = migrateMsg === undefined || isUpToDate !== false;
 
+  if (isLoadingContract || isLoadingLatestCodeId) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   return (
-    <LoadingPage isLoading={isLoadingContract || isLoadingLatestCodeId}>
-      <ProposalForm
-        disabled={isDisabled}
-        initialState={{
-          title: upgradeMessage,
-          description: upgradeMessage,
-        }}
-        getProposalActions={() => {
-          return [{ upgrade_dao: toUpgradeDaoMsg(assertDefined(latestCodeId), assertDefined(migrateMsg)) }];
-        }}
-      >
-        {isUpToDate === false && (
-          <>
-            <WasmMsgInput
-              label="Migration message (optional)"
-              error={migrateMsg === undefined ? 'Invalid JSON' : undefined}
-              valid
-              placeholder="Type your migration message here"
-              value={message}
-              onChange={(value) => setMessage(value || '')}
-            />
-            <VStack gap={4}>
-              <Text weight="bold">{upgradeMessage}</Text>
-              <Text color="supporting">{changeLogMessage}</Text>
-            </VStack>
-          </>
-        )}
+    <ProposalForm
+      disabled={isDisabled}
+      initialState={{
+        title: upgradeMessage,
+        description: upgradeMessage,
+      }}
+      getProposalActions={() => {
+        return [{ upgrade_dao: toUpgradeDaoMsg(assertDefined(latestCodeId), assertDefined(migrateMsg)) }];
+      }}
+    >
+      {isUpToDate === false && (
+        <>
+          <WasmMsgInput
+            label="Migration message (optional)"
+            error={migrateMsg === undefined ? 'Invalid JSON' : undefined}
+            valid
+            placeholder="Type your migration message here"
+            value={message}
+            onChange={(value) => setMessage(value || '')}
+          />
+          <VStack gap={4}>
+            <Text weight="bold">{upgradeMessage}</Text>
+            <Text color="supporting">{changeLogMessage}</Text>
+          </VStack>
+        </>
+      )}
 
-        {isUpToDate === true && <Text weight="bold">Your DAO is up-to-date!</Text>}
+      {isUpToDate === true && <Text weight="bold">Your DAO is up-to-date!</Text>}
 
-        {isUpToDate === undefined && <Throbber />}
-      </ProposalForm>
-    </LoadingPage>
+      {isUpToDate === undefined && <Spinner />}
+    </ProposalForm>
   );
 };

@@ -1,5 +1,6 @@
-import { FormState } from '@terra-money/apps/hooks';
-import { validateLength, validateUrl } from '@terra-money/apps/utils';
+import { FormState } from 'lib/shared/hooks/useForm';
+import { validateLength } from 'lib/shared/utils/validateLength';
+import { validateUrl } from 'lib/ui/utils/validateUrl';
 import { DaoInfoInput } from 'pages/create-dao/DaoWizardFormProvider';
 
 export const validateDaoInfo = ({ name, logo, description }: DaoInfoInput): FormState<DaoInfoInput> => {

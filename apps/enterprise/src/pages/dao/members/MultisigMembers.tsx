@@ -1,9 +1,9 @@
 import { DAO } from 'types';
-import { Throbber } from 'components/primitives';
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
-import { CW20Addr } from '@terra-money/apps/types';
+
 import { MultisigMemberItem } from './MultisigMemberItem';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface MultisigMembersProps {
   dao: DAO;
@@ -12,12 +12,12 @@ interface MultisigMembersProps {
 export const MultisigMembers = (props: MultisigMembersProps) => {
   const { dao } = props;
 
-  const { data: members = [], isLoading } = useMultisigMembersQuery(dao.membershipContractAddress as CW20Addr);
+  const { data: members = [], isLoading } = useMultisigMembersQuery(dao.membershipContractAddress);
 
   return (
-    <Container gap={16} direction="column">
+    <Stack gap={16} direction="column">
       {isLoading ? (
-        <Throbber />
+        <Spinner />
       ) : (
         <>
           {members.map((member) => (
@@ -25,6 +25,6 @@ export const MultisigMembers = (props: MultisigMembersProps) => {
           ))}
         </>
       )}
-    </Container>
+    </Stack>
   );
 };

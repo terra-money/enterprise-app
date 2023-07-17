@@ -1,7 +1,6 @@
-import { CW20Addr } from '@terra-money/apps/types';
-import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { Throbber } from 'components/primitives';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
+import { Spinner } from 'lib/ui/Spinner';
 import { useMultisigMembersQuery } from 'queries/useMultisigMembersQuery';
 import { MultisigMember } from 'types/MultisigMember';
 
@@ -17,10 +16,10 @@ export { useCurrentDaoMultisigMembers };
 export const CurrentDAOMultisigMembersProvider = ({ children }: Props) => {
   const dao = useCurrentDao();
 
-  const { data: members } = useMultisigMembersQuery(dao.dao_membership_contract as CW20Addr);
+  const { data: members } = useMultisigMembersQuery(dao.dao_membership_contract);
 
   if (!members) {
-    return <Throbber />;
+    return <Spinner />;
   }
 
   return <MultisigMembersProvider value={members}>{children}</MultisigMembersProvider>;

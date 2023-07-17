@@ -59,7 +59,7 @@ export const PieChart = ({ items }: Props) => {
     <svg viewBox={`0 0 ${svgViewBoxSize} ${svgViewBoxSize}`}>
       {items.length < 2 ? (
         <SvgDisk
-          color={items.length === 0 ? colors.backgroundGlass : items[0].color}
+          color={items.length === 0 ? colors.mist : items[0].color}
           radius={radius}
           cutoutRadius={cutoutRadius}
         />

@@ -1,8 +1,8 @@
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useMyDaoRewardsQuery } from 'dao/hooks/useMyDaoRewardsQuery';
 import { useClaimRewardsTx } from 'dao/tx/useClaimRewardsTx';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { TitledContent } from 'lib/ui/Layout/TitledContent';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -67,7 +67,7 @@ export const RewardsPanel = () => {
                   <RewardItem key={index} {...reward} />
                 ))}
               </VStack>
-              <PrimaryButton
+              <Button
                 kind="secondary"
                 isDisabled={areNoRewards && 'No tokens to claim'}
                 isLoading={txResult.loading}
@@ -81,7 +81,7 @@ export const RewardsPanel = () => {
                 }}
               >
                 Claim all
-              </PrimaryButton>
+              </Button>
             </>
           )}
         </VStack>

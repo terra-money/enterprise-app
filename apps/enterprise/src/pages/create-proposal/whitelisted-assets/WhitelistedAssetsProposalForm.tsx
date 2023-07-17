@@ -1,6 +1,4 @@
-import { removeByIndex } from '@terra-money/apps/utils';
 import { FormSection } from 'components/form-section';
-import { toWhitelistedAsset } from 'pages/create-dao/helpers/toWhitelistedAsset';
 import { AddTokenButton } from 'pages/create-dao/shared/AddTokenButton';
 import { useMemo, useState } from 'react';
 import { ProposalForm } from '../shared/ProposalForm';
@@ -11,6 +9,7 @@ import styles from './WhitelistedAssetsProposalForm.module.sass';
 import { areSameAsset } from 'chain/Asset';
 import { useCurrentDaoGlobalAssetWhitelistQuery } from 'queries/useCurrentDaoGlobalAssetWhitelistQuery';
 import { Spinner } from 'lib/ui/Spinner';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 
 export const WhitelistedAssetsProposalForm = () => {
   const initialWhitelistedAssets = useCurrentDaoWhitelistedAssets();
@@ -45,15 +44,14 @@ export const WhitelistedAssetsProposalForm = () => {
                   onRemove={
                     isInGlobalWhitelist
                       ? undefined
-                      : () => setWhitelistedAssets(removeByIndex(whitelistedAssets, index))
+                      : () => setWhitelistedAssets(removeAtIndex(whitelistedAssets, index))
                   }
                 />
               );
             })}
           </div>
           <AddTokenButton
-            onSelect={(token) => {
-              const asset = toWhitelistedAsset(token);
+            onSelect={(asset) => {
               if (!whitelistedAssets.some((a) => areSameAsset(asset, a))) {
                 setWhitelistedAssets([...whitelistedAssets, asset]);
               }

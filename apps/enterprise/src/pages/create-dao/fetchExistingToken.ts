@@ -1,8 +1,8 @@
-import { FormModifier } from '@terra-money/apps/hooks';
-import { validateAddress } from '@terra-money/apps/utils';
 import { fetchCW20TokenInfo } from 'queries';
 import { DaoWizardState } from './DaoWizardFormProvider';
 import { LCDClient } from '@terra-money/feather.js';
+import { FormModifier } from 'lib/shared/hooks/useForm';
+import { validateAddress } from 'chain/utils/validators';
 
 export const fetchExistingToken = async (dispatch: FormModifier<DaoWizardState>, lcd: LCDClient, tokenAddr: string) => {
   const existingTokenError = validateAddress(tokenAddr);

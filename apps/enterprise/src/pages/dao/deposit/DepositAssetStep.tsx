@@ -1,39 +1,43 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
+import Big from 'big.js';
+import { Asset, AssetInfo } from 'chain/Asset';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useDepositTx } from 'dao/tx/useDepositTx';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { Button } from 'lib/ui/buttons/Button';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { VStack } from 'lib/ui/Stack';
-import { useTokenBalanceQuery } from 'queries';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Token } from 'types';
 import * as z from 'zod';
 
 interface DepositAssetStepProps {
-  token: Token;
+  asset: Asset & AssetInfo;
   onSuccess: () => void;
   onBack: () => void;
 }
 
 interface DepositFormSchema {
-  amount: number;
+  amount: number | undefined;
 }
 
-export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepProps) => {
+export const DepositAssetStep = ({ asset, onSuccess, onBack }: DepositAssetStepProps) => {
   const walletAddress = useAssertMyAddress();
-  const { data: balance } = useTokenBalanceQuery(walletAddress, token);
+  const { data: balance } = useAssetBalanceQury({
+    address: walletAddress,
+    asset,
+  });
 
   const dao = useCurrentDao();
 
   const formSchema: z.ZodType<DepositFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (balance) {
-      amount = amount.lte(demicrofy(balance, token.decimals).toNumber());
+      amount = amount.lte(fromChainAmount(Big(balance).toNumber(), asset.decimals));
     }
     return z.object({
       amount,
@@ -73,33 +77,34 @@ export const DepositAssetStep = ({ token, onSuccess, onBack }: DepositAssetStepP
             value={value}
             onBlur={onBlur}
             ref={ref}
-            max={balance ? demicrofy(balance, token.decimals).toNumber() : undefined}
-            unit={token.name}
+            max={balance ? fromChainAmount(Big(balance).toNumber(), asset.decimals) : undefined}
+            unit={asset.name}
             suggestion={
               balance ? (
-                <AmountSuggestion
-                  name="Max"
-                  value={fromChainAmount(balance.toNumber(), token.decimals)}
-                  onSelect={onChange}
-                />
+                <AmountSuggestion name="Max" value={fromChainAmount(balance, asset.decimals)} onSelect={onChange} />
               ) : undefined
             }
           />
         )}
       />
       <VStack gap={8}>
-        <PrimaryButton
+        <Button
           onClick={handleSubmit(() => {
             const { amount } = getValues();
 
-            depositTx({ address: dao.address, amount, decimals: token.decimals, denom: token.key });
+            depositTx({
+              address: dao.address,
+              amount: assertDefined(amount),
+              decimals: asset.decimals,
+              denom: asset.id,
+            });
           })}
         >
           Deposit
-        </PrimaryButton>
-        <PrimaryButton kind="secondary" onClick={onBack}>
+        </Button>
+        <Button kind="secondary" onClick={onBack}>
           Back
-        </PrimaryButton>
+        </Button>
       </VStack>
     </>
   );

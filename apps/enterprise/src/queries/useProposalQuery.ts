@@ -1,5 +1,4 @@
-import { CW20Addr } from '@terra-money/apps/types';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { useDAOQuery } from 'queries';
 import { useQuery, UseQueryResult } from 'react-query';
 import { Proposal } from 'dao/shared/proposal';
@@ -9,7 +8,7 @@ import { apiResponseToProposal, ProposalApiResponse } from 'proposal/ProposalApi
 import { toDao } from 'dao/utils/toDao';
 
 interface UseProposalQueryOptions {
-  daoAddress: CW20Addr;
+  daoAddress: string;
   id: number;
   enabled?: boolean;
 }
@@ -17,7 +16,7 @@ interface UseProposalQueryOptions {
 export const useProposalQuery = (options: UseProposalQueryOptions): UseQueryResult<Proposal | undefined> => {
   const { id, daoAddress, enabled = true } = options;
 
-  const { data: daoResponse } = useDAOQuery(daoAddress as CW20Addr);
+  const { data: daoResponse } = useDAOQuery(daoAddress);
 
   const apiEndpoint = useApiEndpoint({
     path: 'v1/daos/{address}/proposals/{id}',

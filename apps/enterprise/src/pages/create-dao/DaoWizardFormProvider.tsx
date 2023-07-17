@@ -1,6 +1,3 @@
-import { FormInput, FormState, useForm } from '@terra-money/apps/hooks';
-import { getLast, isFormStateValid } from '@terra-money/apps/utils';
-import { createContextHook } from '@terra-money/apps/utils/createContextHook';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
@@ -21,6 +18,9 @@ import { fetchExistingMultisigVoters } from './fetchExistingMultisigVoters';
 import { useEnv } from 'hooks';
 import { validateCouncil } from './shared/helpers/validateCouncil';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
+import { FormInput, FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
+import { getLast } from 'lib/shared/utils/getlast';
+import { createContextHook } from 'lib/shared/utils/createContextHook';
 
 export interface DaoSocialDataInput {
   githubUsername?: string;

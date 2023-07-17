@@ -1,20 +1,26 @@
-import { VStack } from 'lib/ui/Stack';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
-import { LUNA } from '@terra-money/apps/types';
-import { useNativeBalanceQuery } from 'queries/useNativeBalanceQuery';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { LabeledValue } from 'lib/ui/LabeledValue';
 import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Spinner } from 'lib/ui/Spinner';
 import { Address } from '../Address';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
+import { lunaInfo } from 'chain/utils/getAssetsInfo';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
 
 export const ConnectedWalletSummary = () => {
   const address = useAssertMyAddress();
 
-  const { data, status } = useNativeBalanceQuery();
+  const { data, status } = useAssetBalanceQury({
+    address,
+    asset: {
+      id: 'uluna',
+      type: 'native',
+    },
+  });
 
   return (
-    <VStack gap={8}>
+    <>
       <Address value={address} />
       <LabeledValue name="Balance">
         <QueryDependant
@@ -22,9 +28,9 @@ export const ConnectedWalletSummary = () => {
           status={status}
           loading={() => <Spinner />}
           error={() => 'Failed to fetch balance'}
-          success={(value) => `${formatAmount(demicrofy(value, LUNA.decimals))} LUNA`}
+          success={(value) => `${formatAmount(fromChainAmount(value.toString(), lunaInfo.decimals))} LUNA`}
         />
       </LabeledValue>
-    </VStack>
+    </>
   );
 };

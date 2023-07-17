@@ -1,11 +1,11 @@
 import { Text } from 'components/primitives';
-import { Token } from 'types';
 import styles from './WhitelistedAssetItem.module.sass';
-import { TokenIcon } from 'components/token-icon';
-import { DeleteIconButton } from 'components/delete-icon-button';
+import { Asset, AssetInfo } from 'chain/Asset';
+import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 interface WhitelistedAssetInputProps {
-  value: Token;
+  value: Asset & AssetInfo;
   onRemove: () => void;
 }
 
@@ -13,10 +13,10 @@ export const WhitelistedAssetItem = ({ value, onRemove }: WhitelistedAssetInputP
   return (
     <div className={styles.root}>
       <div className={styles.info}>
-        <TokenIcon className={styles.icon} symbol={value.icon} path={value.icon} />
+        <AssetIcon className={styles.icon} icon={value.icon} />
         <Text variant="text">{value.name ?? value.symbol}</Text>
       </div>
-      <DeleteIconButton onClick={onRemove} />
+      <DeleteButton onClick={onRemove} />
     </div>
   );
 };

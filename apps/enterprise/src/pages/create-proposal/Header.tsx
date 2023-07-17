@@ -1,4 +1,4 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import classNames from 'classnames';
 import { DAOLogo } from 'components/dao-logo';
 import { Text } from 'components/primitives';
@@ -16,26 +16,13 @@ interface HeaderProps {
 
 export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
   const dao = useCurrentDao();
-  const { className, compact = false, title } = props;
+  const { className, title } = props;
 
   const navigate = useNavigate();
 
-  if (compact) {
-    return (
-      <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
-        <div className={styles.logo}>
-          <DAOLogo size="s" logo={getDaoLogo(dao)} />
-        </div>
-        <Text className={styles.name} variant="heading2">
-          {title}
-        </Text>
-      </Container>
-    );
-  }
-
   return (
-    <Container className={classNames(className, styles.root)} direction="column">
-      <Container ref={ref} className={styles.container}>
+    <Stack className={classNames(className, styles.root)} direction="column">
+      <Stack direction="row" ref={ref} className={styles.container}>
         <Text className={styles.back} variant="link" onClick={() => navigate(-1)}>
           Back
         </Text>
@@ -45,7 +32,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
         <Text className={styles.name} variant="heading2">
           {title}
         </Text>
-      </Container>
-    </Container>
+      </Stack>
+    </Stack>
   );
 });

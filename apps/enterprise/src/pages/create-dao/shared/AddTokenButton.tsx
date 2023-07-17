@@ -1,11 +1,11 @@
-import { AddButton } from 'components/add-button';
-import { TokenInput } from 'components/token-input';
+import { Asset } from 'chain/Asset';
+import { AssetFinder } from 'chain/components/AssetFinder';
 import { Modal } from 'lib/ui/Modal';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
-import { Token } from 'types';
+import { AddButton } from 'lib/ui/buttons/AddButton';
 
 interface AddTokenButtonProps {
-  onSelect: (token: Token) => void;
+  onSelect: (asset: Asset) => void;
 }
 
 export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
@@ -13,19 +13,20 @@ export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
     <OverlayOpener
       renderOverlay={({ onClose }) => (
         <Modal
-          title="Select a token"
+          placement="top"
+          title="Select an asset"
           onClose={onClose}
           renderContent={() => (
-            <TokenInput
-              onSelect={(token) => {
-                onSelect(token);
+            <AssetFinder
+              onSelect={(asset) => {
+                onSelect(asset);
                 onClose();
               }}
             />
           )}
         />
       )}
-      renderOpener={({ onOpen }) => <AddButton onClick={onOpen} />}
+      renderOpener={({ onOpen }) => <AddButton size="l" onClick={onOpen} />}
     />
   );
 };

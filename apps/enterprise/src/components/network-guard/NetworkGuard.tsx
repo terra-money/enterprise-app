@@ -1,13 +1,13 @@
-import { UIElementProps } from '@terra-money/apps/components';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
-import { supportedChains, useChainID } from '@terra-money/apps/hooks';
 import { Center } from 'lib/ui/Center';
 import { Text } from 'lib/ui/Text';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { Spinner } from 'lib/ui/Spinner';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
+import { supportedChains, useChainID } from 'chain/hooks/useChainID';
 
-export const NetworkGuard = (props: UIElementProps) => {
+export const NetworkGuard = (props: ComponentWithChildrenProps) => {
   const { children } = props;
 
   const queryClient = useQueryClient();

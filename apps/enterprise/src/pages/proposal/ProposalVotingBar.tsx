@@ -1,6 +1,3 @@
-import { Container } from '@terra-money/apps/components/container';
-import { u } from '@terra-money/apps/types';
-import { getRatio, toPercents } from '@terra-money/apps/utils';
 import Big from 'big.js';
 import classNames from 'classnames';
 import { Text } from 'components/primitives';
@@ -10,11 +7,13 @@ import { useTokenStakingAmountQuery } from 'queries';
 import { useMemo } from 'react';
 import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
+import { getRatio } from 'lib/shared/utils/getRatio';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
 
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(dao.address);
 
   const totalAvailableVotes = useMemo(() => {
     if (type === 'council') return totalVotes;
@@ -26,7 +25,7 @@ export const ProposalVotingBar = () => {
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
 
-  const quorum = type === "council" ? Number(dao.council?.quorum) : Number(dao.governanceConfig.quorum);
+  const quorum = type === 'council' ? Number(dao.council?.quorum) : Number(dao.governanceConfig.quorum);
 
   const yesRatio = enforceRange(getRatio(yesVotes, total).toNumber(), 0, 1);
 
@@ -57,38 +56,38 @@ export const ProposalVotingBar = () => {
             </Text>
           </div>
         </div>
-        <Container gap={16} direction="row" className={styles.votesContainer}>
+        <HStack gap={16} className={styles.votesContainer}>
           {yesRatio > 0 && (
-            <Container gap={16} direction="row">
+            <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.yesBean}></div>
                 <Text className={classNames(styles.value, styles.label)} variant="text">
                   Yes {toPercents(yesRatio, 'round')}
                 </Text>
               </HStack>
-            </Container>
+            </HStack>
           )}
           {noRatio > 0 && (
-            <Container gap={16} direction="row">
+            <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.noBean}></div>
                 <Text className={classNames(styles.value, styles.label)} variant="text">
                   No {toPercents(noRatio, 'round')}
                 </Text>
               </HStack>
-            </Container>
+            </HStack>
           )}
           {abstainRatio > 0 && (
-            <Container gap={16} direction="row">
+            <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.abstainBean}></div>
                 <Text className={classNames(styles.value, styles.label)} variant="text">
                   Abstain {toPercents(abstainRatio, 'round')}
                 </Text>
               </HStack>
-            </Container>
+            </HStack>
           )}
-        </Container>
+        </HStack>
       </div>
     </div>
   );

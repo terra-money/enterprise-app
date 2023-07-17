@@ -1,10 +1,11 @@
-import { formatAmount } from '@terra-money/apps/libs/formatting';
 import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
+import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
-import { TokenIcon } from 'components/token-icon';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
+import { getColor } from 'lib/ui/theme/getters';
 import { croppedTextCSS } from 'lib/ui/utils/croppedTextCSS';
 import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
 import styled from 'styled-components';
@@ -31,12 +32,12 @@ export const AssetItemFrame = styled.div`
   }
 `;
 
-const Icon = styled(TokenIcon)`
+const Icon = styled(AssetIcon)`
   ${getSameDimensionsCSS(32)}
 `;
 
 const Container = styled(Panel)`
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${getColor('mist')};
   padding: 16px;
 `;
 
@@ -45,7 +46,7 @@ export const AssetItem = ({ asset }: AssetItemProps) => {
     <Container>
       <AssetItemFrame>
         <HStack alignItems="center" gap={24}>
-          <Icon symbol={asset.symbol} path={asset.icon} />
+          <Icon icon={asset.icon} />
           <VStack gap={4}>
             <Text weight="semibold">{asset.symbol}</Text>
             <Text color="supporting" weight="semibold">

@@ -1,18 +1,16 @@
 import { ConditionalWallet } from 'components/conditional-wallet';
 import { UpgradeDAOPromptActions } from './UpgradeDAOPromptActions';
 import { ConnectWallet } from 'chain/components/ConnectWallet';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 
 export const UpgradeDaoActions = () => (
   <ConditionalWallet
     connected={() => <UpgradeDAOPromptActions />}
     notConnected={() => (
       <ConnectWallet
-        renderOpener={props => (
+        renderOpener={(props) => (
           <div {...props}>
-            <PrimaryButton kind="primary">
-              Connect a wallet
-            </PrimaryButton>
+            <Button kind="primary">Connect a wallet</Button>
           </div>
         )}
       />

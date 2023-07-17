@@ -1,29 +1,38 @@
 // TODO: migrate from sass to styled-components
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import { IconButton, Throbber } from 'components/primitives';
 import { ReactComponent as WalletIcon } from 'components/assets/Wallet.svg';
-import classNames from 'classnames';
-import styles from './WalletButton.module.sass';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
-
-interface IndicatorProps {
-  connected: boolean;
-}
-
-const Indicator = (props: IndicatorProps) => {
-  const { connected } = props;
-  return (
-    <div
-      className={classNames(styles.indicator, {
-        [styles.connected]: connected,
-      })}
-    />
-  );
-};
+import { Spinner } from 'lib/ui/Spinner';
+import styled from 'styled-components';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { roundedCSS } from 'lib/ui/utils/roundedCSS';
+import { getColor, matchColor } from 'lib/ui/theme/getters';
+import { IconButton } from 'lib/ui/buttons/IconButton';
 
 interface WalletButtonProps {
   onClick?: () => void;
 }
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const Button = styled(IconButton)`
+  ${getSameDimensionsCSS(48)};
+`;
+
+const Indicator = styled.div<{ isConnected: boolean }>`
+  ${getSameDimensionsCSS(20)};
+  ${roundedCSS};
+  border: 4px solid ${getColor('background')};
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: ${matchColor('isConnected', {
+    true: 'success',
+    false: 'alert',
+  })};
+`;
 
 export const WalletButton = ({ onClick }: WalletButtonProps) => {
   const { status } = useWallet();
@@ -33,13 +42,14 @@ export const WalletButton = ({ onClick }: WalletButtonProps) => {
   const isInitializing = status === WalletStatus.INITIALIZING;
 
   return (
-    <IconButton className={styles.button} disabled={isInitializing} onClick={onClick}>
-      {isInitializing ? (
-        <Throbber dotClassName={styles.throbberDot} variant="secondary" size="small" />
-      ) : (
-        <WalletIcon />
-      )}
-      <Indicator connected={!!myAddress} />
-    </IconButton>
+    <Wrapper>
+      <Button
+        title="Wallet"
+        isDisabled={isInitializing}
+        onClick={onClick}
+        icon={isInitializing ? <Spinner /> : <WalletIcon />}
+      />
+      <Indicator isConnected={!!myAddress} />
+    </Wrapper>
   );
 };

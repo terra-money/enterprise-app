@@ -3,9 +3,9 @@ import { QUERY_KEY } from 'queries';
 import { useQuery } from 'react-query';
 import { useAssertMyAddress } from './useAssertMyAddress';
 import { Msg } from '@terra-money/feather.js';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
 import { lunaDecimals } from 'chain/constants';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 export const useEstimatedFeeQuery = (msgs: Msg[]) => {
   const address = useAssertMyAddress();
@@ -23,6 +23,6 @@ export const useEstimatedFeeQuery = (msgs: Msg[]) => {
     if (!ulunaAmount) {
       throw new Error('Failed to get fee amount');
     }
-    return demicrofy(ulunaAmount.toNumber(), lunaDecimals);
+    return fromChainAmount(ulunaAmount.toNumber(), lunaDecimals);
   });
 };

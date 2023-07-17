@@ -1,4 +1,5 @@
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { isDenom } from '@terra.kitchen/utils';
 import { AssetType } from 'chain';
 import { useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
@@ -19,7 +20,7 @@ export const TxAsset = ({ id, amount }: TxAssetProps) => {
     const { symbol, decimals } = data;
     return (
       <Text weight="semibold" color="regular">
-        {formatAmount(demicrofy(amount, decimals))} {symbol}
+        {formatAmount(fromChainAmount(amount, decimals))} {symbol}
       </Text>
     );
   }

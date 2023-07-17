@@ -1,5 +1,6 @@
-import { FormState } from '@terra-money/apps/hooks';
-import { validateAddress, validateLength } from '@terra-money/apps/utils';
+import { validateAddress } from 'chain/utils/validators';
+import { FormState } from 'lib/shared/hooks/useForm';
+import { validateLength } from 'lib/shared/utils/validateLength';
 import { NftMembershipInfo } from 'pages/create-dao/DaoWizardFormProvider';
 
 export const validateNftMembership = ({

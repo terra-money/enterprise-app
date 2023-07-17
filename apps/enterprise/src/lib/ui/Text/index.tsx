@@ -1,6 +1,4 @@
 import styled, { DefaultTheme, css } from 'styled-components';
-import { gradientColorCSS } from '../gradients';
-import { croppedTextCSS } from '../utils/croppedTextCSS';
 
 const getTextColorRecord = ({ colors }: DefaultTheme) =>
   ({
@@ -14,7 +12,7 @@ const getTextColorRecord = ({ colors }: DefaultTheme) =>
     idle: colors.idle,
     success: colors.success,
     reversed: colors.background,
-    white: colors.contrast,
+    contrast: colors.contrast,
   } as const);
 
 type TextWeight = 'regular' | 'semibold' | 'bold';
@@ -31,35 +29,36 @@ const lineHeight: Record<TextHeight, number> = {
   large: 1.5,
 };
 
-export type TextColor = keyof ReturnType<typeof getTextColorRecord> | 'gradient';
+export type TextColor = keyof ReturnType<typeof getTextColorRecord>;
 
-export interface Props {
+export interface TextProps {
   color?: TextColor;
   weight?: TextWeight;
   size?: number;
   height?: TextHeight;
   centered?: boolean;
   cropped?: boolean;
+  nowrap?: boolean;
 }
 
-const getFonSize = (sizeInPx: number) => {
-  const oneRemInPx = 16;
+export const oneRemInPx = 16;
+
+const getFontSize = (sizeInPx: number) => {
   const sizeInRem = sizeInPx / oneRemInPx;
 
   return `${sizeInRem}rem`;
 };
 
-export const Text = styled.p<Props>`
+export const Text = styled.p<TextProps>`
   margin: 0;
   padding: 0;
+  overflow-wrap: break-word;
 
   ${({ color, theme }) =>
     color &&
-    (color === 'gradient'
-      ? gradientColorCSS
-      : css`
-          color: ${getTextColorRecord(theme)[color].toCssValue()};
-        `)}
+    css`
+      color: ${getTextColorRecord(theme)[color].toCssValue()};
+    `}
   ${({ weight }) =>
     weight &&
     css`
@@ -73,7 +72,7 @@ export const Text = styled.p<Props>`
   ${({ size }) =>
     size &&
     css`
-      font-size: ${getFonSize(size)};
+      font-size: ${getFontSize(size)};
     `}
   ${({ centered }) =>
     centered &&
@@ -81,5 +80,17 @@ export const Text = styled.p<Props>`
       text-align: center;
     `}
 
-  ${({ cropped }) => cropped && croppedTextCSS}
+  ${({ nowrap }) =>
+    nowrap &&
+    css`
+      white-space: nowrap;
+    `}
+
+  ${({ cropped }) =>
+    cropped &&
+    css`
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `}
 `;

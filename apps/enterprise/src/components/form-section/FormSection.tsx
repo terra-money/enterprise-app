@@ -1,16 +1,15 @@
-import { UIElementProps } from '@terra-money/apps/components';
-import classNames from 'classnames';
 import { Text } from 'components/primitives';
 import { ReactNode } from 'react';
 import styles from './FormSection.module.sass';
+import { ComponentWithChildrenProps } from 'lib/shared/props';
 
-interface FormSectionProps extends UIElementProps {
+interface FormSectionProps extends ComponentWithChildrenProps {
   name: ReactNode;
 }
 
-export const FormSection = ({ className, name, children }: FormSectionProps) => {
+export const FormSection = ({ name, children }: FormSectionProps) => {
   return (
-    <div className={classNames(className, styles.root)}>
+    <div className={styles.root}>
       <Text variant="heading4">{name}</Text>
       {children}
     </div>

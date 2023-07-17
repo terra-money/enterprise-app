@@ -1,8 +1,8 @@
-import { useRefCallback } from '@terra-money/apps/hooks';
-import { sleep } from '@terra-money/apps/utils';
 import { useQueryClient } from 'react-query';
 import { TX_KEY } from 'tx';
 import { QUERY_KEY } from './queryKey';
+import { sleep } from 'chain/transactions/utils/sleep';
+import { useRefCallback } from 'chain/transactions/utils/useRefCallback';
 
 interface QueryRefetch {
   queryKey: QUERY_KEY;

@@ -1,4 +1,4 @@
-import { useBoolean } from '@terra-money/apps/hooks';
+import { useBoolean } from 'lib/shared/hooks/useBoolean';
 import { ReactNode } from 'react';
 
 interface RenderParams {

@@ -1,11 +1,11 @@
-import { useTx, TxBuilder } from '@terra-money/apps/libs/transactions';
+import { useTx, TxBuilder } from 'chain/transactions';
 import Big from 'big.js';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 import { TX_KEY } from './txKey';
-import { useChainID } from '@terra-money/apps/hooks';
+import { useChainID } from 'chain/hooks/useChainID';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
-import { assertDefined } from '@terra-money/apps/utils';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export type CreateProposalMsgType = Extract<enterprise.ExecuteMsg, { create_proposal: {} }>;
 

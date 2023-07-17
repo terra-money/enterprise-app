@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import { Button, Text } from 'components/primitives';
+import { Text } from 'components/primitives';
 import { useDisplay } from 'hooks';
 import { useNavigate } from 'react-router';
 import styles from './PrimarySlice.module.sass';
+import { Button } from 'lib/ui/buttons/Button';
 
 export const PrimarySlice = () => {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ export const PrimarySlice = () => {
         token DAO, or NFT DAO in under a minute.
       </Text>
       <Button
-        variant="primary"
         onClick={() => {
           navigate('dashboard');
         }}

@@ -22,7 +22,7 @@ const ExpandIconWrapper = styled.div<{ isExpanded: boolean }>`
   ${getSameDimensionsCSS(48)};
   ${centerContentCSS};
 
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${({ theme }) => theme.colors.mist.toCssValue()};
 
   ${defaultTransitionCSS};
 
@@ -36,7 +36,7 @@ const Header = styled(UnstyledButton)`
   width: 100%;
 
   :hover ${ExpandIconWrapper} {
-    background: ${({ theme }) => theme.colors.backgroundGlass2.toCssValue()};
+    background: ${({ theme }) => theme.colors.mistExtra.toCssValue()};
   }
 `;
 

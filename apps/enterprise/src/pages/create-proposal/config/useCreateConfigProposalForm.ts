@@ -1,7 +1,4 @@
-import { useForm, FormState } from '@terra-money/apps/hooks';
-import { demicrofy } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
-import { isFormStateValid } from '@terra-money/apps/utils';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import Big from 'big.js';
 import { useEnv } from 'hooks';
 import { DaoGovConfigInput } from 'pages/create-dao/gov-config/DaoGovConfigInput';
@@ -13,6 +10,7 @@ import { useCallback, useMemo } from 'react';
 import { hasChangedFields } from '../metadata/toUpdateMetadataMsg';
 import { toUpdateGovConfigMsg } from './helpers/toUpdateGovConfigMsg';
 import { toDao } from 'dao/utils/toDao';
+import { FormState, isFormStateValid, useForm } from 'lib/shared/hooks/useForm';
 
 export interface ConfigProposalFormState extends FormState<DaoGovConfigInput> {
   timeConversionFactor: number;
@@ -69,10 +67,7 @@ export const useCreateConfigProposalForm = () => {
     };
 
     if (governanceConfig.minimumDeposit && token) {
-      initialInput.minimumDeposit = demicrofy(
-        Big(governanceConfig.minimumDeposit) as u<Big>,
-        token.decimals
-      ).toNumber();
+      initialInput.minimumDeposit = fromChainAmount(Big(governanceConfig.minimumDeposit).toNumber(), token.decimals);
     }
 
     const state = {

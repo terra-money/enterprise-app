@@ -1,43 +1,35 @@
-import { useTokens } from '@terra-money/apps/hooks';
-import { CW20Addr } from '@terra-money/apps/types';
-import { DeleteIconButton } from 'components/delete-icon-button';
-import { Text } from 'components/primitives';
-import { TokenIcon } from 'components/token-icon';
-import { useCW20TokenInfoQuery } from 'queries';
-import styles from './WhitelistedAsset.module.sass';
-import classnames from 'classnames';
 import { Asset } from 'chain/Asset';
+import { useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
+import { Text } from 'lib/ui/Text';
+import styled from 'styled-components';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { HStack } from 'lib/ui/Stack';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 interface WhitelistedAssetProps {
   asset: Asset;
   onRemove?: () => void;
 }
 
+const Icon = styled(AssetIcon)`
+  ${getSameDimensionsCSS(28)};
+`;
+
 // TODO: reuse styles from pages/create-dao/shared/WhitelisteAssetItem
 export const WhitelistedAsset = ({ asset, onRemove }: WhitelistedAssetProps) => {
-  const { tokens } = useTokens();
-
-  const assetKey = asset.id;
-  const assetType = asset.type;
-  const isCW20 = assetType === 'cw20';
-
-  const { data: cw20Token } = useCW20TokenInfoQuery(assetKey as CW20Addr, {
-    enabled: isCW20,
-  });
-
-  const token = tokens[assetKey] || cw20Token;
+  const { data: assetInfo } = useAssetInfoQuery(asset);
 
   return (
-    <div className={styles.root}>
-      <div className={styles.info}>
-        {token ? (
-          <TokenIcon className={styles.icon} symbol={token.symbol} path={token.icon} />
-        ) : (
-          <div className={classnames(styles.icon, styles.loader)}></div>
-        )}
-        <Text variant="text">{token ? token.name ?? token.symbol : assetKey}</Text>
-      </div>
-      {onRemove && <DeleteIconButton onClick={onRemove} />}
-    </div>
+    <Panel>
+      <HStack alignItems="center" gap={20}>
+        <HStack alignItems="center" gap={8}>
+          <Icon icon={assetInfo?.icon} />
+        </HStack>
+        <Text cropped>{assetInfo?.name || assetInfo?.symbol || asset.id}</Text>
+        {onRemove && <DeleteButton size="l" onClick={onRemove} />}
+      </HStack>
+    </Panel>
   );
 };

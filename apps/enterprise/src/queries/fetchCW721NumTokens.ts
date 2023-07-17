@@ -1,4 +1,3 @@
-import { u } from '@terra-money/apps/types';
 import Big from 'big.js';
 import { LCDClient } from '@terra-money/feather.js';
 
@@ -11,5 +10,5 @@ export const fetchCW721NumTokens = async (lcd: LCDClient, nftAddress: string): P
     num_tokens: {},
   });
 
-  return Big(response?.count ?? 0) as u<Big>;
+  return Big(response?.count ?? 0) as Big;
 };

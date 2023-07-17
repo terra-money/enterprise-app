@@ -1,7 +1,7 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
 import { AssetInfo } from 'chain/Asset';
 import { AssetInfoQueryParams, useAssetInfoQuery } from 'chain/queries/useAssetInfoQuery';
-import { Throbber } from 'components/primitives';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
+import { Spinner } from 'lib/ui/Spinner';
 
 interface Props extends AssetInfoQueryParams {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export const CurrentAssetInfoProvider = ({ children, ...queryParams }: Props) =>
   const { data } = useAssetInfoQuery(queryParams);
 
   if (!data) {
-    return <Throbber />;
+    return <Spinner />;
   }
 
   return <AssetInfoProvider value={data}>{children}</AssetInfoProvider>;

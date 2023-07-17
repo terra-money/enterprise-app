@@ -1,7 +1,5 @@
-import { demicrofy } from '@terra-money/apps/libs/formatting';
-import { useFetchEveryPage, usePaginatedResultItems } from '@terra-money/apps/queries';
-import { CW20Addr, u } from '@terra-money/apps/types';
-import { capitalizeFirstLetter } from '@terra-money/apps/utils';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+
 import Big from 'big.js';
 import { Text } from 'components/primitives';
 import { toPercents } from 'lib/shared/utils/toPercents';
@@ -16,6 +14,9 @@ import styled from 'styled-components';
 import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
 import { Address } from 'chain/components/Address';
+import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
+import { usePaginatedResultItems } from 'lib/query/hooks/usePaginatedResultItems';
+import { useFetchEveryPage } from 'lib/query/hooks/useFetchEveryPage';
 
 const Content = styled.div`
   display: grid;
@@ -42,11 +43,11 @@ const Content = styled.div`
 export const ProposalVotes = () => {
   const proposal = useCurrentProposal();
   const { totalVotes, status, dao } = useCurrentProposal();
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(dao.address);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(dao.address);
 
   const proposalVotesQuery = useProposalVotesQuery({
     proposalId: proposal.id,
-    contract: proposal.dao.address as CW20Addr,
+    contract: proposal.dao.address,
   });
   useFetchEveryPage(proposalVotesQuery);
   const { data: proposalVotesPages, hasNextPage } = proposalVotesQuery;
@@ -61,7 +62,13 @@ export const ProposalVotes = () => {
 
   // TODO: reuse with ProposalVotingBar
   const totalAvailableVotes =
-    proposal.type === 'council' ? Big(dao.council?.members.length!) : dao.type === 'multisig' ? totalVotes : status === 'in_progress' ? totalStaked : totalVotes;
+    proposal.type === 'council'
+      ? Big(dao.council?.members.length!)
+      : dao.type === 'multisig'
+      ? totalVotes
+      : status === 'in_progress'
+      ? totalStaked
+      : totalVotes;
 
   return (
     <LabeledPageSection name="Votes">
@@ -80,7 +87,9 @@ export const ProposalVotes = () => {
                   <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
                 )}
                 {proposal.type !== 'council' && token && (
-                  <Text variant="text">{`${demicrofy(amount, token.decimals ?? 6)} ${token.symbol}`}</Text>
+                  <Text variant="text">{`${fromChainAmount(amount.toString(), token.decimals ?? 6)} ${
+                    token.symbol
+                  }`}</Text>
                 )}
               </Content>
             </Panel>

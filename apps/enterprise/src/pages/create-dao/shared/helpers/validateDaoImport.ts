@@ -1,4 +1,4 @@
-import { FormState } from '@terra-money/apps/hooks';
+import { FormState } from 'lib/shared/hooks/useForm';
 import { DaoImportInput } from 'pages/create-dao/DaoWizardFormProvider';
 
 export const validateDaoImport = ({ shouldImport, daoAddress }: DaoImportInput): FormState<DaoImportInput> => {

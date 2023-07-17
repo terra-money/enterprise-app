@@ -1,69 +1,36 @@
-import { Container } from '@terra-money/apps/components';
-import classNames from 'classnames';
+import { HStack } from 'lib/ui/Stack';
 import { DAOLogo } from 'components/dao-logo';
 import { FavouriteToggle } from 'components/favourite-toggle';
-import { Text } from 'components/primitives';
-import { Line } from 'lib/ui/Line';
 import { VStack } from 'lib/ui/Stack';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { forwardRef, Ref } from 'react';
 import { DaoNavigation } from './DaoNavigation';
-import styles from './Header.module.sass';
 import { InternalLink } from 'lib/navigation/Link/InternalLink';
 import { Path } from 'navigation';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { toDao } from 'dao/utils/toDao';
+import { SeparatedByLine } from 'lib/ui/SeparatedByLine';
+import { Text } from 'lib/ui/Text';
+import { ShyLinkText } from 'lib/ui/Text/LinkText';
 
-interface HeaderProps {
-  className?: string;
-  compact?: boolean;
-}
-
-export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
+export const Header = () => {
   const dao = useCurrentDao();
-  const { className, compact = false } = props;
-
-  if (compact) {
-    return (
-      <Container ref={ref} className={classNames(className, styles.root, styles.compact)}>
-        <div className={styles.logo}>
-          nbwaro
-          <DAOLogo size="m" logo={getDaoLogo(dao)} />
-        </div>
-        <FavouriteToggle className={styles.favourite} dao={toDao(dao)} />
-        <Text className={styles.name} variant="heading2">
-          {dao.metadata.name}
-        </Text>
-        <Container className={styles.tabs}>
-          <DaoNavigation />
-        </Container>
-      </Container>
-    );
-  }
 
   return (
-    <Container className={classNames(className, styles.root)} direction="column">
+    <SeparatedByLine fullWidth gap={20}>
       <VStack gap={16}>
-        <Container className={styles.container}>
-          <InternalLink to={Path.Daos}>
-            <Text className={styles.back} variant="link">
-              Back
-            </Text>
-          </InternalLink>
-          <div className={styles.logo}>
+        <InternalLink to={Path.Daos}>
+          <ShyLinkText>Back</ShyLinkText>
+        </InternalLink>
+        <HStack alignItems="center" gap={20}>
+          <HStack alignItems="center" gap={8}>
             <DAOLogo size="m" logo={getDaoLogo(dao)} />
-          </div>
-          <FavouriteToggle className={styles.favourite} dao={toDao(dao)} />
-          <Text className={styles.name} variant="heading2">
-            {dao.metadata.name}
-          </Text>
-        </Container>
-        {dao.metadata.description && <Text variant="text">{dao.metadata.description}</Text>}
-        <Line />
+            <FavouriteToggle dao={toDao(dao)} />
+          </HStack>
+          <Text as="h1">{dao.metadata.name}</Text>
+        </HStack>
+        {dao.metadata.description && <Text color="supporting">{dao.metadata.description}</Text>}
       </VStack>
-      <Container ref={ref} className={styles.tabs}>
-        <DaoNavigation />
-      </Container>
-    </Container>
+      <DaoNavigation />
+    </SeparatedByLine>
   );
-});
+};

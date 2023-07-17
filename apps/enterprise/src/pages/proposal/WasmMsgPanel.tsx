@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Container } from '@terra-money/apps/components';
-import { Panel } from 'components/panel';
-import { Button, Text } from 'components/primitives';
-import { useClipboardCopy } from 'hooks';
+import { Stack } from 'lib/ui/Stack';
+import { Text } from 'components/primitives';
 import styles from './WasmMsgPanel.module.sass';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { WasmMsgSummary } from './WasmMsgSummary/WasmMsgSummary';
 import { ErrorBoundary } from 'errors/components/ErrorBoundary';
 import { CosmWasmMsg } from 'chain/CosmWasm';
 import { fromBase64 } from 'chain/utils/fromBase64';
+import { Button } from 'lib/ui/buttons/Button';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { CopyButton } from 'lib/ui/buttons/CopyButton';
 
 export type WasmMsgPanelProps = {
   msg: string;
@@ -33,7 +34,6 @@ const formatMsg = (value: string, showDecoded: boolean) => {
 };
 
 export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
-  const copy = useClipboardCopy();
   const [showDecoded, setShowDecoded] = useState(false);
 
   const toggleDecoded = () => {
@@ -46,20 +46,15 @@ export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
         <WasmMsgSummary msg={JSON.parse(msg)} />
       </ErrorBoundary>
       <Panel className={styles.root}>
-        <Container className={styles.top} direction="row">
+        <Stack className={styles.top} direction="row">
           <Text variant="label">Wasm message</Text>
-          <HStack>
-            <Button
-              variant="secondary"
-              onClick={() => copy({ value: JSON.stringify(msg, null, 2), message: 'Message copied to clipboard' })}
-            >
-              Copy
-            </Button>
-            <Button variant="secondary" onClick={toggleDecoded} className={styles.showDecoded}>
+          <HStack alignItems="center" gap={16}>
+            <CopyButton kind="secondary" content={JSON.stringify(msg, null, 2)} />
+            <Button kind="secondary" onClick={toggleDecoded} className={styles.showDecoded}>
               {showDecoded ? 'Show Base64' : 'Show Decoded'}
             </Button>
           </HStack>
-        </Container>
+        </Stack>
         <pre className={styles.message}>{JSON.stringify(formatMsg(msg, showDecoded), null, 4)}</pre>
       </Panel>
     </VStack>

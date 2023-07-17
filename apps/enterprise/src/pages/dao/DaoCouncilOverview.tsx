@@ -1,9 +1,9 @@
-import { Panel } from 'components/panel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { Address } from 'chain/components/Address';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 export const DaoCouncilOverview = () => {
   const { dao_council } = useCurrentDao();

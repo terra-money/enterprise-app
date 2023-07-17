@@ -1,12 +1,10 @@
 import { RecentProposals } from './RecentProposals';
 import { SocialChannels } from './SocialChannels';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { ConditionalRender } from 'components/primitives';
 import { TokenDaoTotalSupplyPanel } from './TokenDaoTotalSupplyPanel';
 import { NftDaoTotalSupplyPanel } from './NftDaoTotalSupplyPanel';
 import { NftDaoTotalStakedPanel } from './NftDaoTotalStakedPanel';
 import { TokenDaoTotalStakedPanel } from './TokenDaoTotalStakedPanel';
-import { TokenDaoPricePanel } from './TokenDaoPricePanel';
 import { VStack } from 'lib/ui/Stack';
 import { MultisigDaoMembersPanel } from './MultisigDaoMembersPanel';
 import { DaoCouncilOverview } from './DaoCouncilOverview';
@@ -15,6 +13,7 @@ import { GovernanceOverview } from './GovernanceOverview';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { UpgradeDaoPrompt } from './UpgradeDaoPrompt';
 import { DaoErrorBoundary } from './DaoErrorBoundary';
+import { Match } from 'lib/ui/Match';
 
 export const Overview = () => {
   const dao = useCurrentDao();
@@ -25,7 +24,7 @@ export const Overview = () => {
         <UpgradeDaoPrompt />
         <SameWidthChildrenRow gap={16} maxColumns={2} minChildrenWidth={320}>
           <VStack justifyContent="space-between" gap={16}>
-            <ConditionalRender
+            <Match
               value={dao.dao_type}
               multisig={() => (
                 <VStack gap={16}>
@@ -36,7 +35,6 @@ export const Overview = () => {
                 <>
                   <TokenDaoTotalSupplyPanel />
                   <TokenDaoTotalStakedPanel />
-                  <TokenDaoPricePanel />
                 </>
               )}
               nft={() => (

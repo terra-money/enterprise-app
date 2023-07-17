@@ -1,10 +1,10 @@
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
-import { pluralize, toPercents } from '@terra-money/apps/utils';
-import Big, { BigSource } from 'big.js';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import { secondsInDay } from 'date-fns';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
+import { toPercents } from 'lib/shared/utils/toPercents';
+import { pluralize } from 'lib/shared/utils/pluralize';
 
 export interface GovConfigView extends Record<string, string | undefined> {
   quorum: string;
@@ -30,7 +30,7 @@ const noValue = 'null';
 
 const toDays = (seconds: number) => {
   const days = Math.round(Number(seconds) / secondsInDay);
-  return `${days} ${pluralize('day', days)}`;
+  return pluralize(days, 'day');
 };
 
 const formatDuration = (value: enterprise.Duration | null | undefined) => {
@@ -42,7 +42,7 @@ const formatDuration = (value: enterprise.Duration | null | undefined) => {
     return toDays(value.time);
   }
 
-  return `${value.height} ${pluralize('block', value.height)}`;
+  return pluralize(value.height, 'block');
 };
 
 const formatBoolean = (value: boolean | null | undefined) => (value ? 'Yes' : 'No');
@@ -55,9 +55,7 @@ export const getUpdatedFields = (
 
   if (msg.minimum_deposit !== 'no_change') {
     const minimumDeposit = msg.minimum_deposit.change;
-    view.minimumDeposit = minimumDeposit
-      ? formatAmount(demicrofy(Big(minimumDeposit) as u<BigSource>, tokenDecimals))
-      : noValue;
+    view.minimumDeposit = minimumDeposit ? formatAmount(fromChainAmount(minimumDeposit, tokenDecimals)) : noValue;
   }
 
   if (msg.quorum !== 'no_change') {
@@ -102,7 +100,7 @@ export const fromDao = (dao: DAO, tokenDecimals: number = 6): GovConfigView => {
     vetoThreshold: toPercents(governanceConfig.vetoThreshold),
     unlockingPeriod: formatDuration(governanceConfig.unlockingPeriod),
     votingDuration: toDays(Number(governanceConfig.voteDuration)),
-    minimumDeposit: minimumDeposit ? formatAmount(demicrofy(Big(minimumDeposit) as u<Big>, tokenDecimals)) : noValue,
+    minimumDeposit: minimumDeposit ? formatAmount(fromChainAmount(minimumDeposit, tokenDecimals)) : noValue,
   };
 
   if (dao.type === 'multisig') {

@@ -1,19 +1,16 @@
-import { Container } from '@terra-money/apps/components';
+import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
-import { OptionButton } from 'components/option-button';
-import { ConditionalRender, Divider } from 'components/primitives';
 import { enterprise } from 'types/contracts';
-import { TokenAddressInput } from '../token/TokenAddressInput';
-import { NftAddressInput } from '../nft/NftAddressInput';
-import { MultisigAddressInput } from '../multisig/MultisigAddressInput';
 import { CW20TokenInfoResponse, CW721ContractInfoResponse, MultisigVoter } from 'queries';
 import { Text } from 'components/primitives';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
-import { u } from '@terra-money/apps/types';
 import styles from './ImportStep.module.sass';
 import { Address } from 'chain/components/Address';
+import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
+import { booleanMatch } from 'lib/shared/utils/match';
 
 const daoNameRecord: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
@@ -23,7 +20,7 @@ const daoNameRecord: Record<enterprise.DaoType, string> = {
 
 const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: CW20TokenInfoResponse }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Name</Text>
       <Text variant="heading4">{token.name}</Text>
       <Text variant="label">Symbol</Text>
@@ -32,33 +29,33 @@ const CW20TokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: 
       <Address value={tokenAddr} length="l" />
       <Text variant="label">Total supply</Text>
       <Text variant="heading4">
-        {formatAmount(demicrofy(Big(token.total_supply) as u<Big>, token.decimals), { decimals: 2 })}
+        {formatAmount(fromChainAmount(Big(token.total_supply).toNumber(), token.decimals), { decimals: 2 })}
       </Text>
-    </Container>
+    </Stack>
   );
 };
 
 const NFTTokenInformation = ({ tokenAddr, token }: { tokenAddr: string; token: CW721ContractInfoResponse }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Name</Text>
       <Text variant="heading4">{token.name}</Text>
       <Text variant="label">Symbol</Text>
       <Text variant="heading4">{token.symbol}</Text>
       <Text variant="label">CW721 Address</Text>
       <Address value={tokenAddr} length="l" />
-    </Container>
+    </Stack>
   );
 };
 
 const MultisigVotersInformation = ({ multisigAddr, voters }: { multisigAddr: string; voters: MultisigVoter[] }) => {
   return (
-    <Container className={styles.tokenInformation} direction="column">
+    <Stack className={styles.tokenInformation} direction="column">
       <Text variant="label">Number of members</Text>
       <Text variant="heading4">{voters.length}</Text>
       <Text variant="label">CW3 Address</Text>
       <Address value={multisigAddr} length="l" />
-    </Container>
+    </Stack>
   );
 };
 
@@ -82,7 +79,7 @@ export function ImportStep() {
   const daoName = daoNameRecord[type];
 
   const helpContent = shouldImport && (
-    <Container className={styles.helpContent}>
+    <Stack direction="row" className={styles.helpContent}>
       {type === 'token' && existingToken && (
         <CW20TokenInformation tokenAddr={existingTokenAddr} token={existingToken} />
       )}
@@ -90,36 +87,24 @@ export function ImportStep() {
       {type === 'multisig' && existingMultisigVoters && (
         <MultisigVotersInformation multisigAddr={existingMultisigAddr} voters={existingMultisigVoters} />
       )}
-    </Container>
+    </Stack>
   );
-
   return (
     <WizardStep title={`Do you have an existing ${daoName}?`} helpContent={helpContent}>
-      <Container direction="column" gap={24}>
-        <Container gap={24} direction="column">
-          <OptionButton
-            title={`No, create a new ${daoName}`}
-            active={!shouldImport}
-            onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: false } })}
-          />
-          <OptionButton
-            title={`Yes, find my ${daoName}`}
-            active={shouldImport}
-            onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: true } })}
-          />
-          {shouldImport && (
-            <>
-              <Divider />
-              <ConditionalRender
-                value={type}
-                token={() => <TokenAddressInput />}
-                multisig={() => <MultisigAddressInput />}
-                nft={() => <NftAddressInput />}
-              />
-            </>
-          )}
-        </Container>
-      </Container>
+      <Stack direction="column" gap={24}>
+        <PrimarySelect<boolean>
+          options={[false, true]}
+          getName={(option) =>
+            booleanMatch(option, {
+              false: () => `No, create a new ${daoName}`,
+              true: () => `Yes, find my ${daoName}`,
+            })
+          }
+          selectedOption={shouldImport}
+          onSelect={(shouldImport) => formInput({ daoImport: { ...daoImport, shouldImport } })}
+          groupName="proposal-type"
+        />
+      </Stack>
     </WizardStep>
   );
 }

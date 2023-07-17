@@ -2,7 +2,6 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
-import { assertDefined, terraAddressRegex } from '@terra-money/apps/utils';
 import { toSpendTreasuryMsg } from './helpers/toSpendTreasuryMsg';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { useState } from 'react';
@@ -10,15 +9,16 @@ import { VStack } from 'lib/ui/Stack';
 import { useCurrentDaoTreasuryTokens } from './CurrentDAOTreasuryTokentsProvider';
 import { Text } from 'lib/ui/Text';
 import { TreasuryTokenInput } from './TreasuryTokenInput';
-import { demicrofy } from '@terra-money/apps/libs/formatting/demicrofy';
 import { AmountTextInput } from 'lib/ui/inputs/AmountTextInput';
 import { AssetInfoWithPrice } from 'chain/Asset';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 import { AmountSuggestion } from 'lib/ui/inputs/AmountSuggestion';
+import { terraAddressRegex } from 'chain/utils/validators';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 interface SpendTreasuryProposalFormSchema {
   destinationAddress: string;
-  amount: number;
+  amount: number | undefined;
 }
 
 export const SpendTreasuryProposalForm = () => {
@@ -27,7 +27,7 @@ export const SpendTreasuryProposalForm = () => {
   const formSchema: z.ZodType<SpendTreasuryProposalFormSchema> = z.lazy(() => {
     let amount = z.number().positive().gt(0);
     if (token) {
-      amount = amount.lte(demicrofy(token.balance, token.decimals).toNumber());
+      amount = amount.lte(fromChainAmount(token.balance, token.decimals));
     }
     return z.object({
       destinationAddress: z.string().regex(terraAddressRegex, { message: 'Enter a valid Terra address' }),
@@ -54,7 +54,7 @@ export const SpendTreasuryProposalForm = () => {
               action_type: 'spend',
               msgs: [
                 toSpendTreasuryMsg({
-                  amount,
+                  amount: assertDefined(amount),
                   destinationAddress,
                   assetId: id,
                   assetDecimals: decimals,

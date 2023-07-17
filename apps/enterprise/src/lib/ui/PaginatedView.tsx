@@ -41,7 +41,7 @@ export const PaginatedView = ({ children, isLoading, onRequestToLoadMore }: Prop
         <div ref={ref} />
         {isLoading && (
           <LoaderContainer fullWidth gap={8} justifyContent="center" alignItems="center">
-            <Spinner size={16} />
+            <Spinner />
             <Text>Loading</Text>
           </LoaderContainer>
         )}

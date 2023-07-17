@@ -1,8 +1,8 @@
-import { sleep } from '@terra-money/apps/utils';
 import { TX_KEY } from 'tx';
 import { fetchIndexerState } from './fetchIndexerState';
 import { min } from 'd3-array';
-import { NetworkName } from '@terra-money/apps/hooks';
+import { NetworkName } from 'chain/hooks/useNetworkName';
+import { sleep } from 'chain/transactions/utils/sleep';
 
 interface IndexerCompletionOptions {
   networkName: NetworkName;

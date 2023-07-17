@@ -1,6 +1,6 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
 import { AssetInfoWithPrice } from 'chain/Asset';
-import { Throbber } from 'components/primitives';
+import { Spinner } from 'lib/ui/Spinner';
 import { useDaoAssets } from 'queries/useDaoAssets';
 
 interface Props {
@@ -16,7 +16,7 @@ export const CurrentDAOTreasuryTokensProvider = ({ children }: Props) => {
   const { data: assets } = useDaoAssets();
 
   if (!assets) {
-    return <Throbber />;
+    return <Spinner />;
   }
 
   return <TreasuryTokensProvider value={assets}>{children}</TreasuryTokensProvider>;

@@ -1,10 +1,15 @@
-import { Tag } from 'components/tag';
-import classNames from 'classnames';
-import { Container } from '@terra-money/apps/components';
+import { HStack } from 'lib/ui/Stack';
 import { useBlockHeightQuery } from 'queries';
-import styles from './ProposalTags.module.sass';
-import { getProposalStatusName, getProposalTypeName } from 'dao/shared/proposal';
+import {
+  getProposalStatusName,
+  getProposalTypeName,
+  proposalActionTypeName,
+  proposalStatusNames,
+} from 'dao/shared/proposal';
 import { Proposal } from 'dao/shared/proposal';
+import { useTheme } from 'styled-components';
+import { Tag } from 'lib/ui/Tag';
+import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 
 interface ProposalStatusProps {
   className?: string;
@@ -12,7 +17,9 @@ interface ProposalStatusProps {
 }
 
 export const ProposalTags = (props: ProposalStatusProps) => {
-  const { className, proposal } = props;
+  const { proposal } = props;
+
+  const { colors } = useTheme();
 
   const { data: blockHeight = Number.MAX_SAFE_INTEGER } = useBlockHeightQuery();
 
@@ -21,10 +28,12 @@ export const ProposalTags = (props: ProposalStatusProps) => {
   const proposalTypeName = getProposalTypeName(proposal);
 
   return (
-    <Container className={classNames(className, styles.root)}>
-      <Tag className={classNames(styles.status, styles[status.toLowerCase()])}>{status}</Tag>
-      <Tag className={classNames(styles.type, styles[proposalTypeName.toLowerCase()])}>{proposalTypeName}</Tag>
-      {proposal.type === 'council' && <Tag className={styles.emergency}>Emergency</Tag>}
-    </Container>
+    <HStack alignItems="center" wrap="wrap" gap={8}>
+      <Tag color={colors.getLabelColor(proposalStatusNames.indexOf(status))}>{status}</Tag>
+      <Tag color={colors.getLabelColor(proposalActionTypeName.indexOf(proposalTypeName))}>
+        {capitalizeFirstLetter(proposalTypeName)}
+      </Tag>
+      {proposal.type === 'council' && <Tag color={colors.alert}>Emergency</Tag>}
+    </HStack>
   );
 };

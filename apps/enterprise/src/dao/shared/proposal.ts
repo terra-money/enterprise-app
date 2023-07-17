@@ -1,5 +1,4 @@
 import Big from 'big.js';
-import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 
@@ -71,7 +70,25 @@ export const proposalTitle: Record<ProposalType, string> = {
   minWeightForRewards: 'Update minimum weight for rewards',
 };
 
-export const proposalActionShortName: Record<enterprise.ProposalActionType, string> = {
+export const proposalActionTypeName = [
+  'metadata',
+  'gov',
+  'council',
+  'assets',
+  'nfts',
+  'funding',
+  'upgrade',
+  'execute',
+  'members',
+  'distribute',
+  'min weight',
+  'text',
+  'other',
+] as const;
+
+export type ProposalActionTypeName = (typeof proposalActionTypeName)[number];
+
+export const proposalActionShortName: Record<enterprise.ProposalActionType, ProposalActionTypeName> = {
   update_metadata: 'metadata',
   update_gov_config: 'gov',
   update_council: 'council',
@@ -109,18 +126,18 @@ export const getProposalActionMsg = (action: enterprise.ProposalAction): Proposa
   return Object.values(action)[0] as ProposalActionMsg;
 };
 
-export const getProposalTypeName = (proposal: Proposal) => {
+export const getProposalTypeName = (proposal: Proposal): ProposalActionTypeName => {
   const { actions } = proposal;
   const action = actions[0];
   if (!action) {
-    return 'Text';
+    return 'text';
   }
   const type = getProposalActionType(action);
   if (!type) {
-    return 'Other';
+    return 'other';
   }
 
-  return capitalizeFirstLetter(proposalActionShortName[type]);
+  return proposalActionShortName[type];
 };
 
 export const hasProposalExpired = (proposal: Proposal, blockHeight: number, timestamp: number) => {
@@ -142,7 +159,9 @@ export const getProposalEstimatedExpiry = (proposal: Proposal) => {
   return undefined;
 };
 
-export type ProposalStatusName = 'Active' | 'Pending' | 'Passed' | 'Rejected' | 'Executed';
+export const proposalStatusNames = ['Active', 'Pending', 'Passed', 'Rejected', 'Executed'] as const;
+
+type ProposalStatusName = (typeof proposalStatusNames)[number];
 
 export const getProposalStatusName = (proposal: Proposal, blockHeight: number): ProposalStatusName => {
   if (proposal.status === 'in_progress' && hasProposalExpired(proposal, blockHeight, Date.now())) {

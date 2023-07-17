@@ -4,10 +4,12 @@ import { ReactComponent as TelegramIcon } from 'components/assets/TelegramLogo.s
 import { ReactComponent as GithubIcon } from 'components/assets/GithubLogo.svg';
 import { ReactNode } from 'react';
 import { DaoSocialDataInput } from '../DaoWizardFormProvider';
-import { FormState } from '@terra-money/apps/hooks';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import styled from 'styled-components';
 import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getCSSUnit } from 'lib/ui/utils/getCSSUnit';
+import { inputHeight } from 'lib/ui/inputs/config';
+import { FormState } from 'lib/shared/hooks/useForm';
 
 const socialDataKeys: Array<keyof DaoSocialDataInput> = [
   'githubUsername',
@@ -43,13 +45,15 @@ interface SocialFieldsProps extends FormState<DaoSocialDataInput> {
 
 const IconOverlay = styled.div`
   position: absolute;
-  left: 20px;
+  pointer-events: none;
+  width: ${getCSSUnit(inputHeight)};
+  left: 0;
   font-size: 28px;
   ${centerContentCSS};
 `;
 
 const Input = styled(TextInput)`
-  padding-left: 68px;
+  padding-left: ${getCSSUnit(inputHeight)};
 `;
 
 export function SocialFields({ onChange, ...socials }: SocialFieldsProps) {

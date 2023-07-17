@@ -37,7 +37,7 @@ const HourContent = styled.div<{ labelWidth: number }>`
 `;
 
 const HourLine = styled.div`
-  background: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background: ${({ theme }) => theme.colors.mist.toCssValue()};
   height: 1px;
   width: 100%;
 `;

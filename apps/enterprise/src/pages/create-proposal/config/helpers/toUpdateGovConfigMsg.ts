@@ -1,6 +1,6 @@
 import { ConfigProposalFormState } from '../useCreateConfigProposalForm';
 import { enterprise } from 'types/contracts';
-import { microfy } from '@terra-money/apps/libs/formatting';
+import { toChainAmount } from 'chain/utils/toChainAmount';
 import { DAO } from 'types';
 import { getDaoRatio } from 'pages/create-dao/helpers/toCreateDaoMsg';
 
@@ -28,7 +28,7 @@ export const toUpdateGovConfigMsg = (
   };
 
   if (minimumDeposit) {
-    const newMinimumDeposit = microfy(minimumDeposit, tokenDecimals).toString();
+    const newMinimumDeposit = toChainAmount(minimumDeposit, tokenDecimals || 6).toString();
     if (dao.governanceConfig.minimumDeposit !== newMinimumDeposit) {
       msg.minimum_deposit = { change: newMinimumDeposit };
     }

@@ -1,10 +1,9 @@
-import { AnimatedPage, ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { useRef } from 'react';
 import { FeaturesSlice } from './FeaturesSlice';
 import { LandingFooter } from './LandingFooter';
 import { LandingTopbar } from './LandingTopbar';
 import { PrimarySlice } from './PrimarySlice';
 import styles from './LandingPage.module.sass';
+import { VStack } from 'lib/ui/Stack';
 
 // TODO:
 // 1. Adjust font-sizes, we used the Text primitive component for all texts here
@@ -16,27 +15,14 @@ import styles from './LandingPage.module.sass';
 // 7. Update social links
 
 export const LandingPage = () => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const headerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <ScrollableContainer
-      ref={ref}
-      className={styles.root}
-      stickyRef={headerRef}
-      header={(visible) => (
-        <StickyHeader visible={visible}>
-          <LandingTopbar className={styles.compact} />
-        </StickyHeader>
-      )}
-    >
-      <LandingTopbar ref={headerRef} />
-      <AnimatedPage className={styles.container}>
+    <VStack>
+      <LandingTopbar />
+      <div className={styles.container}>
         <PrimarySlice />
         <FeaturesSlice />
         <LandingFooter />
-      </AnimatedPage>
-    </ScrollableContainer>
+      </div>
+    </VStack>
   );
 };

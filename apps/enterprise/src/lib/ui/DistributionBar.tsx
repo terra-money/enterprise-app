@@ -54,7 +54,7 @@ export const DistributionBar = ({ items, height = 40 }: DistributionBarProps) =>
                 <VStack fullHeight fullWidth alignItems="center" justifyContent="center" ref={setElement}>
                   {!size ||
                     (size.width > 20 && (
-                      <Text color="white" weight="bold" size={14}>
+                      <Text color="contrast" weight="bold" size={14}>
                         {Math.round((value / total) * 100)}
                         <Text as="span" size={12}>
                           %

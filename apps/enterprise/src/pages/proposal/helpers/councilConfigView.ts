@@ -1,4 +1,4 @@
-import { toPercents } from '@terra-money/apps/utils';
+import { toPercents } from 'lib/shared/utils/toPercents';
 import { DAO } from 'types';
 import { enterprise } from 'types/contracts';
 

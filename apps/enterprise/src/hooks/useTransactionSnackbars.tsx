@@ -3,13 +3,14 @@ import {
   FailedTransaction,
   PendingTransaction,
   useTransactionSubscribers,
-} from '@terra-money/apps/libs/transactions';
+} from 'chain/transactions';
 import { useSnackbar } from 'notistack';
 import { useRefetchQueries } from 'queries';
 import { TX_KEY } from 'tx';
-import { useNetworkName, useRefCallback } from '@terra-money/apps/hooks';
 import { TransactionSnackbar } from 'components/snackbar';
 import { indexerCompletion } from 'utils/indexerCompletion';
+import { useRefCallback } from 'chain/transactions/utils/useRefCallback';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 
 type TxMessages = Record<TX_KEY, string>;
 

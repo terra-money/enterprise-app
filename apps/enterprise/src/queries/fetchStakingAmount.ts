@@ -1,18 +1,13 @@
 import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
 import { enterprise } from 'types/contracts';
-import { CW20Addr, u } from '@terra-money/apps/types';
 
-export const fetchStakingAmount = async (
-  lcd: LCDClient,
-  daoAddress: CW20Addr,
-  walletAddress?: CW20Addr
-): Promise<u<Big>> => {
+export const fetchStakingAmount = async (lcd: LCDClient, daoAddress: string, walletAddress?: string): Promise<Big> => {
   if (walletAddress === undefined) {
     const response = await lcd.wasm.contractQuery<{ total_staked_amount: string }>(daoAddress, {
       total_staked_amount: {},
     });
-    return Big(response.total_staked_amount) as u<Big>;
+    return Big(response.total_staked_amount) as Big;
   }
 
   const response = await lcd.wasm.contractQuery<enterprise.UserStakeResponse>(daoAddress, {
@@ -26,5 +21,5 @@ export const fetchStakingAmount = async (
         : Big(response.user_stake.nft.amount)
       : Big(0);
 
-  return amount as u<Big>;
+  return amount as Big;
 };

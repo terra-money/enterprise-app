@@ -1,5 +1,5 @@
-import { getValueProviderSetup } from '@terra-money/apps/utils';
-import { Throbber } from 'components/primitives';
+import { getValueProviderSetup } from 'lib/shared/utils/getValueProviderSetup';
+import { Spinner } from 'lib/ui/Spinner';
 import { useCurrentDaoNftWhitelistQuery } from 'queries/useCurrentDaoNftWhitelistQuery';
 
 interface Props {
@@ -15,7 +15,7 @@ export const CurrentDAOWhitelistedNFTsProvider = ({ children }: Props) => {
   const { data: whitelistedNFTs } = useCurrentDaoNftWhitelistQuery();
 
   if (!whitelistedNFTs) {
-    return <Throbber />;
+    return <Spinner />;
   }
 
   return <WhitelistedNFTsProvider value={whitelistedNFTs}>{children}</WhitelistedNFTsProvider>;

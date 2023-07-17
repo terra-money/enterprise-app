@@ -3,10 +3,11 @@ import { QUERY_KEY } from 'queries';
 import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
 import { enterprise } from 'types/contracts';
-import { CW20Addr } from '@terra-money/apps/types';
-import { useLCDClient } from '@terra-money/wallet-provider';
 
-export const fetchVotingPower = async (lcd: LCDClient, daoAddress: CW20Addr, walletAddress: CW20Addr): Promise<Big> => {
+import { useLCDClient } from '@terra-money/wallet-provider';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
+
+export const fetchVotingPower = async (lcd: LCDClient, daoAddress: string, walletAddress: string): Promise<Big> => {
   const response = await lcd.wasm.contractQuery<enterprise.MemberInfoResponse>(daoAddress, {
     member_info: { member_address: walletAddress },
   });
@@ -14,7 +15,7 @@ export const fetchVotingPower = async (lcd: LCDClient, daoAddress: CW20Addr, wal
 };
 
 export const useVotingPowerQuery = (
-  daoAddress?: string,
+  daoAddress: string,
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Big | undefined> => {
@@ -22,7 +23,7 @@ export const useVotingPowerQuery = (
 
   return useQuery(
     [QUERY_KEY.VOTING_POWER, daoAddress, walletAddress],
-    () => fetchVotingPower(lcd, daoAddress as CW20Addr, walletAddress as CW20Addr),
+    () => fetchVotingPower(lcd, daoAddress, assertDefined(walletAddress)),
     {
       ...options,
       refetchOnMount: false,

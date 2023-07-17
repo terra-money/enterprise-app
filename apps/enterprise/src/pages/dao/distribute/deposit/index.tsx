@@ -1,5 +1,5 @@
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { TitledSection } from 'lib/ui/Layout/TitledSection';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { VStack } from 'lib/ui/Stack';
@@ -21,9 +21,9 @@ export const DepositIntoFundsDistributor = () => {
         </Text>
         <OverlayOpener
           renderOpener={({ onOpen }) => (
-            <PrimaryButton onClick={onOpen} kind="secondary">
+            <Button onClick={onOpen} kind="secondary">
               Deposit
-            </PrimaryButton>
+            </Button>
           )}
           renderOverlay={({ onClose }) => <DepositIntoFundsDistributorOverlay onClose={onClose} />}
         />

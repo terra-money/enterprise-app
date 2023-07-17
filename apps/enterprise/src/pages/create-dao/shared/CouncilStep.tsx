@@ -1,6 +1,3 @@
-import { assertDefined, removeByIndex, updateAtIndex } from '@terra-money/apps/utils';
-import { AddButton } from 'components/add-button';
-import { DeleteIconButton } from 'components/delete-icon-button';
 import { TextInput } from 'lib/ui/inputs/TextInput';
 import { Line } from 'lib/ui/Line';
 import { HStack, VStack } from 'lib/ui/Stack';
@@ -9,6 +6,11 @@ import { QuorumInput } from '../gov-config/QuorumInput';
 import { ThresholdInput } from '../gov-config/ThresholdInput';
 import { WizardStep } from '../WizardStep';
 import { CouncilProposalActionType, ProposalTypesInput } from './ProposalTypesInput';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
+import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { AddButton } from 'lib/ui/buttons/AddButton';
+import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
 
 export function CouncilStep() {
   const {
@@ -54,12 +56,14 @@ export function CouncilStep() {
                 placeholder="Enter council member's address"
                 value={member.address}
                 error={member.addressError}
-                onValueChange={(address) => updateMembers(updateAtIndex(council.members, index, { address }))}
+                onValueChange={(address) =>
+                  updateMembers(updateAtIndex(council.members, index, (value) => ({ ...value, address })))
+                }
               />
-              <DeleteIconButton onClick={() => updateMembers(removeByIndex(council.members, index))} />
+              <DeleteButton size="l" onClick={() => updateMembers(removeAtIndex(council.members, index))} />
             </HStack>
           ))}
-          {isValid && <AddButton onClick={() => updateMembers([...council.members, { address: '' }])} />}
+          {isValid && <AddButton size="l" onClick={() => updateMembers([...council.members, { address: '' }])} />}
         </VStack>
       </VStack>
     </WizardStep>

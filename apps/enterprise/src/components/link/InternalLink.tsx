@@ -1,6 +1,6 @@
-import { handleWithPreventDefault } from '@terra-money/apps/utils';
 import { useNavigate } from 'react-router';
 import { UnstyledAnchor, UnstyledAnchorProps } from './UnstyledAnchor';
+import { handleWithPreventDefault } from 'lib/shared/events';
 
 interface InternalLinkProps extends UnstyledAnchorProps {
   to: string;

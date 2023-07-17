@@ -1,4 +1,4 @@
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { secondsInDay, secondsInMinute } from 'date-fns';
 
 export const useEnv = () => {

@@ -1,22 +1,21 @@
-import { FailedTransaction, Transaction, TransactionStatus } from '@terra-money/apps/libs/transactions';
+import { Transaction, TransactionStatus } from 'chain/transactions';
 import { useSnackbar } from 'notistack';
 import { useSnackbarKey } from './SnackbarContainer';
-import { UserDenied } from '@terra-money/wallet-provider';
 import { useMemo } from 'react';
-import { getFinderUrl } from '@terra-money/apps/utils';
 import { useTransactionError } from 'chain/components/TransactionErrorProvider';
-import { useNetworkName } from '@terra-money/apps/hooks';
+import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
 import { ExternalLink } from 'components/link';
 import { Text } from 'lib/ui/Text';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { HStack, VStack } from 'lib/ui/Stack';
-import { ConditionalRender } from 'components/primitives';
 import { PopoverContainer } from 'lib/ui/Menu/PopoverPanel';
-import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
 import { CheckIcon } from 'lib/ui/icons/CheckIcon';
 import { AlertCircleIcon } from 'lib/ui/icons/AlertCircleIcon';
 import { Spinner } from 'lib/ui/Spinner';
+import { Match } from 'lib/ui/Match';
+import { getFinderUrl } from 'chain/utils/getFinderUrl';
+import { CloseButton } from 'lib/ui/buttons/CloseButton';
 
 type Variant = 'pending' | 'completed' | 'failed';
 
@@ -26,14 +25,6 @@ interface TransactionSnackbarProps {
   message: string;
   timeout?: number;
 }
-
-const getErrorText = (error: FailedTransaction['error']) => {
-  if (error instanceof UserDenied) {
-    return error.message;
-  }
-
-  return 'View error details';
-};
 
 export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
   const { transaction, variant, message } = props;
@@ -65,11 +56,11 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
     <PopoverContainer>
       <HStack gap={20} style={{ minWidth: 300 }} alignItems="center">
         <Text as="div" size={20}>
-          <ConditionalRender
+          <Match
             value={variant}
             completed={() => <CheckIcon />}
             failed={() => <AlertCircleIcon />}
-            pending={() => <Spinner size={20} />}
+            pending={() => <Spinner />}
           />
         </Text>
         <VStack gap={4}>
@@ -81,10 +72,10 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
               <ShyTextButton as="div" text="View details" />
             </ExternalLink>
           ) : transaction.status === TransactionStatus.Failed && transaction.error ? (
-            <Text>{getErrorText(transaction.error)}</Text>
+            <Text cropped>{transaction.error.message}</Text>
           ) : null}
         </VStack>
-        {variant !== 'pending' && <CloseIconButton onClick={() => closeSnackbar(snackbarKey)} />}
+        {variant !== 'pending' && <CloseButton onClick={() => closeSnackbar(snackbarKey)} />}
       </HStack>
     </PopoverContainer>
   );

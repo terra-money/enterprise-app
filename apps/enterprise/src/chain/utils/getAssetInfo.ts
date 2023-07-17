@@ -1,7 +1,7 @@
 import { LCDClient } from '@terra-money/feather.js';
 import { Asset, AssetInfo } from 'chain/Asset';
-import { getAssetsInfo } from './getAssetsInfo';
-import { NetworkName } from '@terra-money/apps/hooks';
+import { cw20DefaultIcon, getAssetsInfo } from './getAssetsInfo';
+import { NetworkName } from 'chain/hooks/useNetworkName';
 
 interface CW20TokenInfoResponse {
   name: string;
@@ -16,11 +16,7 @@ interface GetAssetInfoParams {
   networkName: NetworkName;
 }
 
-export const getAssetInfo = async ({
-  asset: { id, type },
-  lcd,
-  networkName,
-}: GetAssetInfoParams): Promise<AssetInfo> => {
+export const getAssetInfo = async ({ asset: { id, type }, lcd, networkName }: GetAssetInfoParams) => {
   const record = await getAssetsInfo(networkName);
 
   if (record[id]) {
@@ -32,11 +28,16 @@ export const getAssetInfo = async ({
       token_info: {},
     });
 
-    return {
+    const result: Asset & AssetInfo = {
       name,
       symbol,
       decimals,
+      type: 'cw20',
+      id,
+      icon: cw20DefaultIcon,
     };
+
+    return result;
   }
 
   throw new Error(`No info about ${type} asset ${id}`);

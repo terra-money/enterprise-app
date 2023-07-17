@@ -1,16 +1,13 @@
-import { ScrollableContainer, StickyHeader } from '@terra-money/apps/components';
-import { useRef } from 'react';
 import { Overview } from './Overview';
 import { RecentProposals } from './RecentProposals';
-import { PageLayout } from 'components/layout';
 import { RecentDAOs } from './TopDAOs';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
+import { PageLayout } from 'components/PageLayout';
+import { StickyWalletManager } from 'chain/components/StickyWalletManager';
 
 export const DashboardPage = () => {
-  const ref = useRef<HTMLDivElement>(null);
-
   const content = (
     <>
       <Overview />
@@ -22,17 +19,13 @@ export const DashboardPage = () => {
   return (
     <ResponsiveView
       normal={() => (
-        <ScrollableContainer stickyRef={ref} header={(visible) => <StickyHeader visible={visible}></StickyHeader>}>
-          <PageLayout
-            header={
-              <Text weight="bold" size={32}>
-                Dashboard
-              </Text>
-            }
-          >
-            {content}
-          </PageLayout>
-        </ScrollableContainer>
+        <PageLayout>
+          <Text weight="bold" size={32}>
+            Dashboard
+          </Text>
+          <StickyWalletManager />
+          {content}
+        </PageLayout>
       )}
       small={() => (
         <VStack gap={24}>

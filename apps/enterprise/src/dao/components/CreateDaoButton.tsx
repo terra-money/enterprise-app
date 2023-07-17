@@ -1,19 +1,12 @@
-import { IconButton } from 'components/primitives';
 import { InternalLink } from 'lib/navigation/Link/InternalLink';
-import { ReactComponent as PlusIcon } from 'components/assets/Plus.svg';
-import styled from 'styled-components';
 import { Path } from 'navigation';
-
-const Button = styled(IconButton)`
-  font-size: 12px;
-`;
+import { PlusIcon } from 'lib/ui/icons/PlusIcon';
+import { IconButton } from 'lib/ui/buttons/IconButton';
 
 export const CreateDaoButton = () => {
   return (
     <InternalLink to={Path.CreateDao}>
-      <Button variant="primary">
-        <PlusIcon />
-      </Button>
+      <IconButton title="Create DAO" as="div" size="l" icon={<PlusIcon />} />
     </InternalLink>
   );
 };

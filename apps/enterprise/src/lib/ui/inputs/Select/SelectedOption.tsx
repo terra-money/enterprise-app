@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { CloseIconButton } from 'lib/ui/buttons/square/CloseIconButton';
 import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { Panel } from 'lib/ui/Panel/Panel';
+import { CloseButton } from 'lib/ui/buttons/CloseButton';
 
 interface Props {
   value: string;
@@ -17,9 +17,9 @@ const Container = styled(Panel)`
 export const SelectedOption = ({ value, onRemove }: Props) => {
   return (
     <Container>
-      <HStack gap={16}>
+      <HStack alignItems="center" gap={16}>
         <Text color="supporting">{value}</Text>
-        <CloseIconButton onClick={onRemove} />
+        <CloseButton onClick={onRemove} />
       </HStack>
     </Container>
   );

@@ -1,15 +1,13 @@
-import { AnimatedPage } from '@terra-money/apps/components';
 import { ReactNode, useRef, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
-import { Button } from 'components/primitives';
+import { Button } from 'lib/ui/buttons/Button';
 import { FormFooter } from 'components/form-footer';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
-import styled from '@emotion/styled';
 import { without } from 'lodash';
 import { DAO } from 'types';
 import { Text } from 'lib/ui/Text';
@@ -22,6 +20,7 @@ import styles from './SelectProposalType.module.sass';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { toDao } from 'dao/utils/toDao';
+import styled from 'styled-components';
 
 const title = 'Create a proposal';
 const contractsProposalTypeRecord: Record<CouncilProposalActionType, ProposalType> = {
@@ -181,7 +180,6 @@ export const SelectProposalType = () => {
             onClick={() =>
               navigate(`/dao/${address}/proposals/create/${proposalType}?votingType=${proposalVotingType}`)
             }
-            variant="primary"
           >
             Next
           </Button>
@@ -202,22 +200,20 @@ export const SelectProposalType = () => {
         </VStack>
       )}
       normal={() => (
-        <AnimatedPage>
-          <NormalScreenContainer>
-            <Header ref={ref} title={title} />
-            {renderVotingTypePicker()}
-            <ProposalsContainer>
-              <NormalScreenContent>{renderOptions()}</NormalScreenContent>
-              <ProposalDescriptionContainer>
-                <Text className={styles.proposalDescriptionTitle}>
-                  What are {capitalizeFirstLetter(proposalType)} proposals?
-                </Text>
-                <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
-              </ProposalDescriptionContainer>
-            </ProposalsContainer>
-            {renderFooter()}
-          </NormalScreenContainer>
-        </AnimatedPage>
+        <NormalScreenContainer>
+          <Header ref={ref} title={title} />
+          {renderVotingTypePicker()}
+          <ProposalsContainer>
+            <NormalScreenContent>{renderOptions()}</NormalScreenContent>
+            <ProposalDescriptionContainer>
+              <Text className={styles.proposalDescriptionTitle}>
+                What are {capitalizeFirstLetter(proposalType)} proposals?
+              </Text>
+              <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
+            </ProposalDescriptionContainer>
+          </ProposalsContainer>
+          {renderFooter()}
+        </NormalScreenContainer>
       )}
     />
   );

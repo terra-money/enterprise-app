@@ -50,7 +50,7 @@ const Line = styled.div`
   width: 100%;
 
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.backgroundGlass.toCssValue()};
+  background-color: ${({ theme }) => theme.colors.mist.toCssValue()};
   border-radius: 1000px;
 `;
 

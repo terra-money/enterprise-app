@@ -1,10 +1,8 @@
-import { AnimateNumber, Container } from '@terra-money/apps/components';
-import { demicrofy, formatAmount } from '@terra-money/apps/libs/formatting';
-import { u } from '@terra-money/apps/types';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
+
 import Big from 'big.js';
-import { NumericPanel } from 'components/numeric-panel';
 import {
-  useCW20BalanceQuery,
   useCW20TokenInfoQuery,
   useReleasableClaimsQuery,
   useTokenStakingAmountQuery,
@@ -12,28 +10,35 @@ import {
 } from 'queries';
 import { UnstakeTokenOverlay } from './UnstakeTokenOverlay';
 import { useClaimTx } from 'tx';
-import { Text } from 'components/primitives';
 import { DAOLogo } from 'components/dao-logo';
 import { usePendingClaims } from 'hooks';
 import { PendingClaims } from './PendingClaims';
-import styles from './TokenStaking.module.sass';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
 import { TokenDaoTotalSupplyPanel } from '../TokenDaoTotalSupplyPanel';
 import { TokenDaoTotalStakedPanel } from '../TokenDaoTotalStakedPanel';
-import { VStack } from 'lib/ui/Stack';
+import { HStack, VStack } from 'lib/ui/Stack';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { OverlayOpener } from 'lib/ui/OverlayOpener';
 import { StakeTokenOverlay } from './StakeTokenOverlay';
-import { PrimaryButton } from 'lib/ui/buttons/rect/PrimaryButton';
+import { Button } from 'lib/ui/buttons/Button';
 import { getDaoLogo } from 'dao/utils/getDaoLogo';
+import { Text } from 'lib/ui/Text';
+import { useAssetBalanceQury } from 'chain/queries/useAssetBalanceQuery';
+import { assertDefined } from 'lib/shared/utils/assertDefined';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { NumericStatistic } from 'lib/ui/NumericStatistic';
+import { QueryDependant } from 'lib/query/components/QueryDependant';
+import { Spinner } from 'lib/ui/Spinner';
+import { toPercents } from 'lib/shared/utils/toPercents';
 
 const useTokenData = (daoAddress: string, tokenAddress: string) => {
   const { data: token } = useCW20TokenInfoQuery(tokenAddress);
 
-  const { data: totalStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(daoAddress);
+  const { data: totalStaked = Big(0) as Big } = useTokenStakingAmountQuery(daoAddress);
 
-  const totalSupply = token === undefined ? Big(0) : demicrofy(Big(token.total_supply) as u<Big>, token.decimals);
+  const totalSupply = token === undefined ? Big(0) : fromChainAmount(token.total_supply, token.decimals);
 
   const totalStakedPercent =
     token === undefined || Big(token.total_supply ?? 0).eq(0)
@@ -50,8 +55,8 @@ const useTokenData = (daoAddress: string, tokenAddress: string) => {
   };
 };
 
-const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u<Big>) => {
-  const { data: walletStaked = Big(0) as u<Big> } = useTokenStakingAmountQuery(daoAddress, walletAddress);
+const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: Big) => {
+  const { data: walletStaked = Big(0) as Big } = useTokenStakingAmountQuery(daoAddress, walletAddress);
 
   const { data: walletVotingPower = Big(0) } = useVotingPowerQuery(daoAddress, walletAddress);
 
@@ -63,8 +68,8 @@ const useWalletData = (daoAddress: string, walletAddress: string, totalStaked: u
 
   const claimableAmount =
     releasableClaims.length > 0 && 'cw20' in releasableClaims[0].asset
-      ? (Big(releasableClaims[0].asset.cw20.amount) as u<Big>)
-      : (Big(0) as u<Big>);
+      ? (Big(releasableClaims[0].asset.cw20.amount) as Big)
+      : (Big(0) as Big);
 
   return {
     walletStaked,
@@ -91,11 +96,17 @@ export const TokenStakingConnectedView = () => {
     totalStaked
   );
 
-  const { data: balance = Big(0) as u<Big> } = useCW20BalanceQuery(walletAddress, tokenAddress);
+  const { data: balance, status: balanceStatus } = useAssetBalanceQury({
+    address: walletAddress,
+    asset: {
+      type: 'cw20',
+      id: tokenAddress,
+    },
+  });
 
   const [claimTxResult, claimTx] = useClaimTx();
 
-  const isStakeDisabled = balance.lte(0);
+  const isStakeDisabled = !balance;
   const isUnstakeDisabled = walletStaked.lte(0);
   const isClaimDisabled = claimableAmount.lte(0);
 
@@ -103,38 +114,31 @@ export const TokenStakingConnectedView = () => {
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
         <VStack gap={16}>
-          <Container className={styles.staking} component="section" direction="column">
-            <VStack gap={40}>
-              <Container className={styles.header}>
+          <Panel>
+            <VStack gap={16}>
+              <HStack gap={20} alignItems="center">
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
-                <Text variant="label" className={styles.title}>
-                  Voting power
-                </Text>
-                <NumericPanel
-                  className={styles.stakedVotingPanel}
-                  value={demicrofy(walletStaked, tokenDecimals)}
-                  decimals={2}
-                  suffix={
-                    <AnimateNumber format={(v) => `${formatAmount(v, { decimals: 2 })}%`}>
-                      {walletVotingPower.mul(100)}
-                    </AnimateNumber>
-                  }
-                />
-              </Container>
-              <Container className={styles.actions} direction="row">
+                <TitledSection title="Voting power">
+                  <NumericStatistic
+                    value={formatAmount(fromChainAmount(walletStaked.toString(), tokenDecimals))}
+                    suffix={toPercents(walletVotingPower.toNumber(), 'round')}
+                  />
+                </TitledSection>
+              </HStack>
+              <SameWidthChildrenRow gap={16}>
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       isLoading={isLoading}
                       isDisabled={isStakeDisabled ? 'No tokens to stake' : undefined}
                       onClick={onOpen}
                     >
                       Stake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <StakeTokenOverlay
-                      balance={balance}
+                      balance={assertDefined(balance)}
                       daoAddress={dao.address}
                       staked={walletStaked}
                       symbol={tokenSymbol}
@@ -147,14 +151,14 @@ export const TokenStakingConnectedView = () => {
                 />
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
-                    <PrimaryButton
+                    <Button
                       kind="secondary"
                       isLoading={isLoading}
                       isDisabled={isUnstakeDisabled && `You don't have any staked tokens`}
                       onClick={onOpen}
                     >
                       Unstake
-                    </PrimaryButton>
+                    </Button>
                   )}
                   renderOverlay={({ onClose }) => (
                     <UnstakeTokenOverlay
@@ -168,9 +172,9 @@ export const TokenStakingConnectedView = () => {
                     />
                   )}
                 />
-              </Container>
+              </SameWidthChildrenRow>
             </VStack>
-          </Container>
+          </Panel>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <TokenDaoTotalSupplyPanel />
             <TokenDaoTotalStakedPanel />
@@ -178,46 +182,53 @@ export const TokenStakingConnectedView = () => {
         </VStack>
 
         <VStack gap={16}>
-          <NumericPanel
-            className={styles.claim}
-            title="Claim Unstaked Tokens"
-            value={demicrofy(claimableAmount, tokenDecimals)}
-            decimals={2}
-            suffix={tokenSymbol}
-            footnote={
+          <Panel>
+            <TitledSection title="Claim Unstaked Tokens">
+              <NumericStatistic
+                suffix={tokenSymbol}
+                value={fromChainAmount(claimableAmount.toString(), tokenDecimals)}
+              />
               <VStack alignItems="stretch" fullWidth gap={40}>
-                <div />
-                <Container className={styles.actions} direction="row">
-                  <PrimaryButton
-                    kind="secondary"
-                    isDisabled={isClaimDisabled && 'No tokens to claim'}
-                    isLoading={claimTxResult.loading}
-                    onClick={() => {
-                      claimTx({ daoAddress: address });
-                    }}
-                  >
-                    Claim all
-                  </PrimaryButton>
-                </Container>
+                <Button
+                  kind="secondary"
+                  isDisabled={isClaimDisabled && 'No tokens to claim'}
+                  isLoading={claimTxResult.loading}
+                  onClick={() => {
+                    claimTx({ daoAddress: address });
+                  }}
+                >
+                  Claim all
+                </Button>
               </VStack>
-            }
-          />
+            </TitledSection>
+          </Panel>
 
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
-            <NumericPanel title="Your wallet" value={demicrofy(balance, tokenDecimals)} suffix={tokenSymbol} />
-            <NumericPanel
-              title="Your total staked"
-              formatter={(v) => `${formatAmount(v, { decimals: 1 })}%`}
-              decimals={2}
-              value={walletStakedPercent}
-            />
+            <Panel>
+              <TitledSection title="Your wallet">
+                <QueryDependant
+                  data={balance}
+                  status={balanceStatus}
+                  error={() => <Text>failed to load</Text>}
+                  loading={() => <Spinner />}
+                  success={(balance) => (
+                    <NumericStatistic suffix={tokenSymbol} value={fromChainAmount(balance, tokenDecimals)} />
+                  )}
+                />
+              </TitledSection>
+            </Panel>
+            <Panel>
+              <TitledSection title="Your total staked">
+                <NumericStatistic value={`${formatAmount(Big(walletStakedPercent).toNumber(), { decimals: 1 })}%`} />
+              </TitledSection>
+            </Panel>
           </SameWidthChildrenRow>
         </VStack>
       </SameWidthChildrenRow>
       {token && (
         <PendingClaims
           claims={pendingClaims}
-          formatter={(amount) => formatAmount(demicrofy(amount as u<Big>, token.decimals), { decimals: 4 })}
+          formatter={(amount) => formatAmount(fromChainAmount(amount.toNumber(), token.decimals), { decimals: 4 })}
         />
       )}
     </>
