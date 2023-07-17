@@ -16,22 +16,9 @@ interface HeaderProps {
 
 export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) => {
   const dao = useCurrentDao();
-  const { className, compact = false, title } = props;
+  const { className, title } = props;
 
   const navigate = useNavigate();
-
-  if (compact) {
-    return (
-      <Stack direction="row" ref={ref} className={classNames(className, styles.root, styles.compact)}>
-        <div className={styles.logo}>
-          <DAOLogo size="s" logo={getDaoLogo(dao)} />
-        </div>
-        <Text className={styles.name} variant="heading2">
-          {title}
-        </Text>
-      </Stack>
-    );
-  }
 
   return (
     <Stack className={classNames(className, styles.root)} direction="column">

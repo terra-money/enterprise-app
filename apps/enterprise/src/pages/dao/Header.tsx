@@ -10,22 +10,7 @@ import { getDaoLogo } from 'dao/utils/getDaoLogo';
 import { toDao } from 'dao/utils/toDao';
 import { SeparatedByLine } from 'lib/ui/SeparatedByLine';
 import { Text } from 'lib/ui/Text';
-import styled from 'styled-components';
-import { getColor } from 'lib/ui/theme/getters';
-import { interactiveCSS } from 'lib/ui/utils/interactiveCSS';
-import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
-
-// TODO: turn into a reusable component
-const BackLink = styled(Text)`
-  color: ${getColor('textSupporting')};
-  ${interactiveCSS};
-  ${defaultTransitionCSS}
-  font-size: 14px;
-
-  :hover {
-    color: ${getColor('text')};
-  }
-`;
+import { ShyLinkText } from 'lib/ui/Text/LinkText';
 
 export const Header = () => {
   const dao = useCurrentDao();
@@ -34,7 +19,7 @@ export const Header = () => {
     <SeparatedByLine fullWidth gap={20}>
       <VStack gap={16}>
         <InternalLink to={Path.Daos}>
-          <BackLink>Back</BackLink>
+          <ShyLinkText>Back</ShyLinkText>
         </InternalLink>
         <HStack alignItems="center" gap={20}>
           <HStack alignItems="center" gap={8}>
