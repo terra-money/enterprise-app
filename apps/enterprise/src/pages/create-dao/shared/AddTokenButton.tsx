@@ -14,7 +14,7 @@ export const AddTokenButton = ({ onSelect }: AddTokenButtonProps) => {
       renderOverlay={({ onClose }) => (
         <Modal
           placement="top"
-          title="Select a token"
+          title="Select an asset"
           onClose={onClose}
           renderContent={() => (
             <AssetFinder

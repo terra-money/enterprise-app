@@ -20,6 +20,7 @@ export const useCreateDAOTx = () => {
 
   return useTx<CreateDaoMsgType>(
     ({ create_dao }) => {
+      console.log(create_dao);
       const tx = TxBuilder.new()
         .execute<enterprise_factory.ExecuteMsg>(assertDefined(myAddress), contractAddress, {
           create_dao,

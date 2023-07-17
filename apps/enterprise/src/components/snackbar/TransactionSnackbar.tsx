@@ -27,14 +27,6 @@ interface TransactionSnackbarProps {
   timeout?: number;
 }
 
-const getErrorText = (error: FailedTransaction['error']) => {
-  if (error instanceof UserDenied) {
-    return error.message;
-  }
-
-  return 'View error details';
-};
-
 export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
   const { transaction, variant, message } = props;
 
@@ -81,7 +73,7 @@ export const TransactionSnackbar = (props: TransactionSnackbarProps) => {
               <ShyTextButton as="div" text="View details" />
             </ExternalLink>
           ) : transaction.status === TransactionStatus.Failed && transaction.error ? (
-            <Text>{getErrorText(transaction.error)}</Text>
+            <Text cropped>{transaction.error.message}</Text>
           ) : null}
         </VStack>
         {variant !== 'pending' && <CloseButton onClick={() => closeSnackbar(snackbarKey)} />}

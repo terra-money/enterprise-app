@@ -17,7 +17,7 @@ const Container = styled(Panel)`
 export const SelectedOption = ({ value, onRemove }: Props) => {
   return (
     <Container>
-      <HStack gap={16}>
+      <HStack alignItems="center" gap={16}>
         <Text color="supporting">{value}</Text>
         <CloseButton onClick={onRemove} />
       </HStack>

@@ -1,11 +1,7 @@
 import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
 import { useDaoWizardForm } from '../DaoWizardFormProvider';
-import { OptionButton } from 'components/option-button';
 import { enterprise } from 'types/contracts';
-import { TokenAddressInput } from '../token/TokenAddressInput';
-import { NftAddressInput } from '../nft/NftAddressInput';
-import { MultisigAddressInput } from '../multisig/MultisigAddressInput';
 import { CW20TokenInfoResponse, CW721ContractInfoResponse, MultisigVoter } from 'queries';
 import { Text } from 'components/primitives';
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
@@ -13,8 +9,8 @@ import { formatAmount } from 'lib/shared/utils/formatAmount';
 import Big from 'big.js';
 import styles from './ImportStep.module.sass';
 import { Address } from 'chain/components/Address';
-import { Match } from 'lib/ui/Match';
-import { Line } from 'lib/ui/Line';
+import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
+import { booleanMatch } from 'lib/shared/utils/match';
 
 const daoNameRecord: Record<enterprise.DaoType, string> = {
   multisig: 'Multisig',
@@ -93,33 +89,21 @@ export function ImportStep() {
       )}
     </Stack>
   );
-
   return (
     <WizardStep title={`Do you have an existing ${daoName}?`} helpContent={helpContent}>
       <Stack direction="column" gap={24}>
-        <Stack gap={24} direction="column">
-          <OptionButton
-            title={`No, create a new ${daoName}`}
-            active={!shouldImport}
-            onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: false } })}
-          />
-          <OptionButton
-            title={`Yes, find my ${daoName}`}
-            active={shouldImport}
-            onClick={() => formInput({ daoImport: { ...daoImport, shouldImport: true } })}
-          />
-          {shouldImport && (
-            <>
-              <Line />
-              <Match
-                value={type}
-                token={() => <TokenAddressInput />}
-                multisig={() => <MultisigAddressInput />}
-                nft={() => <NftAddressInput />}
-              />
-            </>
-          )}
-        </Stack>
+        <PrimarySelect<boolean>
+          options={[false, true]}
+          getName={(option) =>
+            booleanMatch(option, {
+              false: () => `No, create a new ${daoName}`,
+              true: () => `Yes, find my ${daoName}`,
+            })
+          }
+          selectedOption={shouldImport}
+          onSelect={(shouldImport) => formInput({ daoImport: { ...daoImport, shouldImport } })}
+          groupName="proposal-type"
+        />
       </Stack>
     </WizardStep>
   );

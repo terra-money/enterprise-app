@@ -15,6 +15,7 @@ import { ActionInsideInteractiveElement } from 'lib/ui/ActionInsideInteractiveEl
 import { Spacer } from 'lib/ui/Spacer';
 import { InternalLink } from 'lib/navigation/Link/InternalLink';
 import { getDaoPath } from 'navigation';
+import { croppedTextCSS } from 'lib/ui/utils/croppedTextCSS';
 
 interface DAOCardProps {
   dao: DAO;
@@ -35,6 +36,10 @@ const Container = styled(Panel)`
   }
 `;
 
+const Content = styled(HStack)`
+  ${croppedTextCSS};
+`;
+
 export const DAOCard = (props: DAOCardProps) => {
   const { dao } = props;
 
@@ -47,7 +52,7 @@ export const DAOCard = (props: DAOCardProps) => {
           <InternalLink style={{ width: '100%' }} to={getDaoPath(dao.address)}>
             <Container>
               <HStack gap={20} alignItems="center" justifyContent="space-between">
-                <HStack alignItems="center" gap={20}>
+                <Content alignItems="center" gap={20}>
                   <DAOLogo logo={dao.logo} />
                   <VStack>
                     <Text cropped weight="semibold" size={14}>
@@ -69,7 +74,7 @@ export const DAOCard = (props: DAOCardProps) => {
                       )}
                     </SeparatedBy>
                   </VStack>
-                </HStack>
+                </Content>
                 <Spacer {...actionSize} />
               </HStack>
             </Container>
