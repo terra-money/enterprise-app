@@ -1,6 +1,5 @@
 import { SnackbarKey, SnackbarMessage } from 'notistack';
 import { Ref, forwardRef, createContext, useContext } from 'react';
-import styles from './SnackbarContainer.module.sass';
 
 const SnackbarContainerContext = createContext<SnackbarKey | undefined>(undefined);
 
@@ -22,9 +21,7 @@ const SnackbarContainer = forwardRef((props: SnackbarContainerProps, ref: Ref<HT
 
   return (
     <SnackbarContainerContext.Provider value={id}>
-      <div ref={ref} className={styles.root}>
-        {message}
-      </div>
+      <div ref={ref}>{message}</div>
     </SnackbarContainerContext.Provider>
   );
 });

@@ -147,10 +147,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
           direction="column"
         >
           <Stack className={styles.container} as="div" direction="column">
-            <Stack className={styles.tags} as="div" direction="row">
+            <HStack fullWidth justifyContent="space-between">
               <ProposalTags proposal={proposal} />
               {expiry && <Clock variant={variant} expiry={expiry} />}
-            </Stack>
+            </HStack>
             <HStack className={styles.title} alignItems="center" gap={8}>
               <Text weight="semibold" color="shy">
                 #{id}

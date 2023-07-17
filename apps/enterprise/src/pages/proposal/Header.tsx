@@ -37,7 +37,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
         </div>
         {title}
-        <ProposalTags className={styles.tags} proposal={proposal} />
+        <ProposalTags proposal={proposal} />
       </Stack>
     );
   }
@@ -52,7 +52,7 @@ export const Header = forwardRef((props: HeaderProps, ref: Ref<HTMLDivElement>) 
           <DaoLogoLink address={proposal.dao.address} size="s" logo={proposal.dao.logo} />
         </div>
         {title}
-        <ProposalTags className={styles.tags} proposal={proposal} />
+        <ProposalTags proposal={proposal} />
       </Stack>
     </Stack>
   );
