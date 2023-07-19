@@ -1,14 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { WalletProvider, getInitialConfig } from '@terra-money/wallet-kit';
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+getInitialConfig().then((defaultNetworks) =>
+  ReactDOM.render(
+    <WalletProvider defaultNetworks={defaultNetworks}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </WalletProvider>,
+    document.getElementById('root')
+  )
 );

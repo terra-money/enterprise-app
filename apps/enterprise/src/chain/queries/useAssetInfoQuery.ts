@@ -1,5 +1,5 @@
 import { useNetworkName } from 'chain/hooks/useNetworkName';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { AssetType } from 'chain';
 import { getAssetInfo } from 'chain/utils/getAssetInfo';
 import { QUERY_KEY } from 'queries';
@@ -15,7 +15,7 @@ interface AssetInfoQueryOptions {
 }
 
 export const useAssetInfoQuery = (asset: AssetInfoQueryParams, options?: AssetInfoQueryOptions) => {
-  const lcdClient = useLCDClient();
+  const lcdClient = useLcdClient();
   const networkName = useNetworkName();
 
   return useQuery(

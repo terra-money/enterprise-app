@@ -1,5 +1,5 @@
 import { LCDClient } from '@terra-money/feather.js';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { useQuery, UseQueryResult } from 'react-query';
 
 export interface NFTPairs {
@@ -27,7 +27,7 @@ export const useNFTsOwnersQuery = (
   whitelistAddrCollection: string[],
   daoAddress: string
 ): UseQueryResult<NFTPairs[]> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery([whitelistAddrCollection, daoAddress], async () => {
     const nftpairs = await fetchDAONFTsWhitelist(lcd, whitelistAddrCollection, daoAddress);

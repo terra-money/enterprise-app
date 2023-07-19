@@ -1,4 +1,4 @@
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import Big from 'big.js';
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from './queryKey';
@@ -6,7 +6,7 @@ import { useNetworkName } from 'chain/hooks/useNetworkName';
 import { useChainID } from 'chain/hooks/useChainID';
 
 export const useCommunityPoolQuery = (): UseQueryResult<Big | undefined> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
   const ntworkName = useNetworkName();
   const chainID = useChainID();
 

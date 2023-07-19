@@ -41,7 +41,7 @@ export const DaoWizard = () => {
 
       if (!txResult?.value) return;
 
-      const { txhash } = txResult.value.result;
+      const { txhash } = txResult.value;
       if (txhash !== transaction.txHash) return;
 
       try {

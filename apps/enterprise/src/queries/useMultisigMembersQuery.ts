@@ -3,10 +3,10 @@ import { QUERY_KEY } from 'queries';
 import { enterprise } from 'types/contracts';
 
 import { MultisigMember } from 'types/MultisigMember';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 
 export const useMultisigMembersQuery = (contractAddress: string) => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.MULTISIG_MEMBERS, contractAddress],

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { enterprise } from 'types/contracts';
 import { QUERY_KEY } from './queryKey';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 
 export const useProposalVoteQuery = (
   contract: string,
@@ -9,7 +9,7 @@ export const useProposalVoteQuery = (
   proposalId: number,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ) => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.PROPOSAL_VOTE, contract, proposalId, member],

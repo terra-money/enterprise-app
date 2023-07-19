@@ -1,4 +1,4 @@
-import { ConnectType, useWallet } from '@terra-money/wallet-provider';
+import { useWallet } from '@terra-money/wallet-kit';
 import { Button } from 'lib/ui/buttons/Button';
 import { TerraStationIcon } from 'lib/ui/icons/TerraStationIcon';
 import { WalletConnectIcon } from 'lib/ui/icons/WalletConnectIcon';
@@ -6,33 +6,33 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 
-const supportedConnections = [ConnectType.EXTENSION, ConnectType.WALLETCONNECT] as const;
+const supportedConnections = ['station-extension', 'wallet-connect'] as const;
 type SupportedConnection = (typeof supportedConnections)[number];
 
 const supportedConnectionIcons: Record<SupportedConnection, ReactNode> = {
-  [ConnectType.EXTENSION]: <TerraStationIcon />,
-  [ConnectType.WALLETCONNECT]: <WalletConnectIcon />,
+  'station-extension': <TerraStationIcon />,
+  'wallet-connect': <WalletConnectIcon />,
 };
 
 const supportedConnectionNames: Record<SupportedConnection, string> = {
-  [ConnectType.EXTENSION]: 'Station Wallet',
-  [ConnectType.WALLETCONNECT]: 'Wallet Connect',
+  'station-extension': 'Station Wallet',
+  'wallet-connect': 'Wallet Connect',
 };
 
 export const ConnectWalletOptions = () => {
-  const { connect, availableConnections } = useWallet();
+  const { connect, availableWallets } = useWallet();
 
-  const connections = availableConnections.filter((connection) =>
-    supportedConnections.includes(connection.type as SupportedConnection)
+  const connections = availableWallets.filter((connection) =>
+    supportedConnections.includes(connection.id as SupportedConnection)
   );
 
   return (
     <VStack gap={12}>
-      {connections.map(({ type }) => (
-        <Button size="l" style={{ justifyContent: 'start' }} onClick={() => connect(type)} kind="secondary">
+      {connections.map(({ id }) => (
+        <Button size="l" style={{ justifyContent: 'start' }} onClick={() => connect(id)} kind="secondary">
           <HStack alignItems="center" gap={8}>
-            {supportedConnectionIcons[type as SupportedConnection]}
-            <Text>{supportedConnectionNames[type as SupportedConnection]}</Text>
+            {supportedConnectionIcons[id as SupportedConnection]}
+            <Text>{supportedConnectionNames[id as SupportedConnection]}</Text>
           </HStack>
         </Button>
       ))}

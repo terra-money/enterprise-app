@@ -1,4 +1,4 @@
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { QUERY_KEY } from 'queries';
 import { useQuery } from 'react-query';
 import { useAssertMyAddress } from './useAssertMyAddress';
@@ -11,7 +11,7 @@ export const useEstimatedFeeQuery = (msgs: Msg[]) => {
   const address = useAssertMyAddress();
   const chainID = useChainID();
 
-  const client = useLCDClient();
+  const client = useLcdClient();
 
   return useQuery([QUERY_KEY.ESTIMATED_FEE, msgs], async () => {
     const { auth_info } = await client.tx.create([{ address }], {

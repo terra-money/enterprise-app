@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { DashboardButton } from 'dao/components/DashboardButton';
 import { Favourites } from 'components/layout/Favourites';
 import { CreateDaoButton } from 'dao/components/CreateDaoButton';
-import { useConnectedWallet } from '@terra-money/use-wallet';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { Tooltip } from 'lib/ui/Tooltip';
 import { IconButton } from 'lib/ui/buttons/IconButton';
+import { useConnectedWallet } from '@terra-money/wallet-kit';
 
 const Container = styled(VStack)`
   padding: 32px;

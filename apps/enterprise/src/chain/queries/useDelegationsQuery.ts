@@ -1,9 +1,9 @@
 import { QUERY_KEY } from 'queries';
 import { useQuery } from 'react-query';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 
 export const useDelegationsQuery = (delegatorAddress: string) => {
-  const client = useLCDClient();
+  const client = useLcdClient();
 
   return useQuery([QUERY_KEY.DELEGATIONS, delegatorAddress], async () => {
     // TODO: handle pagination

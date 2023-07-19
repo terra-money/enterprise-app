@@ -1,4 +1,4 @@
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { CW20TokenInfoResponse, MultisigVoter, CW721ContractInfoResponse } from 'queries';
 import { createContext, ReactNode, useCallback } from 'react';
 import { enterprise, enterprise_factory } from 'types/contracts';
@@ -356,7 +356,7 @@ const objectContains = <TInput,>(input: Partial<TInput>, key: keyof TInput): boo
 export const DaoWizardFormProvider = ({ children }: DaoWizardFormProviderProps) => {
   const { timeConversionFactor } = useEnv();
 
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   const myAddress = useMyAddress();
 

@@ -1,4 +1,4 @@
-import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider';
+import { useConnectedWallet, useWallet } from '@terra-money/wallet-kit';
 
 export const supportedChains = ['phoenix-1', 'pisco-1'];
 export type ChainID = (typeof supportedChains)[number];

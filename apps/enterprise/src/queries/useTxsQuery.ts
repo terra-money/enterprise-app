@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { getRecord } from 'lib/shared/utils/getRecord';
 import { useChainID } from 'chain/hooks/useChainID';
 import { TxResponse } from 'chain/transactions';
@@ -40,7 +40,7 @@ const queryTransactions = async ({
 };
 
 export const useTxsQuery = (address: string): UseQueryResult<TxResponse[]> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
   const chainID = useChainID();
   const lcdBaseUrl = lcd.config[chainID].lcd;
 
