@@ -2556,7 +2556,7 @@ __metadata:
     "@sentry/react": ^7.52.1
     "@terra-money/feather.js": ^1.0.4
     "@terra-money/log-finder-ruleset": ^3.0.2
-    "@terra-money/wallet-kit": ^1.0.5
+    "@terra-money/wallet-kit": 1.0.4
     "@terra.kitchen/utils": ^1.0.7
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.3.0
@@ -4221,7 +4221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/station-wallet@npm:^1.0.5":
+"@terra-money/station-wallet@npm:^1.0.4":
   version: 1.0.5
   resolution: "@terra-money/station-wallet@npm:1.0.5"
   dependencies:
@@ -4279,7 +4279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-interface@npm:^1.0.5":
+"@terra-money/wallet-interface@npm:^1.0.4, @terra-money/wallet-interface@npm:^1.0.5":
   version: 1.0.5
   resolution: "@terra-money/wallet-interface@npm:1.0.5"
   peerDependencies:
@@ -4288,17 +4288,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-kit@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@terra-money/wallet-kit@npm:1.0.5"
+"@terra-money/wallet-kit@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@terra-money/wallet-kit@npm:1.0.4"
   dependencies:
-    "@terra-money/station-wallet": ^1.0.5
-    "@terra-money/wallet-interface": ^1.0.5
+    "@terra-money/station-wallet": ^1.0.4
+    "@terra-money/wallet-interface": ^1.0.4
     axios: ^1.4.0
   peerDependencies:
     "@terra-money/feather.js": ^1.0.4
     react: ">=17.0.0"
-  checksum: 4ebd5e9195f83940fa4f093cd488c4bc895ff746baef49ed3bb338d6f6d9040b85175c04b44a538b3debbca5329acc5dcc208b15b7b4e6f526cdf25bda543e57
+  checksum: de78ad6a78f1d605e0fd913acb37b6d023e5693ccd2bab5c2906bee1c69822c2577ab73be9afc5343b008453c5f4e4971f9067224e3cc1657ae7e44e8ff2db0b
   languageName: node
   linkType: hard
 
@@ -6731,9 +6731,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001503":
-  version: 1.0.30001516
-  resolution: "caniuse-lite@npm:1.0.30001516"
-  checksum: 044adf3493b734a356a2922445a30095a0f6de6b9194695cdf74deafe7bef658e85858a31177762c2813f6e1ed2722d832d59eee0ecb2151e93a611ee18cb21f
+  version: 1.0.30001517
+  resolution: "caniuse-lite@npm:1.0.30001517"
+  checksum: e4e87436ae1c4408cf4438aac22902b31eb03f3f5bad7f33bc518d12ffb35f3fd9395ccf7efc608ee046f90ce324ec6f7f26f8a8172b8c43c26a06ecee612a29
   languageName: node
   linkType: hard
 
