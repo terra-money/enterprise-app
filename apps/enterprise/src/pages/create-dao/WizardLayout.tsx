@@ -12,7 +12,6 @@ export interface WizardLayoutProps {
 const Container = styled(VStack)`
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(180deg, #151718 20%, #101213 100%);
   background-position: 100% 0%;
   background-size: 50% 100%;
   background-repeat: no-repeat;

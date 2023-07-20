@@ -12,6 +12,7 @@ import { ReactComponent as ChatIcon } from 'components/assets/Chat.svg';
 import { ManageDaosButton } from 'dao/components/ManageDaosButton';
 import { Tooltip } from 'lib/ui/Tooltip';
 import { IconButton } from 'lib/ui/buttons/IconButton';
+import { ThemeToggleButton } from 'lib/ui/theme/ThemeToggleButton';
 
 const Container = styled(VStack)`
   padding: 32px;
@@ -52,6 +53,7 @@ export const SideNavigation = () => {
         </VStack>
       </VStack>
       <VStack gap={24} alignItems="center">
+        <ThemeToggleButton />
         <Tooltip
           content="Got feedback?"
           placement="right"

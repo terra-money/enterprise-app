@@ -3,7 +3,7 @@ import { LocalStorage } from 'lib/state/LocalStorage';
 import { createUsePersistantStorageValueHook } from 'lib/state/createUsePersistantStorageValueHook';
 
 export enum PersistentStorageKey {
-  BetaAccept = '__enterprise_beta_accept',
+  ThemePreference = 'themePreference',
 }
 
 export const persistentStorage =

@@ -16,7 +16,6 @@ import { useAmICouncilMember } from 'dao/hooks/useAmICouncilMember';
 import { daoProposalsRecord, proposalTitle, ProposalType } from 'dao/shared/proposal';
 import { CouncilProposalActionType } from 'pages/create-dao/shared/ProposalTypesInput';
 import { capitalizeFirstLetter } from 'lib/shared/utils/capitalizeFirstLetter';
-import styles from './SelectProposalType.module.sass';
 import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 import { toDao } from 'dao/utils/toDao';
@@ -204,10 +203,8 @@ export const SelectProposalType = () => {
           <ProposalsContainer>
             <NormalScreenContent>{renderOptions()}</NormalScreenContent>
             <ProposalDescriptionContainer>
-              <Text className={styles.proposalDescriptionTitle}>
-                What are {capitalizeFirstLetter(proposalType)} proposals?
-              </Text>
-              <Text className={styles.proposalDescription}>{proposalDescriptionText}</Text>
+              <Text>What are {capitalizeFirstLetter(proposalType)} proposals?</Text>
+              <Text>{proposalDescriptionText}</Text>
             </ProposalDescriptionContainer>
           </ProposalsContainer>
           {renderFooter()}

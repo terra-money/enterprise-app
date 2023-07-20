@@ -1,4 +1,3 @@
-// TODO: migrate from sass to styled-components
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import { ReactComponent as WalletIcon } from 'components/assets/Wallet.svg';
 import { useMyAddress } from 'chain/hooks/useMyAddress';
