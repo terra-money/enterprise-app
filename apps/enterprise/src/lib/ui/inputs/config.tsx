@@ -7,8 +7,12 @@ export const inputBorderRadiusCSS = css`
 
 export const inputHeight = 86;
 
-export const defaultInputShapeCSS = css`
+export const inputHeightCSS = css`
   height: ${getCSSUnit(inputHeight)};
+`;
+
+export const defaultInputShapeCSS = css`
+  ${inputHeightCSS};
   ${inputBorderRadiusCSS};
 `;
 
