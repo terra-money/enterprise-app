@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Header } from './Header';
 import { useNavigate } from 'react-router';
 import { Button } from 'lib/ui/buttons/Button';
@@ -121,8 +121,6 @@ export const SelectProposalType = () => {
   const dao = useCurrentDao();
   const myVotingPower = useMyVotingPower();
 
-  const ref = useRef<HTMLDivElement>(null);
-
   const [proposalType, setProposalType] = useState<ProposalType>('text');
   const proposalDescriptionText = proposalDescription[proposalType];
   const navigate = useNavigate();
@@ -201,7 +199,7 @@ export const SelectProposalType = () => {
       )}
       normal={() => (
         <NormalScreenContainer>
-          <Header ref={ref} title={title} />
+          <Header title={title} />
           {renderVotingTypePicker()}
           <ProposalsContainer>
             <NormalScreenContent>{renderOptions()}</NormalScreenContent>

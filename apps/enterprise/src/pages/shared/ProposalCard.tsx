@@ -1,30 +1,25 @@
-import { Stack } from 'lib/ui/Stack';
-import { Text as DeprecatedText } from 'components/primitives';
+import { Stack, VStack } from 'lib/ui/Stack';
 import { DAOLogo } from 'components/dao-logo';
-import { Proposal } from 'dao/shared/proposal';
 
-import classNames from 'classnames';
-import { Skeleton } from 'components/skeleton';
 import { ProposalTags } from './ProposalTags';
 import { getExpirationMessage } from 'utils';
-import formatDistance from 'date-fns/formatDistance';
 import { useInterval } from 'react-use';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTokenStakingAmountQuery } from 'queries';
 import Big, { BigSource } from 'big.js';
-import styles from './ProposalCard.module.sass';
 import { getProposalEstimatedExpiry } from 'dao/shared/proposal';
 import styled from 'styled-components';
 import { HStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { InternalLink } from 'components/link';
-import { useLocation } from 'react-router-dom';
-
-type Variant = 'compact' | 'extended';
+import { getColor } from 'lib/ui/theme/getters';
+import { useCurrentProposal } from 'pages/proposal/CurrentProposalProvider';
+import { Panel } from 'lib/ui/Panel/Panel';
+import { SeparatedByLine } from 'lib/ui/SeparatedByLine';
+import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
 
 interface ClockProps {
   expiry: Date;
-  variant: Variant;
 }
 
 const Wrapper = styled.div`
@@ -32,19 +27,15 @@ const Wrapper = styled.div`
 `;
 
 const Clock = (props: ClockProps) => {
-  const { expiry, variant } = props;
+  const { expiry } = props;
 
-  const [message, setMessage] = useState(
-    variant === 'extended' ? getExpirationMessage(expiry) : formatDistance(expiry, new Date(), { addSuffix: true })
-  );
+  const [message, setMessage] = useState(getExpirationMessage(expiry));
 
   useInterval(() => {
-    setMessage(
-      variant === 'extended' ? getExpirationMessage(expiry) : formatDistance(expiry, new Date(), { addSuffix: true })
-    );
+    setMessage(getExpirationMessage(expiry));
   }, 60000);
 
-  return <DeprecatedText variant="text">{message}</DeprecatedText>;
+  return <Text color="supporting">{message}</Text>;
 };
 
 interface ProgressBarProps {
@@ -52,6 +43,29 @@ interface ProgressBarProps {
   no: BigSource;
   total: BigSource;
 }
+
+const ProgressBarPosition = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`;
+
+const ProgressBarContainer = styled.div`
+  position: relative;
+  height: 4px;
+  background: ${getColor('mist')};
+`;
+
+const Bar = styled.div`
+  height: 100%;
+  position: absolute;
+  background: ${getColor('contrast')};
+`;
+
+const SecondaryBar = styled(Bar)`
+  background: ${getColor('mistExtra')};
+`;
 
 const ProgressBar = (props: ProgressBarProps) => {
   const { yes, no, total } = props;
@@ -61,20 +75,15 @@ const ProgressBar = (props: ProgressBarProps) => {
     const bar2 = Big(no).div(total).mul(100).toFixed(4);
 
     return (
-      <div className={styles.progressBar}>
-        <div className={styles.bar1} style={{ width: `${bar1}%` }} />
-        <div className={styles.bar2} style={{ width: `${bar2}%`, left: `${bar1}%` }} />
-      </div>
+      <ProgressBarContainer>
+        <Bar style={{ width: `${bar1}%` }} />
+        <SecondaryBar style={{ width: `${bar2}%`, left: `${bar1}%` }} />
+      </ProgressBarContainer>
     );
   }
 
-  return <div className={styles.progressBar} />;
+  return <ProgressBarContainer />;
 };
-
-interface ProposalCardProps {
-  proposal?: Proposal;
-  variant?: Variant;
-}
 
 const DaoLinkWrapper = styled(HStack)`
   color: ${({ theme }) => theme.colors.textSupporting.toCssValue()};
@@ -86,34 +95,39 @@ const DaoLinkWrapper = styled(HStack)`
 
 const DaoLinkOverlay = styled.div`
   position: absolute;
+  margin-top: 20px;
   left: 24px;
-  bottom: 32px;
+  bottom: 20px;
 `;
 
-export const ProposalCard = (props: ProposalCardProps) => {
-  const { proposal, variant = 'compact' } = props;
+const Content = styled(Panel)`
+  position: relative;
+  height: 100%;
 
-  const location = useLocation();
-  const [isDashboard, setIsDashboard] = useState(false);
+  ${defaultTransitionCSS};
 
-  useEffect(() => {
-    setIsDashboard(location.pathname === '/dashboard');
-  }, [location.pathname]);
+  :hover {
+    background: ${getColor('mist')};
+  }
+`;
+
+const Description = styled(Text)`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+interface ProposalCardProps {
+  showDao?: boolean;
+}
+
+export const ProposalCard = ({ showDao }: ProposalCardProps) => {
+  const proposal = useCurrentProposal();
 
   const { data: totalStaked = Big(0) } = useTokenStakingAmountQuery(proposal?.dao.address ?? '', undefined, {
     enabled: proposal !== undefined && proposal.status === 'in_progress',
   });
-
-  if (proposal === undefined) {
-    return (
-      <Stack className={classNames(styles.root, styles.skeleton)} direction="column">
-        <Skeleton className={styles.tags} />
-        <Skeleton className={styles.title} />
-        <Skeleton className={styles.description} />
-        <Skeleton className={styles.footer} />
-      </Stack>
-    );
-  }
 
   const { dao, title, description, id } = proposal;
 
@@ -131,48 +145,43 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const daoLinkContent = (
     <DaoLinkWrapper alignItems="center" gap={8}>
       <DAOLogo size="s" logo={dao.logo} />
-      <Text cropped className={styles.name}>
-        {dao.name}
-      </Text>
+      <Text cropped>{dao.name}</Text>
     </DaoLinkWrapper>
   );
 
   return (
-    <Wrapper className={styles.wrapper}>
+    <Wrapper>
       <InternalLink to={`/dao/${dao.address}/proposals/${proposal.id}`}>
-        <Stack
-          className={classNames(styles.root, {
-            [styles.compact]: variant === 'compact',
-          })}
-          direction="column"
-        >
-          <Stack className={styles.container} as="div" direction="column">
-            <HStack fullWidth justifyContent="space-between">
-              <ProposalTags proposal={proposal} />
-              {expiry && <Clock variant={variant} expiry={expiry} />}
-            </HStack>
-            <HStack className={styles.title} alignItems="center" gap={8}>
-              <Text weight="semibold" color="shy">
-                #{id}
-              </Text>
-              <Text cropped weight="semibold">
-                {title}
-              </Text>
-            </HStack>
+        <Content kind="secondary">
+          <SeparatedByLine fullHeight gap={20}>
+            <VStack style={{ flex: 1 }} gap={20}>
+              <HStack gap={8} wrap="wrap" fullWidth justifyContent="space-between">
+                <ProposalTags proposal={proposal} />
+                {expiry && <Clock expiry={expiry} />}
+              </HStack>
+              <HStack alignItems="center" gap={8}>
+                <Text weight="semibold" color="shy">
+                  #{id}
+                </Text>
+                <Text cropped weight="semibold">
+                  {title}
+                </Text>
+              </HStack>
 
-            <DeprecatedText className={styles.description} variant="text">
-              {description}
-            </DeprecatedText>
-            {isDashboard && (
-              <Stack direction="row" className={styles.footer}>
+              <Description color="shy">{description}</Description>
+            </VStack>
+            {showDao && (
+              <Stack direction="row">
                 <div style={{ opacity: 0 }}>{daoLinkContent}</div>
               </Stack>
             )}
-          </Stack>
-          <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
-        </Stack>
+          </SeparatedByLine>
+          <ProgressBarPosition>
+            <ProgressBar total={totalVotes} yes={proposal.yesVotes} no={proposal.noVotes} />
+          </ProgressBarPosition>
+        </Content>
       </InternalLink>
-      {isDashboard && (
+      {showDao && (
         <DaoLinkOverlay>
           <InternalLink to={`/dao/${dao.address}`}>{daoLinkContent}</InternalLink>
         </DaoLinkOverlay>

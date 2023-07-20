@@ -1,6 +1,5 @@
 import { Stack } from 'lib/ui/Stack';
 import { WizardStep } from '../WizardStep';
-import styles from './MembersStep.module.sass';
 import { MultisigMemberInput } from './member/MultisigMemberInput';
 import { EMPTY_MEMBER, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { MultisigMember } from 'types/MultisigMember';
@@ -38,7 +37,7 @@ export function MembersStep() {
       title="Add members to the multisig"
       subTitle="You need at least two members to create a multisig DAO. Weights are the number of votes given to an address."
     >
-      <Stack gap={24} className={styles.membersList} direction="column" as="section">
+      <Stack gap={24} direction="column" as="section">
         {members.map((formState, index) => {
           return (
             <MultisigMemberInput

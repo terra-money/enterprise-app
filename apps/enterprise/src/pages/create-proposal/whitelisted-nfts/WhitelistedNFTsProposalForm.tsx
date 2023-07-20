@@ -5,12 +5,12 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvider';
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
 import { WhitelistedNFTInput } from './WhitelistedNFTInput';
-import styles from './WhitelistedNFTsProposalForm.module.sass';
 import { useLCDClient } from '@terra-money/wallet-provider';
 import { validateAddress } from 'chain/utils/validators';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 import { AddButton } from 'lib/ui/buttons/AddButton';
+import { HStack, VStack } from 'lib/ui/Stack';
 
 interface NFTInputState {
   value: string;
@@ -78,8 +78,8 @@ export const WhitelistedNFTsProposalForm = () => {
   return (
     <ProposalForm disabled={!isFormValid} getProposalActions={() => [{ update_nft_whitelist: msg }]}>
       <FormSection name="Whitelisted NFTs">
-        <div className={styles.root}>
-          <div className={styles.list}>
+        <VStack gap={24}>
+          <HStack wrap="wrap" gap={20}>
             {nfts.map(({ value, error, loading }, index) => (
               <WhitelistedNFTInput
                 value={value}
@@ -90,7 +90,7 @@ export const WhitelistedNFTsProposalForm = () => {
                 onChange={(value) => handleNFTChange(index, value)}
               />
             ))}
-          </div>
+          </HStack>
           {areNftsValid && (
             <AddButton
               size="l"
@@ -100,7 +100,7 @@ export const WhitelistedNFTsProposalForm = () => {
               }}
             />
           )}
-        </div>
+        </VStack>
       </FormSection>
     </ProposalForm>
   );
