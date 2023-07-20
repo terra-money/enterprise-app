@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { HStack } from 'lib/ui/Stack';
 import styles from './UpdateAssetsWhitelistAction.module.sass';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
@@ -15,7 +15,7 @@ export const UpdateNFTsWhitelistAction = () => {
 
         return (
           <div key={action} className={styles.section}>
-            <Text variant="heading4">Whitelisted NFTs to {action}</Text>
+            <Text weight="semibold">Whitelisted NFTs to {action}</Text>
             <HStack gap={16} wrap="wrap">
               {(nfts as string[]).map((nft) => (
                 <Address length="full" value={nft} />

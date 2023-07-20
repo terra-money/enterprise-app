@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './WasmMsgInput.module.sass';
 import { useId, useRef, useState } from 'react';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
@@ -30,7 +30,7 @@ const WasmMsgInput = (props: WasmMsgInputProps) => {
 
   return (
     <div ref={containerRef} className={styles.root}>
-      <Text variant="text" className={styles.label}>
+      <Text size={14} color="supporting" className={styles.label}>
         {label ?? 'Message'}
       </Text>
 
@@ -45,7 +45,7 @@ const WasmMsgInput = (props: WasmMsgInputProps) => {
         ref={inputContainerRef}
       >
         {!focused && !value && (
-          <Text variant={'label'} className={styles.placeholder}>
+          <Text size={14} color="supporting" className={styles.placeholder}>
             {placeholder ?? 'Type a message'}
           </Text>
         )}
@@ -67,9 +67,7 @@ const WasmMsgInput = (props: WasmMsgInputProps) => {
         />
       </div>
 
-      <Text variant={'text'} className={styles.warning}>
-        {error}
-      </Text>
+      <Text className={styles.warning}>{error}</Text>
     </div>
   );
 };

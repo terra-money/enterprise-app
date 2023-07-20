@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { ReactComponent as LogoIcon } from 'components/assets/LogoSmall.svg';
 import styles from './Logo.module.sass';
 import { Stack } from 'lib/ui/Stack';
@@ -25,7 +25,7 @@ export const Logo = (props: LogoProps) => {
       </div>
 
       {compact === false && (
-        <Text className={styles.text} variant="heading3" weight="bold">
+        <Text className={styles.text} size={24} weight="bold">
           Enterprise
         </Text>
       )}

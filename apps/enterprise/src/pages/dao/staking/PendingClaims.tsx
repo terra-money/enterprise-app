@@ -1,6 +1,6 @@
 import { Stack } from 'lib/ui/Stack';
 import Big from 'big.js';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { format } from 'date-fns';
 import { enterprise } from 'types/contracts';
 import styles from './PendingClaims.module.sass';
@@ -22,15 +22,15 @@ export const PendingClaims = (props: PendingClaimsProps) => {
 
   return claims?.length === 0 ? null : (
     <Stack className={styles.root} direction="column">
-      <Text variant="heading4">Pending Claims</Text>
+      <Text weight="semibold">Pending Claims</Text>
       {claims.map((claim, index) => (
         <Stack key={index} className={styles.claim} direction="row">
-          <Text variant="text">
+          <Text size={14} color="supporting">
             {'cw20' in claim.asset
               ? formatter(Big(claim.asset.cw20.amount))
               : formatter(Big(claim.asset.cw721.tokens.length))}
           </Text>
-          <Text variant="text">
+          <Text size={14} color="supporting">
             {'height' in claim.release_at
               ? `at block ${claim.release_at.height}`
               : `on ${formatTimestamp(new Date(Big(claim.release_at.timestamp).div(1000000).toNumber()))}`}

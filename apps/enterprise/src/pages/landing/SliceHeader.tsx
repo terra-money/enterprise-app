@@ -1,5 +1,5 @@
 import styles from './SliceHeader.module.sass';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 
 interface SliceHeaderProps {
   title: string;
@@ -8,8 +8,10 @@ interface SliceHeaderProps {
 
 export const SliceHeader = ({ title, description }: SliceHeaderProps) => (
   <div className={styles.root}>
-    <Text variant="heading2">{title}</Text>
-    <Text className={styles.description} variant="heading4" component="span">
+    <Text size={32} weight="bold">
+      {title}
+    </Text>
+    <Text className={styles.description} weight="semibold" as="span">
       {description}
     </Text>
   </div>

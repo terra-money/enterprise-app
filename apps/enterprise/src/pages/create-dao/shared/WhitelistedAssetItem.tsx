@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import styles from './WhitelistedAssetItem.module.sass';
 import { Asset, AssetInfo } from 'chain/Asset';
 import { AssetIcon } from 'chain/components/AssetFinder/AssetIcon';
@@ -14,7 +14,9 @@ export const WhitelistedAssetItem = ({ value, onRemove }: WhitelistedAssetInputP
     <div className={styles.root}>
       <div className={styles.info}>
         <AssetIcon className={styles.icon} icon={value.icon} />
-        <Text variant="text">{value.name ?? value.symbol}</Text>
+        <Text size={14} color="supporting">
+          {value.name ?? value.symbol}
+        </Text>
       </div>
       <DeleteButton onClick={onRemove} />
     </div>

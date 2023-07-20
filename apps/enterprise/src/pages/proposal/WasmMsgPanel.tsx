@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Stack } from 'lib/ui/Stack';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import styles from './WasmMsgPanel.module.sass';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { WasmMsgSummary } from './WasmMsgSummary/WasmMsgSummary';
@@ -47,7 +47,9 @@ export const WasmMsgPanel = ({ msg }: WasmMsgPanelProps) => {
       </ErrorBoundary>
       <Panel className={styles.root}>
         <Stack className={styles.top} direction="row">
-          <Text variant="label">Wasm message</Text>
+          <Text size={14} color="supporting">
+            Wasm message
+          </Text>
           <HStack alignItems="center" gap={16}>
             <CopyButton kind="secondary" content={JSON.stringify(msg, null, 2)} />
             <Button kind="secondary" onClick={toggleDecoded} className={styles.showDecoded}>

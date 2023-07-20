@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 import styles from './FormSection.module.sass';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
@@ -10,7 +10,7 @@ interface FormSectionProps extends ComponentWithChildrenProps {
 export const FormSection = ({ name, children }: FormSectionProps) => {
   return (
     <div className={styles.root}>
-      <Text variant="heading4">{name}</Text>
+      <Text weight="semibold">{name}</Text>
       {children}
     </div>
   );

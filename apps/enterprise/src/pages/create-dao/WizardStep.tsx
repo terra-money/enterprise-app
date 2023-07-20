@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { StepLabel } from './StepLabel';
 import { WizardBody } from './WizardBody';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
 import { VStack } from 'lib/ui/Stack';
 import styled from 'styled-components';
@@ -32,9 +32,11 @@ export function WizardStep(props: WizardStepProps) {
       <Container gap={64} fullWidth fullHeight>
         <StepLabel steps={steps} type={type} description={title} />
         <div>
-          <Text variant="heading2">{title}</Text>
+          <Text size={32} weight="bold">
+            {title}
+          </Text>
           {subTitle && (
-            <Text variant="text" component="p">
+            <Text size={14} color="supporting">
               {subTitle}
             </Text>
           )}

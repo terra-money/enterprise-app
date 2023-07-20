@@ -1,5 +1,5 @@
 import { getRecord } from 'lib/shared/utils/getRecord';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { ValueDiff } from 'components/value-diff';
 import { useCurrentDaoMultisigMembers } from 'pages/create-proposal/multisig-members/CurrentDAOMultisigMembersProvider';
 import { ReactComponent as MinusIcon } from 'components/assets/Minus.svg';
@@ -35,7 +35,7 @@ export const UpdateMultisigMembersAction = () => {
 
   return (
     <VStack gap={24}>
-      <Text variant="heading4">Update members</Text>
+      <Text weight="semibold">Update members</Text>
       <SameWidthChildrenRow gap={20} minChildrenWidth={320} maxColumns={2}>
         {msg.edit_members.map(({ address, weight }) => {
           const renderChange = () => {
@@ -51,7 +51,9 @@ export const UpdateMultisigMembersAction = () => {
             if (currentMember === undefined) {
               return (
                 <>
-                  <Text variant="text">{weight}</Text>
+                  <Text size={14} color="supporting">
+                    {weight}
+                  </Text>
                   <Icon style={{ color: colors.success.toCssValue() }}>
                     <PlusIcon />
                   </Icon>

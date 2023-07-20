@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useEffect, useState } from 'react';
 import styles from './TerraAddressInput.module.sass';
 import { TextInput } from 'lib/ui/inputs/TextInput';
@@ -34,7 +34,9 @@ export const TerraAddressInput = (props: TerraAddressInputProps) => {
       />
       {validating && (
         <div className={styles.loader}>
-          <Text variant="text">Checking Terra address</Text>
+          <Text size={14} color="supporting">
+            Checking Terra address
+          </Text>
           <Spinner />
         </div>
       )}

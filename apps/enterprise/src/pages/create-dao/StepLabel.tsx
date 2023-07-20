@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { enterprise } from 'types/contracts';
 import styles from './StepLabel.module.sass';
 
@@ -26,7 +26,7 @@ export function StepLabel<T>(props: StepLabelProps<T>) {
 
   return (
     <div className={classNames(className, styles.root)}>
-      <Text variant="label">{`Step ${steps.length}`}</Text>
+      <Text size={14} color="supporting">{`Step ${steps.length}`}</Text>
       {subTitle && (
         <>
           <div className={styles.separator} />
@@ -34,7 +34,8 @@ export function StepLabel<T>(props: StepLabelProps<T>) {
             className={classNames(styles.description, {
               [styles.highlight]: description,
             })}
-            variant="label"
+            size={14}
+            color="supporting"
           >
             {subTitle}
           </Text>

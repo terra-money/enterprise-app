@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { enterprise } from 'types/contracts';
 import { WasmMsgPanel } from './WasmMsgPanel';
@@ -9,7 +9,7 @@ export const ExecuteMessagesProposalAction = () => {
 
   return (
     <VStack gap={24}>
-      <Text variant="heading4">Execute Messages</Text>
+      <Text weight="semibold">Execute Messages</Text>
       {(msg as enterprise.ExecuteMsgsMsg).msgs.map((message, index) => (
         <WasmMsgPanel key={index} msg={message} />
       ))}

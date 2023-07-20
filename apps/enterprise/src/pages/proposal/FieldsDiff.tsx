@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import styles from './FieldsDiff.module.sass';
 import React, { ReactNode } from 'react';
 import { ValueDiff } from 'components/value-diff';
@@ -33,7 +33,7 @@ export const FieldsDiff = ({ fields }: FieldsDiffProps) => {
       {fields.map((field) => {
         return (
           <React.Fragment key={field.name}>
-            <Text className={styles.name} variant="text">
+            <Text className={styles.name} size={14} color="supporting">
               {field.name}:
             </Text>
             <ValueDiff oldValue={field.oldValue} newValue={field.newValue} />

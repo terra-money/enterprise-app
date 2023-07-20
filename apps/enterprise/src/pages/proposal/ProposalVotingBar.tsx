@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import classNames from 'classnames';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { enforceRange } from 'lib/shared/utils/enforceRange';
 import { HStack } from 'lib/ui/Stack';
 import { useTokenStakingAmountQuery } from 'queries';
@@ -51,7 +51,7 @@ export const ProposalVotingBar = () => {
         </div>
         <div style={{ left: toPercents(quorum) }} className={styles.quorum}>
           <div className={styles.center}>
-            <Text className={classNames(styles.value, styles.label)} variant="text">
+            <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
               Quorum {toPercents(quorum)}
             </Text>
           </div>
@@ -61,7 +61,7 @@ export const ProposalVotingBar = () => {
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.yesBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   Yes {toPercents(yesRatio, 'round')}
                 </Text>
               </HStack>
@@ -71,7 +71,7 @@ export const ProposalVotingBar = () => {
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.noBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   No {toPercents(noRatio, 'round')}
                 </Text>
               </HStack>
@@ -81,7 +81,7 @@ export const ProposalVotingBar = () => {
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
                 <div className={styles.abstainBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   Abstain {toPercents(abstainRatio, 'round')}
                 </Text>
               </HStack>
