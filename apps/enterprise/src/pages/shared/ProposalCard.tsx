@@ -17,6 +17,8 @@ import { useCurrentProposal } from 'pages/proposal/CurrentProposalProvider';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { SeparatedByLine } from 'lib/ui/SeparatedByLine';
 import { defaultTransitionCSS } from 'lib/ui/animations/transitions';
+import { croppedTextCSS } from 'lib/ui/utils/croppedTextCSS';
+import { getHorizontalPaddingCSS } from 'lib/ui/utils/getHorizontalPaddingCSS';
 
 interface ClockProps {
   expiry: Date;
@@ -96,8 +98,10 @@ const DaoLinkWrapper = styled(HStack)`
 const DaoLinkOverlay = styled.div`
   position: absolute;
   margin-top: 20px;
-  left: 24px;
+  ${getHorizontalPaddingCSS(20)};
   bottom: 20px;
+  ${croppedTextCSS};
+  width: 100%;
 `;
 
 const Content = styled(Panel)`
