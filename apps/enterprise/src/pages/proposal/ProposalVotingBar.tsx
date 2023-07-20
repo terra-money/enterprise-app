@@ -9,6 +9,29 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
 import { getRatio } from 'lib/shared/utils/getRatio';
 import { toPercents } from 'lib/shared/utils/toPercents';
+import styled from 'styled-components';
+import { getColor } from 'lib/ui/theme/getters';
+
+const Quorum = styled.div`
+  position: absolute;
+  top: -16px;
+  height: 12px;
+  width: 1px;
+  background: ${getColor('textShy')};
+`;
+
+const Center = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    white-space: nowrap;
+    position: absolute;
+    top: -20px;
+  }
+`;
 
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
@@ -49,13 +72,13 @@ export const ProposalVotingBar = () => {
           {noRatio > 0 && <div style={{ width: noBarWidth }} className={styles.no}></div>}
           {abstainRatio > 0 && <div style={{ width: abstainBarWidth }} className={styles.abstain}></div>}
         </div>
-        <div style={{ left: toPercents(quorum) }} className={styles.quorum}>
-          <div className={styles.center}>
-            <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
+        <Quorum style={{ left: toPercents(quorum) }}>
+          <Center>
+            <Text size={14} color="supporting">
               Quorum {toPercents(quorum)}
             </Text>
-          </div>
-        </div>
+          </Center>
+        </Quorum>
         <HStack gap={16} className={styles.votesContainer}>
           {yesRatio > 0 && (
             <HStack gap={16}>

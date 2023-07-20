@@ -15,7 +15,7 @@ export const PrimarySlice = () => {
       <Text size={40} weight="bold">
         Your no-code solution to DAO management
       </Text>
-      <Text className={styles.description} weight="semibold" as="span">
+      <Text style={{ maxWidth: 840 }} centered weight="semibold" as="span">
         You don't need to be a full-stack engineer to start a DAO. With Enterprise, you can create a multisig wallet,
         token DAO, or NFT DAO in under a minute.
       </Text>

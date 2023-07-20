@@ -168,7 +168,7 @@ export const ProposalCard = ({ showDao }: ProposalCardProps) => {
                 </Text>
               </HStack>
 
-              <Description color="shy">{description}</Description>
+              <Description color="supporting">{description}</Description>
             </VStack>
             {showDao && (
               <Stack direction="row">

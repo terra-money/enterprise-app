@@ -65,12 +65,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Text className={styles.heading} size={14} color="supporting">
                 {`Your balance (${token.symbol})`}
               </Text>
-              <Text
-                style={{
-                  color: Big(balance).gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
-                }}
-                weight="semibold"
-              >
+              <Text color={Big(balance).gte(minimumDeposit) ? 'alert' : 'regular'} weight="semibold">
                 {formatAmount(fromChainAmount(Big(balance).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>

@@ -3,7 +3,6 @@ import { NetworkGuard } from 'components/network-guard';
 import { SnackbarContainer } from 'components/snackbar';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import styles from './App.module.sass';
 import { darkTheme } from 'lib/ui/theme/darkTheme';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'lib/ui/GlobalStyle';
@@ -25,24 +24,22 @@ const AppProviders = () => {
         <ThemeProvider theme={darkTheme}>
           <GlobalStyle />
           <GlobalErrorBoundary>
-            <main className={styles.root}>
-              <QueryClientProvider client={queryClient}>
-                <NetworkGuard>
-                  <TransactionsProvider>
-                    <TransactionErrorProvider>
-                      <SnackbarProvider
-                        autoHideDuration={null}
-                        content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                      >
-                        <PersonalizationProvider>
-                          <AppRoutes />
-                        </PersonalizationProvider>
-                      </SnackbarProvider>
-                    </TransactionErrorProvider>
-                  </TransactionsProvider>
-                </NetworkGuard>
-              </QueryClientProvider>
-            </main>
+            <QueryClientProvider client={queryClient}>
+              <NetworkGuard>
+                <TransactionsProvider>
+                  <TransactionErrorProvider>
+                    <SnackbarProvider
+                      autoHideDuration={null}
+                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                    >
+                      <PersonalizationProvider>
+                        <AppRoutes />
+                      </PersonalizationProvider>
+                    </SnackbarProvider>
+                  </TransactionErrorProvider>
+                </TransactionsProvider>
+              </NetworkGuard>
+            </QueryClientProvider>
           </GlobalErrorBoundary>
         </ThemeProvider>
       </WalletProvider>
