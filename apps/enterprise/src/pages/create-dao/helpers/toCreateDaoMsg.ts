@@ -55,7 +55,7 @@ const getDaoMembership = (input: DaoWizardInput) => {
         new_token: {
           initial_token_balances: initialBalances.map(({ address, amount }) => ({
             address,
-            amount: toChainAmount(amount, decimals).toString(),
+            amount: toChainAmount(amount, decimals),
           })),
           initial_dao_balance: initialDaoBalance ? toChainAmount(initialDaoBalance, decimals).toString() : null,
           token_decimals: decimals,
@@ -91,7 +91,7 @@ const getDaoGovConfig = ({ govConfig, type, timeConversionFactor, tokenInfo }: D
   };
 
   if (type === 'token') {
-    config.minimum_deposit = toChainAmount(govConfig.minimumDeposit || 0, tokenInfo.decimals).toString();
+    config.minimum_deposit = toChainAmount(govConfig.minimumDeposit || 0, tokenInfo.decimals);
   }
 
   return config;
@@ -103,7 +103,7 @@ const getMinimumWeightForRewards = ({ govConfig, type, tokenInfo }: DaoWizardSta
   if (minimumWeightForRewards === undefined) return undefined;
 
   if (type === 'token') {
-    return toChainAmount(minimumWeightForRewards, tokenInfo.decimals).toString();
+    return toChainAmount(minimumWeightForRewards, tokenInfo.decimals);
   }
 
   return minimumWeightForRewards.toString();

@@ -14,7 +14,7 @@ export const toUndelegateMsg = ({ amount, address }: DelegateMsgParams) => {
         validator: address,
         amount: {
           denom: 'uluna',
-          amount: toChainAmount(amount, lunaDecimals).toString(),
+          amount: toChainAmount(amount, lunaDecimals),
         },
       },
     },

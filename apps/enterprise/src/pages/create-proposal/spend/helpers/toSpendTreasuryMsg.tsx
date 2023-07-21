@@ -28,7 +28,7 @@ export const toSpendTreasuryMsg = ({
           amount: [
             {
               denom: assetId,
-              amount: toChainAmount(amount, assetDecimals).toString(),
+              amount: toChainAmount(amount, assetDecimals),
             },
           ],
         },
@@ -41,7 +41,7 @@ export const toSpendTreasuryMsg = ({
   const msg: TransferCW20Msg = {
     transfer: {
       recipient: destinationAddress,
-      amount: toChainAmount(amount, assetDecimals).toString(),
+      amount: toChainAmount(amount, assetDecimals),
     },
   };
 

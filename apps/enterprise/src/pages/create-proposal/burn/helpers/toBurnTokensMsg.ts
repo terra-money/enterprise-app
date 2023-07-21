@@ -11,7 +11,7 @@ interface ToSpendTreasuryMsgParams {
 export const toBurnTokensMsg = ({ amount, tokenDecimals, tokenAddress }: ToSpendTreasuryMsgParams) => {
   const msg: BurnCW20Msg = {
     burn: {
-      amount: toChainAmount(amount, tokenDecimals).toString(),
+      amount: toChainAmount(amount, tokenDecimals),
     },
   };
 

@@ -28,7 +28,7 @@ export const toUpdateGovConfigMsg = (
   };
 
   if (minimumDeposit) {
-    const newMinimumDeposit = toChainAmount(minimumDeposit, tokenDecimals || 6).toString();
+    const newMinimumDeposit = toChainAmount(minimumDeposit, tokenDecimals || 6);
     if (dao.governanceConfig.minimumDeposit !== newMinimumDeposit) {
       msg.minimum_deposit = { change: newMinimumDeposit };
     }
