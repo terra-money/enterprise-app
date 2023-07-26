@@ -21,7 +21,7 @@ interface NFTInputState {
 export const WhitelistedNFTsProposalForm = () => {
   const initialNfts = useCurrentDaoWhitelistedNFTs();
 
-  const [nfts, setNfts] = useState<NFTInputState[]>(initialNfts.map((value) => ({ value })));
+  const [nfts, setNfts] = useState<NFTInputState[]>(() => initialNfts.map((value) => ({ value })));
 
   const msg = toUpdateNFTWhitelistMsg(
     initialNfts,
@@ -72,7 +72,7 @@ export const WhitelistedNFTsProposalForm = () => {
         });
     }
 
-    setNfts(updateAtIndex(nfts, index, () => inputState));
+    setNfts(nfts => updateAtIndex(nfts, index, () => inputState));
   };
 
   return (

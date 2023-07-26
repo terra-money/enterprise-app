@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import styles from './FormFooter.module.sass';
-import { HStack } from 'lib/ui/Stack';
+import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 
 interface FormFooterProps {
   primary: ReactNode;
@@ -9,9 +8,9 @@ interface FormFooterProps {
 
 export const FormFooter = ({ primary, secondary }: FormFooterProps) => {
   return (
-    <HStack className={styles.root} gap={16} alignItems="center">
+    <SameWidthChildrenRow  gap={16} childrenWidth={140}>
       {secondary}
       {primary}
-    </HStack>
+    </SameWidthChildrenRow>
   );
 };
