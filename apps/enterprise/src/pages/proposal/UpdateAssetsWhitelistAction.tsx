@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { HStack } from 'lib/ui/Stack';
 import { WhitelistedAsset } from 'pages/create-proposal/whitelisted-assets/WhitelistedAsset';
@@ -17,7 +17,7 @@ export const UpdateAssetsWhitelistAction = () => {
 
         return (
           <div key={action} className={styles.section}>
-            <Text variant="heading4">Whitelisted assets to {action}</Text>
+            <Text weight="semibold">Whitelisted assets to {action}</Text>
             <HStack gap={16} wrap="wrap">
               {removeUndefinedItems((assets as enterprise.AssetInfoBaseFor_Addr[]).map(toAsset)).map((asset, index) => (
                 <WhitelistedAsset key={index} asset={asset} />

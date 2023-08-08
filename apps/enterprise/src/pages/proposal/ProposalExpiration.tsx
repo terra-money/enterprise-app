@@ -1,4 +1,4 @@
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { getExpirationMessage } from 'utils';
 import { useCurrentProposal } from './CurrentProposalProvider';
 
@@ -10,7 +10,11 @@ export const ProposalExpiration = () => {
   if ('at_time' in expires) {
     const expirationDate = new Date(Number(expires.at_time) / NANO_SECOND_IN_MILLISECOND);
 
-    return <Text variant="text">{getExpirationMessage(expirationDate)}</Text>;
+    return (
+      <Text size={14} color="supporting">
+        {getExpirationMessage(expirationDate)}
+      </Text>
+    );
   }
 
   return null;

@@ -1,17 +1,28 @@
 import { getRecord } from 'lib/shared/utils/getRecord';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { ValueDiff } from 'components/value-diff';
 import { useCurrentDaoMultisigMembers } from 'pages/create-proposal/multisig-members/CurrentDAOMultisigMembersProvider';
-import styles from './UpdateMultisigMembersAction.module.sass';
 import { ReactComponent as MinusIcon } from 'components/assets/Minus.svg';
 import { ReactComponent as PlusIcon } from 'components/assets/Plus.svg';
-import classNames from 'classnames';
 import { HStack, VStack } from 'lib/ui/Stack';
 import { Panel } from 'lib/ui/Panel/Panel';
 import { SameWidthChildrenRow } from 'lib/ui/Layout/SameWidthChildrenRow';
 import { useCurrentProposalAction } from 'dao/components/CurrentProposalActionProvider';
 import { enterprise } from 'types/contracts';
 import { Address } from 'chain/components/Address';
+import styled, { useTheme } from 'styled-components';
+import { roundedCSS } from 'lib/ui/utils/roundedCSS';
+import { getSameDimensionsCSS } from 'lib/ui/utils/getSameDimensionsCSS';
+import { centerContentCSS } from 'lib/ui/utils/centerContentCSS';
+import { getColor } from 'lib/ui/theme/getters';
+
+const Icon = styled.div`
+  ${roundedCSS};
+  ${getSameDimensionsCSS(40)};
+  ${centerContentCSS};
+  background: ${getColor('mist')};
+  font-size: 14px;
+`;
 
 // TODO: highlight what members will be added and removed
 export const UpdateMultisigMembersAction = () => {
@@ -20,17 +31,19 @@ export const UpdateMultisigMembersAction = () => {
 
   const { msg } = useCurrentProposalAction() as { msg: enterprise.ModifyMultisigMembershipMsg };
 
+  const { colors } = useTheme();
+
   return (
     <VStack gap={24}>
-      <Text variant="heading4">Update members</Text>
+      <Text weight="semibold">Update members</Text>
       <SameWidthChildrenRow gap={20} minChildrenWidth={320} maxColumns={2}>
         {msg.edit_members.map(({ address, weight }) => {
           const renderChange = () => {
             if (weight === '0') {
               return (
-                <div className={styles.icon}>
-                  <MinusIcon className={styles.remove} />
-                </div>
+                <Icon style={{ color: colors.alert.toCssValue() }}>
+                  <MinusIcon />
+                </Icon>
               );
             }
 
@@ -38,10 +51,12 @@ export const UpdateMultisigMembersAction = () => {
             if (currentMember === undefined) {
               return (
                 <>
-                  <Text variant="text">{weight}</Text>
-                  <div className={classNames(styles.icon, styles.add)}>
+                  <Text size={14} color="supporting">
+                    {weight}
+                  </Text>
+                  <Icon style={{ color: colors.success.toCssValue() }}>
                     <PlusIcon />
-                  </div>
+                  </Icon>
                 </>
               );
             }

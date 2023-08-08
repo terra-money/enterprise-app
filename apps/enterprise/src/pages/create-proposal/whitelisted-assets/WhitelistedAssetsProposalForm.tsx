@@ -5,11 +5,11 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedAssets } from './CurrentDAOWhitelistedAssetsProvider';
 import { toUpdateAssetWhitelistMsg } from './helpers/toUpdateAssetWhitelistMsg';
 import { WhitelistedAsset } from './WhitelistedAsset';
-import styles from './WhitelistedAssetsProposalForm.module.sass';
 import { areSameAsset } from 'chain/Asset';
 import { useCurrentDaoGlobalAssetWhitelistQuery } from 'queries/useCurrentDaoGlobalAssetWhitelistQuery';
 import { Spinner } from 'lib/ui/Spinner';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
+import { HStack, VStack } from 'lib/ui/Stack';
 
 export const WhitelistedAssetsProposalForm = () => {
   const initialWhitelistedAssets = useCurrentDaoWhitelistedAssets();
@@ -33,8 +33,8 @@ export const WhitelistedAssetsProposalForm = () => {
       getProposalActions={() => [{ update_asset_whitelist: msg }]}
     >
       <FormSection name="Whitelisted Assets">
-        <div className={styles.root}>
-          <div className={styles.list}>
+        <VStack gap={24}>
+          <HStack wrap="wrap" gap={20}>
             {whitelistedAssets.map((asset, index) => {
               const isInGlobalWhitelist = globalWhitelist.some((a) => areSameAsset(a, asset));
               return (
@@ -49,7 +49,7 @@ export const WhitelistedAssetsProposalForm = () => {
                 />
               );
             })}
-          </div>
+          </HStack>
           <AddTokenButton
             onSelect={(asset) => {
               if (!whitelistedAssets.some((a) => areSameAsset(asset, a))) {
@@ -57,7 +57,7 @@ export const WhitelistedAssetsProposalForm = () => {
               }
             }}
           />
-        </div>
+        </VStack>
       </FormSection>
     </ProposalForm>
   );

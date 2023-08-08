@@ -1,4 +1,3 @@
-import { Text } from '../../components/primitives';
 import { ReactComponent as TwitterIcon } from 'components/assets/TwitterLogo.svg';
 import { ReactComponent as DiscordIcon } from 'components/assets/DiscordLogo.svg';
 import { SocialItem } from './SocialItem';
@@ -9,6 +8,7 @@ import styled from 'styled-components';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { GitHubIcon } from 'lib/ui/icons/GitHubIcon';
 import { TelegramIcon } from 'lib/ui/icons/TelegramIcon';
+import { Text } from 'lib/ui/Text';
 
 const Container = styled(HStack)`
   gap: 32px;
@@ -29,7 +29,7 @@ export const SocialChannels = () => {
 
   return (
     <VStack gap={16}>
-      <Text variant={'heading4'}>Social channels</Text>
+      <Text weight="bold">Social channels</Text>
       <Panel>
         <Container>
           {github_username && (

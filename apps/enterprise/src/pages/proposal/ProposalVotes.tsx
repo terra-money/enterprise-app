@@ -1,7 +1,7 @@
 import { fromChainAmount } from 'chain/utils/fromChainAmount';
 
 import Big from 'big.js';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { toPercents } from 'lib/shared/utils/toPercents';
 import { useIsSmallScreen } from 'lib/ui/hooks/useIsSmallScreen';
 import { LabeledPageSection } from 'lib/ui/LabeledPageSection';
@@ -81,13 +81,15 @@ export const ProposalVotes = () => {
           votes.map(({ outcome, amount, voter }, index) => (
             <Panel key={index}>
               <Content>
-                <Text variant="heading4">{capitalizeFirstLetter(outcome)}</Text>
+                <Text weight="semibold">{capitalizeFirstLetter(outcome)}</Text>
                 <Address length={isSmallScreen ? 's' : undefined} value={voter} />
                 {totalAvailableVotes.gt(0) && (
-                  <Text variant="text">{toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}</Text>
+                  <Text size={14} color="supporting">
+                    {toPercents(amount.div(totalAvailableVotes).toNumber(), undefined, 3)}
+                  </Text>
                 )}
                 {proposal.type !== 'council' && token && (
-                  <Text variant="text">{`${fromChainAmount(amount.toString(), token.decimals ?? 6)} ${
+                  <Text size={14} color="supporting">{`${fromChainAmount(amount.toString(), token.decimals ?? 6)} ${
                     token.symbol
                   }`}</Text>
                 )}

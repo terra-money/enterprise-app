@@ -11,6 +11,7 @@ import { validateAddress } from 'chain/utils/validators';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
 import { AddButton } from 'lib/ui/buttons/AddButton';
+import { HStack, VStack } from 'lib/ui/Stack';
 
 interface NFTInputState {
   value: string;
@@ -21,7 +22,7 @@ interface NFTInputState {
 export const WhitelistedNFTsProposalForm = () => {
   const initialNfts = useCurrentDaoWhitelistedNFTs();
 
-  const [nfts, setNfts] = useState<NFTInputState[]>(initialNfts.map((value) => ({ value })));
+  const [nfts, setNfts] = useState<NFTInputState[]>(() => initialNfts.map((value) => ({ value })));
 
   const msg = toUpdateNFTWhitelistMsg(
     initialNfts,
@@ -72,14 +73,14 @@ export const WhitelistedNFTsProposalForm = () => {
         });
     }
 
-    setNfts(updateAtIndex(nfts, index, () => inputState));
+    setNfts(nfts => updateAtIndex(nfts, index, () => inputState));
   };
 
   return (
     <ProposalForm disabled={!isFormValid} getProposalActions={() => [{ update_nft_whitelist: msg }]}>
       <FormSection name="Whitelisted NFTs">
-        <div className={styles.root}>
-          <div className={styles.list}>
+        <VStack gap={24}>
+          <HStack wrap="wrap" gap={20}>
             {nfts.map(({ value, error, loading }, index) => (
               <WhitelistedNFTInput
                 value={value}
@@ -90,7 +91,7 @@ export const WhitelistedNFTsProposalForm = () => {
                 onChange={(value) => handleNFTChange(index, value)}
               />
             ))}
-          </div>
+          </HStack>
           {areNftsValid && (
             <AddButton
               size="l"
@@ -100,7 +101,7 @@ export const WhitelistedNFTsProposalForm = () => {
               }}
             />
           )}
-        </div>
+        </VStack>
       </FormSection>
     </ProposalForm>
   );

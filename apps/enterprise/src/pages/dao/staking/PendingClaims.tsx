@@ -1,9 +1,10 @@
-import { Stack } from 'lib/ui/Stack';
+import { Stack, VStack } from 'lib/ui/Stack';
 import Big from 'big.js';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { format } from 'date-fns';
 import { enterprise } from 'types/contracts';
-import styles from './PendingClaims.module.sass';
+import { TitledSection } from 'lib/ui/Layout/TitledSection';
+import { Panel } from 'lib/ui/Panel/Panel';
 
 interface PendingClaimsProps {
   claims: enterprise.Claim[];
@@ -21,22 +22,25 @@ export const PendingClaims = (props: PendingClaimsProps) => {
   const { claims, formatter } = props;
 
   return claims?.length === 0 ? null : (
-    <Stack className={styles.root} direction="column">
-      <Text variant="heading4">Pending Claims</Text>
-      {claims.map((claim, index) => (
-        <Stack key={index} className={styles.claim} direction="row">
-          <Text variant="text">
-            {'cw20' in claim.asset
-              ? formatter(Big(claim.asset.cw20.amount))
-              : formatter(Big(claim.asset.cw721.tokens.length))}
-          </Text>
-          <Text variant="text">
-            {'height' in claim.release_at
-              ? `at block ${claim.release_at.height}`
-              : `on ${formatTimestamp(new Date(Big(claim.release_at.timestamp).div(1000000).toNumber()))}`}
-          </Text>
-        </Stack>
-      ))}
-    </Stack>
+    <Panel>
+      <TitledSection title="Pending Claims">
+        <VStack gap={16}>
+          {claims.map((claim, index) => (
+            <Stack key={index} direction="row">
+              <Text size={14} color="supporting">
+                {'cw20' in claim.asset
+                  ? formatter(Big(claim.asset.cw20.amount))
+                  : formatter(Big(claim.asset.cw721.tokens.length))}
+              </Text>
+              <Text size={14} color="supporting">
+                {'height' in claim.release_at
+                  ? `at block ${claim.release_at.height}`
+                  : `on ${formatTimestamp(new Date(Big(claim.release_at.timestamp).div(1000000).toNumber()))}`}
+              </Text>
+            </Stack>
+          ))}
+        </VStack>
+      </TitledSection>
+    </Panel>
   );
 };

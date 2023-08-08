@@ -13,7 +13,7 @@ export const toDelegateMsg = ({ amount, address, tokenDecimals }: DelegateMsgPar
       delegate: {
         amount: {
           denom: 'uluna',
-          amount: toChainAmount(amount, tokenDecimals).toString(),
+          amount: toChainAmount(amount, tokenDecimals),
         },
         validator: address,
       },

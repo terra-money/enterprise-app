@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { FormFooter } from 'components/form-footer';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useNavigate } from 'react-router';
 
 import { useCW20TokenInfoQuery } from 'queries';
@@ -34,14 +34,18 @@ const DepositOverview = (props: DepositOverviewProps) => {
         <Stack direction="column" gap={8}>
           {token ? (
             <>
-              <Text className={styles.heading} variant="text">{`Deposit required (${token.symbol})`}</Text>
-              <Text variant="heading4">
+              <Text
+                className={styles.heading}
+                size={14}
+                color="supporting"
+              >{`Deposit required (${token.symbol})`}</Text>
+              <Text weight="semibold">
                 {formatAmount(fromChainAmount(Big(minimumDeposit).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
           ) : (
             <>
-              <Text className={styles.heading} variant="text">
+              <Text className={styles.heading} size={14} color="supporting">
                 Deposit required
               </Text>
               <Spinner />
@@ -51,22 +55,17 @@ const DepositOverview = (props: DepositOverviewProps) => {
         <Stack direction="column" gap={8}>
           {isBalanceLoading || !token ? (
             <>
-              <Text className={styles.heading} variant="text">
+              <Text className={styles.heading} size={14} color="supporting">
                 Your balance
               </Text>
               <Spinner />
             </>
           ) : (
             <>
-              <Text className={styles.heading} variant="text">
+              <Text className={styles.heading} size={14} color="supporting">
                 {`Your balance (${token.symbol})`}
               </Text>
-              <Text
-                style={{
-                  color: Big(balance).gte(minimumDeposit) ? 'var(--text-color-error)' : 'var(--text-color-primary)',
-                }}
-                variant="heading4"
-              >
+              <Text color={Big(balance).gte(minimumDeposit) ? 'alert' : 'regular'} weight="semibold">
                 {formatAmount(fromChainAmount(Big(balance).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>

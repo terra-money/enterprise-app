@@ -16,7 +16,7 @@ export interface MintTokenMsg {
 export const toMintTokenMsg = ({ tokenAddress, recepientAddress, amount, tokenDecimals }: ToMintTokensMsgParams) => {
   const mint: MintTokenMsg = {
     recipient: recepientAddress,
-    amount: toChainAmount(amount, tokenDecimals).toString(),
+    amount: toChainAmount(amount, tokenDecimals),
   };
   return JSON.stringify({
     wasm: {

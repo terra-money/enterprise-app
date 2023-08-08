@@ -1,12 +1,12 @@
-import classNames from 'classnames';
-import styles from './WasmMsgInput.module.sass';
-import { useId, useRef, useState } from 'react';
-import { Text } from 'components/primitives';
+import { useId } from 'react';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-merbivore';
-import { useOnClickOutside } from 'usehooks-ts';
+import styled from 'styled-components';
+import { commonInputCSS } from 'lib/ui/inputs/TextInput';
+import { InputWrapperWithErrorMessage } from 'lib/ui/inputs/InputWrapper';
+import { getColor } from 'lib/ui/theme/getters';
 
 interface WasmMsgInputProps {
   className?: string;
@@ -18,43 +18,31 @@ interface WasmMsgInputProps {
   onChange: (value?: string) => void;
 }
 
+const Wrapper = styled.div`
+  .input {
+    ${commonInputCSS};
+  }
+
+  .ace_placeholder {
+    color: ${getColor('textSupporting')};
+  }
+
+  .ace_content {
+    padding: 12px;
+  }
+`;
+
 const WasmMsgInput = (props: WasmMsgInputProps) => {
-  const { className, label, error, placeholder, value, onChange } = props;
-  const inputContainerRef = useRef<HTMLInputElement>(null);
-  const [focused, setFocused] = useState(false);
+  const { error, placeholder, value, onChange } = props;
   const editorId = useId();
 
-  const containerRef = useRef<HTMLInputElement>(null);
-
-  useOnClickOutside(containerRef, () => setFocused(false));
-
   return (
-    <div ref={containerRef} className={styles.root}>
-      <Text variant="text" className={styles.label}>
-        {label ?? 'Message'}
-      </Text>
-
-      <div
-        className={classNames(
-          styles.editor_container,
-          {
-            [styles.editor_container_with_error]: !!error,
-          },
-          className
-        )}
-        ref={inputContainerRef}
-      >
-        {!focused && !value && (
-          <Text variant={'label'} className={styles.placeholder}>
-            {placeholder ?? 'Type a message'}
-          </Text>
-        )}
+    <InputWrapperWithErrorMessage label="Message" error={error}>
+      <Wrapper isValid={!error}>
         <AceEditor
+          placeholder={placeholder}
           fontSize={14}
-          onFocus={() => setFocused(true)}
-          className={styles.editor}
           mode="json"
-          theme="merbivore"
           onChange={onChange}
           name={editorId}
           wrapEnabled
@@ -64,13 +52,11 @@ const WasmMsgInput = (props: WasmMsgInputProps) => {
           showPrintMargin={false}
           editorProps={{ $renderValidationDecorations: true }}
           value={value}
+          theme="merbivore"
+          className="input"
         />
-      </div>
-
-      <Text variant={'text'} className={styles.warning}>
-        {error}
-      </Text>
-    </div>
+      </Wrapper>
+    </InputWrapperWithErrorMessage>
   );
 };
 

@@ -1,5 +1,5 @@
 import { WizardBody } from './WizardBody';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { useDaoWizardForm } from './DaoWizardFormProvider';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
 import { VStack } from 'lib/ui/Stack';
@@ -40,13 +40,17 @@ export const SelectDaoTypeStep = () => {
     <WizardBody
       helpContent={
         <VStack gap={8}>
-          <Text variant="heading4">What is a {daoTypeNameRecord[type]}?</Text>
-          <Text variant="text">{daoTypeExplanationRecord[type]}</Text>
+          <Text weight="semibold">What is a {daoTypeNameRecord[type]}?</Text>
+          <Text size={14} color="supporting">
+            {daoTypeExplanationRecord[type]}
+          </Text>
         </VStack>
       }
     >
       <Container>
-        <Text variant="heading2">What type of DAO would you like to create?</Text>
+        <Text size={32} weight="bold">
+          What type of DAO would you like to create?
+        </Text>
         <PrimarySelect
           options={daoTypes}
           getName={(type) => daoTypeNameRecord[type]}

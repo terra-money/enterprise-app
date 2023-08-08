@@ -13,7 +13,6 @@ const HelpContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 96px 64px 0 64px;
-  overflow: hidden;
 `;
 
 export const WizardBody = (props: WizardBodyProps) => {

@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import classNames from 'classnames';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { enforceRange } from 'lib/shared/utils/enforceRange';
 import { HStack } from 'lib/ui/Stack';
 import { useTokenStakingAmountQuery } from 'queries';
@@ -9,6 +9,30 @@ import { useCurrentProposal } from './CurrentProposalProvider';
 import styles from './ProposalVotingBar.module.sass';
 import { getRatio } from 'lib/shared/utils/getRatio';
 import { toPercents } from 'lib/shared/utils/toPercents';
+import styled, { useTheme } from 'styled-components';
+import { getColor } from 'lib/ui/theme/getters';
+import { Circle } from 'lib/ui/Circle';
+
+const Quorum = styled.div`
+  position: absolute;
+  top: -16px;
+  height: 12px;
+  width: 1px;
+  background: ${getColor('textShy')};
+`;
+
+const Center = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    white-space: nowrap;
+    position: absolute;
+    top: -20px;
+  }
+`;
 
 export const ProposalVotingBar = () => {
   const { yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
@@ -41,27 +65,36 @@ export const ProposalVotingBar = () => {
 
   const abstainBarWidth = toPercents(abstainRatio);
 
+  const { colors } = useTheme();
+
   return (
     <div className={styles.root}>
-      <div className={styles.bar}>
+      <div style={{ background: colors.mist.toCssValue() }} className={styles.bar}>
         <div style={{ width: totalBarWidth }} className={styles.total}>
-          <div style={{ width: yesBarWidth }} className={styles.yes}></div>
-          {noRatio > 0 && <div style={{ width: noBarWidth }} className={styles.no}></div>}
-          {abstainRatio > 0 && <div style={{ width: abstainBarWidth }} className={styles.abstain}></div>}
+          <div style={{ width: yesBarWidth, background: colors.success.toCssValue() }} className={styles.yes}></div>
+          {noRatio > 0 && (
+            <div style={{ width: noBarWidth, background: colors.alert.toCssValue() }} className={styles.no}></div>
+          )}
+          {abstainRatio > 0 && (
+            <div
+              style={{ width: abstainBarWidth, background: colors.textShy.toCssValue() }}
+              className={styles.abstain}
+            ></div>
+          )}
         </div>
-        <div style={{ left: toPercents(quorum) }} className={styles.quorum}>
-          <div className={styles.center}>
-            <Text className={classNames(styles.value, styles.label)} variant="text">
+        <Quorum style={{ left: toPercents(quorum) }}>
+          <Center>
+            <Text size={14} color="supporting">
               Quorum {toPercents(quorum)}
             </Text>
-          </div>
-        </div>
+          </Center>
+        </Quorum>
         <HStack gap={16} className={styles.votesContainer}>
           {yesRatio > 0 && (
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
-                <div className={styles.yesBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Circle size={8} background={colors.success} />
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   Yes {toPercents(yesRatio, 'round')}
                 </Text>
               </HStack>
@@ -70,8 +103,8 @@ export const ProposalVotingBar = () => {
           {noRatio > 0 && (
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
-                <div className={styles.noBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Circle size={8} background={colors.alert} />
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   No {toPercents(noRatio, 'round')}
                 </Text>
               </HStack>
@@ -80,8 +113,9 @@ export const ProposalVotingBar = () => {
           {abstainRatio > 0 && (
             <HStack gap={16}>
               <HStack gap={8} alignItems="center">
-                <div className={styles.abstainBean}></div>
-                <Text className={classNames(styles.value, styles.label)} variant="text">
+                <Circle size={8} background={colors.textShy} />
+
+                <Text className={classNames(styles.value, styles.label)} size={14} color="supporting">
                   Abstain {toPercents(abstainRatio, 'round')}
                 </Text>
               </HStack>

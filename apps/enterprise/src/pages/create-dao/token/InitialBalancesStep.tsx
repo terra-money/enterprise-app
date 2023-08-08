@@ -1,5 +1,5 @@
 import { WizardStep } from '../WizardStep';
-import { Text } from 'components/primitives';
+import { Text } from 'lib/ui/Text';
 import { EMPTY_INITIAL_BALANCE, InitialBalance, useDaoWizardForm } from '../DaoWizardFormProvider';
 import { formatAmount } from 'lib/shared/utils/formatAmount';
 import styles from './InitialBalancesStep.module.sass';
@@ -48,12 +48,18 @@ export const InitialBalancesStep = () => {
       subTitle="Enter at least one wallet address and an amount. The only way to mint more tokens after this step is through governance. Treasuries are controlled by voters."
       helpContent={
         <VStack gap={24}>
-          <Text variant="label">Name</Text>
-          <Text variant="heading4">{tokenInfo.name}</Text>
-          <Text variant="label">Symbol</Text>
-          <Text variant="heading4">{tokenInfo.symbol}</Text>
-          <Text variant="label">Total Supply</Text>
-          <Text variant="heading4">{formatAmount(totalSupply)}</Text>
+          <Text size={14} color="supporting">
+            Name
+          </Text>
+          <Text weight="semibold">{tokenInfo.name}</Text>
+          <Text size={14} color="supporting">
+            Symbol
+          </Text>
+          <Text weight="semibold">{tokenInfo.symbol}</Text>
+          <Text size={14} color="supporting">
+            Total Supply
+          </Text>
+          <Text weight="semibold">{formatAmount(totalSupply)}</Text>
         </VStack>
       }
     >

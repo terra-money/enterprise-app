@@ -4,7 +4,6 @@ import { useClaimTx } from 'tx';
 import { DAOLogo } from 'components/dao-logo';
 import { StakeNFTOverlay } from './StakeNFTOverlay';
 import { PendingClaims } from './PendingClaims';
-import styles from './NFTStaking.module.sass';
 import { usePendingClaims } from 'hooks';
 import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useAssertMyAddress } from 'chain/hooks/useAssertMyAddress';
@@ -72,15 +71,15 @@ export const NftStakingConnectedView = () => {
     <>
       <SameWidthChildrenRow fullWidth minChildrenWidth={320} gap={16}>
         <VStack gap={16}>
-          <VStack className={styles.staking} as="section">
-            <VStack gap={40}>
-              <HStack alignItems="center" className={styles.header}>
+          <Panel>
+            <VStack gap={16}>
+              <HStack gap={8} alignItems="center">
                 <DAOLogo logo={getDaoLogo(dao)} size="l" />
                 <TitledSection title="Voting power">
                   <NumericStatistic value={toPercents(walletVotingPower.toNumber(), 'round')} />
                 </TitledSection>
               </HStack>
-              <HStack className={styles.actions}>
+              <HStack>
                 <OverlayOpener
                   renderOpener={({ onOpen }) => (
                     <Button
@@ -113,7 +112,7 @@ export const NftStakingConnectedView = () => {
                 />
               </HStack>
             </VStack>
-          </VStack>
+          </Panel>
           <SameWidthChildrenRow fullWidth gap={16} minChildrenWidth={240}>
             <NftDaoTotalSupplyPanel />
             <NftDaoTotalStakedPanel />
@@ -124,7 +123,7 @@ export const NftStakingConnectedView = () => {
             <TitledSection title="Claim Unstaked NFTs">
               <NumericStatistic value={claimableTokens.length} suffix={symbol} />
               <VStack alignItems="stretch" fullWidth gap={40}>
-                <HStack className={styles.actions} alignItems="center">
+                <HStack alignItems="center">
                   <Button
                     kind="secondary"
                     isDisabled={isClaimDisabled ? `You don't have any NFTs to claim` : undefined}

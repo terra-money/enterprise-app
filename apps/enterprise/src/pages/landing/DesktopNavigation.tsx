@@ -1,32 +1,36 @@
 import { Path } from 'navigation';
-import { NavLink } from 'react-router-dom';
-import styles from './DesktopNavigation.module.sass';
 import { HStack } from 'lib/ui/Stack';
+import { InternalLink } from 'components/link';
+import { Button } from 'lib/ui/buttons/Button';
+import { ExternalLink } from 'lib/navigation/Link/ExternalLink';
 
 export const DesktopNavigation = () => {
   return (
     <HStack gap={16} alignItems="center">
-      <span
-        className={styles.link}
-        onClick={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-
+      <Button
+        onClick={() => {
           const element = document.querySelector('#featuresExplorer');
 
           element?.scrollIntoView({
             behavior: 'smooth',
           });
         }}
+        kind="ghost"
       >
-        <span>Features</span>
-      </span>
-      <a className={styles.link} href="https://docs.enterprise.money">
-        <span>Docs</span>
-      </a>
-      <NavLink className={styles.link} to={Path.Dashboard}>
-        <span>App</span>
-      </NavLink>
+        Features
+      </Button>
+
+      <ExternalLink to="https://docs.enterprise.money">
+        <Button as="div" kind="ghost">
+          Docs
+        </Button>
+      </ExternalLink>
+
+      <InternalLink to={Path.Dashboard}>
+        <Button as="div" kind="ghost">
+          App
+        </Button>
+      </InternalLink>
     </HStack>
   );
 };
