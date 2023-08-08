@@ -5,7 +5,6 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvider';
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
 import { WhitelistedNFTInput } from './WhitelistedNFTInput';
-import styles from './WhitelistedNFTsProposalForm.module.sass';
 import { useLcdClient } from '@terra-money/wallet-kit';
 import { validateAddress } from 'chain/utils/validators';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
