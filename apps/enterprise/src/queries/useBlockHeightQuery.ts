@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { useChainID } from 'chain/hooks/useChainID';
 
 export const fetchBlockHeight = async (lcdBaseUrl: string): Promise<number> => {
@@ -12,7 +12,7 @@ export const fetchBlockHeight = async (lcdBaseUrl: string): Promise<number> => {
 };
 
 export const useBlockHeightQuery = (): UseQueryResult<number> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
   const chainID = useChainID();
 
   const lcdBaseUrl = lcd.config[chainID].lcd;

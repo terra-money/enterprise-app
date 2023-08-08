@@ -3,7 +3,7 @@ import { QUERY_KEY } from 'queries';
 import { LCDClient } from '@terra-money/feather.js';
 import { enterprise } from 'types/contracts';
 
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 
 export const fetchClaims = async (
   lcd: LCDClient,
@@ -21,7 +21,7 @@ export const useClaimsQuery = (
   walletAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<enterprise.Claim[]> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.CLAIMS, daoAddress, walletAddress],

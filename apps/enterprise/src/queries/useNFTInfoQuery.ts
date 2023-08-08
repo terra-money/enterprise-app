@@ -1,5 +1,5 @@
 import { LCDClient } from '@terra-money/feather.js';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { useQuery, UseQueryResult } from 'react-query';
 
 type Variables = {
@@ -92,7 +92,7 @@ export const useNFTInfoQuery = (
   collectionAddr: string,
   tokenIds: TokenIds
 ): UseQueryResult<{ [tokenId: string]: any }> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
   return useQuery([collectionAddr, tokenIds], async () => {
     const data = await fetchNFTDataForMultipleTokenIds(collectionAddr, tokenIds, lcd);
     return data;

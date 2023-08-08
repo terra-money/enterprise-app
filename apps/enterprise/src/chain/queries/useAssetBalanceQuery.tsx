@@ -1,4 +1,4 @@
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { Asset } from 'chain/Asset';
 import { getAssetBalance } from 'chain/utils/getAssetBalance';
 import { QUERY_KEY } from 'queries';
@@ -10,7 +10,7 @@ interface AssetBalanceParamsQuery {
 }
 
 export const useAssetBalanceQury = ({ address, asset }: AssetBalanceParamsQuery) => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
   return useQuery([QUERY_KEY.ASSET_BALANCE, asset, address], () => {
     return getAssetBalance({
       lcd,

@@ -5,7 +5,7 @@ import { ProposalForm } from '../shared/ProposalForm';
 import { useCurrentDaoWhitelistedNFTs } from './CurrentDAOWhitelistedNFTsProvider';
 import { toUpdateNFTWhitelistMsg } from './helpers/toUpdateNFTWhitelistMsg';
 import { WhitelistedNFTInput } from './WhitelistedNFTInput';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { validateAddress } from 'chain/utils/validators';
 import { removeAtIndex } from 'lib/shared/utils/removeAtIndex';
 import { updateAtIndex } from 'lib/shared/utils/updateAtIndex';
@@ -28,7 +28,7 @@ export const WhitelistedNFTsProposalForm = () => {
     nfts.map((nft) => nft.value)
   );
 
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   const areNftsValid = nfts.every(({ error, loading }) => !error && !loading);
   const isFormValid = areNftsValid && (msg.add.length > 0 || msg.remove.length > 0);

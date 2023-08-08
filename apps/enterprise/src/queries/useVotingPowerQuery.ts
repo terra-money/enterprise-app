@@ -4,7 +4,7 @@ import { LCDClient } from '@terra-money/feather.js';
 import Big from 'big.js';
 import { enterprise } from 'types/contracts';
 
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const fetchVotingPower = async (lcd: LCDClient, daoAddress: string, walletAddress: string): Promise<Big> => {
@@ -19,7 +19,7 @@ export const useVotingPowerQuery = (
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Big | undefined> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.VOTING_POWER, daoAddress, walletAddress],

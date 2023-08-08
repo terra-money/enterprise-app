@@ -3,8 +3,8 @@ import { ConnectedWalletSummary } from './ConnectedWallet/ConnectedWalletSummary
 import { VStack } from 'lib/ui/Stack';
 import { Menu } from 'lib/ui/Menu';
 import { MenuOption } from 'lib/ui/Menu/MenuOption';
-import { useWallet } from '@terra-money/wallet-provider';
 import { LogOutIcon } from 'lib/ui/icons/LogOutIcon';
+import { useWallet } from '@terra-money/wallet-kit';
 
 export const ManageConnectedWallet = () => {
   const { disconnect } = useWallet();

@@ -1,4 +1,3 @@
-import { WalletProvider, useChainOptions } from '@terra-money/wallet-provider';
 import { NetworkGuard } from 'components/network-guard';
 import { SnackbarContainer } from 'components/snackbar';
 import { SnackbarProvider } from 'notistack';
@@ -15,34 +14,31 @@ import { ThemeProvider } from 'lib/ui/theme/ThemeProvider';
 const queryClient = new QueryClient();
 
 const AppProviders = () => {
-  const chainOptions = useChainOptions();
-
   return (
-    chainOptions && (
-      <WalletProvider {...chainOptions} connectorOpts={{ bridge: 'https://walletconnect.terra.dev/' }}>
-        <ThemeProvider>
-          <GlobalStyle />
-          <GlobalErrorBoundary>
-            <QueryClientProvider client={queryClient}>
-              <NetworkGuard>
-                <TransactionsProvider>
-                  <TransactionErrorProvider>
-                    <SnackbarProvider
-                      autoHideDuration={null}
-                      content={(key, message) => <SnackbarContainer id={key} message={message} />}
-                    >
-                      <PersonalizationProvider>
-                        <AppRoutes />
-                      </PersonalizationProvider>
-                    </SnackbarProvider>
-                  </TransactionErrorProvider>
-                </TransactionsProvider>
-              </NetworkGuard>
-            </QueryClientProvider>
-          </GlobalErrorBoundary>
-        </ThemeProvider>
-      </WalletProvider>
-    )
+
+    <ThemeProvider>
+      <GlobalStyle />
+      <GlobalErrorBoundary>
+        <main>
+          <QueryClientProvider client={queryClient}>
+            <NetworkGuard>
+              <TransactionsProvider>
+                <TransactionErrorProvider>
+                  <SnackbarProvider
+                    autoHideDuration={null}
+                    content={(key, message) => <SnackbarContainer id={key} message={message} />}
+                  >
+                    <PersonalizationProvider>
+                      <AppRoutes />
+                    </PersonalizationProvider>
+                  </SnackbarProvider>
+                </TransactionErrorProvider>
+              </TransactionsProvider>
+            </NetworkGuard>
+          </QueryClientProvider>
+        </main>
+      </GlobalErrorBoundary>
+    </ThemeProvider>
   );
 };
 

@@ -7,7 +7,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { LocalStorageTxStore } from './storage/LocalStorageTxStore';
 import { createTxStoreMiddleware } from './storage';
 import { pendingSubject, completedSubject, cancelledSubject, failedSubject } from './rx';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { CompletedTransaction, FailedTransaction, PendingTransaction, TransactionStatus } from './types';
 import { useChainID } from 'chain/hooks/useChainID';
 import { ComponentWithChildrenProps } from 'lib/shared/props';
@@ -55,7 +55,7 @@ const TransactionsProvider = (props: ComponentWithChildrenProps) => {
 
   const [{ onPending, onCancelled, onCompleted, onFailed }, setEventHandlers] = useState<TxEventHandlers>({});
 
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   const chainID = useChainID();
 

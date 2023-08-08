@@ -3,14 +3,14 @@ import { QUERY_KEY } from 'queries';
 import Big from 'big.js';
 
 import { fetchStakingAmount } from './fetchStakingAmount';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 
 export const useNFTStakingAmountQuery = (
   daoAddress: string,
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<Big> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.NFT_STAKING_AMOUNT, daoAddress, walletAddress],

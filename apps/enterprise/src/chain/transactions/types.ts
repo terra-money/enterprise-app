@@ -1,12 +1,4 @@
 import { TxLog } from '@terra-money/feather.js';
-import {
-  CreateTxFailed,
-  SignBytesFailed,
-  Timeout,
-  TxFailed,
-  TxUnspecifiedError,
-  UserDenied,
-} from '@terra-money/wallet-provider';
 
 export enum TransactionStatus {
   Pending = 'Pending',
@@ -38,7 +30,7 @@ export type FailedTransaction = {
   txHash: string | '';
   status: TransactionStatus.Failed;
   payload: TransactionPayload;
-  error: Error | UserDenied | Timeout | SignBytesFailed | CreateTxFailed | TxFailed | TxUnspecifiedError;
+  error: Error;
 };
 
 export type Transaction = PendingTransaction | CompletedTransaction | FailedTransaction;

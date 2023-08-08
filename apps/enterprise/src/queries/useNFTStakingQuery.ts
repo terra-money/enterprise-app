@@ -3,7 +3,7 @@ import { QUERY_KEY } from 'queries';
 
 import { enterprise } from 'types/contracts';
 import { LCDClient } from '@terra-money/feather.js';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { assertDefined } from 'lib/shared/utils/assertDefined';
 
 export const fetchNFTStaking = async (
@@ -23,7 +23,7 @@ export const useNFTStakingQuery = (
   walletAddress?: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<enterprise.NftUserStake | undefined> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.NFT_STAKING, daoAddress, walletAddress],

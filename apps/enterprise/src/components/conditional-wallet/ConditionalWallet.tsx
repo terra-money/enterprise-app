@@ -1,4 +1,4 @@
-import { useConnectedWallet, useWallet, WalletStatus } from '@terra-money/wallet-provider';
+import { useConnectedWallet, useWallet, WalletStatus } from '@terra-money/wallet-kit';
 import { ReactNode } from 'react';
 
 export interface ConditionalWalletProps {

@@ -2,7 +2,7 @@ import { useCurrentDao } from 'dao/components/CurrentDaoProvider';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from './queryKey';
 import { AssetInfoWithPrice, getAssetBalanceInUsd } from 'chain/Asset';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { getAssetBalance } from 'chain/utils/getAssetBalance';
 import { getDaoTotalStakedAmount } from 'dao/utils/getDaoTotalStakedAmount';
 import Big from 'big.js';
@@ -15,7 +15,7 @@ import { useCurrentDaoAssetWhitelistQuery } from './useCurrentDaoAssetWhitelistQ
 export const useDaoAssets = () => {
   const { address, dao_membership_contract } = useCurrentDao();
 
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   const networkName = useNetworkName();
 

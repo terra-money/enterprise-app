@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { QUERY_KEY } from 'queries';
-import { useLCDClient } from '@terra-money/wallet-provider';
+import { useLcdClient } from '@terra-money/wallet-kit';
 import { LCDClient } from '@terra-money/feather.js';
 
 export interface CW20TokenInfoResponse {
@@ -22,7 +22,7 @@ export const useCW20TokenInfoQuery = (
   tokenAddress: string,
   options: Partial<Pick<UseQueryOptions, 'enabled'>> = { enabled: true }
 ): UseQueryResult<CW20TokenInfoResponse> => {
-  const lcd = useLCDClient();
+  const lcd = useLcdClient();
 
   return useQuery(
     [QUERY_KEY.CW20_TOKEN_QUERY, tokenAddress],
