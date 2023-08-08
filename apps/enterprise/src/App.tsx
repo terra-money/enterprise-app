@@ -16,10 +16,10 @@ const queryClient = new QueryClient();
 const AppProviders = () => {
   return (
 
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider>
       <GlobalStyle />
       <GlobalErrorBoundary>
-        <main className={styles.root}>
+        <main>
           <QueryClientProvider client={queryClient}>
             <NetworkGuard>
               <TransactionsProvider>
