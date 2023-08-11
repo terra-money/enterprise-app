@@ -6,17 +6,17 @@ import { HStack, VStack } from 'lib/ui/Stack';
 import { Text } from 'lib/ui/Text';
 import { ReactNode } from 'react';
 
-const supportedConnections = ['station-extension', 'wallet-connect'] as const;
+const supportedConnections = ['station-extension', 'terra-station-mobile'] as const;
 type SupportedConnection = (typeof supportedConnections)[number];
 
 const supportedConnectionIcons: Record<SupportedConnection, ReactNode> = {
   'station-extension': <TerraStationIcon />,
-  'wallet-connect': <WalletConnectIcon />,
+  'terra-station-mobile': <WalletConnectIcon />,
 };
 
 const supportedConnectionNames: Record<SupportedConnection, string> = {
   'station-extension': 'Station Wallet',
-  'wallet-connect': 'Wallet Connect',
+  'terra-station-mobile': 'Wallet Connect (Mobile)',
 };
 
 export const ConnectWalletOptions = () => {
