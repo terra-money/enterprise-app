@@ -52,7 +52,7 @@ export const fetchDAOsQuery = async (endpoint: string) => {
 };
 
 export const useDAOsQuery = (options: DAOsQueryOptions = {}): UseQueryResult<Array<DAO> | undefined> => {
-  const { query, limit = 100, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS } = options;
+  const { query, limit = 150, direction = query?.length === 0 ? 'desc' : 'asc', queryKey = QUERY_KEY.DAOS } = options;
 
   const endpoint = useApiEndpoint({
     path: 'v1/daos',

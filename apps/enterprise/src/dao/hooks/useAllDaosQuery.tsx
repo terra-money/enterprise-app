@@ -5,7 +5,9 @@ import { useQuery } from 'react-query';
 export const useAllDaosQuery = () => {
   const endpoint = useApiEndpoint({
     path: 'v1/daos',
-    params: {},
+    params: {
+      limit: 150
+    },
   });
 
   return useQuery(
