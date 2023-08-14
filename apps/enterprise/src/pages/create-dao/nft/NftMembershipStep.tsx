@@ -31,8 +31,8 @@ export function NftMembershipStep() {
           onValueChange={(nftSymbol) => onChange({ nftSymbol })}
         />
         <TextInput
-          label="NFT Mint Contract"
-          placeholder="Terra contract address"
+          label="NFT Minter Address"
+          placeholder="Terra wallet address"
           value={nftMembership.minter}
           error={nftMembership.minterError}
           onValueChange={(minter) => onChange({ minter })}
