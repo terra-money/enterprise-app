@@ -36,7 +36,7 @@
     "@terra-money/feather.js": "^1.0.4",
     "@terra-money/log-finder-ruleset": "^3.0.2",
     "@terra-money/terra-station-mobile": "1.0.8",
-    "@terra-money/wallet-kit": "1.0.4",
+    "@terra-money/wallet-kit": "1.0.11",
     "@terra.kitchen/utils": "^1.0.7",
     "ace-builds": "^1.23.4",
     "big.js": "^6.2.1",
