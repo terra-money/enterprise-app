@@ -5,9 +5,9 @@ import { memoize } from 'lib/shared/utils/memoize';
 
 const TFM_ASSETS_INFO_URL = 'https://api-terra2.tfm.com/tokens';
 
-const TFL_IBC_ASSETS_INFO_URL = 'https://assets.terra.money/ibc/tokens.json';
+const TFL_IBC_ASSETS_INFO_URL = 'https://assets.terra.dev/ibc/tokens.json';
 
-const TFL_CW20_ASSETS_INFO_URL = 'https://assets.terra.money/cw20/tokens.json';
+const TFL_CW20_ASSETS_INFO_URL = 'https://assets.terra.dev/cw20/tokens.json';
 
 interface TFMAssetInfo {
   contract_addr: string;
@@ -40,13 +40,13 @@ type AssetsInfo = Record<string, AssetInfo & Asset>;
 export const lunaInfo: AssetInfo & Asset = {
   name: 'LUNA',
   symbol: 'LUNA',
-  icon: 'https://assets.terra.money/icon/svg/Luna.svg',
+  icon: 'https://assets.terra.dev/icon/svg/Luna.svg',
   decimals: 6,
   type: 'native',
   id: 'uluna',
 };
 
-export const cw20DefaultIcon = 'https://assets.terra.money/icon/svg/CW.svg';
+export const cw20DefaultIcon = 'https://assets.terra.dev/icon/svg/CW.svg';
 
 export const getAssetsInfo = memoize(async (network: NetworkName = 'mainnet') => {
   const result: AssetsInfo = {
