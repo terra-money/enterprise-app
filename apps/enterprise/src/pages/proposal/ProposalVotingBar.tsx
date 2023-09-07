@@ -12,6 +12,7 @@ import { toPercents } from 'lib/shared/utils/toPercents';
 import styled, { useTheme } from 'styled-components';
 import { getColor } from 'lib/ui/theme/getters';
 import { Circle } from 'lib/ui/Circle';
+import { round } from 'lodash';
 
 const Quorum = styled.div`
   position: absolute;
@@ -86,6 +87,13 @@ export const ProposalVotingBar = () => {
           <Center>
             <Text size={14} color="supporting">
               Quorum {toPercents(quorum)}
+            </Text>
+          </Center>
+        </Quorum>
+        <Quorum style={{ left: toPercents(getRatio(total, totalAvailableVotes).toNumber()) }}>
+          <Center>
+            <Text size={14} color="supporting">
+              Total {toPercents(getRatio(total, totalAvailableVotes).toNumber(), 'round')}
             </Text>
           </Center>
         </Quorum>
