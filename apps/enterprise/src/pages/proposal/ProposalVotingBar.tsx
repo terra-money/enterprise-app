@@ -12,7 +12,6 @@ import { toPercents } from 'lib/shared/utils/toPercents';
 import styled, { useTheme } from 'styled-components';
 import { getColor } from 'lib/ui/theme/getters';
 import { Circle } from 'lib/ui/Circle';
-import { round } from 'lodash';
 
 const Quorum = styled.div`
   position: absolute;
