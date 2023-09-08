@@ -41,6 +41,13 @@ export const ProposalVoting = () => {
         </Text>
         <ProposalExpiration />
       </HStack>
+      <Text size={14} color="supporting">Total voted: {formatNumber(Number(total), {comma: true})} ({toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})</Text>
+      <Panel>
+        <HStack justifyContent="center" alignItems="center" wrap="wrap" gap={20}>
+          <ProposalVotingBar />
+          <ProposalVotingAction />
+        </HStack>
+      </Panel>
       {executionTxHash && (
         <HStack alignItems="center" gap={8}>
           <Text color="shy">Transaction:</Text>
@@ -52,13 +59,6 @@ export const ProposalVoting = () => {
           </ExternalLink>
         </HStack>
       )}
-      <Text size={14} color="supporting">Total voted: {formatNumber(Number(total), {comma: true})} ({toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})</Text>
-      <Panel>
-        <HStack justifyContent="center" alignItems="center" wrap="wrap" gap={20}>
-          <ProposalVotingBar />
-          <ProposalVotingAction />
-        </HStack>
-      </Panel>
     </VStack>
   );
 };
