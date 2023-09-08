@@ -81,6 +81,7 @@ export const ProposalVotingBar = () => {
               className={styles.abstain}
             ></div>
           )}
+
         </div>
         <Quorum style={{ left: toPercents(quorum) }}>
           <Center>
@@ -89,13 +90,7 @@ export const ProposalVotingBar = () => {
             </Text>
           </Center>
         </Quorum>
-        <Quorum style={{ left: toPercents(getRatio(total, totalAvailableVotes).toNumber()) }}>
-          <Center>
-            <Text size={14} color="supporting">
-              Total {toPercents(getRatio(total, totalAvailableVotes).toNumber(), 'round')}
-            </Text>
-          </Center>
-        </Quorum>
+
         <HStack gap={16} className={styles.votesContainer}>
           {yesRatio > 0 && (
             <HStack gap={16}>
