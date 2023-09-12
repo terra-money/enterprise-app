@@ -48,7 +48,7 @@ export const MetadataFields = ({ formInput, formState }: MetadataProposalFormPro
       />
       <TextArea
         rows={6}
-        maxLength={280}
+        maxLength={1120}
         label="Description"
         value={description}
         error={descriptionError}

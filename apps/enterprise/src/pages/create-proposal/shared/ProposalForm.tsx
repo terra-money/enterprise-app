@@ -47,7 +47,7 @@ export const ProposalForm = ({ children, disabled, getProposalActions, initialSt
         rows={6}
         label="Description"
         value={description}
-        maxLength={280}
+        maxLength={1120}
         error={description.length > 0 ? descriptionError : undefined}
         onValueChange={(description) => input({ description })}
       />

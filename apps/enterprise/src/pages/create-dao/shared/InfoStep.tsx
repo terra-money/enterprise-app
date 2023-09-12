@@ -26,7 +26,7 @@ export function InfoStep() {
         />
         <TextArea
           rows={6}
-          maxLength={280}
+          maxLength={1120}
           label="Description"
           value={info.description}
           error={info.descriptionError}
