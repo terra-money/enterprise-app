@@ -65,7 +65,7 @@ const DepositOverview = (props: DepositOverviewProps) => {
               <Text className={styles.heading} size={14} color="supporting">
                 {`Your balance (${token.symbol})`}
               </Text>
-              <Text color={Big(balance).gte(minimumDeposit) ? 'alert' : 'regular'} weight="semibold">
+              <Text color={Big(balance).gte(minimumDeposit) ? 'regular' : 'alert'} weight="semibold">
                 {formatAmount(fromChainAmount(Big(balance).toNumber(), token.decimals), { decimals: 2 })}
               </Text>
             </>
@@ -104,6 +104,7 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
   });
 
   const isSubmitDisabled = disabled || (isDepositRequired && (!balance || Big(balance).lt(minimumDeposit)));
+  const buttonTooltipMessage = (isDepositRequired && (!balance || Big(balance).lt(minimumDeposit))) ? "Insufficient balance to create proposal" : "Please fill in all relevant fields";
 
   return (
     <Stack className={styles.root} direction="column">
@@ -117,7 +118,7 @@ export const CreateProposalFooter = ({ disabled, loading, onSubmit }: CreateProp
       )}
       <FormFooter
         primary={
-          <Button disabled={isSubmitDisabled} loading={loading || isBalanceLoading} onClick={onSubmit}>
+          <Button isDisabled={isSubmitDisabled ? buttonTooltipMessage : false} loading={loading || isBalanceLoading} onClick={onSubmit}>
             Create
           </Button>
         }
