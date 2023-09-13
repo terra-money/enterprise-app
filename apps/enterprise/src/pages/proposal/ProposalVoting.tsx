@@ -11,13 +11,18 @@ import { getFinderUrl } from 'chain/utils/getFinderUrl';
 import { ShyTextButtonInline } from 'lib/ui/buttons/ShyTextButtonInline';
 import Big from 'big.js';
 import { useMemo } from 'react';
-import { useTokenStakingAmountQuery } from 'queries';
+import { useCW20TokenInfoQuery, useTokenStakingAmountQuery } from 'queries';
 import { formatNumber } from '@terra.kitchen/utils';
 import { getRatio } from 'lib/shared/utils/getRatio';
 import { toPercents } from 'lib/shared/utils/toPercents';
+import { fromChainAmount } from 'chain/utils/fromChainAmount';
+import { QueryDependant } from 'lib/query/components/QueryDependant';
+import { LabeledValue } from 'lib/ui/LabeledValue';
+import { Spinner } from 'lib/ui/Spinner';
 
 export const ProposalVoting = () => {
-  const { executionTxHash, yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } = useCurrentProposal();
+  const { executionTxHash, yesVotes, noVotes, abstainVotes, vetoVotes, totalVotes, status, dao, type } =
+    useCurrentProposal();
 
   const networkName = useNetworkName();
 
@@ -32,6 +37,7 @@ export const ProposalVoting = () => {
   }, [dao.type, status, totalStaked, totalVotes, type]);
 
   const total = yesVotes.add(noVotes).add(abstainVotes).add(vetoVotes);
+  const tokenInfoQuery = useCW20TokenInfoQuery(dao.membershipContractAddress);
 
   return (
     <VStack gap={16}>
@@ -41,7 +47,21 @@ export const ProposalVoting = () => {
         </Text>
         <ProposalExpiration />
       </HStack>
-      <Text size={14} color="supporting">Total voted: {formatNumber(Number(total), {comma: true})} ({toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})</Text>
+      <LabeledValue name="Total voted">
+        <Text color="supporting">
+          <QueryDependant
+            {...tokenInfoQuery}
+            loading={() => <Spinner />}
+            error={() => 'Failed to load token info'}
+            success={(tokenInfo) => {
+              return `${formatNumber(fromChainAmount(total.toString(), tokenInfo.decimals), { comma: true })} (
+              ${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})
+              )}`;
+            }}
+          />
+        </Text>
+      </LabeledValue>
+
       <Panel>
         <HStack justifyContent="center" alignItems="center" wrap="wrap" gap={20}>
           <ProposalVotingBar />
