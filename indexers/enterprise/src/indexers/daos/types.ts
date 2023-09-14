@@ -1,9 +1,9 @@
-import { enterprise } from 'types/contracts';
+import { enterprise_facade } from 'types/contracts';
 
 export type DaoEntity = {
   _type: string;
   address: string;
-  type: enterprise.DaoType;
+  type: enterprise_facade.DaoType;
   name: string;
   description?: string;
   lowerCaseName: string;
@@ -12,7 +12,7 @@ export type DaoEntity = {
   enterpriseFactoryContract: string;
   created: number;
   codeVersionId: string;
-  council: enterprise.DaoCouncil;
+  council: enterprise_facade.DaoCouncil;
   socials: {
     discord_username?: string;
     github_username?: string;
@@ -23,7 +23,7 @@ export type DaoEntity = {
     quorum: number;
     threshold: number;
     vetoThreshold: number;
-    unlockingPeriod: enterprise.Duration;
+    unlockingPeriod: enterprise_facade.Duration;
     voteDuration: number;
     minimumDeposit?: string;
   };

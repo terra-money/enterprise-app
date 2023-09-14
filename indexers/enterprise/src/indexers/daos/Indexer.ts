@@ -2,16 +2,18 @@ import { EventIndexer, IndexFnOptions } from 'indexers/EventIndexer';
 import { LCDClient } from '@terra-money/feather.js';
 import { DaoEntity } from './types';
 import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
-import { batch, createLCDClient } from '@apps-shared/indexers/utils';
+import { NetworkName, batch, createLCDClient, daoContractAddressRecord } from '@apps-shared/indexers/utils';
 import { KeySelector } from '@apps-shared/indexers/services/persistence';
 import { fetchByHeight } from '@apps-shared/indexers/services/event-store';
 import { EnterpriseEventPK, ExecuteProposalEvent, InstantiateDaoEvent } from 'types/events';
-import { enterprise } from 'types/contracts';
 import Big from 'big.js';
+import { enterprise_facade } from 'types/contracts';
 
 export const PK: KeySelector<DaoEntity> = (data) => data.address;
 
 export const SK = 'dao';
+
+const enterpriseFacadeAddress = daoContractAddressRecord[process.env.NETWORK as NetworkName]['enterprise-facade'];
 
 export class Indexer extends EventIndexer<DaoEntity> {
   constructor() {
@@ -45,7 +47,7 @@ export class Indexer extends EventIndexer<DaoEntity> {
   };
 
   private fetchDAO = async (lcd: LCDClient, address: string): Promise<DaoEntity> => {
-    const response = await lcd.wasm.contractQuery<enterprise.DaoInfoResponse>(address, { dao_info: {} });
+    const response = await lcd.wasm.contractQuery<enterprise_facade.DaoInfoResponse>(address, { dao_info: {} });
     const created = 'creation_date' in response ? Math.trunc(Big(response.creation_date).div(1000000).toNumber()) : 0;
 
     return {

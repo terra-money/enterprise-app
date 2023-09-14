@@ -3,41 +3,39 @@ export type Addr = string
 export interface AllDaosResponse {
   daos: Addr[];
 }
-export type AssetInfoBaseFor_Addr =
+export interface ConfigResponse {
+  config: Config;
+}
+export interface Config {
+  cw20_code_id: number;
+  cw721_code_id: number;
+  enterprise_versioning: Addr;
+}
+export type Uint64 = string
+export interface EnterpriseCodeIdsResponse {
+  code_ids: Uint64[];
+}
+export type ExecuteMsg =
+  | {
+      create_dao: CreateDaoMsg;
+    }
+  | {
+      finalize_dao_creation: {};
+    }
+export type AssetInfoBaseFor_String =
   | {
       native: string;
     }
   | {
-      cw20: Addr;
+      cw20: string;
     }
   | {
       /**
        * @minItems 2
        * @maxItems 2
        */
-      cw1155: [Addr, string];
+      cw1155: [string, string];
     }
-export interface AssetWhitelistResponse {
-  assets: AssetInfoBaseFor_Addr[];
-}
-export interface ConfigResponse {
-  config: Config;
-}
-export interface Config {
-  cw20_code_id: number;
-  cw3_fixed_multisig_code_id: number;
-  cw721_code_id: number;
-  enterprise_code_id: number;
-  enterprise_governance_code_id: number;
-  funds_distributor_code_id: number;
-}
-export type Uint64 = string
-export interface EnterpriseCodeIdsResponse {
-  code_ids: Uint64[];
-}
-export type ExecuteMsg = {
-  create_dao: CreateDaoMsg;
-}
 export type ProposalActionType =
   | "update_metadata"
   | "update_gov_config"
@@ -49,8 +47,33 @@ export type ProposalActionType =
   | "execute_msgs"
   | "modify_multisig_membership"
   | "distribute_funds"
+  | "update_minimum_weight_for_rewards"
+  | "add_attestation"
+  | "remove_attestation"
+  | "deploy_cross_chain_treasury"
 export type Decimal = string
-export type Uint128 = string
+export type CreateDaoMembershipMsg =
+  | {
+      new_denom: NewDenomMembershipMsg;
+    }
+  | {
+      import_cw20: ImportCw20MembershipMsg;
+    }
+  | {
+      new_cw20: NewCw20MembershipMsg;
+    }
+  | {
+      import_cw721: ImportCw721MembershipMsg;
+    }
+  | {
+      new_cw721: NewCw721MembershipMsg;
+    }
+  | {
+      import_cw3: ImportCw3MembershipMsg;
+    }
+  | {
+      new_multisig: NewMultisigMembershipMsg;
+    }
 export type Duration =
   | {
       height: number;
@@ -58,24 +81,7 @@ export type Duration =
   | {
       time: number;
     }
-export type CreateDaoMembershipMsg =
-  | {
-      new_membership: NewMembershipInfo;
-    }
-  | {
-      existing_membership: ExistingDaoMembershipMsg;
-    }
-export type NewMembershipInfo =
-  | {
-      new_token: NewTokenMembershipInfo;
-    }
-  | {
-      new_nft: NewNftMembershipInfo;
-    }
-  | {
-      new_multisig: NewMultisigMembershipInfo;
-    }
-export type DaoType = "token" | "nft" | "multisig"
+export type Uint128 = string
 export type Logo =
   | "none"
   | {
@@ -85,18 +91,26 @@ export interface CreateDaoMsg {
   /**
    * assets that are allowed to show in DAO's treasury
    */
-  asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
+  asset_whitelist?: AssetInfoBaseFor_String[] | null;
+  /**
+   * Optional text that users will have to attest to before being able to participate in DAO's governance and certain other functions.
+   */
+  attestation_text?: string | null;
   /**
    * Optional council structure that can manage certain aspects of the DAO
    */
   dao_council?: DaoCouncilSpec | null;
-  dao_gov_config: DaoGovConfig;
   dao_membership: CreateDaoMembershipMsg;
   dao_metadata: DaoMetadata;
+  gov_config: GovConfig;
+  /**
+   * Minimum weight that a user should have in order to qualify for rewards. E.g. a value of 3 here means that a user in token or NFT DAO needs at least 3 staked DAO assets, or a weight of 3 in multisig DAO, to be eligible for rewards.
+   */
+  minimum_weight_for_rewards?: Uint128 | null;
   /**
    * NFTs that are allowed to show in DAO's treasury
    */
-  nft_whitelist?: Addr[] | null;
+  nft_whitelist?: string[] | null;
 }
 export interface DaoCouncilSpec {
   /**
@@ -116,7 +130,92 @@ export interface DaoCouncilSpec {
    */
   threshold: Decimal;
 }
-export interface DaoGovConfig {
+export interface NewDenomMembershipMsg {
+  denom: string;
+  unlocking_period: Duration;
+}
+export interface ImportCw20MembershipMsg {
+  /**
+   * Address of the CW20 token to import
+   */
+  cw20_contract: string;
+  /**
+   * Duration after which unstaked tokens can be claimed
+   */
+  unlocking_period: Duration;
+}
+export interface NewCw20MembershipMsg {
+  /**
+   * Optional amount of tokens to be minted to the DAO's address
+   */
+  initial_dao_balance?: Uint128 | null;
+  initial_token_balances: Cw20Coin[];
+  token_decimals: number;
+  token_marketing?: TokenMarketingInfo | null;
+  token_mint?: MinterResponse | null;
+  token_name: string;
+  token_symbol: string;
+  unlocking_period: Duration;
+}
+export interface Cw20Coin {
+  address: string;
+  amount: Uint128;
+}
+export interface TokenMarketingInfo {
+  description?: string | null;
+  logo_url?: string | null;
+  marketing_owner?: string | null;
+  project?: string | null;
+}
+export interface MinterResponse {
+  /**
+   * cap is a hard cap on total supply that can be achieved by minting. Note that this refers to total_supply. If None, there is unlimited cap.
+   */
+  cap?: Uint128 | null;
+  minter: string;
+}
+export interface ImportCw721MembershipMsg {
+  /**
+   * Address of the CW721 contract to import
+   */
+  cw721_contract: string;
+  /**
+   * Duration after which unstaked items can be claimed
+   */
+  unlocking_period: Duration;
+}
+export interface NewCw721MembershipMsg {
+  minter?: string | null;
+  nft_name: string;
+  nft_symbol: string;
+  unlocking_period: Duration;
+}
+export interface ImportCw3MembershipMsg {
+  /**
+   * Address of the CW3 contract to import
+   */
+  cw3_contract: string;
+}
+export interface NewMultisigMembershipMsg {
+  multisig_members: UserWeight[];
+}
+export interface UserWeight {
+  user: string;
+  weight: Uint128;
+}
+export interface DaoMetadata {
+  description?: string | null;
+  logo: Logo;
+  name: string;
+  socials: DaoSocialData;
+}
+export interface DaoSocialData {
+  discord_username?: string | null;
+  github_username?: string | null;
+  telegram_username?: string | null;
+  twitter_username?: string | null;
+}
+export interface GovConfig {
   /**
    * If set to true, this will allow DAOs to execute proposals that have reached quorum and threshold, even before their voting period ends.
    */
@@ -146,88 +245,18 @@ export interface DaoGovConfig {
    */
   vote_duration: number;
 }
-export interface NewTokenMembershipInfo {
-  /**
-   * Optional amount of tokens to be minted to the DAO's address
-   */
-  initial_dao_balance?: Uint128 | null;
-  initial_token_balances: Cw20Coin[];
-  token_decimals: number;
-  token_marketing?: TokenMarketingInfo | null;
-  token_mint?: MinterResponse | null;
-  token_name: string;
-  token_symbol: string;
-}
-export interface Cw20Coin {
-  address: string;
-  amount: Uint128;
-}
-export interface TokenMarketingInfo {
-  description?: string | null;
-  logo_url?: string | null;
-  marketing_owner?: string | null;
-  project?: string | null;
-}
-export interface MinterResponse {
-  /**
-   * cap is a hard cap on total supply that can be achieved by minting. Note that this refers to total_supply. If None, there is unlimited cap.
-   */
-  cap?: Uint128 | null;
-  minter: string;
-}
-export interface NewNftMembershipInfo {
-  minter?: string | null;
-  nft_name: string;
-  nft_symbol: string;
-}
-export interface NewMultisigMembershipInfo {
-  multisig_members: MultisigMember[];
-}
-export interface MultisigMember {
-  address: string;
-  weight: Uint128;
-}
-export interface ExistingDaoMembershipMsg {
-  dao_type: DaoType;
-  membership_contract_addr: string;
-}
-export interface DaoMetadata {
-  description?: string | null;
-  logo: Logo;
-  name: string;
-  socials: DaoSocialData;
-}
-export interface DaoSocialData {
-  discord_username?: string | null;
-  github_username?: string | null;
-  telegram_username?: string | null;
-  twitter_username?: string | null;
-}
 export interface InstantiateMsg {
   config: Config;
-  global_asset_whitelist?: AssetInfoBaseFor_Addr[] | null;
-  global_nft_whitelist?: Addr[] | null;
 }
 export interface IsEnterpriseCodeIdResponse {
   is_enterprise_code_id: boolean;
 }
 export interface MigrateMsg {
-  new_enterprise_code_id: number;
-  new_enterprise_governance_code_id: number;
-  new_funds_distributor_code_id: number;
-}
-export interface NftWhitelistResponse {
-  nfts: Addr[];
+  enterprise_versioning_addr: string;
 }
 export type QueryMsg =
   | {
       config: {};
-    }
-  | {
-      global_asset_whitelist: {};
-    }
-  | {
-      global_nft_whitelist: {};
     }
   | {
       all_daos: QueryAllDaosMsg;

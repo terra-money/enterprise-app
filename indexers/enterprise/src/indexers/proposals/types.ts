@@ -1,4 +1,4 @@
-import { enterprise } from 'types/contracts';
+import { enterprise_facade } from 'types/contracts';
 
 export type Entity = {
   _type: string;
@@ -9,15 +9,15 @@ export type Entity = {
   started_at: number;
   title: string;
   description: string;
-  expires: enterprise.Expiration;
-  status: enterprise.ProposalStatus;
-  proposalActions: enterprise.ProposalAction[];
+  expires: enterprise_facade.Expiration;
+  status: enterprise_facade.ProposalStatus;
+  proposalActions: enterprise_facade.ProposalAction[];
   yesVotes: string;
   noVotes: string;
   abstainVotes: string;
   vetoVotes: string;
   totalVotes: string;
-  type: enterprise.ProposalType;
+  type: enterprise_facade.ProposalType;
   proposer?: string;
 };
 

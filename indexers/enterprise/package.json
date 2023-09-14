@@ -34,8 +34,8 @@
   },
   "generate-types": {
     "contracts": [
-      "enterprise",
-      "enterprise-factory"
+      "enterprise-factory",
+      "enterprise-facade"
     ],
     "output": "src/types/contracts"
   }
