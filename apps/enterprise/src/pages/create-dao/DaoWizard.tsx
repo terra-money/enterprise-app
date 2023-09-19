@@ -29,7 +29,7 @@ export const DaoWizard = () => {
 
   const { formState, back, forward } = useDaoWizardForm();
 
-  const { steps, predictedSteps, isValid } = formState;
+  const { steps, predictedSteps, isValid = true } = formState;
 
   const [txResult, createDaoTx] = useCreateDAOTx();
 
@@ -99,7 +99,7 @@ export const DaoWizard = () => {
             </Button>
           )}
           {isNextVisible && (
-            <Button onClick={forward} disabled={!isValid}>
+            <Button onClick={forward} disabled={false}>
               Next
             </Button>
           )}

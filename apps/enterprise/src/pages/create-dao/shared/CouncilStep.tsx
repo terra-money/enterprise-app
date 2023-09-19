@@ -34,7 +34,7 @@ export function CouncilStep() {
           <ProposalTypesInput
             value={allowedProposalTypes as CouncilProposalActionType[]}
             onChange={(allowedProposalTypes) => formInput({ council: { ...council, allowedProposalTypes } })}
-            error={council.allowedProposalTypesError}
+            // error={council.allowedProposalTypesError}
           />
           <QuorumInput
             error={council.quorumError}
