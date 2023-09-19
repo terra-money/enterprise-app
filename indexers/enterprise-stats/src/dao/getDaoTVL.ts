@@ -7,8 +7,8 @@ export const getDaoTVL = async (
 ) => {
   const result = await retry({
     func: () => getPulsarTimeseries(dao.address),
-    delay: 1000,
-    attempts: 5,
+    delay: 2000,
+    attempts: 10,
   });
 
   return result.stats.current_networth;
