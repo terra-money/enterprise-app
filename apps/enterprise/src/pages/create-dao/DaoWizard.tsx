@@ -29,7 +29,7 @@ export const DaoWizard = () => {
 
   const { formState, back, forward } = useDaoWizardForm();
 
-  const { steps, predictedSteps, isValid = true } = formState;
+  const { steps, predictedSteps } = formState;
 
   const [txResult, createDaoTx] = useCreateDAOTx();
 
