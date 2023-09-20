@@ -4,10 +4,13 @@ import { updateDao } from 'dao/updateDao';
 
 const collectStats = async () => {
   await processDaos({
-    attributes: ['address', 'enterpriseFactoryContract', 'membershipContractAddress', 'type'],
+    attributes: ['address', 'enterpriseFactoryContract', 'membershipContractAddress', 'type', 'name'],
     handle: async (dao) => {
       try {
         const tvl = await getDaoTVL(dao);
+
+        console.log(`${dao.address}: ${dao.name} TVL = ${tvl}`);
+
         try {
           await updateDao(dao.address, { tvl });
         } catch (err) {

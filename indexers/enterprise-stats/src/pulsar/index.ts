@@ -24,8 +24,10 @@ const queryPulsar = async <T>(params: string): Promise<T> => {
     return queryPulsar(params);
   }
 
+  const queryUlr = `${pulsarBaseUrl}/${params}`;
+
   try {
-    const response = await axios.get<T>(`${pulsarBaseUrl}/${params}`);
+    const response = await axios.get<T>(queryUlr);
     return response.data;
   } catch (err) {
     const retryMightHelp = [429, 500, 503, 504].includes(err.response.status);
