@@ -1,15 +1,10 @@
-import { sum } from "shared/sum"
-import { Dao } from "./Dao"
-import { getDaoAssets } from "./getDaoAssets"
-import { fromChainAmount } from "chain/fromChainAmount"
-import { getDaoNFTs } from "./getDaoNFTs"
+import { Dao } from './Dao';
+import { getTimeseries } from 'pulsar';
 
-export const getDaoTVL = async (dao: Pick<Dao, 'address' | 'membershipContractAddress' | 'enterpriseFactoryContract' | 'type'>) => {
-  const assets = await getDaoAssets(dao)
-  const assetsTvl = sum(assets.map(asset => fromChainAmount(asset.balance, asset.decimals) * asset.usd))
+export const getDaoTVL = async (
+  dao: Pick<Dao, 'address' | 'membershipContractAddress' | 'enterpriseFactoryContract' | 'type'>
+) => {
+  const result = await getTimeseries(dao.address);
 
-  const nfts = await getDaoNFTs(dao)
-  const nftsTvl = sum(nfts.map(nft => nft.usd))
-
-  return assetsTvl + nftsTvl
-}
+  return result.stats.current_networth;
+};
