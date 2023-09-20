@@ -1,15 +1,10 @@
-import { retry } from 'shared/retry';
 import { Dao } from './Dao';
-import { getPulsarTimeseries } from './getPulsarTimeseries';
+import { getTimeseries } from 'pulsar';
 
 export const getDaoTVL = async (
   dao: Pick<Dao, 'address' | 'membershipContractAddress' | 'enterpriseFactoryContract' | 'type'>
 ) => {
-  const result = await retry({
-    func: () => getPulsarTimeseries(dao.address),
-    delay: 2000,
-    attempts: 10,
-  });
+  const result = await getTimeseries(dao.address);
 
   return result.stats.current_networth;
 };

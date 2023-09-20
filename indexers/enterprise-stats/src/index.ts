@@ -8,13 +8,11 @@ const collectStats = async () => {
     handle: async (dao) => {
       try {
         const tvl = await getDaoTVL(dao);
-        console.log(tvl);
-
-        // try {
-        //   await updateDao(dao.address, { tvl })
-        // } catch (err) {
-        //   console.log(`Error updating DAO=${dao.address}`, err?.toString())
-        // }
+        try {
+          await updateDao(dao.address, { tvl });
+        } catch (err) {
+          console.log(`Error updating DAO=${dao.address}`, err?.toString());
+        }
       } catch (err) {
         console.log(`Error getting TVL for DAO=${dao.address}`, err.toString());
       }

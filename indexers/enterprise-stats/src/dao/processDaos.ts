@@ -33,13 +33,11 @@ export async function processDaos<T extends (keyof Dao)[]>({ handle, attributes 
 
     const daos = Items as Pick<Dao, T[number]>[];
 
-    // await Promise.all(
-    //   daos.map(handle)
-    // )
+    await Promise.all(daos.map(handle));
 
-    for (const dao of daos) {
-      await handle(dao);
-    }
+    // for (const dao of daos) {
+    //   await handle(dao);
+    // }
 
     if (LastEvaluatedKey) {
       await recursiveScan(LastEvaluatedKey);
