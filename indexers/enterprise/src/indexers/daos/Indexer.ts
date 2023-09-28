@@ -7,13 +7,13 @@ import { KeySelector } from '@apps-shared/indexers/services/persistence';
 import { fetchByHeight } from '@apps-shared/indexers/services/event-store';
 import { EnterpriseEventPK, ExecuteProposalEvent, InstantiateDaoEvent } from 'types/events';
 import Big from 'big.js';
-import { enterprise_facade } from 'types/contracts';
+import { DaoInfoResponse, QueryMsg } from 'types/enterprise_facade';
 
 export const PK: KeySelector<DaoEntity> = (data) => data.address;
 
 export const SK = 'dao';
 
-const enterpriseFacadeAddress = daoContractAddressRecord[process.env.NETWORK as NetworkName]['enterprise-facade'];
+const enterpriseFacadeAddress = daoContractAddressRecord['enterprise-facade'][process.env.NETWORK as NetworkName];
 
 export class Indexer extends EventIndexer<DaoEntity> {
   constructor() {
@@ -47,7 +47,13 @@ export class Indexer extends EventIndexer<DaoEntity> {
   };
 
   private fetchDAO = async (lcd: LCDClient, address: string): Promise<DaoEntity> => {
-    const response = await lcd.wasm.contractQuery<enterprise_facade.DaoInfoResponse>(address, { dao_info: {} });
+    const msg: QueryMsg = {
+      dao_info: {
+        contract: address,
+      },
+    };
+
+    const response = await lcd.wasm.contractQuery<DaoInfoResponse>(enterpriseFacadeAddress, msg);
     const created = 'creation_date' in response ? Math.trunc(Big(response.creation_date).div(1000000).toNumber()) : 0;
 
     return {

@@ -1,7 +1,7 @@
 import { createLCDClient, daoContractAddressRecord, Logger, NetworkName } from '@apps-shared/indexers/utils';
 import Big from 'big.js';
 import { Entity } from './types';
-import { enterprise_facade } from 'types/contracts';
+import { QueryMsg, ProposalResponse } from 'types/enterprise_facade';
 
 interface GetProposalParams {
   daoAddress: string;
@@ -9,14 +9,14 @@ interface GetProposalParams {
   logger: Logger;
 }
 
-const enterpriseFacadeAddress = daoContractAddressRecord[process.env.NETWORK as NetworkName]['enterprise-facade'];
+const enterpriseFacadeAddress = daoContractAddressRecord['enterprise-facade'][process.env.NETWORK as NetworkName];
 
 export const getProposalFromContract = async ({ daoAddress, id, logger }: GetProposalParams): Promise<Entity> => {
   const lcd = createLCDClient();
 
   logger.info(`Fetching proposal with id ${id} for ${daoAddress} DAO.`);
 
-  const msg: enterprise_facade.QueryMsg = {
+  const msg: QueryMsg = {
     proposal: {
       contract: daoAddress,
       params: {
@@ -25,7 +25,7 @@ export const getProposalFromContract = async ({ daoAddress, id, logger }: GetPro
     },
   };
 
-  const response = await lcd.wasm.contractQuery<enterprise_facade.ProposalResponse>(enterpriseFacadeAddress, msg);
+  const response = await lcd.wasm.contractQuery<ProposalResponse>(enterpriseFacadeAddress, msg);
 
   logger.info(`Received proposal response: ${response}.`);
 

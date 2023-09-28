@@ -25,7 +25,7 @@ const state = createState('collector:enterprise-events');
 
 const genesis = Environment.getGenesis();
 
-const enterpriseFactoryAddress = daoContractAddressRecord[process.env.NETWORK as NetworkName]['enterprise-factory'];
+const enterpriseFactoryAddress = daoContractAddressRecord['enterprise-factory'][process.env.NETWORK as NetworkName];
 
 class EnterpriseEventCollector implements Runnable {
   private enterpriseAddresses: string[] = [];
