@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { Text } from 'lib/ui/Text';
 import { useDisplay } from 'hooks';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import styles from './FeaturesExplorer.module.sass';
+import { ExternalLink } from 'components/link/ExternalLink';
+import { ShyTextButton } from 'lib/ui/buttons/ShyTextButton';
 
 interface Feature {
   title: string;
-  description: string;
+  description: ReactNode;
   imageUrl: string;
 }
 
@@ -17,18 +19,26 @@ const features: Feature[] = [
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Add DAOs to your watchlist',
-    description: 'Follow your favourite DAOs and see what they are up to.',
+    title: 'Manage treasury',
+    description: 'Create proposals and initiate transactions, right in the app.',
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Monitor DAO treasuries',
-    description: "Keep an eye on a DAO's assets and propose how they should be spent.",
+    title: 'Distribute rewards',
+    description: 'Encourage engagement by distributing rewards to DAO stakers.',
     imageUrl: 'images/landing-dashboard.png',
   },
   {
-    title: 'Cross-chain functionality (coming soon!)',
-    description: 'Create Enterprise DAOs on your favorite chains.',
+    title: 'Cross-chain capabilities (coming soon!)',
+    description: (
+      <>
+        Manage assets on integrated chains.{' '}
+        <ExternalLink to="https://terra.sc/enterprisetg">
+          <ShyTextButton as="span" text="Contact us" />
+        </ExternalLink>{' '}
+        to integrate your chain.
+      </>
+    ),
     imageUrl: 'images/landing-dashboard.png',
   },
 ];

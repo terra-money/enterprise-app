@@ -10,8 +10,8 @@ export const FeaturesSlice = () => {
   return (
     <LandingPageSlice className={classNames(styles.root, { [styles.mobile]: isMobile })}>
       <SliceHeader
-        title="Why try Enterprise?"
-        description="Enterprise was created with one goal in mind: to make DAOs easier to manage. Whether you are  creating a new DAO or importing an existing one, Enterprise has all the tools you need in one place."
+        title="DAOs made easy"
+        description="Whether you’re creating a new DAO or importing an existing one, Enterprise has everything you need in one place."
       />
       <FeaturesExplorer />
     </LandingPageSlice>

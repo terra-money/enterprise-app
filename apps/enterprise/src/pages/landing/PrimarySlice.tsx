@@ -4,6 +4,8 @@ import { useDisplay } from 'hooks';
 import { useNavigate } from 'react-router';
 import styles from './PrimarySlice.module.sass';
 import { Button } from 'lib/ui/buttons/Button';
+import { HStack } from 'lib/ui/Stack';
+import { ExternalLink } from 'components/link';
 
 export const PrimarySlice = () => {
   const navigate = useNavigate();
@@ -16,16 +18,20 @@ export const PrimarySlice = () => {
         Your no-code solution to DAO management
       </Text>
       <Text style={{ maxWidth: 840 }} centered weight="semibold" as="span">
-        You don't need to be a full-stack engineer to start a DAO. With Enterprise, you can create a multisig wallet,
-        token DAO, or NFT DAO in under a minute.
+        Create a token, NFT, or multisig DAO in under one minute.
       </Text>
-      <Button
-        onClick={() => {
-          navigate('dashboard');
-        }}
-      >
-        Launch App
-      </Button>
+      <HStack alignItems="center" gap={20}>
+        <Button
+          onClick={() => {
+            navigate('dashboard');
+          }}
+        >
+          Launch App
+        </Button>
+        <ExternalLink to="https://twitter.com/enterprise_dao">
+          <Button as="div">Follow Enterprise</Button>
+        </ExternalLink>
+      </HStack>
     </div>
   );
 };

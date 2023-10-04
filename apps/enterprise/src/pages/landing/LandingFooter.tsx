@@ -1,6 +1,5 @@
 import { ExternalLink } from 'components/link';
-import { InternalLink } from 'components/link/InternalLink';
-import { discordUrl, mediumUrl, Path, telegramUrl, twitterUrl } from 'navigation';
+import { discordUrl, mediumUrl, telegramUrl, twitterUrl } from 'navigation';
 import { SliceHeader } from './SliceHeader';
 import { ReactComponent as TwitterIcon } from 'components/assets/TwitterSolidLogo.svg';
 import { ReactComponent as DiscordIcon } from 'components/assets/DiscordSolidLogo.svg';
@@ -20,18 +19,18 @@ export const LandingFooter = () => {
     <div className={classNames(styles.root, { [styles.mobile]: isMobile })}>
       <div className={styles.header}>
         <SliceHeader
-          title="More in the works"
-          description="The team is hard at work making updates and creating new features. Follow Enterprise on social media to find out more."
+          title="More coming soon"
+          description="New features are being added all the time. Follow Enterprise to stay up to date."
         />
         <div className={styles.actions}>
-          <InternalLink to={Path.Dashboard}>
+          <ExternalLink to={twitterUrl}>
             <Button kind="secondary" as="div">
-              Start now
+              Twitter / X
             </Button>
-          </InternalLink>
-          <ExternalLink to={telegramUrl}>
+          </ExternalLink>
+          <ExternalLink to={mediumUrl}>
             <Button kind="secondary" as="div">
-              Contact us
+              Medium
             </Button>
           </ExternalLink>
         </div>
