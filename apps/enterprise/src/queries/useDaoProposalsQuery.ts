@@ -26,7 +26,7 @@ export const useDaoProposalsQuery = ({
     [QUERY_KEY.PROPOSALS, address],
     async () => {
       const { proposals } = await query<ProposalsQueryArguments, enterprise.ProposalsResponse>(address, {
-        proposals: { limit: 100 },
+        proposals: { limit: 500 },
       });
 
       return proposals.map((resp) => toProposal(resp, toDao(assertDefined(dao)))).sort((a, b) => b.created - a.created);
