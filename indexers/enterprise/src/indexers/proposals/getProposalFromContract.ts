@@ -1,24 +1,31 @@
-import { createLCDClient, Logger } from "@apps-shared/indexers/utils";
-import { enterprise } from "types/contracts";
+import { createLCDClient, daoContractAddressRecord, Logger, NetworkName } from '@apps-shared/indexers/utils';
 import Big from 'big.js';
-import { Entity } from "./types";
+import { Entity } from './types';
+import { QueryMsg, ProposalResponse } from 'types/enterprise_facade';
 
 interface GetProposalParams {
-  daoAddress: string
-  id: number
-  logger: Logger
+  daoAddress: string;
+  id: number;
+  logger: Logger;
 }
+
+const enterpriseFacadeAddress = daoContractAddressRecord['enterprise-facade'][process.env.NETWORK as NetworkName];
 
 export const getProposalFromContract = async ({ daoAddress, id, logger }: GetProposalParams): Promise<Entity> => {
   const lcd = createLCDClient();
 
   logger.info(`Fetching proposal with id ${id} for ${daoAddress} DAO.`);
 
-  const response = await lcd.wasm.contractQuery<enterprise.ProposalResponse>(daoAddress, {
+  const msg: QueryMsg = {
     proposal: {
-      proposal_id: id,
+      contract: daoAddress,
+      params: {
+        proposal_id: id,
+      },
     },
-  });
+  };
+
+  const response = await lcd.wasm.contractQuery<ProposalResponse>(enterpriseFacadeAddress, msg);
 
   logger.info(`Received proposal response: ${response}.`);
 
@@ -50,6 +57,6 @@ export const getProposalFromContract = async ({ daoAddress, id, logger }: GetPro
     vetoVotes,
     totalVotes: response.total_votes_available,
     type: response.proposal.proposal_type,
-    proposer: response.proposal.proposer
+    proposer: response.proposal.proposer,
   };
-}
+};

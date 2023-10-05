@@ -1,9 +1,5 @@
-import dotenv from "dotenv";
-import {
-  ContractAddresses,
-  getContractAddress,
-} from "@apps-shared/indexers/utils";
-import { Epoch } from "@apps-shared/indexers/types";
+import dotenv from 'dotenv';
+import { Epoch } from '@apps-shared/indexers/types';
 
 dotenv.config();
 
@@ -18,8 +14,4 @@ export class Environment {
       timestamp: +process.env.GENESIS_TIMESTAMP,
     };
   };
-
-  static getContractAddress(contract: keyof ContractAddresses) {
-    return getContractAddress(process.env.NETWORK, contract);
-  }
 }

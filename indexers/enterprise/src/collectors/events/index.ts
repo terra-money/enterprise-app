@@ -3,10 +3,12 @@ import { EventCollector } from '@apps-shared/indexers/collectors';
 import { EventStoreTableInitializer, StateTableInitializer } from '@apps-shared/indexers/initializers';
 import { Runner } from '@apps-shared/indexers/indexers';
 import {
+  NetworkName,
   createDynamoDBClient,
   createEventStore,
   createLCDClient,
   createState,
+  daoContractAddressRecord,
   fetchAll,
 } from '@apps-shared/indexers/utils';
 import { BlockListener } from '@apps-shared/indexers/services/block-listener';
@@ -23,7 +25,7 @@ const state = createState('collector:enterprise-events');
 
 const genesis = Environment.getGenesis();
 
-const enterpriseFactoryAddress = Environment.getContractAddress('enterprise-factory');
+const enterpriseFactoryAddress = daoContractAddressRecord['enterprise-factory'][process.env.NETWORK as NetworkName];
 
 class EnterpriseEventCollector implements Runnable {
   private enterpriseAddresses: string[] = [];
