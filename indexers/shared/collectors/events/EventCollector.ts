@@ -45,29 +45,39 @@ export class EventCollector implements Runnable {
   };
 
   private map = (block: Block): Event[] => {
-    const events = block.txs.flatMap((tx) => {
-      return tx.logs.filter(this.findWasmEvent).flatMap((log) => {
-        const wasmEvent = this.findWasmEvent(log);
-        return groupAttributes(wasmEvent.attributes).map((group, index) => {
-          const payload = serialize(group);
-          const event = {
-            contract: this.monikers(payload['_contract_address'], payload),
-            action: payload.action,
-            height: block.height,
-            txHash: tx.txHash,
-            msgIndex: log.msgIndex,
-            eventIndex: index,
-            timestamp: tx.timestamp,
-            payload: payload,
-          };
-          if (this.onEvent) {
-            this.onEvent(event);
-          }
-          return event;
+    const events: Event[] = [];
+    block.txs.forEach((tx) => {
+      tx.logs.forEach((log) => {
+        log.events.forEach((event) => {
+          if (event.type !== 'wasm') return;
+
+          groupAttributes(event.attributes).forEach((group, index) => {
+            const payload = serialize(group);
+            const contract = this.monikers(payload['_contract_address'], payload);
+            if (!contract) return;
+
+            const event = {
+              contract: this.monikers(payload['_contract_address'], payload),
+              action: payload.action,
+              height: block.height,
+              txHash: tx.txHash,
+              msgIndex: log.msgIndex,
+              eventIndex: index,
+              timestamp: tx.timestamp,
+              payload: payload,
+            };
+
+            events.push(event);
+          });
         });
       });
     });
-    return events.filter((event) => event.contract !== undefined);
+
+    if (this.onEvent) {
+      events.forEach((event) => this.onEvent(event));
+    }
+
+    return events;
   };
 
   run = async (): Promise<void> => {
