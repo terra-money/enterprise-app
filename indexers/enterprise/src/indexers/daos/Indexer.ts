@@ -104,7 +104,7 @@ export class Indexer extends EventIndexer<DaoEntity> {
     let { height } = await this.state.get({ height: genesis.height });
 
     await batch(height, current.height, 1000, async ({ min, max }) => {
-      this.logger.info(`Processing blocks between ${min} and ${max}.`);
+      this.logger.info(`Dao Indexer Processing blocks between ${min} and ${max}.`);
       await this.synchronize(await this.getModifiedDAOAddresses(min, max));
 
       await this.state.set({ height: max });

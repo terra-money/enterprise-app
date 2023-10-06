@@ -64,6 +64,7 @@ class EnterpriseEventCollector implements Runnable {
           : undefined;
       },
       onEvent: (event) => {
+        console.log('Detected event: ', event);
         if (event.contract === 'enterprise-factory' && event.action === 'instantiate_dao') {
           if (event.payload['dao_address']) {
             this.enterpriseAddresses.push(event.payload['dao_address']);
