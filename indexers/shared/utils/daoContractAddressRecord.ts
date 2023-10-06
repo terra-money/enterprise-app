@@ -9,7 +9,7 @@ export const daoContractAddressRecord: Record<DaoContract, Record<NetworkName, s
   },
   'enterprise-facade': {
     mainnet: '',
-    testnet: 'terra1v5tw0fq7hdnjh2pg7xxxnm98n2mk56h0qnc3zk68s9s7t74yja0s3wgurm',
+    testnet: 'terra1f703p463k4xfltsk3q0k6z02tkrerxyqpy3jryuqkt0z7qv3z59qyxklfs',
   },
   'enterprise-versioning': {
     mainnet: '',
