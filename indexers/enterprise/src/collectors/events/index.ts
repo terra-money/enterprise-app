@@ -64,12 +64,13 @@ class EnterpriseEventCollector implements Runnable {
           : undefined;
       },
       onEvent: (event) => {
+        console.log('Detected event: ', JSON.stringify(event));
         if (event.contract === 'enterprise-factory') {
-          const isDaoCreatinEvent = ['instantiate_dao', 'create_dao'].includes(event.action);
+          const isDaoCreatinEvent = event.action === 'instantiate_dao';
           if (!isDaoCreatinEvent) return;
 
           console.log('Detected dao creation event: ', event);
-          const daoAddress = event.payload['dao_address'] || event.payload['_contract_address'];
+          const daoAddress = event.payload['dao_address'];
           if (daoAddress) {
             console.log('Added dao address: ', daoAddress);
             this.enterpriseAddresses.push(daoAddress);
