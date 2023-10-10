@@ -52,11 +52,11 @@ export const ProposalVoting = () => {
           <QueryDependant
             {...tokenInfoQuery}
             loading={() => <Spinner />}
-            error={() => 'Failed to load token info'}
+            error={() => dao.type == 'multisig' ? `${yesVotes.div(100)}/${totalAvailableVotes.div(100)} (
+              ${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})` : 'Failed to load token info'}
             success={(tokenInfo) => {
-              return `${formatNumber(fromChainAmount(total.toString(), tokenInfo.decimals), { comma: true })} (
-              ${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})
-              )}`;
+              return `${formatNumber(fromChainAmount(total.toString(), tokenInfo.decimals), { comma: true })} 
+              (${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)}))}`;
             }}
           />
         </Text>
