@@ -18,7 +18,7 @@ const addTxAction = (
       },
     });
 
-    await trackTx(txHash, lcd, dispatch, getState, args, chainID);
+    // await trackTx(txHash, lcd, dispatch, getState, args, chainID);
   };
 };
 
