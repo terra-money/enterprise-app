@@ -7,7 +7,7 @@ const addTxAction = (
   lcd: LCDClient,
   chainID: string
 ): TxAsyncThunkAction => {
-  return async (dispatch, getState, args) => {
+  return async (dispatch) => {
     dispatch({
       type: ActionType.Add,
       payload: {
