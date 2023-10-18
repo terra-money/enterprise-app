@@ -1,6 +1,6 @@
 import { getAssetInfo } from "chain/getAssetInfo"
 import { Dao } from "./Dao"
-import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount"
+import { getDaoTotalStakedAmount } from "../../../enterprise/src/treasury/getDaoTotalStakedAmount"
 import { getAssetPrice } from "chain/getAssetPrice"
 import { Asset, AssetWithPrice } from "chain/Asset"
 

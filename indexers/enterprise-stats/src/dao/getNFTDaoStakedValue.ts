@@ -1,5 +1,5 @@
 import { Dao } from "./Dao"
-import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount"
+import { getDaoTotalStakedAmount } from "../../../enterprise/src/treasury/getDaoTotalStakedAmount"
 import { getNFTCollectionFloorPrice } from "chain/getNftCollectionFloorPrice"
 
 export const getNFTDaoStakedValue = async (dao: Pick<Dao, 'address' | 'membershipContractAddress'>) => {

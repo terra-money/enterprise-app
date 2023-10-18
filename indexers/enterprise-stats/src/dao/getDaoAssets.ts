@@ -5,7 +5,7 @@ import { contractQuery } from "chain/lcd"
 import { enterprise, enterprise_factory } from "types/contracts";
 import { Dao } from "./Dao";
 import { getAssetPrice } from "chain/getAssetPrice";
-import { getDaoTotalStakedAmount } from "./getDaoTotalStakedAmount";
+import { getDaoTotalStakedAmount } from "../../../enterprise/src/treasury/getDaoTotalStakedAmount";
 import Big from "big.js";
 
 const toAsset = (response: enterprise.AssetInfoBaseFor_Addr | enterprise_factory.AssetInfoBaseFor_Addr): Asset | undefined => {

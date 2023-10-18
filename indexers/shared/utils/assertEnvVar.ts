@@ -1,4 +1,4 @@
-type VariableName = "LCD_ENDPOINT" | "CHAIN_ID"
+type VariableName = "LCD_ENDPOINT" | "CHAIN_ID" | "NETWORK"
 
 export const assertEnvVar = (name: VariableName): string => {
   const value = process.env[name]
