@@ -10,6 +10,7 @@ import { AppRoutes } from 'navigation/AppRoutes';
 import { GlobalErrorBoundary } from 'errors/components/GlobalErrorBoundary';
 import { TransactionsProvider } from 'chain/transactions';
 import { ThemeProvider } from 'lib/ui/theme/ThemeProvider';
+import { TermsOfUseOverlay } from 'pages/shared/TermsOfUseOverlay';
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const AppProviders = () => {
                   >
                     <PersonalizationProvider>
                       <AppRoutes />
+                      <TermsOfUseOverlay />
                     </PersonalizationProvider>
                   </SnackbarProvider>
                 </TransactionErrorProvider>
