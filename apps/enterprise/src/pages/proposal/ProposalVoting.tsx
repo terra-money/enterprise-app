@@ -56,7 +56,7 @@ export const ProposalVoting = () => {
               ${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})` : 'Failed to load token info'}
             success={(tokenInfo) => {
               return `${formatNumber(fromChainAmount(total.toString(), tokenInfo.decimals), { comma: true })} 
-              (${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)}))}`;
+              (${toPercents(getRatio(total, totalAvailableVotes).toNumber(), undefined, 2)})`;
             }}
           />
         </Text>
