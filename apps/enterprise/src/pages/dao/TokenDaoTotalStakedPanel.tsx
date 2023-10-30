@@ -10,6 +10,7 @@ import { QueryDependant } from 'lib/query/components/QueryDependant';
 import { Spinner } from 'lib/ui/Spinner';
 import { toPercents } from 'lib/shared/utils/toPercents';
 import { NumericStatistic } from 'lib/ui/NumericStatistic';
+import { formatAmount } from 'lib/shared/utils/formatAmount';
 
 export const TokenDaoTotalStakedPanel = () => {
   const { address, dao_membership_contract } = useCurrentDao();
@@ -28,7 +29,7 @@ export const TokenDaoTotalStakedPanel = () => {
           error={() => <Text>Failed to load</Text>}
           success={(totalStaked) => (
             <NumericStatistic
-              value={fromChainAmount(totalStaked.toString(), token?.decimals ?? 6)}
+              value={formatAmount(fromChainAmount(totalStaked.toString(), token?.decimals ?? 6))}
               suffix={
                 <QueryDependant
                   data={token}
