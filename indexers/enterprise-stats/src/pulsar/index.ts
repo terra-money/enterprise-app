@@ -11,7 +11,7 @@ interface PulsarTimeseriesResponse {
 
 // Pulsar public API is at https://api.pulsar.finance/v1
 // TFL Proxy for Pulsar is at https://pulsar-proxy.tfl.workers.dev
-const pulsarBaseUrl = 'https://pulsar-proxy.tfl.workers.dev';
+const pulsarBaseUrl = 'https://pulsar-finance-proxy.terra.dev/v1';
 
 const msInSec = 1000;
 
