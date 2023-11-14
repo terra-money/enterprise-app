@@ -18,7 +18,7 @@ interface TFMAssetInfo {
 
 interface TFLIbcAssetInfo {
   denom: string;
-  sybmol?: string;
+  symbol?: string;
   name: string;
   icon: string;
   decimals?: number;
@@ -27,7 +27,7 @@ interface TFLIbcAssetInfo {
 type TFLIbcAssetsInfo = Record<NetworkName, Record<string, TFLIbcAssetInfo>>;
 
 interface TFLCw20AssetInfo {
-  sybmol?: string;
+  symbol?: string;
   name: string;
   icon: string;
   decimals?: number;
@@ -56,10 +56,9 @@ export const getAssetsInfo = memoize(async (network: NetworkName = 'mainnet') =>
   const { data: tflIbcAssets } = await axios.get<TFLIbcAssetsInfo>(TFL_IBC_ASSETS_INFO_URL);
   Object.values(tflIbcAssets[network]).forEach((info) => {
     if (!info.decimals) return;
-
     result[info.denom] = {
       name: info.name,
-      symbol: info.sybmol,
+      symbol: info.symbol,
       decimals: info.decimals,
       icon: info.icon,
       type: 'native',
@@ -70,10 +69,9 @@ export const getAssetsInfo = memoize(async (network: NetworkName = 'mainnet') =>
   const { data: tflCw20Assets } = await axios.get<TFLCw20AssetsInfo>(TFL_CW20_ASSETS_INFO_URL);
   Object.entries(tflCw20Assets[network]).forEach(([id, info]) => {
     if (!info.decimals) return;
-
     result[id] = {
       name: info.name,
-      symbol: info.sybmol,
+      symbol: info.symbol,
       decimals: info.decimals,
       icon: info.icon || cw20DefaultIcon,
       type: 'cw20',

@@ -44,7 +44,6 @@ export const useDaoAssets = () => {
 
           try {
             const info = await getAssetInfo({ asset, lcd, networkName });
-
             assets.push({
               ...asset,
               ...info,
