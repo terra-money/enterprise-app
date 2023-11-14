@@ -54,7 +54,14 @@ export const AssetItem = ({ asset }: AssetItemProps) => {
             </Text>
           </VStack>
         </HStack>
-        <VStack gap={4}>
+        {!!asset.usd ? (
+          <Text weight="semibold">${formatAmount(asset.usd)}</Text>
+        ) : (
+          <Text color="supporting" weight="semibold">
+            -
+          </Text>
+        )}
+        <VStack alignItems="end" gap={4}>
           {!!asset.usd ? (
             <Text weight="semibold">${formatAmount(getAssetBalanceInUsd(asset))}</Text>
           ) : (
@@ -66,14 +73,6 @@ export const AssetItem = ({ asset }: AssetItemProps) => {
             {formatAmount(fromChainAmount(asset.balance, asset.decimals))} {asset.symbol}
           </Text>
         </VStack>
-
-        {!!asset.usd ? (
-          <Text weight="semibold">${formatAmount(asset.usd)}</Text>
-        ) : (
-          <Text color="supporting" weight="semibold">
-            -
-          </Text>
-        )}
       </AssetItemFrame>
     </Container>
   );

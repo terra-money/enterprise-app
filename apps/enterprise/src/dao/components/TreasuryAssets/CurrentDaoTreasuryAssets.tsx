@@ -34,8 +34,8 @@ export const CurrentDaoTreasuryAssets = () => {
         <VStack gap={20}>
           <Header>
             <Text>Asset</Text>
-            <Text>Amount</Text>
             <Text>Price</Text>
+            <Text>Amount</Text>
           </Header>
           <VStack gap={16}>
             {assets.map((asset, index) => (
