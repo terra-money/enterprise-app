@@ -25,7 +25,7 @@ const features: Feature[] = [
   },
   {
     title: 'Distribute rewards',
-    description: 'Encourage engagement by distributing rewards to DAO stakers.',
+    description: 'Encourage engagement by distributing rewards to DAO members.',
     imageUrl: 'images/landing-dashboard.png',
   },
   {
