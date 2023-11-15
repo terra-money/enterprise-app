@@ -66,11 +66,4 @@ export interface WasmMigrateMsg {
   }
 }
 
-export interface StargateMsg {
-  stargate: {
-    type_url: string,
-    value: string
-  }
-}
-
 export type CosmWasmMsg = BankSendMsg | DelegateMsg | UndelegateMsg | RedelegateMsg | WasmExecuteMsg | WasmInstantiateMsg | WasmMigrateMsg

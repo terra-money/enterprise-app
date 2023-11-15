@@ -33,7 +33,6 @@ import { Center } from 'lib/ui/Center';
 import { Spinner } from 'lib/ui/Spinner';
 import { Text } from 'lib/ui/Text';
 import { CreateProposalProvider } from './CreateProposalProvider';
-import { RegisterFeeShareProposalPage } from './register-fee-share/RegisterFeeShareProposalPage';
 
 type CreateProposalPageParams = {
   type: ProposalType;
@@ -104,7 +103,6 @@ export const CreateProposalPageContent = () => {
                     undelegate={() => <UndelegateProposalForm />}
                     redelegate={() => <RedelegateProposalForm />}
                     minWeightForRewards={() => <MinimumWeightForRewardsProposalPage />}
-                    registerFeeShare={() => <RegisterFeeShareProposalPage />}
                   />
                 </CurrentDaoProvider>
               </Container>

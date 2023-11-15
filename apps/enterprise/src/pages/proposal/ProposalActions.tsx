@@ -51,7 +51,6 @@ export const ProposalActions = () => {
                     <UpdateMultisigMembersAction />
                   </CurrentDAOMultisigMembersProvider>
                 )}
-                register_fee_share={() => null}
               />
             </CurrentProposalActionProvider>
           );
