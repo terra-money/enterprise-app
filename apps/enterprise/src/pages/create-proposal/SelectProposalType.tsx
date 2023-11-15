@@ -57,7 +57,6 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   mintNft:
     'Mint a new DAO NFT to the specified addresses. This proposal will only work if the minter on the NFT contract is the DAO treasury address.',
   minWeightForRewards: 'Update the minimum weight required to receive rewards.',
-  registerFeeShare: 'Register a contract address that was created by the DAO for fee sharing.'
 };
 
 // TODO: turn into a reusable component
