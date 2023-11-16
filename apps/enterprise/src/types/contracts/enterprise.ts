@@ -157,7 +157,8 @@ export module enterprise {
     | 'execute_msgs'
     | 'modify_multisig_membership'
     | 'distribute_funds'
-    | 'update_minimum_weight_for_rewards';
+    | 'update_minimum_weight_for_rewards'
+    | 'register_fee_share';
   export type Binary = string;
   export interface CreateProposalMsg {
     /**
