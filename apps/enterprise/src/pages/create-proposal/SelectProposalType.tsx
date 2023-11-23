@@ -52,7 +52,7 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   metadata: 'Update the metadata of your DAO.',
   undelegate: 'Undelegate LUNA from a validator that you have delegated to.',
   redelegate: 'Redelegate LUNA from your current validator to a new validator.',
-  council: 'AAAA1',
+  council: 'Update council settings for your DAO',
   mintNft:
     'Mint a new DAO NFT to the specified addresses. This proposal will only work if the minter on the NFT contract is the DAO treasury address.',
   minWeightForRewards: 'Update the minimum weight required to receive rewards.',
