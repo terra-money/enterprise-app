@@ -8,7 +8,6 @@ import { ResponsiveView } from 'lib/ui/ResponsiveView';
 import { VStack } from 'lib/ui/Stack';
 import { MobileCreateProposalHeader } from './MobileCreateProposalHeader';
 import { PrimarySelect } from 'lib/ui/inputs/PrimarySelect';
-import { without } from 'lodash';
 import { DAO } from 'types';
 import { Text } from 'lib/ui/Text';
 import { useMyVotingPower } from 'dao/components/MyVotingPowerProvider';
@@ -53,7 +52,7 @@ export const proposalDescription: Record<ProposalType, ReactNode> = {
   metadata: 'Update the metadata of your DAO.',
   undelegate: 'Undelegate LUNA from a validator that you have delegated to.',
   redelegate: 'Redelegate LUNA from your current validator to a new validator.',
-  council: '',
+  council: 'AAAA1',
   mintNft:
     'Mint a new DAO NFT to the specified addresses. This proposal will only work if the minter on the NFT contract is the DAO treasury address.',
   minWeightForRewards: 'Update the minimum weight required to receive rewards.',
@@ -114,7 +113,7 @@ const getProposalOptions = ({ type, council }: DAO, proposalVotingType: Proposal
     }
   }
 
-  return without(options, 'council');
+  return options;
 };
 
 export const SelectProposalType = () => {

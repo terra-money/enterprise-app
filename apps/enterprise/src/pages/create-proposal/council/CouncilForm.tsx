@@ -13,9 +13,9 @@ import { toUpdateCouncilMsg } from './toUpdateCouncilMsg';
 import { QuorumInput } from 'pages/create-dao/gov-config/QuorumInput';
 import { ThresholdInput } from 'pages/create-dao/gov-config/ThresholdInput';
 import { terraAddressRegex } from 'chain/utils/validators';
-import { assertDefined } from 'lib/shared/utils/assertDefined';
 import { AddButton } from 'lib/ui/buttons/AddButton';
 import { DeleteButton } from 'lib/ui/buttons/DeleteButton';
+import { Text } from 'lib/ui/Text';
 
 interface CouncilFormSchema {
   members: CouncilMember[];
@@ -45,7 +45,7 @@ const councilFormSchema: z.ZodType<CouncilFormSchema> = z.object({
 
 export const CouncilForm = () => {
   const dao = useCurrentDao();
-  const council = assertDefined(dao.dao_council);
+  const council = dao.dao_council;
 
   const {
     register,
@@ -56,10 +56,10 @@ export const CouncilForm = () => {
     mode: 'all',
     resolver: zodResolver(councilFormSchema),
     defaultValues: {
-      members: council.members.map((address) => ({ address })),
-      allowedProposalTypes: council.allowed_proposal_action_types || [],
-      threshold: Number(council.threshold),
-      quorum: Number(council.quorum),
+      members: council?.members.map((address) => ({ address })) || [],
+      allowedProposalTypes: council?.allowed_proposal_action_types || [],
+      threshold: Number(council?.threshold) || 0.51,
+      quorum: Number(council?.quorum) || 0.3,
     },
   });
 
@@ -115,6 +115,7 @@ export const CouncilForm = () => {
         </VStack>
         <Line />
         <VStack gap={8}>
+          <Text>Modify Council Members</Text>
           {fields.map((member, index) => (
             <HStack gap={16} alignItems="center">
               <TextInput
@@ -126,7 +127,7 @@ export const CouncilForm = () => {
               <DeleteButton size="l" onClick={() => remove(index)} />
             </HStack>
           ))}
-          {isValid && <AddButton size="l" onClick={() => append({ address: '' })} />}
+          {<AddButton size="l" onClick={() => append({ address: '' })} />}
         </VStack>
       </VStack>
     </ProposalForm>
