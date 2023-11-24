@@ -1,16 +1,18 @@
 import { EventIndexer, IndexFnOptions } from 'indexers/EventIndexer';
 import { Entity, ProposalKey } from './types';
 import { TableNames, DAOS_PK_NAME, DAOS_SK_NAME } from 'initializers';
-import { batch, createLCDClient } from '@apps-shared/indexers/utils';
+import { NetworkName, batch, createLCDClient, daoContractAddressRecord } from '@apps-shared/indexers/utils';
 import { KeySelector } from '@apps-shared/indexers/services/persistence';
 import { fetchByHeight } from '@apps-shared/indexers/services/event-store';
 import { DaoEvents, EnterpriseEventPK } from 'types/events';
-import { enterprise } from 'types/contracts';
 import { getProposalFromContract } from './getProposalFromContract';
+import { QueryMsg, ProposalsResponse } from 'types/enterprise_facade';
 
 export const PK: KeySelector<Entity> = (data) => data.daoAddress;
 
 export const SK: KeySelector<Entity> = (data) => `proposal:${data.id}`;
+
+const enterpriseFacadeAddress = daoContractAddressRecord['enterprise-facade'][process.env.NETWORK as NetworkName];
 
 export class Indexer extends EventIndexer<Entity> {
   constructor() {
@@ -71,11 +73,15 @@ export class Indexer extends EventIndexer<Entity> {
       daoAddresses.map(async (daoAddress) => {
         try {
           this.logger.info(`Getting proposals for ${daoAddress} DAO.`);
-          const { proposals } = await lcd.wasm.contractQuery<enterprise.ProposalsResponse>(daoAddress, {
+          const query: QueryMsg = {
             proposals: {
-              filter: 'in_progress',
+              contract: daoAddress,
+              params: {
+                filter: 'in_progress',
+              },
             },
-          });
+          };
+          const { proposals } = await lcd.wasm.contractQuery<ProposalsResponse>(enterpriseFacadeAddress, query);
           proposals.forEach(({ proposal }) => {
             const key: ProposalKey = { daoAddress, id: proposal.id };
             if (!proposalsKeys.some((k) => k.daoAddress === key.daoAddress && k.id === key.id)) {
